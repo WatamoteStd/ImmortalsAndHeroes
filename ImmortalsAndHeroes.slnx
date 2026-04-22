@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="IaH.Client/ImmortalsAndHeroesClient.csproj">
+    <BuildType Solution="Release|*" Project="ExportDebug" />
+  </Project>
+  <Project Path="IaH.Server/IaH.Server.csproj" />
+  <Project Path="IaH.Shared/IaH.Shared.csproj" />
+  <Project Path="ImmortalsAndHeroes/ImmortalsAndHeroes.csproj" Id="a49fcd1b-310a-47ac-be0c-136b5760a3e6" />
+</Solution>
