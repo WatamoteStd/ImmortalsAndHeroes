@@ -33,6 +33,7 @@ public partial class NetworkManager : Node
 
 		// EVENT BUS
 		EventBus.OnHeroSelected += SendHeroSelectedToServer;
+		EventBus.OnPlayerConnectedToWorld += SendPlayerConnectedToWorld;
 
 	}
 
@@ -41,14 +42,14 @@ public partial class NetworkManager : Node
 		
 		
 		PacketType rawPacket = (PacketType)reader.GetByte();
+		GD.Print($"Пришел пакет: {rawPacket}, Размер: {reader.AvailableBytes + 1} байт");
 
 		switch (rawPacket)
 		{
 			
 			case PacketType.Welcome:
 
-				ushort id = reader.GetUShort();
-				GD.Print($"ID: {id}");
+				GD.Print("Подключение к серверу успешно!");
 
 			break;
 
@@ -86,6 +87,14 @@ public partial class NetworkManager : Node
 		_writer.Put((byte)hero);
 		_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
 		
+	}
+	private void SendPlayerConnectedToWorld()
+	{
+
+		_writer.Reset();
+		_writer.Put((byte)PacketType.ConnectedToGame);
+		_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
+
 	}
 
 

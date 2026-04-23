@@ -12,7 +12,6 @@ public partial class EntityHandler : Node3D
 
 	public override void _Ready()
 	{
-		
 		EventBus.OnPlayerJoined += SpawnPlayer;
 
 	}
@@ -38,13 +37,19 @@ public partial class EntityHandler : Node3D
 				newEntity = Archer.Instantiate<Entity>();
 
 			break;
+			default:
+				GD.PrintErr($"Попытка спавна неизвестного героя: {packet.SelectedHero}");
+			break;
 
 		}
 		if (newEntity != null)
 		{
+			float posX = packet.X / 100f;
+			float posZ = packet.Z / 100f;
+			float posY = packet.Y / 100f;
 			newEntity.EntityID = packet.EntityId;
-			newEntity.GlobalPosition = new Vector3(packet.X, packet.Y, packet.Z);
 			GetParent().AddChild(newEntity);
+			newEntity.GlobalPosition = new Vector3(posX, posY, posZ);
 			_entities.Add(newEntity.EntityID, newEntity);
 		}
 

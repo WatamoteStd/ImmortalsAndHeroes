@@ -19,8 +19,15 @@ namespace IaH.Shared.Networking
         EntityPosition,
         SpawnEntity,
         PlayerJoined,
-        HeroSelected
+        HeroSelected,
+        ConnectedToGame
     }
+
+    public struct ConnectedToGamePacket
+    {
+
+    }
+
     public struct PlayerJoinedPacket
     {
         public ushort EntityId;
@@ -53,7 +60,7 @@ namespace IaH.Shared.Networking
     }
     public struct HeroSelectedPacket
     {
-        CharacterType SelectedHero;
+        public CharacterType SelectedHero;
     }
 
 }

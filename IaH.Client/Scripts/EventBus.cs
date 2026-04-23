@@ -7,6 +7,12 @@ public static partial class EventBus
 	
 	public static event Action<PlayerJoinedPacket> OnPlayerJoined;
 	public static event Action<CharacterType> OnHeroSelected;
+	public static event Action OnPlayerConnectedToWorld;
+
+	public static void PublishPlayerConnectedToWorld()
+	{
+		OnPlayerConnectedToWorld?.Invoke();
+	} 
 	
 	public static void PublishHeroSelected(CharacterType hero)
 	{

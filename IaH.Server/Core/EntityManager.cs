@@ -11,9 +11,36 @@ namespace IaH.Server.Core
 
         private BaseEntity[] _dense = new BaseEntity[1000]; // плотный массив
 
-        private int[] _sparse = new int[1000]; // index = ID | значени = ondex in _dense;
+        private int[] _sparse = new int[1000]; // index = ID | значени = index in _dense;
 
         private int _count = 0;
+
+
+
+        public BaseEntity GetEntity(int entityId)
+        {
+            if (entityId < 0 || entityId >= _dense.Length) return null;
+
+            int indexInDense = _sparse[entityId];
+
+            if (indexInDense >= _count || _dense[indexInDense] == null ||  _dense[indexInDense].Id != entityId) return null;
+
+            BaseEntity _entity = _dense[indexInDense];
+            return _entity;
+        }
+
+        public IEnumerable<BaseEntity> GetActiveEntities()
+        {
+            for (int i = 0; i < _count; i++)
+            {
+
+                if (_dense != null)
+                {
+                    yield return _dense[i];
+                }
+
+            }
+        }
 
         public void AddEntity(ushort id, short x, short y, short z, CharacterType hero)
         {
@@ -21,10 +48,6 @@ namespace IaH.Server.Core
             if (_count >= 1000) return; // обработать через default что -1 означает отсутсвие места
 
             _dense[_count] = new BaseEntity(id, x, y, z, hero);
-            _dense[_count].Id = id;
-            _dense[_count].X = x;
-            _dense[_count].Z = z;
-
             _sparse[id] = _count;
             _count++;
             
@@ -47,9 +70,9 @@ namespace IaH.Server.Core
         }
 
         // DEBUG 
-        public void EntityCount()
+        public void EntityCount(int count)
         {
-            Console.WriteLine($"ENTITY IN SERVER: {_count}");
+            Console.WriteLine($"ENTITY IN SERVER: {count}");
         }
         
 

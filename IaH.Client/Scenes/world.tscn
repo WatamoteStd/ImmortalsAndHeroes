@@ -1,29 +1,85 @@
 [gd_scene format=3 uid="uid://ct3nd80pwigj5"]
 
 [ext_resource type="PackedScene" uid="uid://dyss810lwxg76" path="res://Scenes/Entities/EntityHandler.tscn" id="1_a02cp"]
+[ext_resource type="Script" uid="uid://bnnjllagffrpt" path="res://Scripts/World/World.cs" id="1_go701"]
+[ext_resource type="Script" uid="uid://ddkojfu6p07fg" path="res://Scripts/World/CameraControl.cs" id="2_5a7ea"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ukr8"]
+albedo_color = Color(0.11674138, 0.32629105, 0, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_yp4wr"]
-size = Vector2(20, 20)
+material = SubResource("StandardMaterial3D_5ukr8")
+size = Vector2(300, 300)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a02cp"]
-size = Vector3(0.9991455, 0.0146484375, 1)
+size = Vector3(300, 1, 300)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_go701"]
+albedo_color = Color(0.2509804, 0.19215687, 0.8666667, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5a7ea"]
+albedo_color = Color(0.744277, 0.041018754, 0.060384914, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8j60k"]
+albedo_color = Color(0.19607843, 0.42352942, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fo5ed"]
+albedo_color = Color(0.24719188, 0.2471919, 0.24719188, 1)
 
 [node name="World" type="Node3D" unique_id=1179558906]
+script = ExtResource("1_go701")
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=1724753008]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=437184053]
 mesh = SubResource("PlaneMesh_yp4wr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1966120107]
-transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0.008544922, -0.068359375, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.008544922, -0.068359375, 0)
 shape = SubResource("BoxShape3D_a02cp")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1872892378]
 transform = Transform3D(1, 0, 0, 0, 0.6533281, 0.7570749, 0, -0.7570749, 0.6533281, 0, 11.255624, 13.847066)
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=925777874]
-transform = Transform3D(-0.027902918, 0.40046096, -0.91588885, 0.012194546, 0.9163138, 0.4002753, 0.9995362, 0, -0.030451268, -7.277883, 2.8603058, 0)
+transform = Transform3D(1, 0, 0, 0, 0.57357645, 0.81915206, 0, -0.81915206, 0.57357645, 0, 22, 15)
+current = true
+fov = 50.0
+script = ExtResource("2_5a7ea")
 
-[node name="Node3D" parent="." unique_id=1114761114 instance=ExtResource("1_a02cp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72309136, 0)
+[node name="EntityHandler" parent="." unique_id=1114761114 instance=ExtResource("1_a02cp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3666737, 0)
+
+[node name="TestMap" type="Node3D" parent="." unique_id=943119483]
+
+[node name="BaseLight" type="CSGBox3D" parent="TestMap" unique_id=1689936593]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 3.75, 115)
+use_collision = true
+size = Vector3(50, 7.5, 50)
+material = SubResource("StandardMaterial3D_go701")
+
+[node name="BaseDark" type="CSGBox3D" parent="TestMap" unique_id=858476474]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -115, 3.75, -115)
+use_collision = true
+size = Vector3(50, 7.5, 50)
+material = SubResource("StandardMaterial3D_5a7ea")
+
+[node name="MiddleRiver" type="CSGBox3D" parent="TestMap" unique_id=1900344210]
+size = Vector3(15, 3, 15)
+material = SubResource("StandardMaterial3D_8j60k")
+
+[node name="RoadMid" type="CSGBox3D" parent="TestMap" unique_id=1816519028]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, 0, 0)
+size = Vector3(15, 0.1, 250)
+material = SubResource("StandardMaterial3D_fo5ed")
+
+[node name="TowerT1" type="CSGBox3D" parent="TestMap" unique_id=1334717713]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 3.5, -25)
+use_collision = true
+size = Vector3(4, 7, 4)
+
+[node name="TowerT1Dark" type="CSGBox3D" parent="TestMap" unique_id=1636357178]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 3.5, 25)
+use_collision = true
+size = Vector3(4, 7, 4)
