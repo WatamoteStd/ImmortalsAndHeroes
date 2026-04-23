@@ -17,11 +17,13 @@ namespace IaH.Server.Core
         private NetManager _netManager;
 
         private EntityManager _entityManager;
+        private NetDataWriter _writer;
 
         public NetworkManager() // constructor
         {
             _listener = new EventBasedNetListener();
             _netManager = new NetManager(_listener);
+            _writer = new NetDataWriter();
 
             _entityManager = new EntityManager();
 
@@ -33,17 +35,13 @@ namespace IaH.Server.Core
 
             _listener.PeerConnectedEvent += (peer) =>
             {
-                Console.WriteLine($"ID: {peer.Id} connected to the server!");
-                _entityManager.AddEntity(_entityId, 0, 0);
-                _peerToEntity.Add(peer.Id, _entityId);
-
-                // SEND THE CONNECTION EVENT PACKET
-                NetDataWriter _writer = new NetDataWriter();
+                _writer.Reset();
                 _writer.Put((byte)PacketType.Welcome);
-                _writer.Put(_entityId);
                 peer.Send(_writer, DeliveryMethod.ReliableOrdered);
 
+                _entityManager.EntityCount();
                 _entityId++;
+
 
             };
             _listener.PeerDisconnectedEvent += (peer, disconnectedInfo) =>
@@ -60,9 +58,48 @@ namespace IaH.Server.Core
 
             };
 
+            _listener.NetworkReceiveEvent += OnPacketReceived;
 
+        }
 
-            // FUNCTIONS | ФУНКЦИИ
+        // FUNCTIONS | ФУНКЦИИ
+
+        private void OnPacketReceived(NetPeer peer, NetDataReader reader, byte channel, DeliveryMethod deliveryMethod)
+        {
+
+            PacketType rawByte = (PacketType)reader.GetByte();
+
+            switch (rawByte)
+            {
+
+                case PacketType.EntityPosition:
+
+                    ushort id = reader.GetUShort();
+                    short x = reader.GetShort();
+                    short y = reader.GetShort();
+                    short z = reader.GetShort();
+                break;
+
+                case PacketType.HeroSelected:
+
+                    CharacterType Hero = (CharacterType)reader.GetByte();
+
+                    _entityManager.AddEntity(_entityId, 0, 0, 0, Hero);
+                    _peerToEntity.Add(peer.Id, _entityId);
+
+                    _writer.Reset();
+                    _writer.Put((byte)PacketType.PlayerJoined);
+                    _writer.Put((ushort)_entityId);
+                    _writer.Put((byte)Hero);
+                    _writer.Put((short)0);
+                    _writer.Put((short)0);
+                    _writer.Put((short)0);
+                    _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
+                    Console.WriteLine($"Данные о ServerID:{peer.Id}, GameID:{_entityId} были отправлены всем игрокам!");
+
+                break;
+
+            }
 
         }
 

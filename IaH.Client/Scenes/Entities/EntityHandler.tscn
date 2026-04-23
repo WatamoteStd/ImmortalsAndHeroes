@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dyss810lwxg76"]
+
+[ext_resource type="Script" uid="uid://k001ahfk2ikw" path="res://Scripts/Entities/EntityHandler.cs" id="1_l1l1u"]
+[ext_resource type="PackedScene" uid="uid://b2fxh27uerjij" path="res://Scenes/Entities/Warrior.tscn" id="2_0rwla"]
+[ext_resource type="PackedScene" uid="uid://cv8v5hw0t6i5n" path="res://Scenes/Entities/Archer.tscn" id="3_skscq"]
+
+[node name="Node3D" type="Node3D" unique_id=1114761114]
+script = ExtResource("1_l1l1u")
+Warrior = ExtResource("2_0rwla")
+Archer = ExtResource("3_skscq")

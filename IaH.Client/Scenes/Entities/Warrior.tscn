@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://b2fxh27uerjij"]
+
+[ext_resource type="Script" uid="uid://c7r6qk52unmxo" path="res://Scripts/Entities/Entity.cs" id="1_jcvt3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wkic0"]
+albedo_color = Color(0.06745156, 0.28494182, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wkic0"]
+material = SubResource("StandardMaterial3D_wkic0")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jcvt3"]
+
+[node name="Warrior" type="CharacterBody3D" unique_id=196361661]
+script = ExtResource("1_jcvt3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1196063167]
+mesh = SubResource("BoxMesh_wkic0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=42971616]
+shape = SubResource("BoxShape3D_jcvt3")

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ImmortalsAndHeroesClient"
-run/main_scene="uid://ct3nd80pwigj5"
+run/main_scene="uid://cq6x40idpiec0"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 
 [autoload]

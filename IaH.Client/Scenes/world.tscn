@@ -1,3 +1,29 @@
 [gd_scene format=3 uid="uid://ct3nd80pwigj5"]
 
+[ext_resource type="PackedScene" uid="uid://dyss810lwxg76" path="res://Scenes/Entities/EntityHandler.tscn" id="1_a02cp"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_yp4wr"]
+size = Vector2(20, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a02cp"]
+size = Vector3(0.9991455, 0.0146484375, 1)
+
 [node name="World" type="Node3D" unique_id=1179558906]
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1724753008]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=437184053]
+mesh = SubResource("PlaneMesh_yp4wr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1966120107]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0.008544922, -0.068359375, 0)
+shape = SubResource("BoxShape3D_a02cp")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1872892378]
+transform = Transform3D(1, 0, 0, 0, 0.6533281, 0.7570749, 0, -0.7570749, 0.6533281, 0, 11.255624, 13.847066)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=925777874]
+transform = Transform3D(-0.027902918, 0.40046096, -0.91588885, 0.012194546, 0.9163138, 0.4002753, 0.9995362, 0, -0.030451268, -7.277883, 2.8603058, 0)
+
+[node name="Node3D" parent="." unique_id=1114761114 instance=ExtResource("1_a02cp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72309136, 0)
