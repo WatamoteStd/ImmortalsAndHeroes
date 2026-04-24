@@ -6,7 +6,7 @@ using IaH.Server.Entities;
 
 namespace IaH.Server.Core
 {
-    internal class EntityManager
+    public class EntityManager
     {
 
         private BaseEntity[] _dense = new BaseEntity[1000]; // плотный массив

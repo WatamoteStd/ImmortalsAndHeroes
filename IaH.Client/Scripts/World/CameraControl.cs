@@ -8,39 +8,49 @@ public partial class CameraControl : Camera3D
 
 	public override void _Input(InputEvent @event)
 	{
-		// Проверяем нажатие колесика мыши
+		
 		if (@event is InputEventMouseButton mouseButton)
 		{
 			if (mouseButton.ButtonIndex == MouseButton.Middle)
 			{
 				_isDragging = mouseButton.Pressed;
 			}
-		}
+			if (mouseButton.ButtonIndex == MouseButton.Right && mouseButton.Pressed)
+			{
+				var cords = GetMouseClickCoords();
+				GD.Print($"CameraContorl| MouseRMB: {cords.Value}");
+				if (cords.HasValue) {
+				EventBus.PublishPlayerRMB(cords.Value);
+				GD.Print("CameraControl| Cords succesfully send to NetworkMabager!");
+				}
 
-		// Если зажато и мышь движется
+			}
+		}
+	
+
+		
 		if (@event is InputEventMouseMotion mouseMotion && _isDragging)
 		{
-			// Двигаем "хаб" камеры
-			// Инвертируем значения, чтобы движение было естественным (тянем карту)
+			
 			Vector3 offset = new Vector3(-mouseMotion.Relative.X, 0, -mouseMotion.Relative.Y) * Sensitivity;
 			
-			// Чтобы камера двигалась относительно своего поворота, а не глобальных осей
+			
 		   	Basis basis = Transform.Basis;
 			Vector3 direction = (basis.X * offset.X) + (new Vector3(basis.Z.X, 0, basis.Z.Z).Normalized() * offset.Z);
 			
 			GlobalPosition += direction;
 		}
 	}
-	/*private const float RayLength = 1000.0f;
+	private const float RayLength = 1000.0f;
 
 	public Vector3? GetMouseClickCoords()
 	{
-		// 1. Получаем позицию мыши на экране
+	
 		var mousePos = GetViewport().GetMousePosition();
 		var from = ProjectRayOrigin(mousePos);
 		var to = from + ProjectRayNormal(mousePos) * RayLength;
 
-		// 3. Создаем параметры запроса
+		
 		var spaceState = GetWorld3D().DirectSpaceState;
 		var query = PhysicsRayQueryParameters3D.Create(from, to);
 		
@@ -56,7 +66,7 @@ public partial class CameraControl : Camera3D
 		}
 
 		return null;
-	}*/
+	}
 
 	
 }

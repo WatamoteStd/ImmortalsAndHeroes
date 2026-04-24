@@ -33,25 +33,29 @@ namespace IaH.Server.Entities
         }
 
         public void Update(float deltaTime)
-        {   
+        {
+       
             switch (CurrentState)
             {
 
                 case StateMachine.Move:
 
                     MoveLogic(deltaTime);
-
-                break;
+                    
+                    break;
 
                 case StateMachine.Idle:
 
+                    
 
-
-                break;
+                    break;
 
             }
+            X = (short)(_floatX * 100);
+            Y = (short)(_floatY * 100);
+            Z = (short)(_floatZ * 100);
 
-            
+
 
         }
 
@@ -60,8 +64,10 @@ namespace IaH.Server.Entities
             Vector3 MyPosition = new Vector3(_floatX, _floatY, _floatZ);
 
             Vector3 rawDirection = (TargetPosition - MyPosition);
+            rawDirection.Y = 0;
 
             float Distance = rawDirection.Length();
+            Console.WriteLine($"[MOVE] ID: {Id}, Dist: {Distance:F2}, Pos: {MyPosition}, Target: {TargetPosition}");
 
             if (Distance > 0.1f)
             {
@@ -81,6 +87,7 @@ namespace IaH.Server.Entities
             }
             else
             {
+                Console.WriteLine($"[MOVE] Прибыли в точку или слишком близко. Смена на Idle.");
                 CurrentState = StateMachine.Idle;
             }
         }

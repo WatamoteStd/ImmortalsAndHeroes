@@ -18,7 +18,7 @@ namespace IaH.Server.Core
         private EventBasedNetListener _listener;
         private NetManager _netManager;
 
-        private EntityManager _entityManager;
+        public EntityManager _entityManager;
         private NetDataWriter _writer;
 
         public NetworkManager() // constructor
@@ -166,6 +166,27 @@ namespace IaH.Server.Core
                     }
 
             }
+
+        }
+
+        public void BroadcastPosition(IEnumerable<BaseEntity> entities)
+        {
+
+            entities = _entityManager.GetActiveEntities();
+            _writer.Reset();
+            _writer.Put((byte)PacketType.BatchEntityPositions);
+            _writer.Put((short)entities.Count());
+            foreach (var entity in entities)
+            {
+
+                _writer.Put((ushort)entity.Id);
+                _writer.Put((short)entity.X);
+                _writer.Put((short)entity.Y);
+                _writer.Put((short)entity.Z);
+
+            }
+
+            _netManager.SendToAll(_writer, DeliveryMethod.Unreliable);
 
         }
 

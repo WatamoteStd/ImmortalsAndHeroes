@@ -20,7 +20,19 @@ namespace IaH.Shared.Networking
         SpawnEntity,
         PlayerJoined,
         HeroSelected,
-        ConnectedToGame
+        ConnectedToGame,
+        EntityPosition,
+        BatchEntityPositions
+    }
+
+
+    public struct EntityPositionPacket
+    {
+        public ushort EntityId;
+        public short x;
+        public short y;
+        public short z;
+
     }
 
     public struct ConnectedToGamePacket
