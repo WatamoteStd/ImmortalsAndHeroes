@@ -16,7 +16,7 @@ namespace IaH.Shared.Networking
     public enum PacketType : byte
     {
         Welcome,
-        EntityPosition,
+        MoveRequest,
         SpawnEntity,
         PlayerJoined,
         HeroSelected,
@@ -36,10 +36,8 @@ namespace IaH.Shared.Networking
 
     }
 
-    public struct EntityPositionPacket
+    public struct MoveRequestPacket
     {
-
-        public ushort EntityId; // Any entity ID
 
         public short X;
         public short y;

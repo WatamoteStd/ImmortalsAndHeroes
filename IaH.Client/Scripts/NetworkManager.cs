@@ -96,6 +96,17 @@ public partial class NetworkManager : Node
 		_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
 
 	}
+	private void SendMoveRequest(short x, short y, short z)
+	{
+		
+		_writer.Reset();
+		_writer.Put((byte)PacketType.MoveRequest);
+		_writer.Put(x);
+		_writer.Put(y);
+		_writer.Put(z);
+		_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
+
+	}
 
 
 	public override void _Process(double delta)
@@ -104,4 +115,39 @@ public partial class NetworkManager : Node
 		_netManager.PollEvents();
 
 	}
+
+
+ // DELETE TOMORROW
+private Vector3? GetMouseCoords(Camera3D cam)
+{
+	var mousePos = GetViewport().GetMousePosition();
+	var from = cam.ProjectRayOrigin(mousePos);
+	var to = from + cam.ProjectRayNormal(mousePos) * 1000f;
+	var query = PhysicsRayQueryParameters3D.Create(from, to);
+	var result = cam.GetWorld3D().DirectSpaceState.IntersectRay(query);
+
+	return result.Count > 0 ? (Vector3)result["position"] : null;
+}
+public override void _Input(InputEvent @event)
+{
+  
+	if (@event is InputEventMouseButton m && m.Pressed && m.ButtonIndex == MouseButton.Right)
+	{
+		var cam = GetTree().Root.GetCamera3D(); 
+		if (cam == null) return;
+
+		Vector3? clickPoint = GetMouseCoords(cam);
+
+		if (clickPoint.HasValue)
+		{
+			// Сразу пакуем и отправляем
+			short x = (short)(clickPoint.Value.X * 100);
+			short y = (short)(clickPoint.Value.Y * 100);
+			short z = (short)(clickPoint.Value.Z * 100);
+
+			SendMoveRequest(x, y, z);
+			GD.Print($"[NET] Отправляем: {x}, {y}, {z}");
+		}
+	}
+}
 }

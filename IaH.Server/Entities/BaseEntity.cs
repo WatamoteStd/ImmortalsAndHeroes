@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IaH.Server.Entities
 {
-    internal class BaseEntity
+    public class BaseEntity
     {
 
         public ushort Id;

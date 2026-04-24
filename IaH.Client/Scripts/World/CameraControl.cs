@@ -31,4 +31,32 @@ public partial class CameraControl : Camera3D
 			GlobalPosition += direction;
 		}
 	}
+	/*private const float RayLength = 1000.0f;
+
+	public Vector3? GetMouseClickCoords()
+	{
+		// 1. Получаем позицию мыши на экране
+		var mousePos = GetViewport().GetMousePosition();
+		var from = ProjectRayOrigin(mousePos);
+		var to = from + ProjectRayNormal(mousePos) * RayLength;
+
+		// 3. Создаем параметры запроса
+		var spaceState = GetWorld3D().DirectSpaceState;
+		var query = PhysicsRayQueryParameters3D.Create(from, to);
+		
+		// Тут можно указать маску коллизий, чтобы луч бился только в пол
+		// query.CollisionMask = 1; 
+
+		var result = spaceState.IntersectRay(query);
+
+	 
+		if (result.Count > 0)
+		{
+			return (Vector3)result["position"];
+		}
+
+		return null;
+	}*/
+
+	
 }

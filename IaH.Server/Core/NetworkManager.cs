@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Numerics;
 using LiteNetLib;
 using LiteNetLib.Utils;
 using IaH.Shared.Networking;
@@ -73,76 +74,96 @@ namespace IaH.Server.Core
             switch (rawByte)
             {
 
-                case PacketType.EntityPosition:
+                case PacketType.MoveRequest:
+                    {
+                        short x = reader.GetShort();
+                        short y = reader.GetShort();
+                        short z = reader.GetShort();
 
-                    ushort id = reader.GetUShort();
-                    short x = reader.GetShort();
-                    short y = reader.GetShort();
-                    short z = reader.GetShort();
-                break;
+                        Vector3 _finalCords = new Vector3(x / 100.0f, y / 100.0f, z / 100.0f);
+
+                        Console.WriteLine($"[SERVER] Получен запрос на движение от Peer {peer.Id}: {_finalCords}");
+
+                        if (_peerToEntity.TryGetValue(peer.Id, out ushort myEntityId))
+                        {
+
+                            Hero _playerHero = _entityManager.GetEntity(myEntityId) as Hero;
+
+                            if (_playerHero != null)
+                            {
+                                _playerHero.TargetPosition = _finalCords;
+                                _playerHero.CurrentState = Hero.StateMachine.Move;
+                                Console.WriteLine($"[SERVER] Установили цель для Entity {myEntityId}: {_finalCords}");
+                            }
+
+                        }
+                    }
+                    break;
 
                 case PacketType.HeroSelected:
-
-                    CharacterType Hero = (CharacterType)reader.GetByte();
-                    short posX, posZ;
-                    if (_entityId % 2 == 0)
                     {
-                        posX = -2000;
-                        posZ = 0;
-                    }
-                    else
-                    {
-                        posX = 2000;
-                        posZ = 0;
-                    }
+                        CharacterType _hero = (CharacterType)reader.GetByte();
+                        short posX, posZ;
+                        if (_entityId % 2 == 0)
+                        {
+                            posX = -2000;
+                            posZ = 0;
+                        }
+                        else
+                        {
+                            posX = 2000;
+                            posZ = 0;
+                        }
 
-                    _entityManager.AddEntity(_entityId, posX, 200, posZ, Hero);
-                    _peerToEntity.Add(peer.Id, _entityId);
-                    _entityId++;
-                    Console.WriteLine($"[SERVER] Spawning Hero: {Hero} for EntityID: {_entityId} at X: {posX}");
+                        _entityManager.AddEntity(_entityId, posX, 200, posZ, _hero);
+                        _peerToEntity.Add(peer.Id, _entityId);
+                        _entityId++;
+                        Console.WriteLine($"[SERVER] Spawning Hero: {_hero} for EntityID: {_entityId} at X: {posX}");
 
-                    break;
-
-                case PacketType.ConnectedToGame:
-
-                    if (!_peerToEntity.TryGetValue(peer.Id, out ushort targetId))
-                    {
-                        Console.WriteLine($"[WARN] Peer {peer.Id} ломится в мир без ID!");
                         break;
                     }
-
-                    ushort _targetId = _peerToEntity[peer.Id];
-                    BaseEntity _entity = _entityManager.GetEntity(_targetId);
-
-                    // SEND ALL INFO ABOUT NEW PLAYER
-                    _writer.Reset();
-                    _writer.Put((byte)PacketType.PlayerJoined);
-                    _writer.Put((ushort)_entity.Id);
-                    _writer.Put((byte)_entity.SelectedHero); // CharacterType
-                    _writer.Put((short)_entity.X);
-                    _writer.Put((short)_entity.Y);
-                    _writer.Put((short)_entity.Z);
-                    _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
-                    _entityManager.EntityCount(_netManager.ConnectedPeersCount);
-                    Console.WriteLine($"Данные о ServerID:{peer.Id}, GameID:{_entity.Id} были отправлены всем игрокам!");
-
-                    // SEND NEW PLAYER INFORMATION ABOUT OLD PLAYERS
-                    foreach (BaseEntity _curEntity in _entityManager.GetActiveEntities()) 
+                case PacketType.ConnectedToGame:
                     {
-                        if (_curEntity.Id == _targetId) continue;
+                        if (!_peerToEntity.TryGetValue(peer.Id, out ushort targetId))
+                        {
+                            Console.WriteLine($"[WARN] Peer {peer.Id} ломится в мир без ID!");
+                            break;
+                        }
 
+                        ushort _targetId = _peerToEntity[peer.Id];
+                        BaseEntity _entity = _entityManager.GetEntity(_targetId);
+
+                        // SEND ALL INFO ABOUT NEW PLAYER
                         _writer.Reset();
                         _writer.Put((byte)PacketType.PlayerJoined);
-                        _writer.Put((ushort)_curEntity.Id);
-                        _writer.Put((byte)_curEntity.SelectedHero); // CharacterType
-                        _writer.Put((short)_curEntity.X);
-                        _writer.Put((short)_curEntity.Y);
-                        _writer.Put((short)_curEntity.Z);
-                        peer.Send(_writer, DeliveryMethod.ReliableOrdered);
+                        _writer.Put((ushort)_entity.Id);
+                        _writer.Put((byte)_entity.SelectedHero); // CharacterType
+                        _writer.Put((short)_entity.X);
+                        _writer.Put((short)_entity.Y);
+                        _writer.Put((short)_entity.Z);
+                        _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
+                        _entityManager.EntityCount(_netManager.ConnectedPeersCount);
+                        Console.WriteLine($"Данные о ServerID:{peer.Id}, GameID:{_entity.Id} были отправлены всем игрокам!");
+
+                        // SEND NEW PLAYER INFORMATION ABOUT OLD PLAYERS
+                        foreach (BaseEntity _curEntity in _entityManager.GetActiveEntities())
+                        {
+                            if (_curEntity.Id == _targetId) continue;
+
+                            _writer.Reset();
+                            _writer.Put((byte)PacketType.PlayerJoined);
+                            _writer.Put((ushort)_curEntity.Id);
+                            _writer.Put((byte)_curEntity.SelectedHero); // CharacterType
+                            _writer.Put((short)_curEntity.X);
+                            _writer.Put((short)_curEntity.Y);
+                            _writer.Put((short)_curEntity.Z);
+                            peer.Send(_writer, DeliveryMethod.ReliableOrdered);
+
+                        }
+
+                        break;
 
                     }
-
-                    break;
 
             }
 

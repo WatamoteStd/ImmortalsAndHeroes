@@ -47,7 +47,7 @@ namespace IaH.Server.Core
 
             if (_count >= 1000) return; // обработать через default что -1 означает отсутсвие места
 
-            _dense[_count] = new BaseEntity(id, x, y, z, hero);
+            _dense[_count] = new Hero(id, x, y, z, hero);
             _sparse[id] = _count;
             _count++;
             
