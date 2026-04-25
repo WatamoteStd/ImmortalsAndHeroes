@@ -1,0 +1,21 @@
+{
+  "HeroId": 1,
+  "Name": "Frozen",
+  "Stats": {
+    "BaseHealth": 520,
+    "HealthRegen": 1.0,
+    "BaseMana": 210,
+    "ManaRegen": 0.2,
+    "MoveSpeed": 4,
+    "Armor": 2,
+    "MagicResist": 0 
+  },
+  "Combat": {
+    "AttackDamage": 60,
+    "AttackRange": 150,
+    "AttackSpeed": 100,
+    "BasicAttackRate": 1.5,
+    "AttackType": "Range"
+  }
+ 
+}

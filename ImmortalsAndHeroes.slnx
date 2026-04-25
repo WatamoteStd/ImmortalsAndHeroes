@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/GameData/">
+    <File Path="frozen.json" />
+  </Folder>
   <Project Path="IaH.Client/ImmortalsAndHeroesClient.csproj">
     <BuildType Solution="Release|*" Project="ExportDebug" />
   </Project>
