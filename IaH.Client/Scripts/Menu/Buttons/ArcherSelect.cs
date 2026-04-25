@@ -15,7 +15,7 @@ public partial class ArcherSelect : Button
 	private void SendEvent()
 	{
 		
-		EventBus.PublishHeroSelected(CharacterType.Archer);
+		EventBus.PublishHeroSelected(CharacterType.VoidlessStar);
 		GetTree().ChangeSceneToFile("Scenes/world.tscn");
 
 	}

@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 public partial class EntityHandler : Node3D
 {
-	[Export] public PackedScene Warrior;
-	[Export] public PackedScene Archer;
+	[Export] public PackedScene FrozenScene;
+	[Export] public PackedScene VoidlessStarScene;
 
 	private Dictionary<ushort, Entity> _entities = new();
 
@@ -20,20 +20,13 @@ public partial class EntityHandler : Node3D
 	private void UpdatePosition(ushort id, Vector3 pos)
 	{
 		
-		// 1. Проверяем, заходит ли сюда код вообще
-	GD.Print($"DEBUG: Пришли данные для ID: {id}. Позиция: {pos}");
 
 	if (_entities.TryGetValue(id, out Entity entity))
 	{
-		// 2. Если нашли — двигаем и рапортуем
+		
 		entity.GlobalPosition = entity.GlobalPosition.Lerp(pos, 0.5f);
-		GD.Print($"DEBUG: Герой {id} найден и передвинут в {pos}");
 	}
-	else 
-	{
-		// 3. Если не нашли — вот тут и затык!
-		GD.PrintErr($"DEBUG: Пиздец! Пришел ID {id}, но в словаре его НЕТ. В словаре сейчас: {string.Join(", ", _entities.Keys)}");
-	}
+	
 	}
 
 	private void SpawnPlayer(PlayerJoinedPacket packet)
@@ -45,16 +38,16 @@ public partial class EntityHandler : Node3D
 		switch (packet.SelectedHero)
 		{
 			
-			case CharacterType.Warrior:
+			case CharacterType.Frozen:
 
-				newEntity = Warrior.Instantiate<Entity>();
+				newEntity = FrozenScene.Instantiate<Entity>();
 				
 
 			break;
 
-			case CharacterType.Archer:
+			case CharacterType.VoidlessStar:
 
-				newEntity = Archer.Instantiate<Entity>();
+				newEntity = VoidlessStarScene.Instantiate<Entity>();
 
 			break;
 			default:

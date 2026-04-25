@@ -12,7 +12,7 @@ public partial class WarrirorSelect : Button
 
 	private void SendEvent()
 	{
-		EventBus.PublishHeroSelected(CharacterType.Warrior);
+		EventBus.PublishHeroSelected(CharacterType.Frozen);
 		GetTree().ChangeSceneToFile("Scenes/world.tscn");
 	}
 }

@@ -30,16 +30,16 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 30
 
-[node name="WarrirorSelect" type="Button" parent="HBoxContainer/VBoxContainer" unique_id=1691202212]
+[node name="FrozenSelect" type="Button" parent="HBoxContainer/VBoxContainer" unique_id=1691202212]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-text = "Warrior"
+text = "Frozen (carry)"
 script = ExtResource("1_3kh17")
 
-[node name="ArcherSelect" type="Button" parent="HBoxContainer/VBoxContainer" unique_id=1605633894]
+[node name="VoidlessStarSelect" type="Button" parent="HBoxContainer/VBoxContainer" unique_id=1605633894]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-text = "Archer"
+text = "VoidlessStar (mage)"
 script = ExtResource("2_kqkty")
 
 [node name="Label" type="Label" parent="." unique_id=608315204]

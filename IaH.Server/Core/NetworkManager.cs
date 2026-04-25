@@ -124,11 +124,7 @@ namespace IaH.Server.Core
                     }
                 case PacketType.ConnectedToGame:
                     {
-                        if (!_peerToEntity.TryGetValue(peer.Id, out ushort targetId))
-                        {
-                            Console.WriteLine($"[WARN] Peer {peer.Id} ломится в мир без ID!");
-                            break;
-                        }
+                        if (!_peerToEntity.TryGetValue(peer.Id, out ushort targetId)) break;
 
                         ushort _targetId = _peerToEntity[peer.Id];
                         BaseEntity _entity = _entityManager.GetEntity(_targetId);

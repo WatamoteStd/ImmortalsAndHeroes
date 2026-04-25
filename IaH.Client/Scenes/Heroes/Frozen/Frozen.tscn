@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://c7ye04nw4j6po"]
+
+[ext_resource type="Script" uid="uid://c7r6qk52unmxo" path="res://Scripts/Entities/Entity.cs" id="1_utrey"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tw7yw"]
+albedo_color = Color(0, 0.29805535, 0.29858226, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_utrey"]
+material = SubResource("StandardMaterial3D_tw7yw")
+size = Vector3(1.2, 1.5, 1.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_171ma"]
+size = Vector3(1.2, 1.5, 1.2)
+
+[node name="Node3D" type="CharacterBody3D" unique_id=882619380]
+script = ExtResource("1_utrey")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=818700968]
+mesh = SubResource("BoxMesh_utrey")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2023265839]
+shape = SubResource("BoxShape3D_171ma")
