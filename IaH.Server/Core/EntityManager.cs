@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using IaH.Shared.Networking;
 using IaH.Server.Entities;
+using IaH.Shared.Data;
 
 namespace IaH.Server.Core
 {
@@ -47,7 +48,15 @@ namespace IaH.Server.Core
 
             if (_count >= 1000) return; // обработать через default что -1 означает отсутсвие места
 
-            _dense[_count] = new Hero(id, x, y, z, hero);
+            var config = HeroDataManager.GetConfig(hero);
+
+            if (config == null)
+            {
+                Console.WriteLine("EntityManager: Error. No hero config. Check JSON...");
+                return;
+            }
+
+            _dense[_count] = new Hero(id, x, y, z, hero, config);
             _sparse[id] = _count;
             _count++;
             

@@ -16,6 +16,7 @@ Console.WriteLine("---IaH Server Starting---");
 NetworkManager _netManager = new NetworkManager();
 
 _netManager.Start();
+HeroDataManager.Initialize();
 
 
 while (true)

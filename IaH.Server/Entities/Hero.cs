@@ -3,14 +3,36 @@ using System;
 using System.Numerics;
 using System.Collections.Generic;
 using System.Text;
+using IaH.Shared.Data;
 
 namespace IaH.Server.Entities
 {
     public class Hero : BaseEntity
     {
-        public float Speed = 5.0f;
+        private float _speed;
+        private float _health;
+        private float _maxHealth;
+        private float _healthRegen;
+        public float Health
+        {
+            get { return _health; }
+            set
+            {
+                if (value > _maxHealth) _health = _maxHealth;
+                else if (value <= 0) _health = MathF.Max(0, value);
+                else _health = value;
+            }
+        }
+        private float _mana;
+        private float _maxMana;
+        private float _manaRegen;
+        private float _armor;
+
+        private float _damage;
+
         float _floatX, _floatY, _floatZ;
         public Vector3 TargetPosition;
+        public HeroConfig Config;
 
         public enum StateMachine
         {
@@ -23,12 +45,22 @@ namespace IaH.Server.Entities
         }
         public StateMachine CurrentState = StateMachine.Idle;
 
-        public Hero(ushort id, short x, short y, short z, CharacterType hero) : base(id, x, y, z, hero)
+        public Hero(ushort id, short x, short y, short z, CharacterType hero, HeroConfig config) : base(id, x, y, z, hero)
         {
+            Config = config;
 
             _floatX = x / 100.0f;
             _floatY = y / 100.0f;
             _floatZ = z / 100.0f;
+
+            _speed = config.Stats.MoveSpeed;
+            _maxHealth = config.Stats.BaseHealth;
+            _health = config.Stats.BaseHealth;
+            _healthRegen = config.Stats.HealthRegen;
+            _mana = config.Stats.BaseMana;
+            _maxMana = config.Stats.BaseMana;
+            _manaRegen = config.Stats.ManaRegen;
+            _damage = config.Combat.AttackDamage;
 
         }
 
@@ -74,7 +106,7 @@ namespace IaH.Server.Entities
 
                 Vector3 direction = Vector3.Normalize(rawDirection);
 
-                Vector3 velocity = direction * Speed * deltaTime;
+                Vector3 velocity = direction * _speed * deltaTime;
 
                 _floatX += velocity.X;
                 _floatY += velocity.Y;

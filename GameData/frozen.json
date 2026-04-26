@@ -1,5 +1,5 @@
 {
-  "HeroId": 1,
+  "HeroId": 0,
   "Name": "Frozen",
   "Stats": {
     "BaseHealth": 520,
