@@ -10,8 +10,14 @@ public static partial class EventBus
 	public static event Action<CharacterType> OnHeroSelected;
 	public static event Action OnPlayerConnectedToWorld;
 	public static event Action<Vector3> OnPlayerRMB;
+	public static event Action<EntityStatsPacket> OnStatsPacketReceived;
 
 	public static event Action<ushort, Vector3> OnPositionsUpdated;
+
+	public static void PublishStatsPacketReceived(EntityStatsPacket packet)
+	{
+		OnStatsPacketReceived?.Invoke(packet);
+	}
 
 	public static void PublishPositionsUpdated(ushort id, Vector3 position)
 	{

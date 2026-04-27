@@ -24,7 +24,7 @@ namespace IaH.Server.Core
 
             int indexInDense = _sparse[entityId];
 
-            if (indexInDense >= _count || _dense[indexInDense] == null ||  _dense[indexInDense].Id != entityId) return null;
+            if (indexInDense >= _count || _dense[indexInDense] == null || _dense[indexInDense].Id != entityId) return null;
 
             BaseEntity _entity = _dense[indexInDense];
             return _entity;
@@ -56,14 +56,14 @@ namespace IaH.Server.Core
                 return;
             }
 
-            _dense[_count] = new Hero(id, x, y, z, hero, config);
+            _dense[_count] = new Hero(id, x, y, z, hero, config);       
             _sparse[id] = _count;
             _count++;
-            
+
 
 
         }
-        
+
         public void RemoveEntity(ushort idToRemove)
         {
 
@@ -77,13 +77,6 @@ namespace IaH.Server.Core
             _count--;
 
         }
-
-        // DEBUG 
-        public void EntityCount(int count)
-        {
-            Console.WriteLine($"ENTITY IN SERVER: {count}");
-        }
-        
 
     }
 }

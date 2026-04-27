@@ -37,13 +37,13 @@ namespace IaH.Server.Core
             }
         }
 
-        
+
 
         public static HeroConfig GetConfig(CharacterType type)
         {
 
             ushort id = (ushort)type;
-            
+
             if (_heroes.ContainsKey(id))
             {
                 return _heroes[id];
@@ -53,7 +53,7 @@ namespace IaH.Server.Core
                 Console.WriteLine("HeroDataManager: Invalid JSON.");
                 return null;
             }
-                                             
+
         }
 
     }

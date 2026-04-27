@@ -11,6 +11,7 @@ public partial class HeroStatsUi : Control
 	[Export] public Label _manaLabel;
 	public override void _Ready()
 	{
+		EventBus.OnStatsPacketReceived += UpdateStats;
 	}
 
 	public void UpdateStats(EntityStatsPacket packet)
@@ -20,12 +21,14 @@ public partial class HeroStatsUi : Control
 
 		if ((packet.UpdateMask & 1) != 0) // vitals
 		{
-			_healthLabel.Text = $"HP: {packet.Vitals.CurrentHp}";
+			_healthLabel.Text = $"HP: {packet.Vitals.CurrentHp / 10}";
+			_manaLabel.Text = $"MP: {packet.Vitals.CurrentMana / 10}";
 		}
 		if ((packet.UpdateMask & 2) != 0) // attribut
 		{
-			_healthLabel.Text += $" / {packet.Attributes.MaxHealth}";
-			_speedLabel.Text = $"MoveSpeed: {packet.Attributes.Speed / 100.0f}";
+			_healthLabel.Text += $" / {packet.Attributes.MaxHealth / 10}";
+			_manaLabel.Text += $" / {packet.Attributes.MaxMana / 10}";
+			_speedLabel.Text = $"MoveSpeed: {packet.Attributes.Speed / 10.0f}";
 		}
 
 	}

@@ -106,10 +106,14 @@ public partial class NetworkManager : Node
 
 			break;
 
+			case PacketType.EntityStats:
+				
+				EntityStatsPacket newPacket = new EntityStatsPacket();
+				newPacket.Deserialize(reader);
+				EventBus.PublishStatsPacketReceived(newPacket);
+			break;
 		}
-
 	}
-
 	private void SendHeroSelectedToServer(CharacterType hero)
 	{
 

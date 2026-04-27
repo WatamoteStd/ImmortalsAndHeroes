@@ -129,7 +129,7 @@ namespace IaH.Server.Core
                         ushort _targetId = _peerToEntity[peer.Id];
                         BaseEntity _entity = _entityManager.GetEntity(_targetId);
 
-                        // SEND ALL INFO ABOUT NEW PLAYER
+                        // SEND ALL !INFO! ABOUT NEW PLAYER
                         _writer.Reset();
                         _writer.Put((byte)PacketType.PlayerJoined);
                         _writer.Put((ushort)_entity.Id);
@@ -137,9 +137,20 @@ namespace IaH.Server.Core
                         _writer.Put((short)_entity.X);
                         _writer.Put((short)_entity.Y);
                         _writer.Put((short)_entity.Z);
-                        _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
-                        _entityManager.EntityCount(_netManager.ConnectedPeersCount);
+                        _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);                 
                         Console.WriteLine($"Данные о ServerID:{peer.Id}, GameID:{_entity.Id} были отправлены всем игрокам!");
+
+                        // SEND ALL PLAYER STATS TO CLIENT 
+                        if (_entity is Hero hero)
+                        {
+                            var stats = hero.GetStatsPacket(7); // all stats
+                            _writer.Reset();
+                            _writer.Put((byte)PacketType.EntityStats);
+                            stats.Serialize(_writer);
+                            _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
+
+                        }
+
 
                         // SEND NEW PLAYER INFORMATION ABOUT OLD PLAYERS
                         foreach (BaseEntity _curEntity in _entityManager.GetActiveEntities())
@@ -154,6 +165,15 @@ namespace IaH.Server.Core
                             _writer.Put((short)_curEntity.Y);
                             _writer.Put((short)_curEntity.Z);
                             peer.Send(_writer, DeliveryMethod.ReliableOrdered);
+
+                            if (_curEntity is Hero curHero)
+                            {
+                                _writer.Reset();
+                                _writer.Put((byte)PacketType.EntityStats);
+                                var stats = curHero.GetStatsPacket(7);
+                                stats.Serialize(_writer);
+                                peer.Send(_writer, DeliveryMethod.ReliableOrdered);
+                            }
 
                         }
 

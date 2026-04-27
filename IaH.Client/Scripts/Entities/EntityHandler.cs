@@ -8,7 +8,7 @@ public partial class EntityHandler : Node3D
 	[Export] public PackedScene FrozenScene;
 	[Export] public PackedScene VoidlessStarScene;
 
-	private Dictionary<ushort, Entity> _entities = new();
+	public Dictionary<ushort, Entity> _entities = new();
 
 	public override void _Ready()
 	{
