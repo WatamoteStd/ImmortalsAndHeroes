@@ -37,6 +37,8 @@ namespace IaH.Server.Entities
         private float _magicResist;
 
         private float _damage;
+        private float _reloadTime = 2.0f;
+        private float _preAttack = 0.2f;
 
         public int AttackRange;
 
@@ -176,15 +178,38 @@ namespace IaH.Server.Entities
 
                 case StateMachine.Attack:
                     {
-                        float windUpTimeStatic = 0.2f;
-                        float curWindUpTime = windUpTimeStatic - deltaTime;
-                        Vector3 TargetPos = new Vector3(_currentTarget.X, _currentTarget.Y, _currentTarget.Z);
-                        var DistanceToTarget = Vector3.Distance(GlobalPos, TargetPos);
-                        if (curWindUpTime <= 0 &&DistanceToTarget < AttackRange)
+                        if (_currentTarget == null || _currentTarget.Healths <= 0)
                         {
-                            _currentTarget.TakeDamage(DamageType.Physical, _damage);
+                            CurrentState = StateMachine.Idle;
+                            return;
                         }
-                        else CurrentState = StateMachine.Chase;
+                       
+                        Vector3 TargetPos = new Vector3(_currentTarget.X / 100.0f, _currentTarget.Y/ 100.0f, _currentTarget.Z / 100.0f);
+                        var DistanceToTarget = Vector3.Distance(GlobalPos, TargetPos);
+
+                        if (DistanceToTarget > AttackRange)
+                        {
+                            CurrentState = StateMachine.Chase;
+                            _preAttack = 0.2f;
+                            return;
+                        }
+
+                        if (_reloadTime > 0)
+                        {
+
+                        }
+                        else if (_reloadTime <= 0)
+                        {
+                            _preAttack -= deltaTime;
+                            if (_preAttack <= 0)
+                            {
+                                _currentTarget.TakeDamage(DamageType.Physical, _damage);
+                               
+                                _preAttack = 0.2f;
+                                _reloadTime = 2.0f;
+                            }
+                        }
+
                     }
                 break;
 
@@ -198,7 +223,7 @@ namespace IaH.Server.Entities
 
             }
 
-
+            if (_reloadTime >= 0) _reloadTime -= deltaTime; // reload attack always
 
             X = (short)(_floatX * 100);
             Y = (short)(_floatY * 100);

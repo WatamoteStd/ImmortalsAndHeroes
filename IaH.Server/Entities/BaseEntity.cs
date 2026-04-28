@@ -8,9 +8,11 @@ namespace IaH.Server.Entities
     public class BaseEntity : IDamable
     {
 
+        
+
         public ushort Id;
         public short X, Y, Z;
-        public int Healths;
+        public float Healths;
         public CharacterType SelectedHero;
 
         public BaseEntity(ushort id,  short x, short y, short z, CharacterType hero)
@@ -27,7 +29,7 @@ namespace IaH.Server.Entities
 
         public virtual void TakeDamage(DamageType type, float damage)
         {
-            Healths -= (int)damage;
+            Healths -= damage;
         }
 
     }
