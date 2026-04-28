@@ -18,7 +18,21 @@ namespace IaH.Shared.Networking
         ConnectedToGame,
         EntityPosition,
         BatchEntityPositions,
-        EntityStats
+        EntityStats,
+        AtatckRequest
+    }
+
+    public enum DamageType
+    {
+        Physical,
+        Magical,
+        Pure
+    }
+
+    public struct AttackRequestPacket
+    {
+        public ushort EntityId;
+        public ushort TargetId;
     }
 
     public struct EntityStatsPacket

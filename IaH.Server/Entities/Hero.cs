@@ -9,6 +9,9 @@ namespace IaH.Server.Entities
 {
     public class Hero : BaseEntity
     {
+
+        public BaseEntity _currentTarget;
+
         private ushort _lvl = 1;
         private float _expToLvl = 100.0f;
         private float _currentExp = 0.0f;
@@ -35,11 +38,15 @@ namespace IaH.Server.Entities
 
         private float _damage;
 
+        public int AttackRange;
+
         private short _gold = 1;
 
-        float _floatX, _floatY, _floatZ;
+        public float _floatX, _floatY, _floatZ;
         public Vector3 TargetPosition;
         public HeroConfig Config;
+
+        public Vector3 GlobalPos => new Vector3(_floatX, _floatY, _floatZ);
 
         public enum StateMachine
         {
@@ -69,6 +76,41 @@ namespace IaH.Server.Entities
             _manaRegen = config.Stats.ManaRegen;
             _damage = config.Combat.AttackDamage;
             _magicResist = config.Stats.MagicResist;
+            AttackRange = config.Combat.AttackRange;
+
+        }
+
+        public override void TakeDamage(DamageType type, float damage)
+        {
+            
+            switch (type)
+            {
+
+                case DamageType.Physical:
+
+                    var damageBlock = _armor * 2;
+                    Health -= MathF.Max(0, damage - damageBlock);
+
+                    break;
+
+                case DamageType.Magical:
+
+                    if (_magicResist <= 0)
+                    {
+                        Health -= damage;
+                        return;
+                    }
+
+                    Health -= damage * (1 - _magicResist / 100);
+
+                    break;
+
+                case DamageType.Pure:
+
+                    Health -= damage;
+
+                    break;
+            }
 
         }
 
@@ -114,7 +156,7 @@ namespace IaH.Server.Entities
 
         }
 
-        public void Update(float deltaTime)
+        public void Update(float deltaTime) // stateMachine
         {
        
             switch (CurrentState)
@@ -132,7 +174,32 @@ namespace IaH.Server.Entities
 
                     break;
 
+                case StateMachine.Attack:
+                    {
+                        float windUpTimeStatic = 0.2f;
+                        float curWindUpTime = windUpTimeStatic - deltaTime;
+                        Vector3 TargetPos = new Vector3(_currentTarget.X, _currentTarget.Y, _currentTarget.Z);
+                        var DistanceToTarget = Vector3.Distance(GlobalPos, TargetPos);
+                        if (curWindUpTime <= 0 &&DistanceToTarget < AttackRange)
+                        {
+                            _currentTarget.TakeDamage(DamageType.Physical, _damage);
+                        }
+                        else CurrentState = StateMachine.Chase;
+                    }
+                break;
+
+                case StateMachine.Chase:
+                    {
+
+                        CurrentState = StateMachine.Idle; // TEMP
+
+                    }
+                    break;
+
             }
+
+
+
             X = (short)(_floatX * 100);
             Y = (short)(_floatY * 100);
             Z = (short)(_floatZ * 100);

@@ -5,12 +5,12 @@ using System.Text;
 
 namespace IaH.Server.Entities
 {
-    public class BaseEntity
+    public class BaseEntity : IDamable
     {
 
         public ushort Id;
         public short X, Y, Z;
-        public int Health;
+        public int Healths;
         public CharacterType SelectedHero;
 
         public BaseEntity(ushort id,  short x, short y, short z, CharacterType hero)
@@ -20,9 +20,14 @@ namespace IaH.Server.Entities
             X = x;
             Y = y;
             Z = z;
-            Health = 100;
+            Healths = 100;
             SelectedHero = hero;
 
+        }
+
+        public virtual void TakeDamage(DamageType type, float damage)
+        {
+            Healths -= (int)damage;
         }
 
     }

@@ -180,6 +180,27 @@ namespace IaH.Server.Core
                         break;
 
                     }
+                case PacketType.AtatckRequest:
+                    {
+                        ushort _entity = reader.GetUShort();
+                        ushort _targetEntity = reader.GetUShort();
+                        BaseEntity _curEntity = _entityManager.GetEntity(_entity);
+                        BaseEntity _curTarEntity = _entityManager.GetEntity(_targetEntity);
+
+                        Vector3 _targetPos = new Vector3(_curTarEntity.X / 100, _curTarEntity.Y / 100, _curTarEntity.Z / 100);
+
+                        if (_curEntity is Hero curHero)
+                        {
+                            if (Vector3.Distance(curHero.GlobalPos, _targetPos) <= curHero.AttackRange )
+                            {
+                                curHero.CurrentState = Hero.StateMachine.Attack;
+
+                            }
+
+                        }
+
+                    }
+                break;
 
             }
 
