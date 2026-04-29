@@ -19,7 +19,8 @@ namespace IaH.Shared.Networking
         EntityPosition,
         BatchEntityPositions,
         EntityStats,
-        AttackRequest
+        AttackRequest,
+        EntityRemove
     }
 
     public enum DamageType
@@ -166,6 +167,10 @@ namespace IaH.Shared.Networking
     public struct ConnectedToGamePacket
     {
 
+    }
+    public struct EntityRemovePacket
+    {
+        public ushort EntityId;
     }
 
     public struct PlayerJoinedPacket

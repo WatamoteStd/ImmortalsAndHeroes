@@ -12,9 +12,6 @@ public partial class NetworkManager : Node
 	private NetPeer _serverPeer;
 	private NetDataWriter _writer;
 
-	private readonly Dictionary<ushort, Node3D> _entities = new();
-
-
 	public override void _Ready()
 	{
 		
@@ -110,6 +107,15 @@ public partial class NetworkManager : Node
 				EntityStatsPacket newPacket = new EntityStatsPacket();
 				newPacket.Deserialize(reader);
 				EventBus.PublishStatsPacketReceived(newPacket);
+			break;
+
+			case PacketType.EntityRemove:
+				{
+					
+					ushort EntityId = reader.GetUShort();
+					EventBus.PublishDisconnectedPacketReceived(EntityId);
+
+				}
 			break;
 		}
 	}

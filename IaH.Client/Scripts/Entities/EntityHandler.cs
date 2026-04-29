@@ -14,7 +14,19 @@ public partial class EntityHandler : Node3D
 	{
 		EventBus.OnPlayerJoined += SpawnPlayer;
 		EventBus.OnPositionsUpdated += UpdatePosition;
+		EventBus.OnDisconnectPacketReceived += DeleteEntity;
 
+	}
+
+	private void DeleteEntity(ushort id)
+	{
+		if (_entities.TryGetValue(id, out Entity _disconnectedEntity))
+		{
+			
+			_disconnectedEntity.QueueFree();
+			_entities.Remove(id);
+
+		}
 	}
 
 	private void UpdatePosition(ushort id, Vector3 pos)

@@ -55,6 +55,10 @@ namespace IaH.Server.Core
 
                 if (_peerToEntity.TryGetValue(peer.Id, out ushort entityId))
                 {
+                    _writer.Reset();
+                    _writer.Put((byte)PacketType.EntityRemove);
+                    _writer.Put((ushort)entityId);
+                    _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
 
                     _entityManager.RemoveEntity(entityId);
                     _peerToEntity.Remove(peer.Id);
