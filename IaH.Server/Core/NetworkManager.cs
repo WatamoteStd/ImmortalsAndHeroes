@@ -5,8 +5,10 @@ using System.Text;
 using System.Numerics;
 using LiteNetLib;
 using LiteNetLib.Utils;
+
 using IaH.Shared.Networking;
 using IaH.Server.Entities;
+using IaH.Shared.Networking.Events;
 
 namespace IaH.Server.Core
 {
@@ -27,6 +29,7 @@ namespace IaH.Server.Core
             _netManager = new NetManager(_listener);
             _writer = new NetDataWriter();
 
+
             _entityManager = new EntityManager();
 
             _listener.ConnectionRequestEvent += (request) =>
@@ -39,15 +42,16 @@ namespace IaH.Server.Core
             {
                 _writer.Reset();
                 _writer.Put((byte)PacketType.Welcome);
+                _writer.Put((ushort)peer.Id);
                 peer.Send(_writer, DeliveryMethod.ReliableOrdered);
 
-                Console.WriteLine($"TOTAL CLIENTS CONNECTED:{_netManager.ConnectedPeersCount}");
-                _entityId++;
+                Console.WriteLine($"[SERVER] PeerConnected! PeerId:{peer.Id} | Entity Id: NotOrdered Yet.");
 
 
             };
             _listener.PeerDisconnectedEvent += (peer, disconnectedInfo) =>
             {
+                Console.WriteLine($"[SERVER] PeerId:{peer.Id} disconnected from the server.");
 
                 if (_peerToEntity.TryGetValue(peer.Id, out ushort entityId))
                 {
@@ -61,6 +65,9 @@ namespace IaH.Server.Core
             };
 
             _listener.NetworkReceiveEvent += OnPacketReceived;
+
+            // EVENTS
+            EventBus.OnHpChanged += OnHealthChanged;
 
         }
 
@@ -102,7 +109,12 @@ namespace IaH.Server.Core
 
                 case PacketType.HeroSelected:
                     {
-                        CharacterType _hero = (CharacterType)reader.GetByte();
+                        if (_peerToEntity.ContainsKey(peer.Id))
+                        {
+                            Console.WriteLine($"[SERVER] PeerId:{peer.Id} already have entity selected!");
+                            return;
+                        }
+                        CharacterType _selectedHero = (CharacterType)reader.GetByte();
                         short posX, posZ;
                         if (_entityId % 2 == 0)
                         {
@@ -115,10 +127,11 @@ namespace IaH.Server.Core
                             posZ = 0;
                         }
 
-                        _entityManager.AddEntity(_entityId, posX, 200, posZ, _hero);
+                        _entityManager.AddEntity(_entityId, posX, 200, posZ, _selectedHero);
                         _peerToEntity.Add(peer.Id, _entityId);
+                        Console.WriteLine($"[SERVER] CreatedEntity:{_selectedHero} | EntityID: {_entityId} | PeerID: {peer.Id}");
                         _entityId++;
-                        Console.WriteLine($"[SERVER] Spawning Hero: {_hero} for EntityID: {_entityId} at X: {posX}");
+                       
 
                         break;
                     }
@@ -126,19 +139,18 @@ namespace IaH.Server.Core
                     {
                         if (!_peerToEntity.TryGetValue(peer.Id, out ushort targetId)) break;
 
-                        ushort _targetId = _peerToEntity[peer.Id];
-                        BaseEntity _entity = _entityManager.GetEntity(_targetId);
+                        BaseEntity _entity = _entityManager.GetEntity(targetId);
 
-                        // SEND ALL !INFO! ABOUT NEW PLAYER
+                        // SEND ALL !INFO! ABOUT NEW ENTITY
                         _writer.Reset();
                         _writer.Put((byte)PacketType.PlayerJoined);
                         _writer.Put((ushort)_entity.Id);
-                        _writer.Put((byte)_entity.SelectedHero); // CharacterType
+                        ;_writer.Put((byte)_entity.SelectedHero); // CharacterType
                         _writer.Put((short)_entity.X);
                         _writer.Put((short)_entity.Y);
                         _writer.Put((short)_entity.Z);
                         _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);                 
-                        Console.WriteLine($"Данные о ServerID:{peer.Id}, GameID:{_entity.Id} были отправлены всем игрокам!");
+                        Console.WriteLine($"[SERVER] ConnectedToGame: PeerId:{peer.Id} | EntityId:{_entity.Id}");
 
                         // SEND ALL PLAYER STATS TO CLIENT 
                         if (_entity is Hero hero)
@@ -155,7 +167,7 @@ namespace IaH.Server.Core
                         // SEND NEW PLAYER INFORMATION ABOUT OLD PLAYERS
                         foreach (BaseEntity _curEntity in _entityManager.GetActiveEntities())
                         {
-                            if (_curEntity.Id == _targetId) continue;
+                            if (_curEntity.Id == targetId) continue;
 
                             _writer.Reset();
                             _writer.Put((byte)PacketType.PlayerJoined);
@@ -180,30 +192,73 @@ namespace IaH.Server.Core
                         break;
 
                     }
-                case PacketType.AtatckRequest:
+                case PacketType.AttackRequest:
                     {
-                        ushort _entity = reader.GetUShort();
-                        ushort _targetEntity = reader.GetUShort();
-                        BaseEntity _curEntity = _entityManager.GetEntity(_entity);
-                        BaseEntity _curTarEntity = _entityManager.GetEntity(_targetEntity);
+                        Console.WriteLine("[SERVER] AttackRequestPacket received!");
 
-                        Vector3 _targetPos = new Vector3(_curTarEntity.X / 100, _curTarEntity.Y / 100, _curTarEntity.Z / 100);
+                        ushort _cId = reader.GetUShort();
+                        ushort _tId = reader.GetUShort();
 
-                        if (_curEntity is Hero curHero)
+                        // ВЫВЕДИ ВСЕ АКТИВНЫЕ ID
+                        var allEntities = _entityManager.GetActiveEntities();
+                        Console.WriteLine($"[DEBUG] Entities in world: {string.Join(", ", allEntities.Select(e => e.Id))}");
+
+                        // 1. Читаем данные из пакета (клиент прислал ID того, кого хочет ударить)
+                        // ВАЖНО: Если клиент шлет и свой ID, и чужой, сначала вычитай их оба
+                        ushort _clientSaidMyId = reader.GetUShort(); // Мы это выкинем, но прочитать надо, чтобы сдвинуть указатель
+                        ushort _targetEntityId = reader.GetUShort();
+
+                        // 2. Достаем ИСТИННЫЙ ID атакующего по его соединению (peer.Id)
+                        if (_peerToEntity.TryGetValue(peer.Id, out ushort myActualHeroId))
                         {
-                            if (Vector3.Distance(curHero.GlobalPos, _targetPos) <= curHero.AttackRange )
-                            {
-                                curHero.CurrentState = Hero.StateMachine.Attack;
+                            BaseEntity attacker = _entityManager.GetEntity(myActualHeroId);
+                            BaseEntity target = _entityManager.GetEntity(_targetEntityId);
 
+                            // 3. ПРОВЕРКА НА NULL (Чтобы сервер не падал!)
+                            if (attacker == null || target == null)
+                            {
+                                Console.WriteLine($"[SERVER] Attack failed: One of entities is null! Attacker: {attacker != null}, Target: {target != null}");
+                                break;
                             }
 
-                        }
+                            // 4. Логика дистанции
+                            Vector3 targetPos = new Vector3(target.X / 100.0f, target.Y / 100.0f, target.Z / 100.0f);
 
+                            if (attacker is Hero hero)
+                            {
+                                if (Vector3.Distance(hero.GlobalPos, targetPos) <= hero.AttackRange)
+                                {
+                                    hero._currentTarget = target; // НЕ ЗАБУДЬ ПРИСВОИТЬ ЦЕЛЬ
+                                    hero.CurrentState = Hero.StateMachine.Attack;
+                                    Console.WriteLine($"[SERVER] Hero {myActualHeroId} started attacking {target.Id}");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("[SERVER] Too far to attack!");
+                                    // Тут можно переключить в стейт Chase (преследование)
+                                }
+                            }
+                        }
                     }
-                break;
+                    break;
 
             }
 
+        }
+        private void OnHealthChanged(EntityHpChangedEvent data)
+        {
+            Console.WriteLine("EventBus | Event 'HealthChange' received succesfully!");
+            _writer.Reset();
+            _writer.Put((byte)PacketType.EntityStats);
+            EntityStatsPacket packet = new EntityStatsPacket
+            {
+                EntityId = data.EntityId,
+                UpdateMask = 1,
+                Vitals = new EntityVitalsStats { CurrentHp = (short)data.NewHp, CurrentMana = (short)data.NewMp }
+            };
+            packet.Serialize(_writer);
+            _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
+            
         }
 
         public void BroadcastPosition(IEnumerable<BaseEntity> entities)

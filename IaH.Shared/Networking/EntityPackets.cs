@@ -19,7 +19,7 @@ namespace IaH.Shared.Networking
         EntityPosition,
         BatchEntityPositions,
         EntityStats,
-        AtatckRequest
+        AttackRequest
     }
 
     public enum DamageType
@@ -187,7 +187,7 @@ namespace IaH.Shared.Networking
 
     public struct WelcomePacket
     {
-        public ushort MyEntityId;
+        public ushort PeerId;
     }
 
     public struct EntityData

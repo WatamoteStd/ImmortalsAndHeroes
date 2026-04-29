@@ -4,6 +4,7 @@ using System.Text;
 using IaH.Shared.Networking;
 using IaH.Server.Entities;
 using IaH.Shared.Data;
+using System.Threading.Channels;
 
 namespace IaH.Server.Core
 {
@@ -16,7 +17,10 @@ namespace IaH.Server.Core
 
         private int _count = 0;
 
-
+        public EntityManager ()
+        {
+            Array.Fill(_sparse, -1);
+        }
 
         public BaseEntity GetEntity(int entityId)
         {
@@ -43,12 +47,12 @@ namespace IaH.Server.Core
             }
         }
 
-        public void AddEntity(ushort id, short x, short y, short z, CharacterType hero)
+        public void AddEntity(ushort id, short x, short y, short z, CharacterType entity)
         {
 
             if (_count >= 1000) return; // обработать через default что -1 означает отсутсвие места
 
-            var config = HeroDataManager.GetConfig(hero);
+            var config = HeroDataManager.GetConfig(entity);
 
             if (config == null)
             {
@@ -56,7 +60,7 @@ namespace IaH.Server.Core
                 return;
             }
 
-            _dense[_count] = new Hero(id, x, y, z, hero, config);       
+            _dense[_count] = new Hero(id, x, y, z, entity, config);       
             _sparse[id] = _count;
             _count++;
 
@@ -67,13 +71,18 @@ namespace IaH.Server.Core
         public void RemoveEntity(ushort idToRemove)
         {
 
-
+            
             int indexInDense = _sparse[idToRemove];
+            if (indexInDense == -1)
+            {
+                Console.WriteLine("[EntityManager] RemoveEntity: index don't exist's.");
+                return;
+            }
 
             ushort lastEntityId = _dense[_count - 1].Id;
             _dense[indexInDense] = _dense[_count - 1];
-
             _sparse[lastEntityId] = indexInDense;
+            _sparse[idToRemove] = -1;
             _count--;
 
         }

@@ -53,14 +53,13 @@ public partial class NetworkManager : Node
 		
 		
 		PacketType rawPacket = (PacketType)reader.GetByte();
-		GD.Print($"Пришел пакет: {rawPacket}, Размер: {reader.AvailableBytes + 1} байт");
 
 		switch (rawPacket)
 		{
 			
 			case PacketType.Welcome:
-
-				GD.Print("Подключение к серверу успешно!");
+				var clientPeerId = reader.GetUShort();
+				GD.Print($"[NetworkManager] Sussecfully connected to the server! PeerId:{clientPeerId}");
 
 			break;
 
@@ -151,6 +150,20 @@ public partial class NetworkManager : Node
 		_netManager.PollEvents();
 
 	}
+
+	// DELETE AFTER TEST
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("attackRequestTest"))
+		{
+			_writer.Reset();
+			_writer.Put((byte)PacketType.AttackRequest);
+			_writer.Put((ushort)2);
+			_writer.Put((ushort)2);
+			_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
+		}
+	}
+
 
 
  

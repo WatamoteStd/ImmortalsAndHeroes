@@ -9,11 +9,13 @@ namespace IaH.Shared.Networking.Events
     {
         public ushort EntityId;
         public float NewHp;
+        public float NewMp;
 
-        public EntityHpChangedEvent(ushort id, float hp)
+        public EntityHpChangedEvent(ushort id, float hp, float mp)
         {
             EntityId = id;
             NewHp = hp;
+            NewMp = mp;
         }
 
     }

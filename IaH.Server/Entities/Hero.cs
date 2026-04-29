@@ -4,6 +4,7 @@ using System.Numerics;
 using System.Collections.Generic;
 using System.Text;
 using IaH.Shared.Data;
+using IaH.Shared.Networking.Events;
 
 namespace IaH.Server.Entities
 {
@@ -178,6 +179,7 @@ namespace IaH.Server.Entities
 
                 case StateMachine.Attack:
                     {
+                        Console.WriteLine("PLAYER: STATE [ATTACK]");
                         if (_currentTarget == null || _currentTarget.Healths <= 0)
                         {
                             CurrentState = StateMachine.Idle;
@@ -187,24 +189,23 @@ namespace IaH.Server.Entities
                         Vector3 TargetPos = new Vector3(_currentTarget.X / 100.0f, _currentTarget.Y/ 100.0f, _currentTarget.Z / 100.0f);
                         var DistanceToTarget = Vector3.Distance(GlobalPos, TargetPos);
 
-                        if (DistanceToTarget > AttackRange)
+                       /* if (DistanceToTarget > AttackRange)
                         {
                             CurrentState = StateMachine.Chase;
                             _preAttack = 0.2f;
                             return;
-                        }
+                        }*/
 
                         if (_reloadTime > 0)
                         {
-
                         }
                         else if (_reloadTime <= 0)
                         {
                             _preAttack -= deltaTime;
                             if (_preAttack <= 0)
                             {
+                                Console.WriteLine($"[SERVER] BOOM! Damage dealt to {_currentTarget.Id}");
                                 _currentTarget.TakeDamage(DamageType.Physical, _damage);
-                               
                                 _preAttack = 0.2f;
                                 _reloadTime = 2.0f;
                             }

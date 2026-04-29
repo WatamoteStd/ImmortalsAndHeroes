@@ -65,6 +65,7 @@ public partial class EntityHandler : Node3D
 			newEntity.GlobalPosition = new Vector3(posX, posY, posZ);
 			_entities.Add(newEntity.EntityID, newEntity);
 			GD.Print($"Entity {newEntity.EntityID} added to dictionary");
+			
 		}
 
 	}

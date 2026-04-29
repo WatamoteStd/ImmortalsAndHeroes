@@ -18,10 +18,8 @@ public partial class CameraControl : Camera3D
 			if (mouseButton.ButtonIndex == MouseButton.Right && mouseButton.Pressed)
 			{
 				var cords = GetMouseClickCoords();
-				GD.Print($"CameraContorl| MouseRMB: {cords.Value}");
 				if (cords.HasValue) {
-				EventBus.PublishPlayerRMB(cords.Value);
-				GD.Print("CameraControl| Cords succesfully send to NetworkMabager!");
+				EventBus.PublishPlayerRMB(cords.Value);	
 				}
 
 			}
