@@ -1,0 +1,59 @@
+[gd_resource type="Theme" format=3 uid="uid://d288s54ykbsws"]
+
+[ext_resource type="FontFile" uid="uid://0xgb637yqhh0" path="res://Assets/Fonts/Jost Medieval.ttf" id="1_olnjf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_olnjf"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.31586385, 0.032576364, 0.046213113, 1)
+skew = Vector2(0.2, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.27143836, 0.2714384, 0.27143836, 1)
+border_blend = true
+shadow_size = 5
+shadow_offset = Vector2(-3, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ueobe"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.28299925, 0.025790446, 0.03675631, 1)
+skew = Vector2(0.2, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.27143836, 0.2714384, 0.27143836, 1)
+border_blend = true
+shadow_size = 5
+shadow_offset = Vector2(-3, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yn1tv"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.17983961, 0.011928286, 0.01517441, 1)
+skew = Vector2(0.2, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3403393, 0.34033936, 0.34033924, 1)
+border_blend = true
+corner_detail = 10
+shadow_size = 10
+
+[resource]
+Button/colors/font_hover_color = Color(0.89482915, 0.89491594, 0.8473619, 1)
+Button/colors/font_pressed_color = Color(0.7093541, 0.7093536, 0.709354, 1)
+Button/fonts/font = ExtResource("1_olnjf")
+Button/styles/hover = SubResource("StyleBoxFlat_olnjf")
+Button/styles/normal = SubResource("StyleBoxFlat_ueobe")
+Button/styles/pressed = SubResource("StyleBoxFlat_yn1tv")

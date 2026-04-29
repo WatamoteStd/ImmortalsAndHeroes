@@ -164,8 +164,8 @@ public partial class NetworkManager : Node
 		{
 			_writer.Reset();
 			_writer.Put((byte)PacketType.AttackRequest);
-			_writer.Put((ushort)2);
-			_writer.Put((ushort)2);
+			_writer.Put((ushort)0);
+			_writer.Put((ushort)0);
 			_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
 		}
 	}

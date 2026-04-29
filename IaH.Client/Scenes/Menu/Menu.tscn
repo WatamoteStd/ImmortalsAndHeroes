@@ -1,56 +1,373 @@
 [gd_scene format=3 uid="uid://cq6x40idpiec0"]
 
-[ext_resource type="Script" uid="uid://cjesprgemiuem" path="res://Scripts/Menu/Buttons/WarrirorSelect.cs" id="1_3kh17"]
-[ext_resource type="Script" uid="uid://dj50g1gy88are" path="res://Scripts/Menu/Buttons/ArcherSelect.cs" id="2_kqkty"]
+[ext_resource type="Theme" uid="uid://d288s54ykbsws" path="res://Assets/Themes/IaH_Theme.tres" id="1_1kgdg"]
+[ext_resource type="FontFile" uid="uid://o4l4jdsxb6dc" path="res://Assets/Fonts/Jost Medieval Bold.ttf" id="2_3kh17"]
+[ext_resource type="Script" uid="uid://de3ovfslmyj0m" path="res://Scripts/Menu/Menu.cs" id="2_47xui"]
+[ext_resource type="FontFile" uid="uid://0xgb637yqhh0" path="res://Assets/Fonts/Jost Medieval.ttf" id="3_kqkty"]
+[ext_resource type="Texture2D" uid="uid://bq7iqnt8vjtbd" path="res://Assets/Sprites/Menu/Profile/ChangeNicknameFeather.png" id="5_kulhe"]
+[ext_resource type="Texture2D" uid="uid://dt818phw7n561" path="res://Assets/Sprites/Menu/Profile/ChangeNicknameFeatherHover.png" id="6_l7xyq"]
+[ext_resource type="Script" uid="uid://6raxv5n6hf11" path="res://Scripts/Menu/Buttons/ConnectToGame.cs" id="7_h7084"]
+[ext_resource type="Script" uid="uid://dckd063gx0a77" path="res://Scripts/Menu/HeroChoicePanel.cs" id="7_uw0ty"]
 
-[node name="Control" type="Control" unique_id=1248173988]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3kh17"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 5.0
+content_margin_bottom = 10.0
+bg_color = Color(0.047058824, 0.06666667, 0.10980392, 0.4509804)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.64740616, 0.53888905, 0.2577627, 1)
+border_blend = true
+corner_detail = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kulhe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kulhe"]
+bg_color = Color(0.8666667, 0.8666667, 0.75686276, 0.20392157)
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.91764706, 0.90588236, 0.7647059, 0.2627451)
+border_blend = true
+corner_detail = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7xyq"]
+content_margin_left = 5.0
+content_margin_top = 7.0
+content_margin_right = 5.0
+content_margin_bottom = 7.0
+bg_color = Color(0.08235294, 0.105882354, 0.16078432, 0.48235294)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.22800198, 0.28929216, 0.41901112, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7084"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.11120137, 0.16995126, 0.44299302, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_detail = 10
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uw0ty"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.086498566, 0.13655114, 0.36984178, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_detail = 10
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ac4b6"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.15070906, 0.21943691, 0.5543529, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_detail = 10
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x2cqt"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.009134182, 0.18762565, 0.2336236, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_detail = 10
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5buhm"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0055898274, 0.15590358, 0.19670296, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_detail = 10
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_et8ab"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.010410224, 0.21915227, 0.2721988, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_detail = 10
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7fq4t"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.018538028, 0.21992165, 0.10893483, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.27143836, 0.2714384, 0.27143836, 1)
+border_blend = true
+shadow_size = 5
+shadow_offset = Vector2(-3, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c61og"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.013463371, 0.180412, 0.088499315, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3403393, 0.34033936, 0.34033924, 1)
+border_blend = true
+corner_detail = 10
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kqh14"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.045095146, 0.3381223, 0.18072712, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.27143836, 0.2714384, 0.27143836, 1)
+border_blend = true
+shadow_size = 5
+shadow_offset = Vector2(-3, 2)
+
+[node name="Menu" type="Control" unique_id=1248173988 node_paths=PackedStringArray("Ladder", "Heroes", "Glossarium", "BecomeTester", "NicknameText", "NicknameEdit", "ChangeNickname")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_1kgdg")
+script = ExtResource("2_47xui")
+Ladder = NodePath("TopPanel/TopPanelVertical/Ladder")
+Heroes = NodePath("TopPanel/TopPanelVertical/HeroList")
+Glossarium = NodePath("TopPanel/TopPanelVertical/Glossarium")
+BecomeTester = NodePath("TopPanel/TopPanelVertical/BecomeTester")
+NicknameText = NodePath("Profile/HBoxContainer/Nickname")
+NicknameEdit = NodePath("Profile/HBoxContainer/NicknameEdit")
+ChangeNickname = NodePath("Profile/HBoxContainer/ChangeNickname")
 metadata/_edit_use_anchors_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2006427996]
+[node name="Background" type="ColorRect" parent="." unique_id=215981343]
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -46.0
-offset_bottom = 46.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-alignment = 1
+color = Color(0.012144739, 0.020162664, 0.042222798, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=2058636901]
+[node name="TopPanel" type="VBoxContainer" parent="." unique_id=2056430702]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_constants/separation = 5
+
+[node name="TopPanelVertical" type="HBoxContainer" parent="TopPanel" unique_id=1618362513]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 8
+
+[node name="ImmortalsAndHeroes" type="Label" parent="TopPanel/TopPanelVertical" unique_id=413050577]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.948659, 0.9486591, 0.948659, 1)
+theme_override_fonts/font = ExtResource("2_3kh17")
+theme_override_font_sizes/font_size = 37
+text = "Immortals And Heroes    "
+
+[node name="Ladder" type="Button" parent="TopPanel/TopPanelVertical" unique_id=279626961]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "LADDER"
+
+[node name="HeroList" type="Button" parent="TopPanel/TopPanelVertical" unique_id=1096630158]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "HEROES"
+
+[node name="Glossarium" type="Button" parent="TopPanel/TopPanelVertical" unique_id=1109627618]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "GLOSSARIUM"
+
+[node name="BecomeTester" type="Button" parent="TopPanel/TopPanelVertical" unique_id=1592038229]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "BECOME A TESTER!"
+
+[node name="Profile" type="PanelContainer" parent="." unique_id=1127950982]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -401.0
+offset_right = 271.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3kh17")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Profile" unique_id=857743471]
+layout_mode = 2
+mouse_filter = 0
+theme_override_constants/separation = 15
+
+[node name="Nickname" type="Label" parent="Profile/HBoxContainer" unique_id=708021774]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("3_kqkty")
+theme_override_font_sizes/font_size = 25
+text = "UnnamedPlayer"
+
+[node name="NicknameEdit" type="LineEdit" parent="Profile/HBoxContainer" unique_id=1877888218]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("3_kqkty")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kulhe")
+theme_override_styles/focus = SubResource("StyleBoxFlat_kulhe")
+placeholder_text = "Enter..."
+max_length = 15
+emoji_menu_enabled = false
+
+[node name="ChangeNickname" type="TextureButton" parent="Profile/HBoxContainer" unique_id=7904364]
+self_modulate = Color(0.91303873, 0.84940946, 0.7283672, 1)
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+texture_normal = ExtResource("5_kulhe")
+texture_hover = ExtResource("6_l7xyq")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HeroChoicePanel" type="PanelContainer" parent="." unique_id=1905783781 node_paths=PackedStringArray("ConnectButton")]
+visible = false
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -500.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_l7xyq")
+script = ExtResource("7_uw0ty")
+ConnectButton = NodePath("../ConnectToGame")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HeroChoicePanel" unique_id=1354959264]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ChoiceHerotext" type="Label" parent="HeroChoicePanel/VBoxContainer" unique_id=1808293091]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/separation = 30
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.83889705, 0.83889705, 0.838897, 1)
+theme_override_fonts/font = ExtResource("3_kqkty")
+theme_override_font_sizes/font_size = 30
+text = "CHOICE YOUR HERO !"
 
-[node name="FrozenSelect" type="Button" parent="HBoxContainer/VBoxContainer" unique_id=1691202212]
+[node name="HeroList" type="VBoxContainer" parent="HeroChoicePanel/VBoxContainer" unique_id=1940699634]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/separation = 7
+
+[node name="FrozenChoice" type="Button" parent="HeroChoicePanel/VBoxContainer/HeroList" unique_id=1480375605]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_h7084")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uw0ty")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ac4b6")
 text = "Frozen (carry)"
-script = ExtResource("1_3kh17")
 
-[node name="VoidlessStarSelect" type="Button" parent="HBoxContainer/VBoxContainer" unique_id=1605633894]
+[node name="VoidlessStarChoice" type="Button" parent="HeroChoicePanel/VBoxContainer/HeroList" unique_id=1993130169]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_x2cqt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5buhm")
+theme_override_styles/hover = SubResource("StyleBoxFlat_et8ab")
 text = "VoidlessStar (mage)"
-script = ExtResource("2_kqkty")
 
-[node name="Label" type="Label" parent="." unique_id=608315204]
+[node name="ConnectToGame" type="Button" parent="." unique_id=1745896598 node_paths=PackedStringArray("Container")]
+custom_minimum_size = Vector2(250, 40)
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -0.5
-offset_right = 0.5
-offset_bottom = 23.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 50
-text = "SELECT HERO"
-horizontal_alignment = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -302.0
+offset_top = -98.0
+offset_right = -52.0
+offset_bottom = -44.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_7fq4t")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_c61og")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kqh14")
+text = "Connect"
+script = ExtResource("7_h7084")
+Container = NodePath("../HeroChoicePanel")
