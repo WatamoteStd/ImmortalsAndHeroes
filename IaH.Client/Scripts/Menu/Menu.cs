@@ -11,6 +11,8 @@ public partial class Menu : Control
 	[Export] public Label NicknameText;
 	[Export] public LineEdit NicknameEdit;
 	[Export] public TextureButton ChangeNickname;
+
+
 	public override void _Ready()
 	{
 		ChangeNickname.Pressed += EditNickname;

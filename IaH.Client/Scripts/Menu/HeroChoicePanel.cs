@@ -32,6 +32,7 @@ public partial class HeroChoicePanel : PanelContainer
 
 		tween.Finished += () =>
 		{
+			Visible = false;
 			ConnectButton.Visible = true;
 		};
 

@@ -8,7 +8,6 @@ public partial class ConnectToGame : Button
 	{
 		
 		Container.Modulate = new Color(1,1,1,0);
-		Container.Visible = true;
 		Container.MouseFilter = Control.MouseFilterEnum.Stop;
 
 		Pressed += OpenConnectPanel;
@@ -17,6 +16,7 @@ public partial class ConnectToGame : Button
 
 	private void OpenConnectPanel()
 	{
+		Container.Visible = true;
 		MouseFilter = Control.MouseFilterEnum.Ignore;
 		Container.MouseFilter = Control.MouseFilterEnum.Stop;
 
