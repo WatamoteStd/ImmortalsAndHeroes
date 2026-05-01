@@ -17,7 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://bw8epoffus70v" path="res://Assets/Menu/Audio/MenuBackground.ogg" id="11_et8ab"]
 [ext_resource type="Texture2D" uid="uid://0t3fwjr2tpmd" path="res://Assets/Heroes/Frozen/SkillsIcons/IceArrow.png" id="15_1upnj"]
 [ext_resource type="FontFile" uid="uid://bxsjvyrryuj8l" path="res://Assets/Fonts/Jost Medieval Italic.ttf" id="16_ofv6h"]
-[ext_resource type="Script" uid="uid://wlk3s42irqds" path="res://Scripts/Menu/Buttons/Quit.cs" id="19_q10mx"]
+[ext_resource type="Script" uid="uid://dbnayao7yw6g" path="res://Scripts/Menu/Settings/SettingsWindow.cs" id="18_o0fcc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3kh17"]
 content_margin_left = 20.0
@@ -296,6 +296,48 @@ border_blend = true
 shadow_color = Color(0, 0, 0, 0.49019608)
 shadow_size = 1
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lkkwq"]
+content_margin_left = 70.0
+content_margin_top = 7.0
+content_margin_right = 70.0
+content_margin_bottom = 7.0
+bg_color = Color(0.38742673, 0.049531087, 0.09831949, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.27143836, 0.2714384, 0.27143836, 1)
+border_blend = true
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ud00n"]
+content_margin_left = 70.0
+content_margin_top = 7.0
+content_margin_right = 70.0
+content_margin_bottom = 7.0
+bg_color = Color(0.35417178, 0.042984128, 0.08844004, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.27143836, 0.2714384, 0.27143836, 1)
+border_blend = true
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r7rut"]
+content_margin_left = 70.0
+content_margin_top = 7.0
+content_margin_right = 70.0
+content_margin_bottom = 7.0
+bg_color = Color(0.46092618, 0.0684372, 0.12302033, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.27143836, 0.2714384, 0.27143836, 1)
+border_blend = true
+shadow_size = 2
+
 [node name="Menu" type="Control" unique_id=1248173988 node_paths=PackedStringArray("Ladder", "Heroes", "Glossarium", "BecomeTester", "NicknameText", "NicknameEdit", "ChangeNickname")]
 layout_mode = 3
 anchors_preset = 15
@@ -314,14 +356,16 @@ NicknameEdit = NodePath("Profile/HBoxContainer/NicknameEdit")
 ChangeNickname = NodePath("Profile/HBoxContainer/ChangeNickname")
 metadata/_edit_use_anchors_ = true
 
-[node name="MenuManager" type="Control" parent="." unique_id=1854668945 node_paths=PackedStringArray("_proflePanel", "_heroListPanel", "_heroDetailedPanel", "_ladderButton", "_heroesButton")]
+[node name="MenuManager" type="Control" parent="." unique_id=1854668945 node_paths=PackedStringArray("_heroListPanel", "_heroDetailedPanel", "_settingsPanel", "_ladderButton", "_heroesButton", "_settingsButton", "_settingsLeaveButton") groups=["Buttons"]]
 anchors_preset = 0
 script = ExtResource("3_g5cqd")
-_proflePanel = NodePath("..")
 _heroListPanel = NodePath("../HeroesList")
 _heroDetailedPanel = NodePath("../HeroesList/HeroesPanel/DetailedHeroInfoPanel")
+_settingsPanel = NodePath("../SettingsWindow")
 _ladderButton = NodePath("../TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical/Ladder")
 _heroesButton = NodePath("../TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical/HeroList")
+_settingsButton = NodePath("../TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical/Settings")
+_settingsLeaveButton = NodePath("../SettingsWindow/SettingsMargin/LeaveSettings")
 
 [node name="Background" type="ColorRect" parent="." unique_id=215981343]
 layout_mode = 1
@@ -691,10 +735,13 @@ color = Color(0.079149, 0.10523509, 0.17232108, 1)
 [node name="TopPanel" type="VBoxContainer" parent="TopPanelContainer" unique_id=2056430702]
 custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TopPanelContainer/TopPanel" unique_id=1549973171]
 layout_mode = 2
-theme_override_constants/separation = -4
+theme_override_constants/separation = -26
+alignment = 1
 
 [node name="ImmortalsAndHeroes" type="Label" parent="TopPanelContainer/TopPanel/HBoxContainer" unique_id=413050577]
 layout_mode = 2
@@ -705,34 +752,39 @@ text = "Immortals And Heroes    "
 
 [node name="TopPanelVertical" type="HBoxContainer" parent="TopPanelContainer/TopPanel/HBoxContainer" unique_id=1618362513]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_constants/separation = 8
+theme_override_constants/separation = 5
 
 [node name="Ladder" type="Button" parent="TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical" unique_id=279626961 groups=["Buttons"]]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
 text = "LADDER"
 
 [node name="HeroList" type="Button" parent="TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical" unique_id=1096630158 groups=["Buttons"]]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
 text = "HEROES"
 
 [node name="Glossarium" type="Button" parent="TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical" unique_id=1109627618 groups=["Buttons"]]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
 text = "GLOSSARIUM"
 
 [node name="BecomeTester" type="Button" parent="TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical" unique_id=1592038229 groups=["Buttons"]]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
 text = "BECOME A TESTER!"
 
-[node name="Quit" type="Button" parent="TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical" unique_id=992804306 groups=["Buttons"]]
+[node name="Settings" type="Button" parent="TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical" unique_id=1819776904 groups=["Buttons"]]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
-text = "QUIT"
-script = ExtResource("19_q10mx")
+text = "SETTINGS"
 
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="." unique_id=1719036035]
 stream = ExtResource("11_et8ab")
@@ -748,23 +800,22 @@ script = ExtResource("9_ac4b6")
 HoverSound = SubResource("AudioStreamMP3_x2cqt")
 ClickSound = ExtResource("11_5buhm")
 
-[node name="SettingsWindow" type="MarginContainer" parent="." unique_id=1113656619]
+[node name="SettingsWindow" type="MarginContainer" parent="." unique_id=1113656619 node_paths=PackedStringArray("_musicSlider", "_soundSlider")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("18_o0fcc")
+_musicSlider = NodePath("SettingsMargin/VBoxContainer/Columbs/Sounds/MusicVolume/MusicSlider")
+_soundSlider = NodePath("SettingsMargin/VBoxContainer/Columbs/Sounds/SoundVolume/SoundSlider")
 
 [node name="BackgroundSettings" type="ColorRect" parent="SettingsWindow" unique_id=1705048380]
 layout_mode = 2
 color = Color(0.10944759, 0.1355865, 0.19854105, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsWindow" unique_id=1258272974]
-layout_mode = 2
-theme_override_constants/separation = 60
-
-[node name="SettingsLabel" type="Label" parent="SettingsWindow/VBoxContainer" unique_id=1889730264]
+[node name="SettingsLabel" type="Label" parent="SettingsWindow" unique_id=1889730264]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
@@ -774,49 +825,60 @@ theme_override_font_sizes/font_size = 50
 text = "SETTINGS"
 horizontal_alignment = 1
 
-[node name="Columbs" type="HBoxContainer" parent="SettingsWindow/VBoxContainer" unique_id=582000731]
+[node name="SettingsMargin" type="MarginContainer" parent="SettingsWindow" unique_id=1234678703]
+layout_mode = 2
+theme_override_constants/margin_left = 70
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 70
+theme_override_constants/margin_bottom = 70
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsWindow/SettingsMargin" unique_id=1258272974]
+layout_mode = 2
+theme_override_constants/separation = 60
+
+[node name="Columbs" type="HBoxContainer" parent="SettingsWindow/SettingsMargin/VBoxContainer" unique_id=582000731]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 80
 
-[node name="Sounds" type="VBoxContainer" parent="SettingsWindow/VBoxContainer/Columbs" unique_id=116324975]
+[node name="Sounds" type="VBoxContainer" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs" unique_id=116324975]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 25
 
-[node name="SoundsLabel" type="Label" parent="SettingsWindow/VBoxContainer/Columbs/Sounds" unique_id=1449777026]
+[node name="SoundsLabel" type="Label" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Sounds" unique_id=1449777026]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_kqkty")
 theme_override_font_sizes/font_size = 28
-text = "SOUNDS"
+text = "SOUNDS & MOUSE"
 horizontal_alignment = 1
 
-[node name="MasterVolume" type="HBoxContainer" parent="SettingsWindow/VBoxContainer/Columbs/Sounds" unique_id=726111864]
+[node name="SoundVolume" type="HBoxContainer" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Sounds" unique_id=726111864]
 layout_mode = 2
 theme_override_constants/separation = 11
 
-[node name="MasterVolumne" type="Label" parent="SettingsWindow/VBoxContainer/Columbs/Sounds/MasterVolume" unique_id=2058352066]
+[node name="MasterVolumne" type="Label" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Sounds/SoundVolume" unique_id=2058352066]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("3_kqkty")
 theme_override_font_sizes/font_size = 18
-text = "Master Volume"
+text = "Sound Volume"
 horizontal_alignment = 1
 
-[node name="HSlider" type="HSlider" parent="SettingsWindow/VBoxContainer/Columbs/Sounds/MasterVolume" unique_id=166752542]
+[node name="SoundSlider" type="HSlider" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Sounds/SoundVolume" unique_id=166752542]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/slider = SubResource("StyleBoxLine_o0fcc")
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_g3vth")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_y54ir")
-value = 100.0
+value = 50.0
 
-[node name="MusicVolume" type="HBoxContainer" parent="SettingsWindow/VBoxContainer/Columbs/Sounds" unique_id=335822025]
+[node name="MusicVolume" type="HBoxContainer" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Sounds" unique_id=335822025]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="Music" type="Label" parent="SettingsWindow/VBoxContainer/Columbs/Sounds/MusicVolume" unique_id=1342157621]
+[node name="Music" type="Label" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Sounds/MusicVolume" unique_id=1342157621]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -825,71 +887,95 @@ theme_override_font_sizes/font_size = 18
 text = "Music Volume"
 horizontal_alignment = 1
 
-[node name="HSlider" type="HSlider" parent="SettingsWindow/VBoxContainer/Columbs/Sounds/MusicVolume" unique_id=579232428]
+[node name="MusicSlider" type="HSlider" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Sounds/MusicVolume" unique_id=579232428]
 layout_mode = 2
 size_flags_horizontal = 3
-value = 100.0
+theme_override_styles/slider = SubResource("StyleBoxLine_o0fcc")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_g3vth")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_y54ir")
+value = 50.0
 
-[node name="Other" type="VBoxContainer" parent="SettingsWindow/VBoxContainer/Columbs" unique_id=242546057]
+[node name="MouseSense" type="HBoxContainer" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Sounds" unique_id=1141182687]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="MouseSenseLabel" type="Label" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Sounds/MouseSense" unique_id=929781483]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("3_kqkty")
+theme_override_font_sizes/font_size = 18
+text = "Mouse Sense"
+horizontal_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Sounds/MouseSense" unique_id=1330869032]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/slider = SubResource("StyleBoxLine_o0fcc")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_g3vth")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_y54ir")
+value = 50.0
+
+[node name="Other" type="VBoxContainer" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs" unique_id=242546057]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 25
 
-[node name="OtherLabel" type="Label" parent="SettingsWindow/VBoxContainer/Columbs/Other" unique_id=1004691326]
+[node name="OtherLabel" type="Label" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Other" unique_id=1004691326]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_kqkty")
 theme_override_font_sizes/font_size = 28
 text = "OTHER"
 horizontal_alignment = 1
 
-[node name="V-Sync" type="HBoxContainer" parent="SettingsWindow/VBoxContainer/Columbs/Other" unique_id=1705961352]
+[node name="V-Sync" type="HBoxContainer" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Other" unique_id=1705961352]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 35
 
-[node name="VSyncLabel" type="Label" parent="SettingsWindow/VBoxContainer/Columbs/Other/V-Sync" unique_id=172152796]
+[node name="VSyncLabel" type="Label" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Other/V-Sync" unique_id=172152796]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_kqkty")
 theme_override_font_sizes/font_size = 20
 text = "V-SYNC"
 
-[node name="CheckBox" type="CheckBox" parent="SettingsWindow/VBoxContainer/Columbs/Other/V-Sync" unique_id=1443031790]
+[node name="CheckBox" type="CheckBox" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Other/V-Sync" unique_id=1443031790 groups=["Buttons"]]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_o0fcc")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_1upnj")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ofv6h")
 theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_g5cqd")
 
-[node name="FPS" type="HBoxContainer" parent="SettingsWindow/VBoxContainer/Columbs/Other" unique_id=1557748965]
+[node name="FPS" type="HBoxContainer" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Other" unique_id=1557748965]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 17
+theme_override_constants/separation = 11
 
-[node name="ShowFPSLabel" type="Label" parent="SettingsWindow/VBoxContainer/Columbs/Other/FPS" unique_id=744742524]
+[node name="ShowFPSLabel" type="Label" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Other/FPS" unique_id=744742524]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_kqkty")
 theme_override_font_sizes/font_size = 20
 text = "SHOW FPS"
 
-[node name="CheckBox" type="CheckBox" parent="SettingsWindow/VBoxContainer/Columbs/Other/FPS" unique_id=981722798]
+[node name="CheckBox" type="CheckBox" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Other/FPS" unique_id=981722798 groups=["Buttons"]]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_o0fcc")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_1upnj")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ofv6h")
 theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_g5cqd")
 
-[node name="Graphics" type="HBoxContainer" parent="SettingsWindow/VBoxContainer/Columbs/Other" unique_id=1327653002]
+[node name="Graphics" type="HBoxContainer" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Other" unique_id=1327653002]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 35
 
-[node name="GraphicsLabel" type="Label" parent="SettingsWindow/VBoxContainer/Columbs/Other/Graphics" unique_id=1740404870]
+[node name="GraphicsLabel" type="Label" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Other/Graphics" unique_id=1740404870]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_kqkty")
 theme_override_font_sizes/font_size = 20
 text = "Graphics"
 
-[node name="OptionButton" type="OptionButton" parent="SettingsWindow/VBoxContainer/Columbs/Other/Graphics" unique_id=1471712831]
+[node name="OptionButton" type="OptionButton" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Other/Graphics" unique_id=1471712831 groups=["Buttons"]]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_q10mx")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_md428")
@@ -904,28 +990,39 @@ popup/item_2/id = 2
 popup/item_3/text = "Ultra"
 popup/item_3/id = 3
 
-[node name="Shadows" type="HBoxContainer" parent="SettingsWindow/VBoxContainer/Columbs/Other" unique_id=862702155]
+[node name="Shadows" type="HBoxContainer" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Other" unique_id=862702155]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 35
 
-[node name="ShadowsLabel" type="Label" parent="SettingsWindow/VBoxContainer/Columbs/Other/Shadows" unique_id=402841780]
+[node name="ShadowsLabel" type="Label" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Other/Shadows" unique_id=402841780]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_kqkty")
 theme_override_font_sizes/font_size = 20
 text = "Shadows"
 
-[node name="OptionButton" type="OptionButton" parent="SettingsWindow/VBoxContainer/Columbs/Other/Shadows" unique_id=1825808133]
+[node name="OptionButton" type="OptionButton" parent="SettingsWindow/SettingsMargin/VBoxContainer/Columbs/Other/Shadows" unique_id=1825808133 groups=["Buttons"]]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_q10mx")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_md428")
 theme_override_styles/hover = SubResource("StyleBoxFlat_0p4q6")
+alignment = 1
 item_count = 4
-popup/item_0/text = "OFF"
+popup/item_0/text = "Off"
 popup/item_0/id = 0
-popup/item_1/text = "LOW"
+popup/item_1/text = "Low"
 popup/item_1/id = 1
-popup/item_2/text = "MEDIUM"
+popup/item_2/text = "Medium"
 popup/item_2/id = 2
-popup/item_3/text = "HIGHT"
+popup/item_3/text = "High"
 popup/item_3/id = 3
+
+[node name="LeaveSettings" type="Button" parent="SettingsWindow/SettingsMargin" unique_id=2057107998 groups=["Buttons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 27
+theme_override_styles/normal = SubResource("StyleBoxFlat_lkkwq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ud00n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r7rut")
+text = "BACK"

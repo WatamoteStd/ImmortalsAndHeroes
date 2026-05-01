@@ -25,6 +25,7 @@ public partial class MenuManager : Node
 	[Export] private Button _ladderButton;
 	[Export] private Button _heroesButton;
 	[Export] private Button _settingsButton;
+	[Export] private Button _settingsLeaveButton;
 
 	private Dictionary<WindowType, Control> _window;
 	private WindowType _currentWindow;
@@ -34,12 +35,20 @@ public partial class MenuManager : Node
 		
 		_window = new Dictionary<WindowType, Control>
 		{
-			{ WindowType.Profile, _proflePanel},
 			{WindowType.HeroList, _heroListPanel},
 			{WindowType.Settings, _settingsPanel}
 		};
 		_heroesButton.Pressed += () => SwitchWindow(WindowType.HeroList);
+		_settingsButton.Pressed += () => SwitchWindow(WindowType.Settings);
+		_settingsLeaveButton.Pressed += () => SwitchToMain();
 
+	}
+	public void SwitchToMain()
+	{
+		foreach (var window in _window.Values)
+		{
+			window.Visible = false;
+		}
 	}
 
 	public void SwitchWindow(WindowType newWindow)
@@ -56,8 +65,4 @@ public partial class MenuManager : Node
 		}
 	}
 
-	
-	public override void _Process(double delta)
-	{
-	}
 }
