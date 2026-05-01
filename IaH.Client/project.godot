@@ -14,9 +14,20 @@ config/name="ImmortalsAndHeroesClient"
 run/main_scene="uid://cq6x40idpiec0"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 
+[audio]
+
+buses/default_bus_layout="uid://dqdocfg5q0tdu"
+
 [autoload]
 
 NetworkManager="*uid://c2m1xggrt3rjw"
+GameData="*uid://dfnle6qxis3cr"
+HeroStatsUi="*uid://bseifhw7w3y2q"
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [dotnet]
 

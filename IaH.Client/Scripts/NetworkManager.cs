@@ -56,6 +56,7 @@ public partial class NetworkManager : Node
 			
 			case PacketType.Welcome:
 				var clientPeerId = reader.GetUShort();
+				GameData.Instance.MyLocalPeer = clientPeerId;
 				GD.Print($"[NetworkManager] Sussecfully connected to the server! PeerId:{clientPeerId}");
 
 			break;
@@ -67,6 +68,15 @@ public partial class NetworkManager : Node
 				short _x = reader.GetShort();
 				short _y = reader.GetShort();
 				short _z = reader.GetShort();
+				if (GameData.Instance.MyLocalId == -1) 
+				{
+					GameData.Instance.MyLocalId = (short)_id;
+					if (HeroStatsUi.Instance != null)
+				{
+					HeroStatsUi.Instance.MainHeroId = _id;
+					HeroStatsUi.Instance.TargetHeroId = _id;
+				}
+				}
 				PlayerJoinedPacket packet = new PlayerJoinedPacket()
 				{
 					

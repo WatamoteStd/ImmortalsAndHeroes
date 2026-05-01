@@ -2,7 +2,7 @@ using Godot;
 using System;
 using IaH.Shared.Networking;
 
-public partial class ArcherSelect : Button
+public partial class VoidlessStarSelect : Button
 {
 	
 	public override void _Ready()

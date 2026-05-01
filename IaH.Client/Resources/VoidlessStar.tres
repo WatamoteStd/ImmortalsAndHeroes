@@ -1,0 +1,20 @@
+[gd_resource type="Resource" format=3 uid="uid://bmyjtjhr23jtl"]
+
+[ext_resource type="Texture2D" uid="uid://dl6guwawqktan" path="res://Assets/Sprites/Menu/Profile/NotAwalible.png" id="1_6puj0"]
+[ext_resource type="Script" uid="uid://ck7btlvlvajn4" path="res://Resources/HeroResource.cs" id="2_s6rq8"]
+
+[resource]
+script = ExtResource("2_s6rq8")
+Name = "VoidlessStar"
+Icon = ExtResource("1_6puj0")
+Description = "Carry, need gold"
+Health = 520
+Damage = 60
+AttackType = "Ranged"
+MoveSpeed = 5
+Armor = 2
+BaseAttackInterval = 1.5
+Skill1Name = "Ice Shot"
+Skill1Description = "Перезарядка:Расход MP (за выстрел): 10 / 16 / 25 / 40Доп урон: 16 / 28 / 42 / 65Тип: АктивируемыйОписание: Каждый выстрел наносит дополнительный физический урон и при попадании накладывает на цель атаки заряди холода.Frozen Charges (заряды холода):Каждый заряд уменьшает скорость передвижения на 4% и скорость атаки на 2%.Когда существо имеет на себе 8 зарядов оно будет заморожено на 1,25 секунд.Замороженные юниты не могут передвигаться, атаковать и применять заклинания, однако могут использовать предметы и навыки для снятия эффектов контроля."
+Skill2Name = "Deft Hands"
+Skill2Description = "Тип: ПассивныйШанс на двойную атаку: 17% / 35% / 55%Шанс на тройную атаку: 0% / 12% / 24%Скорость атаки для доп.шанса: 15Скорость атаки для доп.шанса (тройная атака): 30Описание:С каждый выстрелом Frozen имеет шанс выстрелить два/три раза вместо одного. На дополнительные выстрелы работают все модификаторы атаки и они наносят 100% урона.Также она может увеличить шанс на несколько выстрелов благодаря скорости атаки."

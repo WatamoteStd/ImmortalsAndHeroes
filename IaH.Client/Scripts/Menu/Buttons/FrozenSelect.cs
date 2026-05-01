@@ -2,7 +2,7 @@ using Godot;
 using System;
 using IaH.Shared.Networking;
 
-public partial class WarrirorSelect : Button
+public partial class FrozenSelect : Button
 {
 	
 	public override void _Ready()

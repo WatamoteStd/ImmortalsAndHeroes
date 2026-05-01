@@ -17,32 +17,6 @@ namespace IaH.Server.Entities
         private float _expToLvl = 100.0f;
         private float _currentExp = 0.0f;
 
-        private float _speed;
-        private float _health;
-        private float _maxHealth;
-        private float _healthRegen;
-        public float Health
-        {
-            get { return _health; }
-            set
-            {
-                if (value > _maxHealth) _health = _maxHealth;
-                else if (value <= 0) _health = MathF.Max(0, value);
-                else _health = value;
-            }
-        }
-        private float _mana;
-        private float _maxMana;
-        private float _manaRegen;
-        private float _armor;
-        private float _magicResist;
-
-        private float _damage;
-        private float _reloadTime = 2.0f;
-        private float _preAttack = 0.2f;
-
-        public int AttackRange;
-
         private short _gold = 1;
 
         public float _floatX, _floatY, _floatZ;
@@ -85,6 +59,7 @@ namespace IaH.Server.Entities
 
         public override void TakeDamage(DamageType type, float damage)
         {
+            base.TakeDamage(type, damage);
             
             switch (type)
             {
@@ -179,8 +154,8 @@ namespace IaH.Server.Entities
 
                 case StateMachine.Attack:
                     {
-                        Console.WriteLine("PLAYER: STATE [ATTACK]");
-                        if (_currentTarget == null || _currentTarget.Healths <= 0)
+                       
+                        if (_currentTarget == null || _currentTarget.Health <= 0)
                         {
                             CurrentState = StateMachine.Idle;
                             return;
@@ -208,6 +183,7 @@ namespace IaH.Server.Entities
                                 _currentTarget.TakeDamage(DamageType.Physical, _damage);
                                 _preAttack = 0.2f;
                                 _reloadTime = 2.0f;
+                                Console.WriteLine($"Hero: Attack sussesfull. Target:{_currentTarget}");
                             }
                         }
 

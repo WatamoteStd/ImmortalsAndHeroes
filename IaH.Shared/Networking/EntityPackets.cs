@@ -32,8 +32,8 @@ namespace IaH.Shared.Networking
 
     public struct AttackRequestPacket
     {
-        public ushort EntityId;
-        public ushort TargetId;
+        public ushort EntityId; //who attack
+        public ushort TargetId; // who take damage
     }
 
     public struct EntityStatsPacket

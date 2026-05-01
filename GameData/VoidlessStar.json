@@ -1,0 +1,21 @@
+{
+	"HeroId": 1,
+	"Name": "VoidlessStar",
+	"Stats": {
+		"BaseHealth": 440,
+		"HealthRegen": 0.8,
+		"BaseMana": 270,
+		"ManaRegen": 0.5,
+		"MoveSpeed": 3,
+		"Armor": 2,
+		"MagicResist": 10
+	},
+	"Combat": {
+		"AttackDamage": 40,
+		"AttackRange": 50,
+		"AttackSpeed": 100,
+		"BasicAttackRate": 1.6,
+		"AttackType": "Melee"
+	}
+
+}

@@ -22,11 +22,12 @@ public partial class MenuAudioManager : AudioStreamPlayer2D
 
 	private void PlaySound(AudioStream sound)
 	{
-
+		if (IsInsideTree() && !IsQueuedForDeletion()) {
 		if (sound == null) return;
 		PitchScale = (float)GD.RandRange(3.8, 4.2);
 		Stream = sound;
 		Play();
+		}
 		
 	}
 

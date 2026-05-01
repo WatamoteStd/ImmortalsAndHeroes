@@ -135,7 +135,7 @@ namespace IaH.Server.Core
                         _peerToEntity.Add(peer.Id, _entityId);
                         Console.WriteLine($"[SERVER] CreatedEntity:{_selectedHero} | EntityID: {_entityId} | PeerID: {peer.Id}");
                         _entityId++;
-                       
+
 
                         break;
                     }
@@ -149,11 +149,11 @@ namespace IaH.Server.Core
                         _writer.Reset();
                         _writer.Put((byte)PacketType.PlayerJoined);
                         _writer.Put((ushort)_entity.Id);
-                        ;_writer.Put((byte)_entity.SelectedHero); // CharacterType
+                        ; _writer.Put((byte)_entity.SelectedHero); // CharacterType
                         _writer.Put((short)_entity.X);
                         _writer.Put((short)_entity.Y);
                         _writer.Put((short)_entity.Z);
-                        _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);                 
+                        _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
                         Console.WriteLine($"[SERVER] ConnectedToGame: PeerId:{peer.Id} | EntityId:{_entity.Id}");
 
                         // SEND ALL PLAYER STATS TO CLIENT 
@@ -200,54 +200,29 @@ namespace IaH.Server.Core
                     {
                         Console.WriteLine("[SERVER] AttackRequestPacket received!");
 
-                        ushort _cId = reader.GetUShort();
-                        ushort _tId = reader.GetUShort();
+                        var attackerId = reader.GetUShort();
+                        var enemyId = reader.GetUShort();
+                        var attackerEntity = _entityManager.GetEntity(attackerId);
+                        var attackerVictim = _entityManager.GetEntity(enemyId);
 
-                        // ВЫВЕДИ ВСЕ АКТИВНЫЕ ID
-                        var allEntities = _entityManager.GetActiveEntities();
-                        Console.WriteLine($"[DEBUG] Entities in world: {string.Join(", ", allEntities.Select(e => e.Id))}");
-
-                        // 1. Читаем данные из пакета (клиент прислал ID того, кого хочет ударить)
-                        // ВАЖНО: Если клиент шлет и свой ID, и чужой, сначала вычитай их оба
-                        ushort _clientSaidMyId = reader.GetUShort(); // Мы это выкинем, но прочитать надо, чтобы сдвинуть указатель
-                        ushort _targetEntityId = reader.GetUShort();
-
-                        // 2. Достаем ИСТИННЫЙ ID атакующего по его соединению (peer.Id)
-                        if (_peerToEntity.TryGetValue(peer.Id, out ushort myActualHeroId))
+                        if (attackerEntity != null && attackerEntity is Hero attacker)
                         {
-                            BaseEntity attacker = _entityManager.GetEntity(myActualHeroId);
-                            BaseEntity target = _entityManager.GetEntity(_targetEntityId);
 
-                            // 3. ПРОВЕРКА НА NULL (Чтобы сервер не падал!)
-                            if (attacker == null || target == null)
+                            if (attackerVictim != null && attackerVictim is BaseEntity victim)
                             {
-                                Console.WriteLine($"[SERVER] Attack failed: One of entities is null! Attacker: {attacker != null}, Target: {target != null}");
-                                break;
+                                attacker.CurrentState = Hero.StateMachine.Attack;
+                                attacker._currentTarget = victim;
+                                Console.WriteLine("Attack: target valid!");
                             }
 
-                            // 4. Логика дистанции
-                            Vector3 targetPos = new Vector3(target.X / 100.0f, target.Y / 100.0f, target.Z / 100.0f);
-
-                            if (attacker is Hero hero)
-                            {
-                                if (Vector3.Distance(hero.GlobalPos, targetPos) <= hero.AttackRange)
-                                {
-                                    hero._currentTarget = target; // НЕ ЗАБУДЬ ПРИСВОИТЬ ЦЕЛЬ
-                                    hero.CurrentState = Hero.StateMachine.Attack;
-                                    Console.WriteLine($"[SERVER] Hero {myActualHeroId} started attacking {target.Id}");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("[SERVER] Too far to attack!");
-                                    // Тут можно переключить в стейт Chase (преследование)
-                                }
-                            }
                         }
+
+
+                        break;
+
                     }
-                    break;
 
             }
-
         }
         private void OnHealthChanged(EntityHpChangedEvent data)
         {
