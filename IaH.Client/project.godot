@@ -22,7 +22,6 @@ buses/default_bus_layout="uid://dqdocfg5q0tdu"
 
 NetworkManager="*uid://c2m1xggrt3rjw"
 GameData="*uid://dfnle6qxis3cr"
-HeroStatsUi="*uid://bseifhw7w3y2q"
 
 [display]
 

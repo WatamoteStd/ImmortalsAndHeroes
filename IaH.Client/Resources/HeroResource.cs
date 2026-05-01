@@ -7,6 +7,9 @@ public partial class HeroResource : Resource
 	[Export] public Texture2D Icon;
 	[Export] public string Description;
 	[Export] public int Health;
+	[Export] public float HealthRegen;
+	[Export] public int Mana;
+	[Export] public float ManaRegen;
 	[Export] public int Damage;
 	[Export] public string AttackType;
 	[Export] public int MoveSpeed;
