@@ -143,7 +143,7 @@ namespace IaH.Server.Core
                     {
                         if (!_peerToEntity.TryGetValue(peer.Id, out ushort targetId)) break;
 
-                        BaseEntity _entity = _entityManager.GetEntity(targetId);
+                        var _entity = _entityManager.GetEntity(targetId);
 
                         // SEND ALL !INFO! ABOUT NEW ENTITY
                         _writer.Reset();

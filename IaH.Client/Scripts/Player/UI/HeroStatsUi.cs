@@ -8,7 +8,7 @@ public partial class HeroStatsUi : Control
 	
 	
 	public static HeroStatsUi Instance { get; private set; }
-	public ushort MainHeroId;
+	public short MainHeroId;
 	public ushort TargetHeroId;
 	[Export] public Label _nameLabel;
 	[Export] public Label _healthLabel;
@@ -18,6 +18,8 @@ public partial class HeroStatsUi : Control
 	{
 		Instance = this;
 		EventBus.OnStatsPacketReceived += UpdateStats;
+		MainHeroId = GameData.Instance.MyLocalId;
+		GD.Print($"HeroStats EntityID:{MainHeroId}");
 	}
 
 	public void UpdateStats(EntityStatsPacket packet)

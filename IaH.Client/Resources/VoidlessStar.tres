@@ -7,9 +7,10 @@
 script = ExtResource("2_s6rq8")
 Name = "VoidlessStar"
 Icon = ExtResource("1_6puj0")
-Description = "Carry, need gold"
+Description = "Mage"
 Health = 520
-Damage = 60
+Mana = 100
+Damage = 42
 AttackType = "Ranged"
 MoveSpeed = 5
 Armor = 2

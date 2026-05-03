@@ -801,6 +801,7 @@ HoverSound = SubResource("AudioStreamMP3_x2cqt")
 ClickSound = ExtResource("11_5buhm")
 
 [node name="SettingsWindow" type="MarginContainer" parent="." unique_id=1113656619 node_paths=PackedStringArray("_musicSlider", "_soundSlider")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
