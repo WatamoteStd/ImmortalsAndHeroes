@@ -9,10 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://dt818phw7n561" path="res://Assets/Sprites/Menu/Profile/ChangeNicknameFeatherHover.png" id="6_l7xyq"]
 [ext_resource type="Script" uid="uid://6raxv5n6hf11" path="res://Scripts/Menu/Buttons/ConnectToGame.cs" id="7_h7084"]
 [ext_resource type="Script" uid="uid://dckd063gx0a77" path="res://Scripts/Menu/HeroChoicePanel.cs" id="7_uw0ty"]
-[ext_resource type="Script" uid="uid://cjesprgemiuem" path="res://Scripts/Menu/Buttons/FrozenSelect.cs" id="8_7fq4t"]
 [ext_resource type="PackedScene" uid="uid://dw5f1dqrl5f8w" path="res://Scenes/Menu/HeroList/HeroCard.tscn" id="8_c61og"]
-[ext_resource type="Script" uid="uid://dj50g1gy88are" path="res://Scripts/Menu/Buttons/VoidlessStarSelect.cs" id="8_et8ab"]
 [ext_resource type="Script" uid="uid://c2umfbyonf0k2" path="res://Scripts/Menu/MenuAudioManager.cs" id="9_ac4b6"]
+[ext_resource type="Script" uid="uid://g352ei1rpi2y" path="res://Scripts/Menu/Buttons/ConnectToGamePanel/FindTheGameButton.cs" id="9_i80xk"]
 [ext_resource type="AudioStream" uid="uid://dr0seo81qjf0s" path="res://Assets/Menu/Audio/ButtonClick.mp3" id="11_5buhm"]
 [ext_resource type="AudioStream" uid="uid://bw8epoffus70v" path="res://Assets/Menu/Audio/MenuBackground.ogg" id="11_et8ab"]
 [ext_resource type="Texture2D" uid="uid://0t3fwjr2tpmd" path="res://Assets/Heroes/Frozen/SkillsIcons/IceArrow.png" id="15_1upnj"]
@@ -140,51 +139,6 @@ content_margin_top = 5.0
 content_margin_right = 20.0
 content_margin_bottom = 5.0
 bg_color = Color(0.15070906, 0.21943691, 0.5543529, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
-border_blend = true
-corner_detail = 10
-shadow_size = 3
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x2cqt"]
-content_margin_left = 20.0
-content_margin_top = 5.0
-content_margin_right = 20.0
-content_margin_bottom = 5.0
-bg_color = Color(0.009134182, 0.18762565, 0.2336236, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
-border_blend = true
-corner_detail = 10
-shadow_size = 3
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5buhm"]
-content_margin_left = 20.0
-content_margin_top = 5.0
-content_margin_right = 20.0
-content_margin_bottom = 5.0
-bg_color = Color(0.0055898274, 0.15590358, 0.19670296, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
-border_blend = true
-corner_detail = 10
-shadow_size = 3
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_et8ab"]
-content_margin_left = 20.0
-content_margin_top = 5.0
-content_margin_right = 20.0
-content_margin_bottom = 5.0
-bg_color = Color(0.010410224, 0.21915227, 0.2721988, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -444,9 +398,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_c61og")
 theme_override_styles/hover = SubResource("StyleBoxFlat_kqh14")
 text = "Connect"
 script = ExtResource("7_h7084")
-Container = NodePath("../HeroChoicePanel")
+Container = NodePath("../ConnectToGamePanel")
 
-[node name="HeroChoicePanel" type="PanelContainer" parent="." unique_id=1905783781 node_paths=PackedStringArray("ConnectButton")]
+[node name="ConnectToGamePanel" type="PanelContainer" parent="." unique_id=1905783781 node_paths=PackedStringArray("ConnectButton")]
 visible = false
 custom_minimum_size = Vector2(450, 0)
 layout_mode = 1
@@ -463,42 +417,34 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_l7xyq")
 script = ExtResource("7_uw0ty")
 ConnectButton = NodePath("../ConnectToGame")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HeroChoicePanel" unique_id=1354959264]
+[node name="VBoxContainer" type="VBoxContainer" parent="ConnectToGamePanel" unique_id=1354959264]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 50
 
-[node name="ChoiceHerotext" type="Label" parent="HeroChoicePanel/VBoxContainer" unique_id=1808293091]
+[node name="ChoiceHerotext" type="Label" parent="ConnectToGamePanel/VBoxContainer" unique_id=1808293091]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0.83889705, 0.83889705, 0.838897, 1)
 theme_override_fonts/font = ExtResource("3_kqkty")
 theme_override_font_sizes/font_size = 30
-text = "CHOICE YOUR HERO !"
+text = "Search the lobby.."
 
-[node name="HeroList" type="VBoxContainer" parent="HeroChoicePanel/VBoxContainer" unique_id=1940699634]
+[node name="HeroList" type="VBoxContainer" parent="ConnectToGamePanel/VBoxContainer" unique_id=1940699634]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_constants/separation = 7
+size_flags_vertical = 10
 
-[node name="FrozenChoice" type="Button" parent="HeroChoicePanel/VBoxContainer/HeroList" unique_id=1480375605 groups=["Buttons"]]
+[node name="FindTheGameButton" type="Button" parent="ConnectToGamePanel/VBoxContainer/HeroList" unique_id=1480375605 groups=["Buttons"]]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_h7084")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_uw0ty")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ac4b6")
-text = "Frozen (carry)"
-script = ExtResource("8_7fq4t")
-
-[node name="VoidlessStarChoice" type="Button" parent="HeroChoicePanel/VBoxContainer/HeroList" unique_id=1993130169 groups=["Buttons"]]
-layout_mode = 2
-theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxFlat_x2cqt")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_5buhm")
-theme_override_styles/hover = SubResource("StyleBoxFlat_et8ab")
-text = "VoidlessStar (mage)"
-script = ExtResource("8_et8ab")
+text = "FIND THE GAME"
+script = ExtResource("9_i80xk")
 
 [node name="HeroesList" type="MarginContainer" parent="." unique_id=599072395]
 visible = false
@@ -801,6 +747,7 @@ HoverSound = SubResource("AudioStreamMP3_x2cqt")
 ClickSound = ExtResource("11_5buhm")
 
 [node name="SettingsWindow" type="MarginContainer" parent="." unique_id=1113656619 node_paths=PackedStringArray("_musicSlider", "_soundSlider")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

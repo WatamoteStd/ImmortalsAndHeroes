@@ -71,11 +71,7 @@ public partial class NetworkManager : Node
 				if (GameData.Instance.MyLocalId == -1) 
 				{
 					GameData.Instance.MyLocalId = (short)_id;
-					if (HeroStatsUi.Instance != null)
-				{
-					HeroStatsUi.Instance.MainHeroId = _id;
-					HeroStatsUi.Instance.TargetHeroId = _id;
-				}
+
 				}
 				PlayerJoinedPacket packet = new PlayerJoinedPacket()
 				{

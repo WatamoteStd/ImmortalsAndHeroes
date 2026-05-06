@@ -143,7 +143,7 @@ namespace IaH.Server.Core
                     {
                         if (!_peerToEntity.TryGetValue(peer.Id, out ushort targetId)) break;
 
-                        BaseEntity _entity = _entityManager.GetEntity(targetId);
+                        var _entity = _entityManager.GetEntity(targetId);
 
                         // SEND ALL !INFO! ABOUT NEW ENTITY
                         _writer.Reset();
@@ -239,26 +239,25 @@ namespace IaH.Server.Core
             _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
             
         }
-
-        public void BroadcastPosition(IEnumerable<BaseEntity> entities)
+        public void SendToLobby(List<NetPeer> recipients, IEnumerable<BaseEntity> entities)
         {
-
-            entities = _entityManager.GetActiveEntities();
-            _writer.Reset();
+            _writer.Reset(); // Чистим, как ты и учил
             _writer.Put((byte)PacketType.BatchEntityPositions);
             _writer.Put((short)entities.Count());
+
             foreach (var entity in entities)
             {
-
                 _writer.Put((ushort)entity.Id);
-                _writer.Put((short)entity.X);
+                _writer.Put((short)entity.X); // Тут твои координаты * 100
                 _writer.Put((short)entity.Y);
                 _writer.Put((short)entity.Z);
-
             }
 
-            _netManager.SendToAll(_writer, DeliveryMethod.Unreliable);
-
+            // ВАЖНО: Шлем только тем, кто в списке комнаты
+            foreach (var peer in recipients)
+            {
+                peer.Send(_writer, DeliveryMethod.Unreliable);
+            }
         }
 
         public void Start()

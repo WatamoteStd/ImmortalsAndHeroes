@@ -12,32 +12,30 @@ sw.Start();
 
 Console.WriteLine("---IaH Server Starting---");
 
-// Передай его в конструктор!
 NetworkManager _netManager = new NetworkManager();
 
 _netManager.Start();
 HeroDataManager.Initialize();
 
+List<Lobby> allLobbies = new List<Lobby>();
+
 
 while (true)
 {
+    // DELTATIME
     var currenTime = sw.ElapsedMilliseconds;
     float deltaTimeMS = currenTime - lastTime;
     lastTime = currenTime;
     float deltaTime = deltaTimeMS / 1000.0f;
 
-    // CYCLE OF MOVE ENTITIES
-    var entities = _netManager._entityManager.GetActiveEntities();
-    foreach (var entity in entities)
-    {
-        if (entity is Hero _hero)
-        {
-            _hero.Update(deltaTime);
-            
-        }
-    }
-    _netManager.BroadcastPosition(entities);
     _netManager.Update();
+
+    //LOBBY
+    foreach (var lobby in allLobbies)
+    {
+        lobby.Update(deltaTime);
+    }    
+    
     Thread.Sleep(15);
 }
 
