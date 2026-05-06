@@ -23,6 +23,9 @@ namespace IaH.Server.Core
         public EntityManager _entityManager;
         private NetDataWriter _writer;
 
+        // LOBBY
+        private LobbyManager _lobbyManager;
+
         public NetworkManager() // constructor
         {
             _listener = new EventBasedNetListener();
@@ -85,6 +88,12 @@ namespace IaH.Server.Core
             switch (rawByte)
             {
 
+                case PacketType.JoinQueue:
+
+                    _lobbyManager.HandleJoinQueue(peer);
+
+                    break;
+
                 case PacketType.MoveRequest:
                     {
                         short x = reader.GetShort();
@@ -139,63 +148,6 @@ namespace IaH.Server.Core
 
                         break;
                     }
-                case PacketType.ConnectedToGame:
-                    {
-                        if (!_peerToEntity.TryGetValue(peer.Id, out ushort targetId)) break;
-
-                        var _entity = _entityManager.GetEntity(targetId);
-
-                        // SEND ALL !INFO! ABOUT NEW ENTITY
-                        _writer.Reset();
-                        _writer.Put((byte)PacketType.PlayerJoined);
-                        _writer.Put((ushort)_entity.Id);
-                        ; _writer.Put((byte)_entity.SelectedHero); // CharacterType
-                        _writer.Put((short)_entity.X);
-                        _writer.Put((short)_entity.Y);
-                        _writer.Put((short)_entity.Z);
-                        _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
-                        Console.WriteLine($"[SERVER] ConnectedToGame: PeerId:{peer.Id} | EntityId:{_entity.Id}");
-
-                        // SEND ALL PLAYER STATS TO CLIENT 
-                        if (_entity is Hero hero)
-                        {
-                            var stats = hero.GetStatsPacket(7); // all stats
-                            _writer.Reset();
-                            _writer.Put((byte)PacketType.EntityStats);
-                            stats.Serialize(_writer);
-                            _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
-
-                        }
-
-
-                        // SEND NEW PLAYER INFORMATION ABOUT OLD PLAYERS
-                        foreach (BaseEntity _curEntity in _entityManager.GetActiveEntities())
-                        {
-                            if (_curEntity.Id == targetId) continue;
-
-                            _writer.Reset();
-                            _writer.Put((byte)PacketType.PlayerJoined);
-                            _writer.Put((ushort)_curEntity.Id);
-                            _writer.Put((byte)_curEntity.SelectedHero); // CharacterType
-                            _writer.Put((short)_curEntity.X);
-                            _writer.Put((short)_curEntity.Y);
-                            _writer.Put((short)_curEntity.Z);
-                            peer.Send(_writer, DeliveryMethod.ReliableOrdered);
-
-                            if (_curEntity is Hero curHero)
-                            {
-                                _writer.Reset();
-                                _writer.Put((byte)PacketType.EntityStats);
-                                var stats = curHero.GetStatsPacket(7);
-                                stats.Serialize(_writer);
-                                peer.Send(_writer, DeliveryMethod.ReliableOrdered);
-                            }
-
-                        }
-
-                        break;
-
-                    }
                 case PacketType.AttackRequest:
                     {
                         Console.WriteLine("[SERVER] AttackRequestPacket received!");
@@ -241,23 +193,36 @@ namespace IaH.Server.Core
         }
         public void SendToLobby(List<NetPeer> recipients, IEnumerable<BaseEntity> entities)
         {
-            _writer.Reset(); // Чистим, как ты и учил
+            _writer.Reset();
             _writer.Put((byte)PacketType.BatchEntityPositions);
             _writer.Put((short)entities.Count());
 
             foreach (var entity in entities)
             {
                 _writer.Put((ushort)entity.Id);
-                _writer.Put((short)entity.X); // Тут твои координаты * 100
+                _writer.Put((short)entity.X); 
                 _writer.Put((short)entity.Y);
                 _writer.Put((short)entity.Z);
             }
 
-            // ВАЖНО: Шлем только тем, кто в списке комнаты
+           
             foreach (var peer in recipients)
             {
                 peer.Send(_writer, DeliveryMethod.Unreliable);
             }
+        }
+
+        public void SendPacketToLobby(List<NetPeer> recipients, NetDataWriter writer)
+        {
+            foreach (var peer in recipients)
+            {
+                peer.Send(writer, DeliveryMethod.ReliableUnordered);
+            }
+        }
+
+        public void SetLobbyManager(LobbyManager manager)
+        {
+            _lobbyManager = manager;
         }
 
         public void Start()

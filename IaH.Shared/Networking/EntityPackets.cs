@@ -10,18 +10,31 @@ namespace IaH.Shared.Networking
 
     public enum PacketType : byte
     {
+        // 0-10: Menu/Lobby
         Welcome,
+        EntityRemove,
+        HeroSelected,
+        ChatMessage,
+        JoinQueue,
+        LobbyJoined,
+        PlayerJoined,
+
+        // 10-100: Gameplay
         MoveRequest,
         SpawnEntity,
-        PlayerJoined,
-        HeroSelected,
-        ConnectedToGame,
         EntityPosition,
         BatchEntityPositions,
         EntityStats,
         AttackRequest,
-        EntityRemove
     }
+
+    public struct JoinQueuePacket { };
+    public struct LobbyJoinedPacket { };
+
+    public struct ChatMessagePacket
+    {
+        public string message;
+    };
 
     public enum DamageType
     {
@@ -34,6 +47,144 @@ namespace IaH.Shared.Networking
     {
         public ushort EntityId; //who attack
         public ushort TargetId; // who take damage
+    }
+
+    public enum CharacterType : byte
+    {
+       None,
+       Frozen,
+       VoidlessStar
+    }
+    
+
+
+    public struct EntityPositionPacket
+    {
+        public ushort EntityId;
+        public short x;
+        public short y;
+        public short z;
+
+    }
+    public struct EntityRemovePacket
+    {
+        public ushort EntityId;
+    }
+
+    public struct PlayerJoinedPacket
+    {
+        public ushort EntityId;
+        public CharacterType SelectedHero;
+        public short X, Y, Z;
+
+    }
+
+    public struct MoveRequestPacket
+    {
+
+        public short X;
+        public short y;
+        public short Z;
+
+    }
+
+    public struct WelcomePacket
+    {
+        public ushort PeerId;
+    }
+    public struct HeroSelectedPacket
+    {
+        public CharacterType SelectedHero;
+    }
+
+namespace IaH.Shared.Networking
+    {
+
+
+        public enum PacketType : byte
+        {
+            // 0-10: Menu/Lobby
+            Welcome,
+            EntityRemove,
+            HeroSelected,
+            ChatMessage,
+            PlayerJoined,
+
+            // 10-100: Gameplay
+            MoveRequest,
+            SpawnEntity,
+            EntityPosition,
+            BatchEntityPositions,
+            EntityStats,
+            AttackRequest,
+        }
+
+        public struct ChatMessagePacket
+        {
+            public string message;
+        };
+
+        public enum DamageType
+        {
+            Physical,
+            Magical,
+            Pure
+        }
+
+        public struct AttackRequestPacket
+        {
+            public ushort EntityId; //who attack
+            public ushort TargetId; // who take damage
+        }
+
+        public enum CharacterType : byte
+        {
+            None,
+            Frozen,
+            VoidlessStar
+        }
+
+
+
+        public struct EntityPositionPacket
+        {
+            public ushort EntityId;
+            public short x;
+            public short y;
+            public short z;
+
+        }
+        public struct EntityRemovePacket
+        {
+            public ushort EntityId;
+        }
+
+        public struct PlayerJoinedPacket
+        {
+            public ushort EntityId;
+            public CharacterType SelectedHero;
+            public short X, Y, Z;
+
+        }
+
+        public struct MoveRequestPacket
+        {
+
+            public short X;
+            public short y;
+            public short Z;
+
+        }
+
+        public struct WelcomePacket
+        {
+            public ushort PeerId;
+        }
+        public struct HeroSelectedPacket
+        {
+            public CharacterType SelectedHero;
+        }
+
     }
 
     public struct EntityStatsPacket
@@ -96,12 +247,12 @@ namespace IaH.Shared.Networking
         }
         public void Deserialize(NetDataReader reader)
         {
-           MaxHealth = reader.GetShort();
-           MaxMana = reader.GetShort();
-           Armor = reader.GetShort();
-           MagicResist = reader.GetShort();
-           Speed = reader.GetShort();
-           Gold = reader.GetShort();
+            MaxHealth = reader.GetShort();
+            MaxMana = reader.GetShort();
+            Armor = reader.GetShort();
+            MagicResist = reader.GetShort();
+            Speed = reader.GetShort();
+            Gold = reader.GetShort();
         }
     }
     public struct EntityVitalsStats // or dynamic 
@@ -117,8 +268,8 @@ namespace IaH.Shared.Networking
 
         public void Deserialize(NetDataReader reader)
         {
-           CurrentHp = reader.GetShort();
-           CurrentMana = reader.GetShort();
+            CurrentHp = reader.GetShort();
+            CurrentMana = reader.GetShort();
         }
     }
     public struct EntityProgressionStats  // exp, lvl
@@ -147,63 +298,6 @@ namespace IaH.Shared.Networking
     }
 
 
-    public enum CharacterType : byte
-    {
-       Frozen,
-       VoidlessStar
-    }
-    
-
-
-    public struct EntityPositionPacket
-    {
-        public ushort EntityId;
-        public short x;
-        public short y;
-        public short z;
-
-    }
-
-    public struct ConnectedToGamePacket
-    {
-
-    }
-    public struct EntityRemovePacket
-    {
-        public ushort EntityId;
-    }
-
-    public struct PlayerJoinedPacket
-    {
-        public ushort EntityId;
-        public CharacterType SelectedHero;
-        public short X, Y, Z;
-
-    }
-
-    public struct MoveRequestPacket
-    {
-
-        public short X;
-        public short y;
-        public short Z;
-
-    }
-
-    public struct WelcomePacket
-    {
-        public ushort PeerId;
-    }
-
-    public struct EntityData
-    {
-
-
-
-    }
-    public struct HeroSelectedPacket
-    {
-        public CharacterType SelectedHero;
-    }
-
 }
+
+

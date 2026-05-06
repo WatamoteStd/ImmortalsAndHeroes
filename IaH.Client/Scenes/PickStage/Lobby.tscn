@@ -2,6 +2,26 @@
 
 [ext_resource type="Script" uid="uid://c4jexm0erdekf" path="res://Scripts/Lobby/LobbyManager.cs" id="1_hbqoi"]
 [ext_resource type="FontFile" uid="uid://o4l4jdsxb6dc" path="res://Assets/Fonts/Jost Medieval Bold.ttf" id="1_r82ik"]
+[ext_resource type="FontFile" uid="uid://0xgb637yqhh0" path="res://Assets/Fonts/Jost Medieval.ttf" id="3_qsxkt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hbqoi"]
+bg_color = Color(0, 0, 0, 0.5882353)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ksdyd"]
+bg_color = Color(0.12225228, 0.12225222, 0.1222522, 0.6117647)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yncki"]
+bg_color = Color(0.37539855, 0.37539858, 0.37539855, 0.9098039)
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.44162306, 0.44162303, 0.44162297, 0.91764706)
 
 [node name="Lobby" type="Control" unique_id=39404304]
 layout_mode = 3
@@ -45,6 +65,64 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 color = Color(0.16862746, 0.16862746, 0.16862746, 0.5254902)
 
+[node name="PlayersContainer" type="HBoxContainer" parent="OverallWindow" unique_id=256588287]
+layout_mode = 2
+
+[node name="LeftTeam" type="VBoxContainer" parent="OverallWindow/PlayersContainer" unique_id=8045935]
+layout_mode = 2
+
+[node name="Player1" type="Label" parent="OverallWindow/PlayersContainer/LeftTeam" unique_id=1568154256]
+layout_mode = 2
+text = "Player1"
+
+[node name="Player2" type="Label" parent="OverallWindow/PlayersContainer/LeftTeam" unique_id=1406884981]
+layout_mode = 2
+text = "Player2"
+
+[node name="Player3" type="Label" parent="OverallWindow/PlayersContainer/LeftTeam" unique_id=118543512]
+layout_mode = 2
+text = "Player3"
+
+[node name="Player4" type="Label" parent="OverallWindow/PlayersContainer/LeftTeam" unique_id=287478745]
+layout_mode = 2
+text = "Player4"
+
+[node name="Player5" type="Label" parent="OverallWindow/PlayersContainer/LeftTeam" unique_id=1720189017]
+layout_mode = 2
+text = "Player5"
+
+[node name="Control" type="Control" parent="OverallWindow/PlayersContainer" unique_id=918018285]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RightTeam" type="VBoxContainer" parent="OverallWindow/PlayersContainer" unique_id=1706858343]
+layout_mode = 2
+
+[node name="Player6" type="Label" parent="OverallWindow/PlayersContainer/RightTeam" unique_id=949956146]
+layout_mode = 2
+text = "Player6"
+horizontal_alignment = 2
+
+[node name="Player7" type="Label" parent="OverallWindow/PlayersContainer/RightTeam" unique_id=404535888]
+layout_mode = 2
+text = "Player7"
+horizontal_alignment = 2
+
+[node name="Player8" type="Label" parent="OverallWindow/PlayersContainer/RightTeam" unique_id=192607202]
+layout_mode = 2
+text = "Player8"
+horizontal_alignment = 2
+
+[node name="Player9" type="Label" parent="OverallWindow/PlayersContainer/RightTeam" unique_id=1553335854]
+layout_mode = 2
+text = "Player9"
+horizontal_alignment = 2
+
+[node name="Player10" type="Label" parent="OverallWindow/PlayersContainer/RightTeam" unique_id=1728173104]
+layout_mode = 2
+text = "Player10"
+horizontal_alignment = 2
+
 [node name="TimerLabel" type="Label" parent="OverallWindow" unique_id=243335350]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -54,31 +132,38 @@ theme_override_font_sizes/font_size = 34
 text = "1:00"
 horizontal_alignment = 1
 
-[node name="TeamNames" type="HBoxContainer" parent="OverallWindow" unique_id=917565829]
+[node name="ChatContainer" type="PanelContainer" parent="OverallWindow" unique_id=824121021]
+custom_minimum_size = Vector2(420, 120)
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_hbqoi")
 
-[node name="Team1" type="VBoxContainer" parent="OverallWindow/TeamNames" unique_id=1048585320]
+[node name="VBoxContainer" type="VBoxContainer" parent="OverallWindow/ChatContainer" unique_id=1400839091]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
+theme_override_constants/separation = 10
 
-[node name="NameTeam" type="Label" parent="OverallWindow/TeamNames/Team1" unique_id=778652757]
+[node name="ChatHistory" type="RichTextLabel" parent="OverallWindow/ChatContainer/VBoxContainer" unique_id=1631407087]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_r82ik")
-theme_override_font_sizes/font_size = 24
-text = "BLUE"
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_following = true
 
-[node name="Team2" type="VBoxContainer" parent="OverallWindow/TeamNames" unique_id=779777995]
+[node name="HSeparator" type="HSeparator" parent="OverallWindow/ChatContainer/VBoxContainer" unique_id=101569608]
 layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 0
 
-[node name="NameTeam2" type="Label" parent="OverallWindow/TeamNames/Team2" unique_id=2115651424]
+[node name="HBoxContainer" type="HBoxContainer" parent="OverallWindow/ChatContainer/VBoxContainer" unique_id=17048828]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_r82ik")
-theme_override_font_sizes/font_size = 24
-text = "RED"
+
+[node name="ChatInput" type="LineEdit" parent="OverallWindow/ChatContainer/VBoxContainer/HBoxContainer" unique_id=2103721134]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("3_qsxkt")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ksdyd")
+theme_override_styles/focus = SubResource("StyleBoxFlat_yncki")
+placeholder_text = "Message..."
+max_length = 500
 
 [node name="Timer" type="Timer" parent="." unique_id=1646429163]
 one_shot = true

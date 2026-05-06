@@ -33,7 +33,6 @@ public partial class NetworkManager : Node
 
 		// EVENT BUS
 		EventBus.OnHeroSelected += SendHeroSelectedToServer;
-		EventBus.OnPlayerConnectedToWorld += SendPlayerConnectedToWorld;
 		EventBus.OnPlayerRMB += (cords) =>
 		{
 			short x = (short)(cords.X * 100);
@@ -42,6 +41,8 @@ public partial class NetworkManager : Node
 
 			SendMoveRequest(x, y, z);
 		};
+
+		EventBus.OnJoinTheQueue += SendJoinQueue;
 
 	}
 
@@ -134,14 +135,6 @@ public partial class NetworkManager : Node
 		_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
 		
 	}
-	private void SendPlayerConnectedToWorld()
-	{
-
-		_writer.Reset();
-		_writer.Put((byte)PacketType.ConnectedToGame);
-		_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
-
-	}
 	private void SendMoveRequest(short x, short y, short z)
 	{
 	
@@ -153,6 +146,12 @@ public partial class NetworkManager : Node
 		_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
 		
 
+	}
+	private void SendJoinQueue()
+	{
+		_writer.Reset();
+		_writer.Put((byte)PacketType.JoinQueue);
+		_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
 	}
 
 

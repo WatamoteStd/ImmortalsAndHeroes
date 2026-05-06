@@ -13,6 +13,13 @@ public static partial class EventBus
 	public static event Action<EntityStatsPacket> OnStatsPacketReceived;
 	public static event Action<ushort, Vector3> OnPositionsUpdated;
 	public static event Action<ushort> OnDisconnectPacketReceived;
+	
+	// LOBBY
+	public static event Action OnJoinTheQueue;
+	public static void PublishOnJoinQueue()
+	{
+		OnJoinTheQueue?.Invoke();
+	}
 
 	public static void PublishDisconnectedPacketReceived(ushort id)
 	{

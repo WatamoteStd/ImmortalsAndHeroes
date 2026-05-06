@@ -29,6 +29,14 @@ namespace IaH.Server.Core
             _netManager = managerFromMain;
         }
 
+        public bool TryAddPlayer(NetPeer peer)
+        {
+            if (playersList.Count >= 10 || State != LobbyStatus.Waiting) return false;
+
+            playersList.Add(peer);
+            return true;
+        }
+
         public void Update(float deltaTime)
         {
             if (State != LobbyStatus.InGame) return; 

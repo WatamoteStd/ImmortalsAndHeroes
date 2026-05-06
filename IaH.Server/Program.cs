@@ -13,11 +13,14 @@ sw.Start();
 Console.WriteLine("---IaH Server Starting---");
 
 NetworkManager _netManager = new NetworkManager();
-
 _netManager.Start();
 HeroDataManager.Initialize();
 
+// LOBBY
 List<Lobby> allLobbies = new List<Lobby>();
+
+LobbyManager lobbyManager = new LobbyManager(allLobbies, _netManager);
+_netManager.SetLobbyManager(lobbyManager);
 
 
 while (true)
