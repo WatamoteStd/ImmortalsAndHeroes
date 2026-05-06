@@ -43,6 +43,7 @@ public partial class NetworkManager : Node
 		};
 
 		EventBus.OnJoinTheQueue += SendJoinQueue;
+		EventBus.OnSendMessageToLobby += SendMessageLobby;
 
 	}
 
@@ -54,6 +55,19 @@ public partial class NetworkManager : Node
 
 		switch (rawPacket)
 		{
+
+			case PacketType.ChatMessage:
+
+				string message = reader.GetString();
+				EventBus.PublishOnMessageReceived(message);
+
+			break;
+
+			case PacketType.LobbyJoined:
+				GD.Print("[NetworkManager] Connected to lobby!");
+				GetTree().ChangeSceneToFile("res://Scenes/PickStage/Lobby.tscn");
+
+			break;
 			
 			case PacketType.Welcome:
 				var clientPeerId = reader.GetUShort();
@@ -147,10 +161,18 @@ public partial class NetworkManager : Node
 		
 
 	}
+	// LOBBY
 	private void SendJoinQueue()
 	{
 		_writer.Reset();
 		_writer.Put((byte)PacketType.JoinQueue);
+		_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
+	}
+	private void SendMessageLobby(string text)
+	{
+		_writer.Reset();
+		_writer.Put((byte)PacketType.ChatMessage);
+		_writer.Put(text);
 		_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
 	}
 
@@ -162,20 +184,5 @@ public partial class NetworkManager : Node
 
 	}
 
-	// DELETE AFTER TEST
-	public override void _Input(InputEvent @event)
-	{
-		if (@event.IsActionPressed("attackRequestTest"))
-		{
-			_writer.Reset();
-			_writer.Put((byte)PacketType.AttackRequest);
-			_writer.Put((ushort)0);
-			_writer.Put((ushort)0);
-			_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
-		}
-	}
-
-
-
- 
+	
 }

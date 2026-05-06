@@ -75,7 +75,12 @@ namespace IaH.Server.Core
 
             // EVENTS
             EventBus.OnHpChanged += OnHealthChanged;
-
+            EventBus.OnPlayerJoinedQueue += (peer) =>
+            {
+                _writer.Reset();
+                _writer.Put((byte)PacketType.LobbyJoined);
+                peer.Send(_writer, DeliveryMethod.ReliableOrdered);
+            };
         }
 
         // FUNCTIONS | ФУНКЦИИ
@@ -91,6 +96,18 @@ namespace IaH.Server.Core
                 case PacketType.JoinQueue:
 
                     _lobbyManager.HandleJoinQueue(peer);
+
+                    break;
+
+                case PacketType.ChatMessage:
+
+                    string msg = reader.GetString();
+                    _writer.Reset();
+                    _writer.Put((byte)PacketType.ChatMessage);
+                    _writer.Put(msg);
+
+                    _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
+                    Console.WriteLine($"[CHAT] Broad-casted:{msg}");
 
                     break;
 

@@ -25,12 +25,14 @@ namespace IaH.Server.Core
                 if (lobby.TryAddPlayer(peer))
                 {
                     Console.WriteLine($"[LobbyManager] ClientPeer:{peer.Id}, succesfully added to lobby!");
+                    EventBus.PublishPlayerJoinedQueue(peer);
                     return;
                 }
             }
             Lobby newLobby = new Lobby(_netManager);
             newLobby.TryAddPlayer(peer);
             _allLobies.Add(newLobby);
+            EventBus.PublishPlayerJoinedQueue(peer);
             Console.WriteLine($"[LobbyManager] Created new lobby for ClientPeer:{peer.Id}!");
         }
 

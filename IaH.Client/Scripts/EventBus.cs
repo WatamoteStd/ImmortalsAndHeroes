@@ -15,10 +15,20 @@ public static partial class EventBus
 	public static event Action<ushort> OnDisconnectPacketReceived;
 	
 	// LOBBY
-	public static event Action OnJoinTheQueue;
+	public static event Action OnJoinTheQueue; // when join queue but not in lobby
 	public static void PublishOnJoinQueue()
 	{
 		OnJoinTheQueue?.Invoke();
+	}
+	public static event Action<string> OnSendMessageToLobby;
+	public static void PublishSendMessageToLobby(string message)
+	{
+		OnSendMessageToLobby?.Invoke(message);
+	}
+	public static event Action<string> OnMessageReceived;
+	public static void PublishOnMessageReceived(string msg)
+	{
+		OnMessageReceived?.Invoke(msg);
 	}
 
 	public static void PublishDisconnectedPacketReceived(ushort id)
