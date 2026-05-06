@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://sbjktga8w3pk"]
 
+[ext_resource type="Script" uid="uid://c4jexm0erdekf" path="res://Scripts/Lobby/LobbyManager.cs" id="1_hbqoi"]
+[ext_resource type="FontFile" uid="uid://o4l4jdsxb6dc" path="res://Assets/Fonts/Jost Medieval Bold.ttf" id="1_r82ik"]
+
 [node name="Lobby" type="Control" unique_id=39404304]
 layout_mode = 3
 anchors_preset = 15
@@ -9,10 +12,12 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="LobbyManager" type="Control" parent="." unique_id=2027410242]
+[node name="LobbyManager" type="Control" parent="." unique_id=2027410242 node_paths=PackedStringArray("LobbyTimerLabel", "LobbyTimer")]
+layout_mode = 1
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+script = ExtResource("1_hbqoi")
+LobbyTimerLabel = NodePath("../OverallWindow/TimerLabel")
+LobbyTimer = NodePath("../Timer")
 
 [node name="Background" type="ColorRect" parent="." unique_id=499293423]
 layout_mode = 1
@@ -22,3 +27,58 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.13682577, 0.13682574, 0.13682571, 1)
+
+[node name="OverallWindow" type="MarginContainer" parent="." unique_id=1530131819]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+metadata/_edit_use_anchors_ = true
+
+[node name="BackgroundWindow" type="ColorRect" parent="OverallWindow" unique_id=1583444090]
+layout_mode = 2
+color = Color(0.16862746, 0.16862746, 0.16862746, 0.5254902)
+
+[node name="TimerLabel" type="Label" parent="OverallWindow" unique_id=243335350]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("1_r82ik")
+theme_override_font_sizes/font_size = 34
+text = "1:00"
+horizontal_alignment = 1
+
+[node name="TeamNames" type="HBoxContainer" parent="OverallWindow" unique_id=917565829]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Team1" type="VBoxContainer" parent="OverallWindow/TeamNames" unique_id=1048585320]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="NameTeam" type="Label" parent="OverallWindow/TeamNames/Team1" unique_id=778652757]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_r82ik")
+theme_override_font_sizes/font_size = 24
+text = "BLUE"
+
+[node name="Team2" type="VBoxContainer" parent="OverallWindow/TeamNames" unique_id=779777995]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+
+[node name="NameTeam2" type="Label" parent="OverallWindow/TeamNames/Team2" unique_id=2115651424]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_r82ik")
+theme_override_font_sizes/font_size = 24
+text = "RED"
+
+[node name="Timer" type="Timer" parent="." unique_id=1646429163]
+one_shot = true
