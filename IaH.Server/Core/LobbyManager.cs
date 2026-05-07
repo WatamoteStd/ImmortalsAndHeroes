@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using IaH.Server.Entities;
 using LiteNetLib;
 using LiteNetLib.Utils;
 
@@ -18,22 +19,25 @@ namespace IaH.Server.Core
             _netManager = netManager;
         }
 
-        public void HandleJoinQueue(NetPeer peer)
+        public void HandleJoinQueue(Player player )
         {
+            if (player.CurrentState == Player.PlayerStates.InLobby) return;
+
+            player.CurrentState = Player.PlayerStates.InLobby;
             foreach (var lobby in _allLobies)
             {
-                if (lobby.TryAddPlayer(peer))
+                if (lobby.TryAddPlayer(player))
                 {
-                    Console.WriteLine($"[LobbyManager] ClientPeer:{peer.Id}, succesfully added to lobby!");
-                    EventBus.PublishPlayerJoinedQueue(peer);
+                    Console.WriteLine($"[LobbyManager] Player:{player.Name}, succesfully added to lobby!");
+                    EventBus.PublishPlayerJoinedQueue(player);
                     return;
                 }
             }
             Lobby newLobby = new Lobby(_netManager);
-            newLobby.TryAddPlayer(peer);
+            newLobby.TryAddPlayer(player);
             _allLobies.Add(newLobby);
-            EventBus.PublishPlayerJoinedQueue(peer);
-            Console.WriteLine($"[LobbyManager] Created new lobby for ClientPeer:{peer.Id}!");
+            EventBus.PublishPlayerJoinedQueue(player);
+            Console.WriteLine($"[LobbyManager] Created new lobby for Player:{player.Name}!");
         }
 
     }

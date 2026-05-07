@@ -41,9 +41,10 @@ public partial class NetworkManager : Node
 			SendMoveRequest(x, y, z);
 		};
 
+		// MENU | LOBBY
 		EventBus.OnJoinTheQueue += SendJoinQueue;
 		EventBus.OnSendMessageToLobby += SendMessageLobby;
-
+		EventBus.OnNicknameChanged += SendNickname;
 	}
 
 	private void PacketReceived(NetPeer peer, NetDataReader reader, byte channel, DeliveryMethod deliveryMethod )
@@ -57,8 +58,9 @@ public partial class NetworkManager : Node
 
 			case PacketType.ChatMessage:
 
+				string sender = reader.GetString();
 				string message = reader.GetString();
-				EventBus.PublishOnMessageReceived(message);
+				EventBus.PublishOnMessageReceived(sender, message);
 
 			break;
 
@@ -109,6 +111,20 @@ public partial class NetworkManager : Node
 			break;
 		}
 	}
+
+	// MENU
+
+	private void SendNickname(string nick)
+	{
+		_writer.Reset();
+		_writer.Put((byte)PacketType.ChangeNickname);
+		_writer.Put(nick);
+		_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
+	}
+
+
+	// GAMEPLAY
+
 	private void SendMoveRequest(short x, short y, short z)
 	{
 	

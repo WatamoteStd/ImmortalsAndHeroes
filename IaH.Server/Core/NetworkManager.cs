@@ -63,11 +63,18 @@ namespace IaH.Server.Core
 
             // EVENTS
             EventBus.OnHpChanged += OnHealthChanged;
-            EventBus.OnPlayerJoinedQueue += (peer) =>
+            EventBus.OnPlayerJoinedQueue += (player) =>
             {
-                _writer.Reset();
-                _writer.Put((byte)PacketType.LobbyJoined);
-                peer.Send(_writer, DeliveryMethod.ReliableOrdered);
+                NetPeer realPeer = (NetPeer)_netManager.GetPeerById(player.PeerId);
+                if (realPeer != null)
+                {
+
+                    _writer.Reset();
+                    _writer.Put((byte)PacketType.LobbyJoined);
+                    realPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
+
+                }
+                else Console.WriteLine($"[ERROR] Invalid peer, can't send lobby joined: Peer:{realPeer} not found!");
             };
         }
 
@@ -83,38 +90,48 @@ namespace IaH.Server.Core
 
                 case PacketType.JoinQueue:
 
-                    _lobbyManager.HandleJoinQueue(peer);
+                    _lobbyManager.HandleJoinQueue(_players[peer.Id]);
 
+                    break;
+
+                case PacketType.ChangeNickname:
+                    {
+
+                        string text = reader.GetString();
+                        if (_players.TryGetValue(peer.Id, out Player player))
+                        {
+                            if (string.IsNullOrWhiteSpace(text))
+                            {
+                                text = "UnknownPlayer";
+                            }
+                            if (text.Length > 27)
+                            {
+                                text = text.Substring(0, 27);
+                            }
+
+                            player.Name = text;
+                            Console.WriteLine($"[SERVER] Peer:{peer.Id}, changed nickname to: {player.Name}");
+                        }
+
+                        
+                    }
                     break;
 
                 case PacketType.ChatMessage:
-
-                    string msg = reader.GetString();
-                    _writer.Reset();
-                    _writer.Put((byte)PacketType.ChatMessage);
-                    _writer.Put(msg);
-
-                    _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
-                    Console.WriteLine($"[CHAT] Broad-casted:{msg}");
-
-                    break;
-
-                case PacketType.MoveRequest:
                     {
-                       
+                        string msg = reader.GetString();
+                        if (_players.TryGetValue(peer.Id, out Player player))
+                        {
+                            _writer.Reset();
+                            _writer.Put((byte)PacketType.ChatMessage);
+                            _writer.Put(player.Name);
+                            _writer.Put(msg);
+
+                            _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
+                            Console.WriteLine($"[CHAT] {player.Name}: {msg}");
+                        }
                     }
                     break;
-
-                case PacketType.HeroSelected:
-                    {
-                        
-
-                        break;
-                    }
-                case PacketType.AttackRequest:
-                    
-                       
-                        break;
 
             }
         }
@@ -133,7 +150,7 @@ namespace IaH.Server.Core
             _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
             
         }
-        public void SendToLobby(List<NetPeer> recipients, IEnumerable<BaseEntity> entities)
+        public void SendToLobby(List<Player> recipients, IEnumerable<BaseEntity> entities)
         {
             _writer.Reset();
             _writer.Put((byte)PacketType.BatchEntityPositions);
@@ -148,9 +165,10 @@ namespace IaH.Server.Core
             }
 
            
-            foreach (var peer in recipients)
+            foreach (var player in recipients)
             {
-                peer.Send(_writer, DeliveryMethod.Unreliable);
+                var realPeer = _netManager.GetPeerById(player.PeerId);
+                realPeer.Send(_writer, DeliveryMethod.Unreliable);
             }
         }
 

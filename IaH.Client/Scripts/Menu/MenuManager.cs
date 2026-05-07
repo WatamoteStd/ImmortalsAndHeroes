@@ -32,6 +32,7 @@ public partial class MenuManager : Node
 	[Export] public Label NicknameText;
 	[Export] public LineEdit NicknameEdit;
 	[Export] public TextureButton ChangeNickname;
+	private string _lastSentNick = "";
 
 	private Dictionary<WindowType, Control> _window;
 	private WindowType _currentWindow;
@@ -86,10 +87,16 @@ public partial class MenuManager : Node
 	}
 	private void EditNicknameEnd()
 	{
-		
+		string newNick = NicknameEdit.Text.Trim();
+		if (newNick == _lastSentNick) return;
+
+		_lastSentNick = newNick;
+
 		NicknameEdit.Visible = false;
 		NicknameText.Text = NicknameEdit.Text;
 		NicknameText.Visible = true;
+	
+		EventBus.PublishNicknameChanged(NicknameText.Text);
 
 	}
 	public override void _Input(InputEvent @event)

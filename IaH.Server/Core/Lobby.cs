@@ -19,7 +19,7 @@ namespace IaH.Server.Core
             InGame
         }
         public LobbyStatus State = LobbyStatus.Waiting;
-        public List<NetPeer> playersList = new List<NetPeer>();
+        public List<Player> playersList = new List<Player>();
         private EntityManager _entityManager = new EntityManager();
         private NetworkManager _netManager;
         private NetDataWriter _writer;
@@ -29,11 +29,11 @@ namespace IaH.Server.Core
             _netManager = managerFromMain;
         }
 
-        public bool TryAddPlayer(NetPeer peer)
+        public bool TryAddPlayer(Player player)
         {
             if (playersList.Count >= 10 || State != LobbyStatus.Waiting) return false;
 
-            playersList.Add(peer);
+            playersList.Add(player);
             return true;
         }
 

@@ -14,9 +14,11 @@ public partial class LobbyManager : Control
 		EventBus.OnMessageReceived += UpdateChat;
 		
 	}
-	private void UpdateChat(string message)
+	private void UpdateChat(string sender, string message)
 	{
-		ChatHistrory.AppendText(message + "\n");
+		string formatedMessage = $"[b][color=#4db8ff]{sender}:[/color][/b] {message}\n";
+
+		ChatHistrory.AppendText(formatedMessage);
 	}
 	public void SendMessageToAll(string message)
 	{

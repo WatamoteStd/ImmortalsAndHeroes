@@ -5,6 +5,12 @@ using System.Collections.Generic;
 
 public static partial class EventBus 
 {
+	// MENU
+	public static event Action<string> OnNicknameChanged;
+	public static void PublishNicknameChanged(string nick)
+	{
+		OnNicknameChanged?.Invoke(nick);
+	}
 	
 	public static event Action<CharacterType> OnHeroSelected;
 	public static event Action OnPlayerConnectedToWorld;
@@ -24,10 +30,10 @@ public static partial class EventBus
 	{
 		OnSendMessageToLobby?.Invoke(message);
 	}
-	public static event Action<string> OnMessageReceived;
-	public static void PublishOnMessageReceived(string msg)
+	public static event Action<string, string> OnMessageReceived;
+	public static void PublishOnMessageReceived(string sender, string msg)
 	{
-		OnMessageReceived?.Invoke(msg);
+		OnMessageReceived?.Invoke(sender, msg);
 	}
 
 	public static void PublishDisconnectedPacketReceived(ushort id)

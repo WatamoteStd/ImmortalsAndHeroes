@@ -12,7 +12,6 @@ public partial class EntityHandler : Node3D
 
 	public override void _Ready()
 	{
-		EventBus.OnPlayerJoined += SpawnPlayer;
 		EventBus.OnPositionsUpdated += UpdatePosition;
 		EventBus.OnDisconnectPacketReceived += DeleteEntity;
 

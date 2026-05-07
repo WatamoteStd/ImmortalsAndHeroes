@@ -301,7 +301,7 @@ grow_vertical = 2
 theme = ExtResource("1_1kgdg")
 metadata/_edit_use_anchors_ = true
 
-[node name="MenuManager" type="Control" parent="." unique_id=1854668945 node_paths=PackedStringArray("_heroListPanel", "_heroDetailedPanel", "_settingsPanel", "_ladderButton", "_heroesButton", "_settingsButton", "_settingsLeaveButton") groups=["Buttons"]]
+[node name="MenuManager" type="Control" parent="." unique_id=1854668945 node_paths=PackedStringArray("_heroListPanel", "_heroDetailedPanel", "_settingsPanel", "_ladderButton", "_heroesButton", "_settingsButton", "_settingsLeaveButton", "NicknameText", "NicknameEdit", "ChangeNickname") groups=["Buttons"]]
 anchors_preset = 0
 script = ExtResource("3_g5cqd")
 _heroListPanel = NodePath("../HeroesList")
@@ -311,6 +311,9 @@ _ladderButton = NodePath("../TopPanelContainer/TopPanel/HBoxContainer/TopPanelVe
 _heroesButton = NodePath("../TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical/HeroList")
 _settingsButton = NodePath("../TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical/Settings")
 _settingsLeaveButton = NodePath("../SettingsWindow/SettingsMargin/LeaveSettings")
+NicknameText = NodePath("../Profile/HBoxContainer/Nickname")
+NicknameEdit = NodePath("../Profile/HBoxContainer/NicknameEdit")
+ChangeNickname = NodePath("../Profile/HBoxContainer/ChangeNickname")
 
 [node name="Background" type="ColorRect" parent="." unique_id=215981343]
 layout_mode = 1

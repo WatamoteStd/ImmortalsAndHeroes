@@ -19,7 +19,6 @@ public partial class CameraControl : Camera3D
 			{
 				var cords = GetMouseClickCoords();
 				if (cords.HasValue) {
-				EventBus.PublishPlayerRMB(cords.Value);	
 				}
 
 			}
