@@ -11,7 +11,7 @@ namespace IaH.Shared.Networking
     public enum PacketType : byte
     {
         // 0-10: Menu/Lobby
-        Welcome,
+        ChangeNickname,
         EntityRemove,
         HeroSelected,
         ChatMessage,
@@ -30,6 +30,11 @@ namespace IaH.Shared.Networking
 
     public struct JoinQueuePacket { };
     public struct LobbyJoinedPacket { };
+    public struct ChangeNicknamePacket
+    {
+        public string Name;
+
+    };
 
     public struct ChatMessagePacket
     {

@@ -10,9 +10,11 @@ config_version=5
 
 [application]
 
-config/name="ImmortalsAndHeroesClient"
+config/name="ImmortalsAndHeroes:TechnicalPreview"
+config/version="0.0.1-alpha"
 run/main_scene="uid://cq6x40idpiec0"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
+config/icon="uid://h0im7sarowp8"
 
 [audio]
 

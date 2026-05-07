@@ -6,7 +6,6 @@ using System.Collections.Generic;
 public static partial class EventBus 
 {
 	
-	public static event Action<PlayerJoinedPacket> OnPlayerJoined;
 	public static event Action<CharacterType> OnHeroSelected;
 	public static event Action OnPlayerConnectedToWorld;
 	public static event Action<Vector3> OnPlayerRMB;
@@ -46,26 +45,9 @@ public static partial class EventBus
 		OnPositionsUpdated?.Invoke(id, position);
 	}
 
-	public static void PublishPlayerRMB(Vector3 cords)
-	{
-		OnPlayerRMB?.Invoke(cords);
-	}
-
-	public static void PublishPlayerConnectedToWorld()
-	{
-		OnPlayerConnectedToWorld?.Invoke();
-	} 
-	
 	public static void PublishHeroSelected(CharacterType hero)
 	{
 		OnHeroSelected?.Invoke(hero);
-	}
-
-	public static void PublishPlayerJoined(PlayerJoinedPacket packet)
-	{
-		
-		OnPlayerJoined?.Invoke(packet);
-
 	}
 
 }

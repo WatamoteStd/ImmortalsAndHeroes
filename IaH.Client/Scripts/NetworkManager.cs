@@ -32,7 +32,6 @@ public partial class NetworkManager : Node
 		_writer = new NetDataWriter();
 
 		// EVENT BUS
-		EventBus.OnHeroSelected += SendHeroSelectedToServer;
 		EventBus.OnPlayerRMB += (cords) =>
 		{
 			short x = (short)(cords.X * 100);
@@ -69,37 +68,7 @@ public partial class NetworkManager : Node
 
 			break;
 			
-			case PacketType.Welcome:
-				var clientPeerId = reader.GetUShort();
-				GameData.Instance.MyLocalPeer = clientPeerId;
-				GD.Print($"[NetworkManager] Sussecfully connected to the server! PeerId:{clientPeerId}");
-
-			break;
-
 			case PacketType.PlayerJoined:
-
-				ushort _id = reader.GetUShort();
-				CharacterType _hero = (CharacterType)reader.GetByte();
-				short _x = reader.GetShort();
-				short _y = reader.GetShort();
-				short _z = reader.GetShort();
-				if (GameData.Instance.MyLocalId == -1) 
-				{
-					GameData.Instance.MyLocalId = (short)_id;
-
-				}
-				PlayerJoinedPacket packet = new PlayerJoinedPacket()
-				{
-					
-					EntityId = _id,
-					SelectedHero = _hero,
-					X = _x,
-					Y = _y,
-					Z = _z
-
-				};
-				EventBus.PublishPlayerJoined(packet);
-
 
 			break;
 
@@ -139,15 +108,6 @@ public partial class NetworkManager : Node
 				}
 			break;
 		}
-	}
-	private void SendHeroSelectedToServer(CharacterType hero)
-	{
-
-		_writer.Reset();
-		_writer.Put((byte)PacketType.HeroSelected);
-		_writer.Put((byte)hero);
-		_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
-		
 	}
 	private void SendMoveRequest(short x, short y, short z)
 	{

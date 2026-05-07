@@ -14,8 +14,6 @@ namespace IaH.Server.Core
 {
     public class NetworkManager
     {
-        private readonly Dictionary<int, ushort> _peerToEntity = new Dictionary<int, ushort>();
-        private ushort _entityId = 0;
 
         private EventBasedNetListener _listener;
         private NetManager _netManager;
@@ -25,15 +23,16 @@ namespace IaH.Server.Core
 
         // LOBBY
         private LobbyManager _lobbyManager;
+        private readonly Dictionary<int, Player> _players = new Dictionary<int, Player>();
 
         public NetworkManager() // constructor
         {
             _listener = new EventBasedNetListener();
             _netManager = new NetManager(_listener);
             _writer = new NetDataWriter();
-
-
             _entityManager = new EntityManager();
+
+            // DICTIONARY
 
             _listener.ConnectionRequestEvent += (request) =>
             {
@@ -43,31 +42,20 @@ namespace IaH.Server.Core
 
             _listener.PeerConnectedEvent += (peer) =>
             {
-                _writer.Reset();
-                _writer.Put((byte)PacketType.Welcome);
-                _writer.Put((ushort)peer.Id);
-                peer.Send(_writer, DeliveryMethod.ReliableOrdered);
 
-                Console.WriteLine($"[SERVER] PeerConnected! PeerId:{peer.Id} | Entity Id: NotOrdered Yet.");
+                var player = new Player
+                {
+                    PeerId = peer.Id,
+                    CurrentState = Player.PlayerStates.InMenu
+                };
+                _players.Add(peer.Id, player);
+                Console.WriteLine($"[SERVER] New Player session created. PeerId: {peer.Id}");
 
 
             };
             _listener.PeerDisconnectedEvent += (peer, disconnectedInfo) =>
             {
-                Console.WriteLine($"[SERVER] PeerId:{peer.Id} disconnected from the server.");
-
-                if (_peerToEntity.TryGetValue(peer.Id, out ushort entityId))
-                {
-                    _writer.Reset();
-                    _writer.Put((byte)PacketType.EntityRemove);
-                    _writer.Put((ushort)entityId);
-                    _netManager.SendToAll(_writer, DeliveryMethod.ReliableOrdered);
-
-                    _entityManager.RemoveEntity(entityId);
-                    _peerToEntity.Remove(peer.Id);
-                    Console.WriteLine($"Entity {entityId} removed from the world!");
-
-                }
+                
 
             };
 
@@ -113,83 +101,20 @@ namespace IaH.Server.Core
 
                 case PacketType.MoveRequest:
                     {
-                        short x = reader.GetShort();
-                        short y = reader.GetShort();
-                        short z = reader.GetShort();
-
-                        Vector3 _finalCords = new Vector3(x / 100.0f, y / 100.0f, z / 100.0f);
-
-                        Console.WriteLine($"[SERVER] Получен запрос на движение от Peer {peer.Id}: {_finalCords}");
-
-                        if (_peerToEntity.TryGetValue(peer.Id, out ushort myEntityId))
-                        {
-
-                            Hero _playerHero = _entityManager.GetEntity(myEntityId) as Hero;
-
-                            if (_playerHero != null)
-                            {
-                                _playerHero.TargetPosition = _finalCords;
-                                _playerHero.CurrentState = Hero.StateMachine.Move;
-                                Console.WriteLine($"[SERVER] Установили цель для Entity {myEntityId}: {_finalCords}");
-                            }
-
-                        }
+                       
                     }
                     break;
 
                 case PacketType.HeroSelected:
                     {
-                        if (_peerToEntity.ContainsKey(peer.Id))
-                        {
-                            Console.WriteLine($"[SERVER] PeerId:{peer.Id} already have entity selected!");
-                            return;
-                        }
-                        CharacterType _selectedHero = (CharacterType)reader.GetByte();
-                        short posX, posZ;
-                        if (_entityId % 2 == 0)
-                        {
-                            posX = -2000;
-                            posZ = 0;
-                        }
-                        else
-                        {
-                            posX = 2000;
-                            posZ = 0;
-                        }
-
-                        _entityManager.AddEntity(_entityId, posX, 200, posZ, _selectedHero);
-                        _peerToEntity.Add(peer.Id, _entityId);
-                        Console.WriteLine($"[SERVER] CreatedEntity:{_selectedHero} | EntityID: {_entityId} | PeerID: {peer.Id}");
-                        _entityId++;
-
+                        
 
                         break;
                     }
                 case PacketType.AttackRequest:
-                    {
-                        Console.WriteLine("[SERVER] AttackRequestPacket received!");
-
-                        var attackerId = reader.GetUShort();
-                        var enemyId = reader.GetUShort();
-                        var attackerEntity = _entityManager.GetEntity(attackerId);
-                        var attackerVictim = _entityManager.GetEntity(enemyId);
-
-                        if (attackerEntity != null && attackerEntity is Hero attacker)
-                        {
-
-                            if (attackerVictim != null && attackerVictim is BaseEntity victim)
-                            {
-                                attacker.CurrentState = Hero.StateMachine.Attack;
-                                attacker._currentTarget = victim;
-                                Console.WriteLine("Attack: target valid!");
-                            }
-
-                        }
-
-
+                    
+                       
                         break;
-
-                    }
 
             }
         }

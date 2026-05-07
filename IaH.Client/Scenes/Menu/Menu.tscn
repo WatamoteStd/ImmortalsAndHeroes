@@ -2,7 +2,6 @@
 
 [ext_resource type="Theme" uid="uid://d288s54ykbsws" path="res://Assets/Themes/IaH_Theme.tres" id="1_1kgdg"]
 [ext_resource type="FontFile" uid="uid://o4l4jdsxb6dc" path="res://Assets/Fonts/Jost Medieval Bold.ttf" id="2_3kh17"]
-[ext_resource type="Script" uid="uid://de3ovfslmyj0m" path="res://Scripts/Menu/Menu.cs" id="2_47xui"]
 [ext_resource type="Script" uid="uid://dgl830qb3mgj0" path="res://Scripts/Menu/MenuManager.cs" id="3_g5cqd"]
 [ext_resource type="FontFile" uid="uid://0xgb637yqhh0" path="res://Assets/Fonts/Jost Medieval.ttf" id="3_kqkty"]
 [ext_resource type="Texture2D" uid="uid://bq7iqnt8vjtbd" path="res://Assets/Sprites/Menu/Profile/ChangeNicknameFeather.png" id="5_kulhe"]
@@ -292,7 +291,7 @@ border_color = Color(0.27143836, 0.2714384, 0.27143836, 1)
 border_blend = true
 shadow_size = 2
 
-[node name="Menu" type="Control" unique_id=1248173988 node_paths=PackedStringArray("Ladder", "Heroes", "Glossarium", "BecomeTester", "NicknameText", "NicknameEdit", "ChangeNickname")]
+[node name="Menu" type="Control" unique_id=1248173988]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -300,14 +299,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_1kgdg")
-script = ExtResource("2_47xui")
-Ladder = NodePath("TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical/Ladder")
-Heroes = NodePath("TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical/HeroList")
-Glossarium = NodePath("TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical/Glossarium")
-BecomeTester = NodePath("TopPanelContainer/TopPanel/HBoxContainer/TopPanelVertical/BecomeTester")
-NicknameText = NodePath("Profile/HBoxContainer/Nickname")
-NicknameEdit = NodePath("Profile/HBoxContainer/NicknameEdit")
-ChangeNickname = NodePath("Profile/HBoxContainer/ChangeNickname")
 metadata/_edit_use_anchors_ = true
 
 [node name="MenuManager" type="Control" parent="." unique_id=1854668945 node_paths=PackedStringArray("_heroListPanel", "_heroDetailedPanel", "_settingsPanel", "_ladderButton", "_heroesButton", "_settingsButton", "_settingsLeaveButton") groups=["Buttons"]]

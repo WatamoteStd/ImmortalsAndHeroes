@@ -26,6 +26,12 @@ public partial class MenuManager : Node
 	[Export] private Button _heroesButton;
 	[Export] private Button _settingsButton;
 	[Export] private Button _settingsLeaveButton;
+	[Export] public Button BecomeTester;
+
+	// NICKNAME
+	[Export] public Label NicknameText;
+	[Export] public LineEdit NicknameEdit;
+	[Export] public TextureButton ChangeNickname;
 
 	private Dictionary<WindowType, Control> _window;
 	private WindowType _currentWindow;
@@ -41,6 +47,10 @@ public partial class MenuManager : Node
 		_heroesButton.Pressed += () => SwitchWindow(WindowType.HeroList);
 		_settingsButton.Pressed += () => SwitchWindow(WindowType.Settings);
 		_settingsLeaveButton.Pressed += () => SwitchToMain();
+
+		ChangeNickname.Pressed += EditNickname;
+		NicknameEdit.FocusExited += EditNicknameEnd;
+		NicknameEdit.TextSubmitted += (string text) => EditNicknameEnd();	
 
 	}
 	public void SwitchToMain()
@@ -64,5 +74,38 @@ public partial class MenuManager : Node
 			_currentWindow = newWindow;
 		}
 	}
+
+	// NICKNAME
+	private void EditNickname()
+	{
+
+		NicknameText.Visible = false;
+		NicknameEdit.Visible = true;
+		NicknameEdit.GrabFocus();
+		
+	}
+	private void EditNicknameEnd()
+	{
+		
+		NicknameEdit.Visible = false;
+		NicknameText.Text = NicknameEdit.Text;
+		NicknameText.Visible = true;
+
+	}
+	public override void _Input(InputEvent @event)
+	{
+		
+		if (@event is InputEventMouseButton mouseAction && mouseAction.Pressed)
+		{
+			
+			if (NicknameEdit.HasFocus() && !NicknameEdit.GetGlobalRect().HasPoint(mouseAction.GlobalPosition))
+			{
+				NicknameEdit.ReleaseFocus();
+			}
+
+		}
+
+	}
+
 
 }
