@@ -1,0 +1,659 @@
+[gd_scene format=3 uid="uid://bqylasln35n7x"]
+
+[ext_resource type="Script" uid="uid://8tayc0txnuhe" path="res://Scripts/Menu/MenuManager.cs" id="1_3kf3n"]
+[ext_resource type="Theme" uid="uid://05oefhx4b62j" path="res://Assets/Styles/Menu.theme" id="1_syfuq"]
+[ext_resource type="FontFile" uid="uid://dlcqgy7ybh2jk" path="res://Assets/Fonts/Title/MedievalSharp-Regular.ttf" id="2_6pedr"]
+[ext_resource type="FontFile" uid="uid://bewhfj4crg3km" path="res://Assets/Fonts/Main/Cinzel-VariableFont_wght.ttf" id="4_s2c3o"]
+[ext_resource type="Script" uid="uid://c2hu45byrsy4s" path="res://Scripts/Menu/Panels/SearchGamePanel.cs" id="5_ma218"]
+[ext_resource type="Script" uid="uid://c8or105jrys1o" path="res://Scripts/Menu/Panels/SearchTimePanel.cs" id="6_idohh"]
+
+[sub_resource type="Gradient" id="Gradient_syfuq"]
+interpolation_color_space = 1
+offsets = PackedFloat32Array(0, 0.44011977, 1)
+colors = PackedColorArray(0.05755859, 0.062216647, 0.14014277, 1, 0.05466959, 0.06283862, 0.1416285, 1, 0.056749135, 0.024035424, 0.10144264, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_s2c3o"]
+gradient = SubResource("Gradient_syfuq")
+width = 1024
+height = 1024
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_syfuq"]
+content_margin_left = 2.0
+content_margin_top = 10.0
+content_margin_right = 2.0
+bg_color = Color(0.13510853, 0.14086464, 0.27187034, 1)
+border_width_bottom = 3
+border_color = Color(0.08194845, 0.09172361, 0.18925473, 1)
+border_blend = true
+shadow_size = 5
+
+[sub_resource type="FontVariation" id="FontVariation_ma218"]
+base_font = ExtResource("4_s2c3o")
+variation_opentype = {
+2003265652: 600
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idohh"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(1.02277845e-07, 0.33316776, 0.09619682, 1)
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+border_color = Color(2.4065375e-08, 0.2929745, 0.07733252, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wfhf6"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.111102395, 0.29984277, 0.1076828, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.20437908, 0.50774693, 0.1993177, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3jcrr"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.16036215, 0.40788475, 0.15601796, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.20437908, 0.50774693, 0.1993177, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aobxe"]
+draw_center = false
+border_width_top = 3
+border_color = Color(0.17520267, 0.23158637, 0.37607938, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 5
+
+[sub_resource type="Gradient" id="Gradient_s2c3o"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.99206346)
+colors = PackedColorArray(0.05882353, 0.08627451, 0.09803922, 1, 0.05490196, 0.10980392, 0.17254902, 0.62352943)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ma218"]
+gradient = SubResource("Gradient_s2c3o")
+fill_from = Vector2(0.5099715, 0.84615386)
+fill_to = Vector2(0.5156695, 0.44159544)
+
+[sub_resource type="FontVariation" id="FontVariation_s2c3o"]
+base_font = ExtResource("4_s2c3o")
+variation_opentype = {
+2003265652: 400
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_byewe"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.34686807, 0.06896648, 0.065870754, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.28151733, 0.047359772, 0.047351554, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8aa6"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.29803923, 0.050980393, 0.050980393, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.26534083, 0.04257711, 0.042570658, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x0ao6"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.41755596, 0.08872328, 0.088716425, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.42558885, 0.091176294, 0.09116661, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ab40c"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.13334769, 0.18667388, 0.27000517, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.13714004, 0.19149423, 0.2764313, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sjh0l"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1330333, 0.18528068, 0.27670115, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.13714004, 0.19149423, 0.2764313, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qki4b"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.21813801, 0.28295448, 0.42628816, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.13714004, 0.19149423, 0.2764313, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8p2w"]
+content_margin_left = 15.0
+content_margin_top = 3.0
+content_margin_right = 15.0
+content_margin_bottom = 3.0
+bg_color = Color(0.14779314, 0.6651797, 0.788353, 0.16470589)
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dd46u"]
+content_margin_left = 15.0
+content_margin_top = 3.0
+content_margin_right = 15.0
+content_margin_bottom = 3.0
+bg_color = Color(0.101960786, 0.5254902, 0.61960787, 0.21568628)
+border_color = Color(0.9100788, 0.8698636, 0.7145668, 1)
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dsmso"]
+content_margin_left = 15.0
+content_margin_top = 3.0
+content_margin_right = 15.0
+content_margin_bottom = 3.0
+bg_color = Color(0.101960786, 0.5254902, 0.61960787, 0.21568628)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9100788, 0.8698636, 0.7145668, 1)
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_krje8"]
+content_margin_left = 15.0
+content_margin_top = 3.0
+content_margin_right = 15.0
+content_margin_bottom = 3.0
+bg_color = Color(0.14779314, 0.6651797, 0.788353, 0.16470589)
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="FontVariation" id="FontVariation_idohh"]
+base_font = ExtResource("4_s2c3o")
+variation_opentype = {
+2003265652: 700
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n3nbb"]
+content_margin_left = 20.0
+content_margin_top = 6.0
+content_margin_right = 20.0
+content_margin_bottom = 6.0
+bg_color = Color(0.1697079, 0.3271131, 0.11792988, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.06674788, 0.15182483, 0.03911669, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dm44m"]
+content_margin_left = 20.0
+content_margin_top = 6.0
+content_margin_right = 20.0
+content_margin_bottom = 6.0
+bg_color = Color(0.1297929, 0.2610933, 0.08722051, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.06674788, 0.15182483, 0.03911669, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_du1yi"]
+content_margin_left = 20.0
+content_margin_top = 6.0
+content_margin_right = 20.0
+content_margin_bottom = 6.0
+bg_color = Color(0.2053628, 0.388453, 0.14581785, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.06674788, 0.15182483, 0.03911669, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6pedr"]
+bg_color = Color(0.15138647, 0, 0.0024839498, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s2c3o"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.1461868, 0.25036287, 0.44734484, 1)
+skew = Vector2(0.3, 0)
+border_color = Color(0.050980393, 0.07450981, 0.16862746, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ma218"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.092964, 0.1707328, 0.31517467, 1)
+skew = Vector2(0.3, 0)
+border_color = Color(0.050980393, 0.07450981, 0.16862746, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c0stj"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.46123856, 0.049116515, 0.081470706, 1)
+border_width_top = 5
+border_width_right = 100
+border_width_bottom = 5
+border_color = Color(0.8235294, 0.12941177, 0.18431373, 0.07450981)
+border_blend = true
+
+[sub_resource type="FontVariation" id="FontVariation_3feh0"]
+base_font = ExtResource("4_s2c3o")
+variation_embolden = 0.1
+
+[node name="Menu" type="Control" unique_id=269866567]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_syfuq")
+metadata/_edit_use_anchors_ = true
+
+[node name="MenuManager" type="Control" parent="." unique_id=1439821629 node_paths=PackedStringArray("_loginButton", "_loginWindow", "_nicknameEdit", "_searchGameButton", "_searchGameContainer")]
+anchors_preset = 0
+script = ExtResource("1_3kf3n")
+_loginButton = NodePath("../AuthWindow/VBoxContainer/LoginButton")
+_loginWindow = NodePath("../AuthWindow")
+_nicknameEdit = NodePath("../AuthWindow/VBoxContainer/TextEdit")
+_searchGameButton = NodePath("../SearchButtonPanel/MarginContainer/SearchGameButton")
+_searchGameContainer = NodePath("../SearchGamePanel")
+
+[node name="Bg" type="TextureRect" parent="." unique_id=1962085197]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_s2c3o")
+expand_mode = 1
+
+[node name="TopPanel" type="PanelContainer" parent="." unique_id=800637285]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_syfuq")
+
+[node name="MarginContainer" type="MarginContainer" parent="TopPanel" unique_id=1412640788]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 5
+
+[node name="Main" type="HBoxContainer" parent="TopPanel/MarginContainer" unique_id=707236242]
+layout_mode = 2
+
+[node name="Left" type="HBoxContainer" parent="TopPanel/MarginContainer/Main" unique_id=1113764717]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+
+[node name="SettingsB" type="Button" parent="TopPanel/MarginContainer/Main/Left" unique_id=501000677]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+theme = ExtResource("1_syfuq")
+text = "Settings"
+
+[node name="HeroesB" type="Button" parent="TopPanel/MarginContainer/Main/Left" unique_id=1877870721]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+theme = ExtResource("1_syfuq")
+theme_override_font_sizes/font_size = 20
+text = "Heroes"
+
+[node name="MechanicsB" type="Button" parent="TopPanel/MarginContainer/Main/Left" unique_id=435933395]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+theme = ExtResource("1_syfuq")
+theme_override_font_sizes/font_size = 20
+text = "Mechanics
+"
+
+[node name="Middle" type="HBoxContainer" parent="TopPanel/MarginContainer/Main" unique_id=1265379172]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 3.0
+alignment = 1
+
+[node name="GameNameLabel" type="Label" parent="TopPanel/MarginContainer/Main/Middle" unique_id=1875088183]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("2_6pedr")
+theme_override_font_sizes/font_size = 45
+text = "Immortals And Heroes"
+horizontal_alignment = 1
+
+[node name="Right" type="HBoxContainer" parent="TopPanel/MarginContainer/Main" unique_id=1979747227]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+alignment = 2
+
+[node name="Ladder" type="Button" parent="TopPanel/MarginContainer/Main/Right" unique_id=809266762]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+text = "Ladder"
+
+[node name="RankSystem" type="Button" parent="TopPanel/MarginContainer/Main/Right" unique_id=1839153534]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+text = "Patch Info"
+
+[node name="Quit" type="Button" parent="TopPanel/MarginContainer/Main/Right" unique_id=1183725962]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+text = "Quit"
+
+[node name="SearchButtonPanel" type="Control" parent="." unique_id=437019016]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="SearchButtonPanel" unique_id=553608048]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -207.0
+offset_top = -35.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="SearchGameButton" type="Button" parent="SearchButtonPanel/MarginContainer" unique_id=1267228176]
+custom_minimum_size = Vector2(200, 35)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7877587, 0.7877594, 0.7877589, 1)
+theme_override_fonts/font = SubResource("FontVariation_ma218")
+theme_override_styles/normal = SubResource("StyleBoxFlat_idohh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wfhf6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3jcrr")
+text = "START"
+
+[node name="SearchGamePanel" type="PanelContainer" parent="." unique_id=857499293 node_paths=PackedStringArray("RankedButton", "NormalButton", "_searchGameButton", "_playerCountContainer", "_seartchTimePanel")]
+visible = false
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -171.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_aobxe")
+script = ExtResource("5_ma218")
+RankedButton = NodePath("Borders/Tables/GameModes/RankedMatch")
+NormalButton = NodePath("Borders/Tables/GameModes/NormalMatch")
+_searchGameButton = NodePath("Borders/Tables/SearchTheGame")
+_playerCountContainer = NodePath("Borders/Tables/PlayerCount")
+_seartchTimePanel = NodePath("../SearchTimePanel")
+
+[node name="Bg" type="TextureRect" parent="SearchGamePanel" unique_id=1164760033]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_ma218")
+
+[node name="Borders" type="MarginContainer" parent="SearchGamePanel" unique_id=623331526]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="Tables" type="HBoxContainer" parent="SearchGamePanel/Borders" unique_id=501008700]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="GameModes" type="VBoxContainer" parent="SearchGamePanel/Borders/Tables" unique_id=1858481002]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="GameModeLabel" type="Label" parent="SearchGamePanel/Borders/Tables/GameModes" unique_id=178825397]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_fonts/font = SubResource("FontVariation_s2c3o")
+theme_override_font_sizes/font_size = 27
+text = "SELECT GAME MODE"
+horizontal_alignment = 1
+
+[node name="RankedMatch" type="Button" parent="SearchGamePanel/Borders/Tables/GameModes" unique_id=1363408318]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_byewe")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a8aa6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_x0ao6")
+text = "RANKED MATCH"
+
+[node name="NormalMatch" type="Button" parent="SearchGamePanel/Borders/Tables/GameModes" unique_id=1522622437]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ab40c")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_sjh0l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qki4b")
+text = "NORMAL MATCH"
+
+[node name="PlayerCount" type="VBoxContainer" parent="SearchGamePanel/Borders/Tables" unique_id=697825007]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="GameModeLabel2" type="Label" parent="SearchGamePanel/Borders/Tables/PlayerCount" unique_id=864720673]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = SubResource("FontVariation_s2c3o")
+theme_override_font_sizes/font_size = 20
+text = "PLAYERS"
+horizontal_alignment = 1
+
+[node name="2vs2" type="CheckBox" parent="SearchGamePanel/Borders/Tables/PlayerCount" unique_id=1744668543]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_t8p2w")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dd46u")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dsmso")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_dsmso")
+text = "2vs2"
+alignment = 1
+
+[node name="5vs5" type="CheckBox" parent="SearchGamePanel/Borders/Tables/PlayerCount" unique_id=499864779]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_krje8")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dsmso")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dsmso")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_dsmso")
+text = "5vs5"
+alignment = 1
+
+[node name="SearchTheGame" type="Button" parent="SearchGamePanel/Borders/Tables" unique_id=1973446775]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+theme_override_fonts/font = SubResource("FontVariation_idohh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_n3nbb")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dm44m")
+theme_override_styles/hover = SubResource("StyleBoxFlat_du1yi")
+text = "SEARCH THE GAME"
+
+[node name="AuthWindow" type="PanelContainer" parent="." unique_id=774084447]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6pedr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AuthWindow" unique_id=1230450226]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Login" type="Label" parent="AuthWindow/VBoxContainer" unique_id=619577183]
+layout_mode = 2
+theme_override_font_sizes/font_size = 29
+text = "LOGIN TO ENTER THE GAME"
+
+[node name="HSeparator" type="HSeparator" parent="AuthWindow/VBoxContainer" unique_id=420484502]
+layout_mode = 2
+
+[node name="TextEdit" type="TextEdit" parent="AuthWindow/VBoxContainer" unique_id=230580271]
+custom_minimum_size = Vector2(200, 35)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+placeholder_text = "Nickname
+"
+
+[node name="LoginButton" type="Button" parent="AuthWindow/VBoxContainer" unique_id=860432207]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_s2c3o")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ma218")
+text = "LOGIN"
+
+[node name="SearchTimePanel" type="MarginContainer" parent="." unique_id=1986447269 node_paths=PackedStringArray("_timeLabel")]
+visible = false
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -128.0
+offset_right = 128.0
+offset_bottom = 96.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_top = 80
+script = ExtResource("6_idohh")
+_timeLabel = NodePath("PanelContainer/HBoxContainer/Time")
+
+[node name="PanelContainer" type="PanelContainer" parent="SearchTimePanel" unique_id=1888905382]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_c0stj")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SearchTimePanel/PanelContainer" unique_id=537283018]
+layout_mode = 2
+
+[node name="Searching" type="Label" parent="SearchTimePanel/PanelContainer/HBoxContainer" unique_id=2132564654]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_3feh0")
+theme_override_font_sizes/font_size = 26
+text = "SEARCHING "
+
+[node name="Time" type="Label" parent="SearchTimePanel/PanelContainer/HBoxContainer" unique_id=1551028041]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_3feh0")
+theme_override_font_sizes/font_size = 26
+text = "0:00"

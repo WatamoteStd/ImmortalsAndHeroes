@@ -1,0 +1,12 @@
+<Project Sdk="Godot.NET.Sdk/4.6.2">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+  </PropertyGroup>
+  <ItemGroup>
+  <Reference Include="IaH.Shared">
+    <HintPath>C:/Moba/IaH.Project/IaH.Shared/bin/Release/netstandard2.1/IaH.Shared.dll</HintPath>
+  </Reference>
+</ItemGroup>
+</Project>

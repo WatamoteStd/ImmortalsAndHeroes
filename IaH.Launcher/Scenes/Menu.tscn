@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://bunoei5jf2axo"]
+
+[ext_resource type="Script" uid="uid://csv3tggiiix5w" path="res://Scripts/Menu.cs" id="1_6pedr"]
+[ext_resource type="FontFile" uid="uid://cyehonnsskks2" path="res://Assets/Fonts/Jost-Medium.ttf" id="2_syfuq"]
+
+[node name="Launcher" type="Control" unique_id=2023642862 node_paths=PackedStringArray("_loginButton", "_loginEdit", "_passwordEdit")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6pedr")
+_loginButton = NodePath("MainLayout/Border/LoginPanel/EnterGameButton")
+_loginEdit = NodePath("MainLayout/Border/LoginPanel/LoginStruct/LoginEdit")
+_passwordEdit = NodePath("MainLayout/Border/LoginPanel/PasswordStruct/PasswordEdit")
+metadata/_edit_use_anchors_ = true
+
+[node name="MainLayout" type="PanelContainer" parent="." unique_id=90172449]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="MainLayout" unique_id=50591549]
+layout_mode = 2
+color = Color(0.43786067, 0.066036314, 0.0747317, 1)
+
+[node name="Border" type="MarginContainer" parent="MainLayout" unique_id=1197508229]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 20
+
+[node name="GameName" type="Label" parent="MainLayout/Border" unique_id=1469152429]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("2_syfuq")
+theme_override_font_sizes/font_size = 30
+text = "IMMORTALS AND HEROES"
+
+[node name="LoginPanel" type="VBoxContainer" parent="MainLayout/Border" unique_id=90682357]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="LoginStruct" type="VBoxContainer" parent="MainLayout/Border/LoginPanel" unique_id=627929351]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Login" type="Label" parent="MainLayout/Border/LoginPanel/LoginStruct" unique_id=1379871381]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_syfuq")
+theme_override_font_sizes/font_size = 22
+text = "LOGIN"
+horizontal_alignment = 1
+
+[node name="LoginEdit" type="LineEdit" parent="MainLayout/Border/LoginPanel/LoginStruct" unique_id=834043094]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="PasswordStruct" type="VBoxContainer" parent="MainLayout/Border/LoginPanel" unique_id=1910949447]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Password" type="Label" parent="MainLayout/Border/LoginPanel/PasswordStruct" unique_id=1642776442]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_syfuq")
+theme_override_font_sizes/font_size = 22
+text = "PASSWORD"
+horizontal_alignment = 1
+
+[node name="PasswordEdit" type="LineEdit" parent="MainLayout/Border/LoginPanel/PasswordStruct" unique_id=997305168]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+secret = true
+
+[node name="EnterGameButton" type="Button" parent="MainLayout/Border/LoginPanel" unique_id=522156863]
+layout_mode = 2
+text = "ENTER THE GAME"

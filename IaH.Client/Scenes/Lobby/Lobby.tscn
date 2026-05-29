@@ -1,0 +1,141 @@
+[gd_scene format=3 uid="uid://b2bekxgajeqde"]
+
+[ext_resource type="Script" uid="uid://cfbrwojfx2skb" path="res://Scripts/Lobby/LobbyManager.cs" id="1_a15b7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r02bc"]
+draw_center = false
+
+[node name="Control" type="Control" unique_id=1685970061 node_paths=PackedStringArray("_player1", "_selectedHeroP1", "_player2", "_selectedHeroP2", "_lobbyTimer", "_lobbyId", "_pickVoidlessStar", "_pickFrozen")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a15b7")
+_player1 = NodePath("VBoxContainer/PanelContainer/LeftPlayer/NicknameP1")
+_selectedHeroP1 = NodePath("VBoxContainer/PanelContainer/LeftPlayer/SelectedHeroP1")
+_player2 = NodePath("VBoxContainer/PanelContainer/RightPlayer/NicknameP2")
+_selectedHeroP2 = NodePath("VBoxContainer/PanelContainer/RightPlayer/SelectedHeroP2")
+_lobbyTimer = NodePath("VBoxContainer/PanelContainer/Middle/Timer")
+_lobbyId = NodePath("LobbyIdLabel")
+_pickVoidlessStar = NodePath("HBoxContainer/VoidlessStarPick")
+_pickFrozen = NodePath("HBoxContainer/FrozenPick")
+
+[node name="Bg" type="ColorRect" parent="." unique_id=1566838103]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.014026925, 0.25788417, 0.21983999, 1)
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1528741865]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_r02bc")
+
+[node name="LobbyIdLabel" type="Label" parent="." unique_id=837580447]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -21.0
+offset_top = -23.0
+offset_right = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "None"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1451322725]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="MarginContainer" parent="VBoxContainer" unique_id=121840263]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 25
+
+[node name="LeftPlayer" type="HBoxContainer" parent="VBoxContainer/PanelContainer" unique_id=1925721655]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 20
+
+[node name="NicknameP1" type="Label" parent="VBoxContainer/PanelContainer/LeftPlayer" unique_id=1590173612]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "Player1"
+
+[node name="SelectedHeroP1" type="Label" parent="VBoxContainer/PanelContainer/LeftPlayer" unique_id=964402349]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.81960785, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "not selected"
+
+[node name="Middle" type="HBoxContainer" parent="VBoxContainer/PanelContainer" unique_id=543207609]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Timer" type="Label" parent="VBoxContainer/PanelContainer/Middle" unique_id=992458437]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "0:30"
+
+[node name="RightPlayer" type="HBoxContainer" parent="VBoxContainer/PanelContainer" unique_id=416981211]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="NicknameP2" type="Label" parent="VBoxContainer/PanelContainer/RightPlayer" unique_id=1332391255]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "Player 2"
+
+[node name="SelectedHeroP2" type="Label" parent="VBoxContainer/PanelContainer/RightPlayer" unique_id=2115931365]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.21176471, 0.46666667, 1, 1)
+theme_override_font_sizes/font_size = 25
+text = "not selected"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=183416263]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -207.5
+offset_top = -25.0
+offset_right = 207.5
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="VoidlessStarPick" type="Button" parent="HBoxContainer" unique_id=529963785]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "VoidlessStar"
+
+[node name="FrozenPick" type="Button" parent="HBoxContainer" unique_id=1536222843]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "Frozen"

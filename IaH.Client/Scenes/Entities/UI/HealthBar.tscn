@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://oq7r5d3tnvi3"]
+
+[ext_resource type="Script" uid="uid://8n3saguf6wc3" path="res://Scripts/Game/Entities/UI/HealthBar.cs" id="1_3w6mc"]
+[ext_resource type="Texture2D" uid="uid://kyutj1y0bcgf" path="res://Assets/UI/ProgressBars/Under.png" id="1_y8cn8"]
+[ext_resource type="Texture2D" uid="uid://wc6w5swqckyl" path="res://Assets/UI/ProgressBars/Progress.png" id="2_3w6mc"]
+
+[node name="SubViewport" type="SubViewport" unique_id=1552809282]
+transparent_bg = true
+size = Vector2i(128, 16)
+script = ExtResource("1_3w6mc")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=1692005191]
+modulate = Color(0.14352006, 0.5759431, 0, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_under = ExtResource("1_y8cn8")
+texture_progress = ExtResource("2_3w6mc")

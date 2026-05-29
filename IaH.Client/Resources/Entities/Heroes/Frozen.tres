@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="HeroData" format=3 uid="uid://botq3k5awvil2"]
+
+[ext_resource type="Script" uid="uid://dh74mbm1wqhg7" path="res://Scripts/Resources/HeroData.cs" id="1_8qqng"]
+[ext_resource type="PackedScene" uid="uid://xqxd1tk0jpy2" path="res://Scenes/Entities/Heroes/Frozen.tscn" id="1_mklhu"]
+
+[resource]
+script = ExtResource("1_8qqng")
+Name = "Frozen"
+Model = ExtResource("1_mklhu")
+metadata/_custom_type_script = "uid://dh74mbm1wqhg7"
