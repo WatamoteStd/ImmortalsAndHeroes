@@ -16,3 +16,4 @@ C:\Moba\IaH.Project\IaH.Server\obj\Debug\net10.0\refint\IaH.Server.dll
 C:\Moba\IaH.Project\IaH.Server\obj\Debug\net10.0\IaH.Server.pdb
 C:\Moba\IaH.Project\IaH.Server\obj\Debug\net10.0\IaH.Server.genruntimeconfig.cache
 C:\Moba\IaH.Project\IaH.Server\obj\Debug\net10.0\ref\IaH.Server.dll
+C:\Moba\IaH.Project\IaH.Server\obj\Debug\net10.0\IaH.Server.sourcelink.json

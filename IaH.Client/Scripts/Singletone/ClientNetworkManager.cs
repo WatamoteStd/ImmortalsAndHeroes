@@ -12,6 +12,7 @@ public partial class ClientNetworkManager : Node
 	// CASH FOR LOBBY
 	public int CachedLobbyId {get; private set;} = new();
 	public Godot.Collections.Dictionary<int, string> CachedPlayersInLobby {get; private set;} = new();
+	public Godot.Collections.Dictionary<int, Team> CachedPlayersTeam {get; private set;} = new();
 
 	public Godot.Collections.Dictionary<int, UnitList> CachedPlayersHeroes { get; private set; } = new();
 	public ushort LocalID {get; private set;}
@@ -86,15 +87,22 @@ public partial class ClientNetworkManager : Node
 				byte count = reader.GetByte();
 				CachedLobbyId = lobbyId;
 
+				CachedPlayersInLobby.Clear();
+    			CachedPlayersTeam.Clear();
+    			CachedPlayersHeroes.Clear(); 
+
 				for (int i = 0; i < count; i++)
 				{
 					
 					ushort pID = reader.GetUShort();
 					string pName = reader.GetString();
+					byte teamId = reader.GetByte();
 
 					CachedPlayersInLobby[pID] = pName;
+					CachedPlayersTeam[pID] = (Team)teamId;
 
 				}
+				EventBus.Instance.PublishPlayerConnectedToLobby(lobbyId);
 
 			break;
 			case PacketType.HeroSelected:
@@ -212,6 +220,8 @@ public partial class ClientNetworkManager : Node
 		_writer.Put(index);
 		_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
 	}
+
+
 
 
 	// GAME

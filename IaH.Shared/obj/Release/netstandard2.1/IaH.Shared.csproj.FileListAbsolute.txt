@@ -7,3 +7,4 @@ C:\Moba\IaH.Project\IaH.Shared\obj\Release\netstandard2.1\IaH.Shared.AssemblyInf
 C:\Moba\IaH.Project\IaH.Shared\obj\Release\netstandard2.1\IaH.Shared.csproj.CoreCompileInputs.cache
 C:\Moba\IaH.Project\IaH.Shared\obj\Release\netstandard2.1\IaH.Shared.dll
 C:\Moba\IaH.Project\IaH.Shared\obj\Release\netstandard2.1\IaH.Shared.pdb
+C:\Moba\IaH.Project\IaH.Shared\obj\Release\netstandard2.1\IaH.Shared.sourcelink.json

@@ -118,8 +118,7 @@ namespace IaH.Server.Managers
                     UnitList hero = (UnitList)reader.GetByte();
                     Player p = _peerToPlayer[peer.Id];
                     p.SelectedHero = hero;
-                    Lobby? pLobby = p.CurrentLobby;
-                    pLobby?.HeroSelected(p, hero);
+                    p.CurrentLobby?.HeroSelected(p, hero);
 
                     }
 

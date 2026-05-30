@@ -11,9 +11,15 @@ namespace IaH.Server.PlayerClasses
     public class Lobby
     {
         public ushort ID {get; private set;}
-        private float _lobbyTimer = 5.0f;
+        private float _lobbyTimer = 30.0f;
         private int _lastSentSec = 31;
+
+        // PLAYERS AND TEAMS
         private List<Player> _lobbyPlayers;
+        private List<Player> _teamWhite;
+        private List<Player> _teamDark;
+
+        // ONLINE INFO
         public NetManager _netManager;
         private NetDataWriter _writer;
         public enum State {WaitingForPlayers, WaitingForAllReady, Picking, Waiting, InGame};
@@ -21,6 +27,8 @@ namespace IaH.Server.PlayerClasses
         
         public Lobby(NetManager serverNetManager, ushort id)
         {
+            _teamDark = new();
+            _teamWhite = new();
             ID = id;
             _lobbyPlayers = new List<Player>();
             _netManager = serverNetManager;
@@ -84,6 +92,16 @@ namespace IaH.Server.PlayerClasses
             
             _lobbyPlayers.Add(player);
             player.CurrentState = Player.State.InLobby;
+
+            if (_teamWhite.Count < _teamDark.Count) {
+                _teamWhite.Add(player);
+                player.TeamID = Team.White;
+            }
+            else {
+                _teamDark.Add(player);
+                player.TeamID = Team.Black;
+            }
+            
             UpdateLobbyState();
 
         }
@@ -101,6 +119,8 @@ namespace IaH.Server.PlayerClasses
             }
 
         }
+
+
 
         public void HeroSelected(Player player, UnitList hero)
         {
@@ -121,11 +141,12 @@ namespace IaH.Server.PlayerClasses
         {
             _writer.Reset();
             _writer.Put((byte)PacketType.ConnectToLobby);
-            _writer.Put((ushort)ID);
+            _writer.Put((ushort)ID); // lobby id
             _writer.Put(PlayersCount());
             foreach (var p in _lobbyPlayers) {
                 _writer.Put((ushort)p.ID);
                 _writer.Put((string)p.Nickname);
+                _writer.Put((byte)p.TeamID);
             }
             SendToLobby(DeliveryMethod.ReliableOrdered);
         }

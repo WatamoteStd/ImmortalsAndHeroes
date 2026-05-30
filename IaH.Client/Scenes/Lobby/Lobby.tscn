@@ -1,44 +1,321 @@
 [gd_scene format=3 uid="uid://b2bekxgajeqde"]
 
-[ext_resource type="Script" uid="uid://cfbrwojfx2skb" path="res://Scripts/Lobby/LobbyManager.cs" id="1_a15b7"]
+[ext_resource type="Script" uid="uid://dshtobx0lpufl" path="res://Scripts/Lobby/LobbyManagerClient.cs" id="1_t6nvb"]
+[ext_resource type="FontFile" uid="uid://bewhfj4crg3km" path="res://Assets/Fonts/Main/Cinzel-VariableFont_wght.ttf" id="2_t6nvb"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r02bc"]
+[sub_resource type="Gradient" id="Gradient_a15b7"]
+colors = PackedColorArray(0.06429618, 0.026008222, 0.025903158, 1, 0.16399142, 0.2518197, 0.48065722, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t6nvb"]
+gradient = SubResource("Gradient_a15b7")
+width = 256
+height = 256
+fill_from = Vector2(0.5669516, 1)
+fill_to = Vector2(0.39601138, 0)
+
+[sub_resource type="FontVariation" id="FontVariation_q0a3m"]
+base_font = ExtResource("2_t6nvb")
+variation_opentype = {
+2003265652: 600
+}
+
+[sub_resource type="FontVariation" id="FontVariation_ptqqe"]
+base_font = ExtResource("2_t6nvb")
+variation_opentype = {
+2003265652: 600
+}
+
+[sub_resource type="FontVariation" id="FontVariation_t6nvb"]
+base_font = ExtResource("2_t6nvb")
+
+[sub_resource type="Gradient" id="Gradient_q0a3m"]
+offsets = PackedFloat32Array(0, 0.489418, 1)
+colors = PackedColorArray(0.050980393, 0.25882354, 0.3137255, 0.49019608, 0.09019608, 0.19607843, 0.22745098, 0.6117647, 0.05490196, 0.08627451, 0.18431373, 0.047058824)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ptqqe"]
+gradient = SubResource("Gradient_q0a3m")
+width = 128
+height = 128
+fill_to = Vector2(0.50427353, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t6nvb"]
 draw_center = false
+border_width_top = 4
+border_color = Color(0.13378492, 0.2440351, 0.3351842, 1)
+border_blend = true
+shadow_size = 3
 
-[node name="Control" type="Control" unique_id=1685970061 node_paths=PackedStringArray("_player1", "_selectedHeroP1", "_player2", "_selectedHeroP2", "_lobbyTimer", "_lobbyId", "_pickVoidlessStar", "_pickFrozen")]
+[sub_resource type="FontVariation" id="FontVariation_kye7n"]
+base_font = ExtResource("2_t6nvb")
+variation_opentype = {
+2003265652: 700
+}
+
+[sub_resource type="FontVariation" id="FontVariation_dy3e7"]
+base_font = ExtResource("2_t6nvb")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lj1ok"]
+bg_color = Color(0.14952296, 0.23506305, 0.62273216, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.064253695, 0.1731734, 0.3505247, 1)
+border_blend = true
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4hucq"]
+bg_color = Color(0.10467207, 0.17239085, 0.48150188, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.064253695, 0.1731734, 0.3505247, 1)
+border_blend = true
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e46jn"]
+bg_color = Color(0.14952296, 0.23506305, 0.62273216, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7107547, 0.8115472, 0.9714369, 1)
+border_blend = true
+shadow_size = 2
+
+[sub_resource type="FontVariation" id="FontVariation_qy7bc"]
+base_font = ExtResource("2_t6nvb")
+
+[sub_resource type="FontVariation" id="FontVariation_2dfve"]
+base_font = ExtResource("2_t6nvb")
+
+[sub_resource type="FontVariation" id="FontVariation_1pw17"]
+base_font = ExtResource("2_t6nvb")
+
+[sub_resource type="FontVariation" id="FontVariation_k75xl"]
+base_font = ExtResource("2_t6nvb")
+
+[sub_resource type="FontVariation" id="FontVariation_lj1ok"]
+base_font = ExtResource("2_t6nvb")
+variation_opentype = {
+2003265652: 700
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pk7kb"]
+content_margin_left = 15.0
+content_margin_top = 5.0
+content_margin_right = 15.0
+content_margin_bottom = 5.0
+bg_color = Color(5.4147097e-07, 0.34834054, 0.15144446, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.2624747, 0.108398266, 1)
+border_blend = true
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q0a3m"]
+content_margin_left = 15.0
+content_margin_top = 5.0
+content_margin_right = 15.0
+content_margin_bottom = 5.0
+bg_color = Color(4.0911138e-07, 0.31375048, 0.13478893, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.2624747, 0.108398266, 1)
+border_blend = true
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ptqqe"]
+content_margin_left = 15.0
+content_margin_top = 5.0
+content_margin_right = 15.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0.38897556, 0.1735059, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(3.3691526e-06, 0.66210854, 0.3169407, 1)
+border_blend = true
+shadow_size = 3
+
+[node name="Lobby" type="Control" unique_id=1685970061]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_a15b7")
-_player1 = NodePath("VBoxContainer/PanelContainer/LeftPlayer/NicknameP1")
-_selectedHeroP1 = NodePath("VBoxContainer/PanelContainer/LeftPlayer/SelectedHeroP1")
-_player2 = NodePath("VBoxContainer/PanelContainer/RightPlayer/NicknameP2")
-_selectedHeroP2 = NodePath("VBoxContainer/PanelContainer/RightPlayer/SelectedHeroP2")
-_lobbyTimer = NodePath("VBoxContainer/PanelContainer/Middle/Timer")
-_lobbyId = NodePath("LobbyIdLabel")
-_pickVoidlessStar = NodePath("HBoxContainer/VoidlessStarPick")
-_pickFrozen = NodePath("HBoxContainer/FrozenPick")
 
-[node name="Bg" type="ColorRect" parent="." unique_id=1566838103]
+[node name="LobbyManagerClient" type="Control" parent="." unique_id=2050272079 node_paths=PackedStringArray("_frozenButton", "_voidlessStarButton", "_whipButton", "_ozonidButton", "_lilithButton", "_chooseHeroButton", "_timer", "_nicknameWhite1", "_nicknameWhite2", "_heroWhite1", "_heroWhite2", "_nicknameBlack1", "_nicknameBlack2", "_heroBlack1", "_heroBlack2")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_t6nvb")
+_frozenButton = NodePath("../HeroPanel/PanelContainer/Border/HeroChoice/Heroes/HeroesGrid/FrozenPick")
+_voidlessStarButton = NodePath("../HeroPanel/PanelContainer/Border/HeroChoice/Heroes/HeroesGrid/VoidlessStarPick")
+_whipButton = NodePath("../HeroPanel/PanelContainer/Border/HeroChoice/Heroes/HeroesGrid/Whip")
+_ozonidButton = NodePath("../HeroPanel/PanelContainer/Border/HeroChoice/Heroes/HeroesGrid/Ozonid")
+_lilithButton = NodePath("../HeroPanel/PanelContainer/Border/HeroChoice/Heroes/HeroesGrid/Lilith")
+_chooseHeroButton = NodePath("../HeroPanel/PanelContainer/Border/HeroChoice/Chosehero")
+_timer = NodePath("../TimerContainer/Timer")
+_nicknameWhite1 = NodePath("../TopPanel/HBoxContainer/LeftPart/Players/NicknameP1")
+_nicknameWhite2 = NodePath("../TopPanel/HBoxContainer/LeftPart/Players/NicknameP2")
+_heroWhite1 = NodePath("../TopPanel/HBoxContainer/LeftPart/Heroes/SelectedHeroP1")
+_heroWhite2 = NodePath("../TopPanel/HBoxContainer/LeftPart/Heroes/SelectedHeroP2")
+_nicknameBlack1 = NodePath("../TopPanel/HBoxContainer/RightPart/Players2/NicknameP3")
+_nicknameBlack2 = NodePath("../TopPanel/HBoxContainer/RightPart/Players2/NicknameP4")
+_heroBlack1 = NodePath("../TopPanel/HBoxContainer/RightPart/Heroes/SelectedHeroP3")
+_heroBlack2 = NodePath("../TopPanel/HBoxContainer/RightPart/Heroes/SelectedHeroP4")
+
+[node name="Bg" type="TextureRect" parent="." unique_id=1006491404]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.014026925, 0.25788417, 0.21983999, 1)
+texture = SubResource("GradientTexture2D_t6nvb")
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1528741865]
+[node name="TopPanel" type="MarginContainer" parent="." unique_id=121840263]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
+offset_bottom = 81.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_r02bc")
+size_flags_vertical = 0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TopPanel" unique_id=1253718914]
+layout_mode = 2
+alignment = 1
+
+[node name="LeftPart" type="VBoxContainer" parent="TopPanel/HBoxContainer" unique_id=1163218943]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Players" type="HBoxContainer" parent="TopPanel/HBoxContainer/LeftPart" unique_id=1925721655]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/separation = 40
+
+[node name="NicknameP1" type="Label" parent="TopPanel/HBoxContainer/LeftPart/Players" unique_id=1590173612]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = SubResource("FontVariation_q0a3m")
+theme_override_font_sizes/font_size = 23
+text = "Player1"
+horizontal_alignment = 1
+
+[node name="NicknameP2" type="Label" parent="TopPanel/HBoxContainer/LeftPart/Players" unique_id=921973393]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = SubResource("FontVariation_ptqqe")
+theme_override_font_sizes/font_size = 23
+text = "Player2"
+horizontal_alignment = 1
+
+[node name="Heroes" type="HBoxContainer" parent="TopPanel/HBoxContainer/LeftPart" unique_id=1854888471]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 40
+
+[node name="SelectedHeroP1" type="Label" parent="TopPanel/HBoxContainer/LeftPart/Heroes" unique_id=964402349]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.81960785, 0, 1)
+theme_override_fonts/font = SubResource("FontVariation_t6nvb")
+theme_override_font_sizes/font_size = 18
+text = "not selected"
+horizontal_alignment = 1
+
+[node name="SelectedHeroP2" type="Label" parent="TopPanel/HBoxContainer/LeftPart/Heroes" unique_id=384623746]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.81960785, 0, 1)
+theme_override_fonts/font = SubResource("FontVariation_t6nvb")
+theme_override_font_sizes/font_size = 19
+text = "not selected"
+horizontal_alignment = 1
+
+[node name="VS" type="Label" parent="TopPanel/HBoxContainer" unique_id=752661644]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_font_sizes/font_size = 40
+text = "VS"
+
+[node name="RightPart" type="VBoxContainer" parent="TopPanel/HBoxContainer" unique_id=592110661]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 1
+
+[node name="Players2" type="HBoxContainer" parent="TopPanel/HBoxContainer/RightPart" unique_id=2047495134]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/separation = 40
+
+[node name="NicknameP3" type="Label" parent="TopPanel/HBoxContainer/RightPart/Players2" unique_id=1446271795]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_q0a3m")
+theme_override_font_sizes/font_size = 23
+text = "Player3"
+horizontal_alignment = 1
+
+[node name="NicknameP4" type="Label" parent="TopPanel/HBoxContainer/RightPart/Players2" unique_id=1604858390]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_ptqqe")
+theme_override_font_sizes/font_size = 23
+text = "Player4"
+horizontal_alignment = 1
+
+[node name="Heroes" type="HBoxContainer" parent="TopPanel/HBoxContainer/RightPart" unique_id=1281194654]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 40
+
+[node name="SelectedHeroP3" type="Label" parent="TopPanel/HBoxContainer/RightPart/Heroes" unique_id=520395068]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.81960785, 0, 1)
+theme_override_fonts/font = SubResource("FontVariation_t6nvb")
+theme_override_font_sizes/font_size = 18
+text = "not selected"
+horizontal_alignment = 1
+
+[node name="SelectedHeroP4" type="Label" parent="TopPanel/HBoxContainer/RightPart/Heroes" unique_id=1176426840]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.81960785, 0, 1)
+theme_override_fonts/font = SubResource("FontVariation_t6nvb")
+theme_override_font_sizes/font_size = 19
+text = "not selected"
+horizontal_alignment = 1
+
+[node name="TimerContainer" type="MarginContainer" parent="." unique_id=15143692]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -34.0
+offset_right = 34.0
+offset_bottom = 47.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 100
+
+[node name="Timer" type="Label" parent="TimerContainer" unique_id=992458437]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.7647072, 0.74183893, 0.7486702, 1)
+theme_override_font_sizes/font_size = 34
+text = "0:30"
 
 [node name="LobbyIdLabel" type="Label" parent="." unique_id=837580447]
 layout_mode = 1
@@ -47,95 +324,127 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -21.0
-offset_top = -23.0
-offset_right = 21.0
+offset_left = -26.5
+offset_top = -28.0
+offset_right = 26.5
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 20
 text = "None"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1451322725]
+[node name="HeroPanel" type="MarginContainer" parent="." unique_id=273797950]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 190
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 30
 
-[node name="PanelContainer" type="MarginContainer" parent="VBoxContainer" unique_id=121840263]
+[node name="Bg" type="TextureRect" parent="HeroPanel" unique_id=499070806]
 layout_mode = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 25
+texture = SubResource("GradientTexture2D_ptqqe")
 
-[node name="LeftPlayer" type="HBoxContainer" parent="VBoxContainer/PanelContainer" unique_id=1925721655]
+[node name="PanelContainer" type="PanelContainer" parent="HeroPanel" unique_id=156487988]
 layout_mode = 2
-size_flags_horizontal = 0
-theme_override_constants/separation = 20
+theme_override_styles/panel = SubResource("StyleBoxFlat_t6nvb")
 
-[node name="NicknameP1" type="Label" parent="VBoxContainer/PanelContainer/LeftPlayer" unique_id=1590173612]
+[node name="Border" type="MarginContainer" parent="HeroPanel/PanelContainer" unique_id=745822051]
 layout_mode = 2
-theme_override_font_sizes/font_size = 23
-text = "Player1"
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="SelectedHeroP1" type="Label" parent="VBoxContainer/PanelContainer/LeftPlayer" unique_id=964402349]
+[node name="HeroChoice" type="VBoxContainer" parent="HeroPanel/PanelContainer/Border" unique_id=1392448162]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0.81960785, 0, 1)
-theme_override_font_sizes/font_size = 25
-text = "not selected"
+size_flags_vertical = 4
+theme_override_constants/separation = 30
 
-[node name="Middle" type="HBoxContainer" parent="VBoxContainer/PanelContainer" unique_id=543207609]
+[node name="Heroes" type="VBoxContainer" parent="HeroPanel/PanelContainer/Border/HeroChoice" unique_id=2062808234]
 layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Timer" type="Label" parent="VBoxContainer/PanelContainer/Middle" unique_id=992458437]
-layout_mode = 2
-theme_override_font_sizes/font_size = 34
-text = "0:30"
-
-[node name="RightPlayer" type="HBoxContainer" parent="VBoxContainer/PanelContainer" unique_id=416981211]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-theme_override_constants/separation = 20
-
-[node name="NicknameP2" type="Label" parent="VBoxContainer/PanelContainer/RightPlayer" unique_id=1332391255]
-layout_mode = 2
-theme_override_font_sizes/font_size = 23
-text = "Player 2"
-
-[node name="SelectedHeroP2" type="Label" parent="VBoxContainer/PanelContainer/RightPlayer" unique_id=2115931365]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.21176471, 0.46666667, 1, 1)
-theme_override_font_sizes/font_size = 25
-text = "not selected"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=183416263]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -207.5
-offset_top = -25.0
-offset_right = 207.5
-offset_bottom = 25.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 15
+theme_override_constants/separation = 50
 
-[node name="VoidlessStarPick" type="Button" parent="HBoxContainer" unique_id=529963785]
+[node name="CategoryName" type="Label" parent="HeroPanel/PanelContainer/Border/HeroChoice/Heroes" unique_id=1861391485]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_kye7n")
+theme_override_font_sizes/font_size = 25
+text = "HEROES"
+horizontal_alignment = 1
+
+[node name="HeroesGrid" type="GridContainer" parent="HeroPanel/PanelContainer/Border/HeroChoice/Heroes" unique_id=384052994]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 30
+columns = 3
+
+[node name="VoidlessStarPick" type="Button" parent="HeroPanel/PanelContainer/Border/HeroChoice/Heroes/HeroesGrid" unique_id=529963785]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_dy3e7")
 theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxFlat_lj1ok")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4hucq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_e46jn")
 text = "VoidlessStar"
 
-[node name="FrozenPick" type="Button" parent="HBoxContainer" unique_id=1536222843]
+[node name="FrozenPick" type="Button" parent="HeroPanel/PanelContainer/Border/HeroChoice/Heroes/HeroesGrid" unique_id=1536222843]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_qy7bc")
 theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxFlat_lj1ok")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4hucq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_e46jn")
 text = "Frozen"
+
+[node name="Whip" type="Button" parent="HeroPanel/PanelContainer/Border/HeroChoice/Heroes/HeroesGrid" unique_id=534435651]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_2dfve")
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxFlat_lj1ok")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4hucq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_e46jn")
+text = "Whip"
+
+[node name="Lilith" type="Button" parent="HeroPanel/PanelContainer/Border/HeroChoice/Heroes/HeroesGrid" unique_id=1951001690]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_1pw17")
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxFlat_lj1ok")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4hucq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_e46jn")
+text = "Lilith"
+
+[node name="Ozonid" type="Button" parent="HeroPanel/PanelContainer/Border/HeroChoice/Heroes/HeroesGrid" unique_id=1274367870]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_k75xl")
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxFlat_lj1ok")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4hucq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_e46jn")
+text = "Ozonid"
+
+[node name="HSeparator" type="HSeparator" parent="HeroPanel/PanelContainer/Border/HeroChoice" unique_id=1696513603]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Chosehero" type="Button" parent="HeroPanel/PanelContainer/Border/HeroChoice" unique_id=2050349727]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_fonts/font = SubResource("FontVariation_lj1ok")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_pk7kb")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_q0a3m")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ptqqe")
+text = "CHOOSE HERO"

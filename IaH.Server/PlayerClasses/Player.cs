@@ -11,6 +11,7 @@ namespace IaH.Server.PlayerClasses
     {
         public enum State {Auth, InMenu, SearchTheGame, InLobby, InGame};
         public ushort ID {get; private set;}
+        public Team TeamID {get; set;} = Team.None;
         public Lobby? CurrentLobby {get; set;}
 
         public ushort CurrentMatchID {get; set;} = 0;

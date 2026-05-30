@@ -36,6 +36,12 @@ public partial class EventBus : Node
 		EmitSignal(SignalName.LobbyTimer, time);
 	}
 
+	[Signal] public delegate void PlayerConnectedToLobbyEventHandler(ushort lobbyID);
+	public void PublishPlayerConnectedToLobby(ushort lobbyID)
+	{
+		EmitSignal(SignalName.PlayerConnectedToLobby, lobbyID);
+	}
+
 	// GAME EVENTS
 	[Signal] public delegate void ReadyToGameEventHandler();
 	public void PublishReadyToGame()
