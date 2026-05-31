@@ -12,11 +12,9 @@ namespace IaH.Server.Entities
     public class HeroEntity : BaseEntity
     {
         public Player MainPlayer;
-        public UnitList Unit;
         public enum State {Idle, Move, Chase, Attack, Respawning, Casting};
         public State CurrentState {get; set;} = State.Idle;
-        private float _baseSpeed = 7.0f;
-        public float CurrentSpeed = 7.0f;
+        public float CurrentSpeed;
 
         // MATCH
         private WorldMatch _match;
@@ -30,12 +28,11 @@ namespace IaH.Server.Entities
         private List<AbilityBase>? _abilityList;
         private AbilityBase? _activeAbility;
         
-        public HeroEntity(ushort id, byte type, Player player, WorldMatch m) : base (id, type)
+        public HeroEntity(ushort id, UnitList unitType, Player player, WorldMatch m) : base (id, unitType)
         {
             _abilityList = new();
             _match = m;
             MainPlayer = player;
-            Unit = (UnitList)type;
 
             if (Unit != UnitList.None)
             {
@@ -170,7 +167,7 @@ namespace IaH.Server.Entities
         {
             
             Vector3 currentPosition = new Vector3(X / 100f, Y / 100f, Z / 100f);
-            float step = CurrentSpeed * deltaTime;
+            float step = _baseSpeed * deltaTime;
             if (Vector3.Distance(_moveTarget, currentPosition) <= step)
             {
                 X = (short)(_moveTarget.X * 100);
@@ -182,7 +179,7 @@ namespace IaH.Server.Entities
 
             var direction = Vector3.Normalize(_moveTarget - currentPosition);
             CurrentDirection = direction;
-            var velocity = direction * CurrentSpeed * deltaTime;
+            var velocity = direction * _baseSpeed * deltaTime;
            
             currentPosition += velocity;
 

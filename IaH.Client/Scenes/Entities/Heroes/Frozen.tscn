@@ -4,14 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://oq7r5d3tnvi3" path="res://Scenes/Entities/UI/HealthBar.tscn" id="2_oqc4v"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8kqxt"]
-size = Vector3(1.8, 2, 1.8)
+size = Vector3(1.8, 2.7, 1.8)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_11qcb"]
 albedo_color = Color(0.13831198, 0.13601217, 0.52660644, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_oqc4v"]
 material = SubResource("StandardMaterial3D_11qcb")
-size = Vector3(1.8, 2, 1.8)
+size = Vector3(1.8, 2.7, 1.8)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_vohy6"]
 viewport_path = NodePath("HealthBar3D/SubViewport")
@@ -32,3 +32,4 @@ texture = SubResource("ViewportTexture_vohy6")
 
 [node name="SubViewport" parent="HealthBar3D" unique_id=1552809282 instance=ExtResource("2_oqc4v")]
 size = Vector2i(256, 32)
+render_target_update_mode = 4

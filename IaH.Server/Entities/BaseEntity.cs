@@ -1,6 +1,7 @@
 using System;
 using System.Numerics;
-using IaH.Server.Entities;
+using Iah.Shared.Entities;
+using Iah.Shared.Packets;
 using IaH.Server.Entities.Interfaces;
 
 namespace IaH.Server.Entities
@@ -9,8 +10,9 @@ namespace IaH.Server.Entities
     public class BaseEntity : IDamagable
     {
         
+        public EntityStats Stats;
         public ushort ID {get; set;}
-        public byte Type {get; set;}
+        public UnitList Unit;
         public int X {get; set;} = 0;
         public int Y {get; set;} = 0;
         public int Z {get; set;} = 0;
@@ -18,8 +20,8 @@ namespace IaH.Server.Entities
         protected float _attackCooldown = 1.7f;
 
         // BATTLE SYSTEM
-        private float _health = 200;
-        private float _maxHealth = 200;
+        protected float _health;
+        protected float _maxHealth;
         public float Health
         {
             get => _health;
@@ -30,11 +32,31 @@ namespace IaH.Server.Entities
 
         }
         public float AttackRange = 5.0f;
+        protected float _baseSpeed;
+        protected float _manna;
+        protected float _maxManna;
+        public float Manna
+        {
+            get => _manna;
+            set
+            {
+                _manna = Math.Clamp(value, 0, _maxManna);
+            }
+        }
+        public float Damage;
 
-        public BaseEntity(ushort id, byte type)
+        public BaseEntity(ushort id, UnitList type)
         {
             ID = id;
-            Type = type;
+            Unit = type;
+            Stats = EntityRegistry.GetStats(Unit);
+            _health = Stats.MaxHealth;
+            _maxHealth = Stats.MaxHealth;
+            _manna = Stats.Mana;
+            _maxManna = Stats.Mana;
+            _baseSpeed = Stats.MoveSpeed;
+            Damage = Stats.Damage;
+
         }
 
 

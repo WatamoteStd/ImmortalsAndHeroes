@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IaH.Shared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba8d5cc95438133769a723bbb8b3fd8d83dc8f7c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da8f43c9d473961ec6a131010a8f232e6ef0cdbf")]
 [assembly: System.Reflection.AssemblyProductAttribute("IaH.Shared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IaH.Shared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

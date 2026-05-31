@@ -127,12 +127,11 @@ public partial class ClientNetworkManager : Node
 			case PacketType.SpawnEntity:
 			{
 				ushort entityID = reader.GetUShort();
-				byte unitType = reader.GetByte();
-				ushort maxHealth = reader.GetUShort();
+				UnitList unitType = (UnitList)reader.GetByte();
 				short cordX = reader.GetShort();
 				short cordY = reader.GetShort();
 				short cordZ = reader.GetShort();
-				CurrentMatch.AddEntity(entityID, unitType, cordX, cordY, cordZ, maxHealth);
+				CurrentMatch.AddEntity(entityID, unitType, cordX, cordY, cordZ);
 				
 			}
 				break;

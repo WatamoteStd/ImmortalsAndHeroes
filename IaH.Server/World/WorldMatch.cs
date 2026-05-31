@@ -96,7 +96,7 @@ namespace IaH.Server.World
 
             foreach (var p in playersList)
             {
-                HeroEntity newHero = new HeroEntity( 0, (byte)p.SelectedHero, p, this);
+                HeroEntity newHero = new HeroEntity( 0, p.SelectedHero, p, this); // ID 0 BCS ENTITY MANAGER REWRITE IT
                 _entityManager.AddEntity(newHero);
                 _playerToHero[p] = newHero;
 
@@ -107,21 +107,20 @@ namespace IaH.Server.World
             foreach (var p in playersList)
             {
                 _writer.Reset();
-                 _writer.Put((byte)PacketType.SpawnEntity);
-                 Console.WriteLine("[DEBUG] Creating the SPAWN PACKET");
+                _writer.Put((byte)PacketType.SpawnEntity);
+                Console.WriteLine("[DEBUG] Creating the SPAWN PACKET");
 
                 if (_playerToHero.TryGetValue(p, out HeroEntity? curHero))
                 {
-                    Console.WriteLine($"[SERVER] Для игрока {p.Nickname} отправляем пакет SpawnEntity с ID существа: {curHero.ID}");
+                    Console.WriteLine($"[SERVER] Player:{p.Nickname} Hero:{curHero}. Info send to all!");
 
                     _writer.Put((ushort)curHero.ID);
-                    _writer.Put((byte)curHero.Type);
-                    _writer.Put((ushort)curHero.GetMaxHealth());
+                    _writer.Put((byte)curHero.Unit);
                     _writer.Put((short)curHero.X);
                     _writer.Put((short)curHero.Y);
                     _writer.Put((short)curHero.Z);
                     SendToAll(_writer, DeliveryMethod.ReliableOrdered);
-                    Console.WriteLine($"[DEBUG] Package succesfully sended to player!");
+                    Console.WriteLine($"[DEBUG] Package succesfully sended to players!");
                     
                 } 
                 

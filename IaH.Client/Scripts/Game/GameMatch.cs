@@ -1,4 +1,5 @@
 using Godot;
+using Iah.Shared.Entities;
 using Iah.Shared.Packets;
 using System;
 using System.Collections.Generic;
@@ -38,30 +39,30 @@ public partial class GameMatch : Node
 
 
 
-	public void AddEntity(ushort id, byte unitType, short x, short y, short z, ushort health)
+	public void AddEntity(ushort id, UnitList unitType, short x, short y, short z)
 	{
+		// SAFE CHECK
+		var unitModel = _entityRegistor.GetModel(unitType);
+		if (unitModel == null) return;
 
-		var config = _entityRegistor.GetConfig((UnitList)unitType);
-		if (config == null) return;
+		// INSTANCE AND INIT'S
 
-		GD.Print($"Trying to spawn entity {id}, type {unitType}. Config found: {config != null}");
-
-		var entity = config.Model.Instantiate<BaseEntityClient>();
+		var entity = unitModel.Instantiate<BaseEntityClient>();
 		entity.NetID = id;
-		entity.UnitType = (UnitList)unitType;
-
-
+		entity.UnitType = unitType;
+		entity.InitStats(EntityRegistry.GetStats(unitType));
 
 		Vector3 targetPosition = new Vector3(x / 100f, y / 100f, z / 100f);
 		entity.Position = targetPosition;
 
 		IdToEntity[id] = entity;
 		_entitiesContainer.CallDeferred("add_child", entity);
-		entity.CallDeferred(nameof(BaseEntityClient.InitHealthBar), health);
 
+
+		// PLAYER CONTROL & LOCAL PLAYER SELECT
 		if (entity is HeroEntityClient hero)
 		{
-			hero.InitHero(config);
+			
 			if (id == ClientNetworkManager.Instance.LocalID) hero.IsLocalPlayer = true;
 
 			_playerController.LocalPlayer = hero;

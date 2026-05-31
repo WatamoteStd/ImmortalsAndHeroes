@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://c2vk67v6kxf8h"]
+
+[ext_resource type="Script" uid="uid://cuqml8urk51gy" path="res://Scripts/Game/Entities/HeroEntityClient.cs" id="1_s8ofc"]
+[ext_resource type="PackedScene" uid="uid://oq7r5d3tnvi3" path="res://Scenes/Entities/UI/HealthBar.tscn" id="2_yedi5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8kqxt"]
+size = Vector3(1.9, 2.5, 2.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s8ofc"]
+albedo_color = Color(0.002570568, 0.095794685, 2.4065375e-08, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yedi5"]
+material = SubResource("StandardMaterial3D_s8ofc")
+size = Vector3(1.9, 2.5, 2.1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_vohy6"]
+viewport_path = NodePath("HealthBar3D/SubViewport")
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1287979487]
+script = ExtResource("1_s8ofc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=672782514]
+shape = SubResource("BoxShape3D_8kqxt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1686638741]
+mesh = SubResource("BoxMesh_yedi5")
+
+[node name="HealthBar3D" type="Sprite3D" parent="." unique_id=1849052037]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_vohy6")
+
+[node name="SubViewport" parent="HealthBar3D" unique_id=1552809282 instance=ExtResource("2_yedi5")]
+size = Vector2i(256, 32)
+render_target_update_mode = 4

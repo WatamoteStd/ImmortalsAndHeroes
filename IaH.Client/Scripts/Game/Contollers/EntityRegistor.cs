@@ -5,34 +5,34 @@ using System.Collections.Generic;
 
 public partial class EntityRegistor : Node
 {
-	[Export] public HeroData VoidlessStarConfig;
-	[Export] public HeroData FrozenConfig;
-	private readonly Dictionary<UnitList, HeroData> _numToConfig = new();
 	
-	public override void _Ready()
+	// CARRY & DD & RDD
+	[Export] private PackedScene FrozenModel;
+	[Export] private PackedScene OzonidModel;
+
+	// MAGE 
+	[Export] private PackedScene VoidlessStarModel;
+	[Export] private PackedScene LilithModel;
+
+	// TANK
+	[Export] private PackedScene WhipModel;
+
+	public PackedScene GetModel(UnitList unit)
 	{
 		
-		_numToConfig[UnitList.VoidlessStar] = VoidlessStarConfig;
-		_numToConfig[UnitList.Frozen] = FrozenConfig;
-
-	}
-	public PackedScene GetEntity(UnitList unitType)
-	{
-		if (_numToConfig.TryGetValue(unitType, out HeroData config))
+		return unit switch
 		{
-			return config.Model;
-		}
-		else return null;
-	}
-	public HeroData GetConfig(UnitList unitType)
-{
-	if (_numToConfig.TryGetValue(unitType, out HeroData config))
-	{
-		return config; 
-	}
-	return null;
-}
+			UnitList.Frozen => FrozenModel,
+			UnitList.VoidlessStar => VoidlessStarModel,
+			UnitList.Whip => WhipModel,
+			UnitList.Lilith => LilithModel,
+			UnitList.Ozonid => OzonidModel,
+			_ => null
+		};
 
-	
+	}
+
+
+
 	
 }

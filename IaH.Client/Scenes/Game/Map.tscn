@@ -3,11 +3,14 @@
 [ext_resource type="Script" uid="uid://ceajlkwjyt8sh" path="res://Scripts/Game/MapManager.cs" id="1_prkeu"]
 [ext_resource type="Script" uid="uid://lgi6qvj80qjt" path="res://Scripts/Game/GameMatch.cs" id="2_uanab"]
 [ext_resource type="Script" uid="uid://cvhbxtcrw4vnh" path="res://Scripts/Game/Contollers/EntityRegistor.cs" id="3_y2xks"]
-[ext_resource type="Resource" uid="uid://by4oivoultkgw" path="res://Resources/Entities/Heroes/VoidlessStar.tres" id="4_sjloc"]
-[ext_resource type="Resource" uid="uid://botq3k5awvil2" path="res://Resources/Entities/Heroes/Frozen.tres" id="5_xtuap"]
+[ext_resource type="PackedScene" uid="uid://xqxd1tk0jpy2" path="res://Scenes/Entities/Heroes/Frozen.tscn" id="4_ww23v"]
+[ext_resource type="PackedScene" uid="uid://c2vk67v6kxf8h" path="res://Scenes/Entities/Heroes/Ozonid.tscn" id="5_bapf2"]
+[ext_resource type="PackedScene" uid="uid://dyq5ayamtr4l0" path="res://Scenes/Entities/Heroes/VoidlessStar.tscn" id="6_8f6rt"]
 [ext_resource type="Script" uid="uid://brevs1ln1gvio" path="res://Scripts/Game/Contollers/PlayerController.cs" id="6_wk4lc"]
 [ext_resource type="Script" uid="uid://cptioi2uilula" path="res://Scripts/Game/Interface/CameraHolder.cs" id="7_5lxbi"]
 [ext_resource type="Texture2D" uid="uid://bmsd0fgvtjqom" path="res://Assets/Game/Textures/Map/Water/NormalMap.jpeg" id="7_5nk7q"]
+[ext_resource type="PackedScene" uid="uid://dumpgfbweftoa" path="res://Scenes/Entities/Heroes/Lilith.tscn" id="7_hlbdy"]
+[ext_resource type="PackedScene" uid="uid://ce6je5klr35rw" path="res://Scenes/Entities/Heroes/Whip.tscn" id="8_ommjs"]
 [ext_resource type="Script" uid="uid://c85am8q3bt01j" path="res://Scripts/Game/Textures/River.cs" id="8_vf887"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sn66k"]
@@ -185,8 +188,11 @@ _playerController = NodePath("../PlayerController")
 
 [node name="EntityRegistor" type="Node" parent="Controllers" unique_id=244427743]
 script = ExtResource("3_y2xks")
-VoidlessStarConfig = ExtResource("4_sjloc")
-FrozenConfig = ExtResource("5_xtuap")
+FrozenModel = ExtResource("4_ww23v")
+OzonidModel = ExtResource("5_bapf2")
+VoidlessStarModel = ExtResource("6_8f6rt")
+LilithModel = ExtResource("7_hlbdy")
+WhipModel = ExtResource("8_ommjs")
 
 [node name="PlayerController" type="Node" parent="Controllers" unique_id=1426936623]
 script = ExtResource("6_wk4lc")
