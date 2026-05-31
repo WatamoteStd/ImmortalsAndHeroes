@@ -10,11 +10,29 @@ public partial class GameMatch : Node
 	[Export] private EntityRegistor _entityRegistor;
 	[Export] private Node3D _entitiesContainer;
 	[Export] private PlayerController _playerController;
+
+	private Team CachedLocalTeam = ClientNetworkManager.Instance.CachedPlayersTeam[ClientNetworkManager.Instance.LocalID];
 	
 	public override void _Ready()
 	{
 		
 		ClientNetworkManager.Instance.RegisterMatch(this);
+	}
+
+	public void RefreshAllEntityTeamColors() 
+	{
+
+		foreach (var entity in IdToEntity.Values)
+		{
+			if (entity.EntityTeam == CachedLocalTeam) entity.UpdateHealthBarVisual(true);
+			else entity.UpdateHealthBarVisual(false);
+		}
+
+	}
+	public void ColorizeEntity(BaseEntityClient entity)
+	{
+		if (entity.EntityTeam == CachedLocalTeam) entity.UpdateHealthBarVisual(true);
+		else entity.UpdateHealthBarVisual(false);
 	}
 
 
@@ -49,7 +67,17 @@ public partial class GameMatch : Node
 
 		var entity = unitModel.Instantiate<BaseEntityClient>();
 		entity.NetID = id;
+
+		// UNIT TYPE & TEAM
 		entity.UnitType = unitType;
+		if (ClientNetworkManager.Instance.CachedPlayersTeam.TryGetValue(id, out var team))
+		{
+    		entity.EntityTeam = team;
+		}
+		else
+		{
+    		entity.EntityTeam = Team.Neutral; 
+		}
 		entity.InitStats(EntityRegistry.GetStats(unitType));
 
 		Vector3 targetPosition = new Vector3(x / 100f, y / 100f, z / 100f);
@@ -57,6 +85,7 @@ public partial class GameMatch : Node
 
 		IdToEntity[id] = entity;
 		_entitiesContainer.CallDeferred("add_child", entity);
+		Callable.From(() => ColorizeEntity(entity)).CallDeferred();
 
 
 		// PLAYER CONTROL & LOCAL PLAYER SELECT

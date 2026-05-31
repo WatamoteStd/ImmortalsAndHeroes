@@ -9,6 +9,14 @@ public partial class HealthBar : SubViewport
 		_healthBar = GetNode<TextureProgressBar>("TextureProgressBar");
 	}
 
+	public void UpdateColor(bool isAlly)
+	{
+		
+		if (isAlly) _healthBar.Modulate = Colors.DarkGreen;
+		else _healthBar.Modulate = Colors.DarkRed;
+
+	}
+
 	public void Init(ushort maxHp)
 	{
 		_healthBar.MaxValue = maxHp;
