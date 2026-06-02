@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using Iah.Shared.Entities;
+using Iah.Shared.Packets;
 
 public partial class PlayerController : Node
 {
@@ -24,6 +26,7 @@ public partial class PlayerController : Node
 			Node collider = (Node)mouseClick["collider"].AsGodotObject();
 			if (collider is BaseEntityClient enemy)
 			{
+				if (enemy.EntityTeam == LocalPlayer.EntityTeam) return;
 				ClientNetworkManager.Instance.SendAttackPacket(enemy.NetID);
 			}
 			else
