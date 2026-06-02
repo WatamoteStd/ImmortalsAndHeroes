@@ -13,6 +13,7 @@ namespace IaH.Server.Entities
         public EntityStats Stats;
         public ushort ID {get; set;}
         public UnitList Unit;
+        public Team EntityTeam;
         public int X {get; set;} = 0;
         public int Y {get; set;} = 0;
         public int Z {get; set;} = 0;
@@ -45,8 +46,9 @@ namespace IaH.Server.Entities
         }
         public float Damage;
 
-        public BaseEntity(ushort id, UnitList type)
+        public BaseEntity(ushort id, UnitList type, Team team)
         {
+            EntityTeam = team;
             ID = id;
             Unit = type;
             Stats = EntityRegistry.GetStats(Unit);

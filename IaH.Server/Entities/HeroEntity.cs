@@ -28,7 +28,7 @@ namespace IaH.Server.Entities
         private List<AbilityBase>? _abilityList;
         private AbilityBase? _activeAbility;
         
-        public HeroEntity(ushort id, UnitList unitType, Player player, WorldMatch m) : base (id, unitType)
+        public HeroEntity(ushort id, UnitList unitType, Player player, WorldMatch m, Team team) : base (id, unitType, team)
         {
             _abilityList = new();
             _match = m;

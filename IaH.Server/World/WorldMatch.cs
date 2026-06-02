@@ -96,7 +96,7 @@ namespace IaH.Server.World
 
             foreach (var p in playersList)
             {
-                HeroEntity newHero = new HeroEntity( 0, p.SelectedHero, p, this); // ID 0 BCS ENTITY MANAGER REWRITE IT
+                HeroEntity newHero = new HeroEntity( 0, p.SelectedHero, p, this, p.TeamID); // ID 0 BCS ENTITY MANAGER REWRITE IT
                 _entityManager.AddEntity(newHero);
                 _playerToHero[p] = newHero;
 
@@ -108,19 +108,18 @@ namespace IaH.Server.World
             {
                 _writer.Reset();
                 _writer.Put((byte)PacketType.SpawnEntity);
-                Console.WriteLine("[DEBUG] Creating the SPAWN PACKET");
 
                 if (_playerToHero.TryGetValue(p, out HeroEntity? curHero))
                 {
-                    Console.WriteLine($"[SERVER] Player:{p.Nickname} Hero:{curHero}. Info send to all!");
 
                     _writer.Put((ushort)curHero.ID);
+                    _writer.Put((ushort)p.ID);
                     _writer.Put((byte)curHero.Unit);
+                    _writer.Put((byte)curHero.EntityTeam);
                     _writer.Put((short)curHero.X);
                     _writer.Put((short)curHero.Y);
                     _writer.Put((short)curHero.Z);
                     SendToAll(_writer, DeliveryMethod.ReliableOrdered);
-                    Console.WriteLine($"[DEBUG] Package succesfully sended to players!");
                     
                 } 
                 

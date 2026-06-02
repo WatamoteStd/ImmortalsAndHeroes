@@ -24,6 +24,7 @@ public partial class PlayerController : Node
 			Node collider = (Node)mouseClick["collider"].AsGodotObject();
 			if (collider is BaseEntityClient enemy)
 			{
+				if (enemy.EntityTeam != LocalPlayer.EntityTeam)
 				ClientNetworkManager.Instance.SendAttackPacket(enemy.NetID);
 			}
 			else

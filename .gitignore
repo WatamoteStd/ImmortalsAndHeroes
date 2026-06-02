@@ -12,6 +12,12 @@ export_presets.cfg
 *.DotSettings.user
 project.godot.lock
 
+bin/
+obj/
+*.dll
+*.pdb
+*.exe
+
 # OS / Editor
 .DS_Store
 Thumbs.db

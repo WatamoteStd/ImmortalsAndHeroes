@@ -11,6 +11,8 @@ public partial class GameMatch : Node
 	[Export] private Node3D _entitiesContainer;
 	[Export] private PlayerController _playerController;
 
+	public Godot.Collections.Dictionary<ushort, ushort> EntityIdToPlayer {get; private set;} = new();
+
 	private Team CachedLocalTeam = ClientNetworkManager.Instance.CachedPlayersTeam[ClientNetworkManager.Instance.LocalID];
 	
 	public override void _Ready()
@@ -57,7 +59,7 @@ public partial class GameMatch : Node
 
 
 
-	public void AddEntity(ushort id, UnitList unitType, short x, short y, short z)
+	public void AddEntity(ushort id, UnitList unitType, short x, short y, short z, Team team, ushort playerID)
 	{
 		// SAFE CHECK
 		var unitModel = _entityRegistor.GetModel(unitType);
@@ -70,14 +72,9 @@ public partial class GameMatch : Node
 
 		// UNIT TYPE & TEAM
 		entity.UnitType = unitType;
-		if (ClientNetworkManager.Instance.CachedPlayersTeam.TryGetValue(id, out var team))
-		{
-    		entity.EntityTeam = team;
-		}
-		else
-		{
-    		entity.EntityTeam = Team.Neutral; 
-		}
+		
+		entity.EntityTeam = team;
+
 		entity.InitStats(EntityRegistry.GetStats(unitType));
 
 		Vector3 targetPosition = new Vector3(x / 100f, y / 100f, z / 100f);
@@ -92,13 +89,15 @@ public partial class GameMatch : Node
 		if (entity is HeroEntityClient hero)
 		{
 			
-			if (id == ClientNetworkManager.Instance.LocalID) hero.IsLocalPlayer = true;
-
-			_playerController.LocalPlayer = hero;
+			if (playerID == ClientNetworkManager.Instance.LocalID) {
+				hero.IsLocalPlayer = true;
+				_playerController.LocalPlayer = hero;
+			}
+			
 		}
-		
-		
+		EntityIdToPlayer[id] = playerID;
 
+		
 	}
 	
 }

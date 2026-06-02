@@ -11,7 +11,7 @@ namespace IaH.Server.PlayerClasses
     public class Lobby
     {
         public ushort ID {get; private set;}
-        private float _lobbyTimer = 30.0f;
+        private float _lobbyTimer = 15.0f;
         private int _lastSentSec = 31;
 
         // PLAYERS AND TEAMS
@@ -96,10 +96,12 @@ namespace IaH.Server.PlayerClasses
             if (_teamWhite.Count < _teamDark.Count) {
                 _teamWhite.Add(player);
                 player.TeamID = Team.White;
+                Console.WriteLine($"[LOBBY #{ID}] Player:{player.Nickname} team is {player.TeamID.ToString()}");
             }
             else {
                 _teamDark.Add(player);
                 player.TeamID = Team.Black;
+                Console.WriteLine($"[LOBBY #{ID}] Player:{player.Nickname} team is {player.TeamID.ToString()}");
             }
             
             UpdateLobbyState();

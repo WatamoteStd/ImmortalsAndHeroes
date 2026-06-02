@@ -106,11 +106,12 @@ public partial class ClientNetworkManager : Node
 
 			break;
 			case PacketType.HeroSelected:
-
+				{
 				ushort playerID = reader.GetUShort();
 				UnitList playerHero = (UnitList)reader.GetByte();
 				CachedPlayersHeroes[playerID] = playerHero;
 				EventBus.Instance.PublishLobbyHeroChanged();
+				}
 			break;
 			case PacketType.LobbyTimer:
 
@@ -127,11 +128,14 @@ public partial class ClientNetworkManager : Node
 			case PacketType.SpawnEntity:
 			{
 				ushort entityID = reader.GetUShort();
+				ushort playerID = reader.GetUShort();
 				UnitList unitType = (UnitList)reader.GetByte();
+				Team team = (Team)reader.GetByte();
 				short cordX = reader.GetShort();
 				short cordY = reader.GetShort();
 				short cordZ = reader.GetShort();
-				CurrentMatch.AddEntity(entityID, unitType, cordX, cordY, cordZ);
+				
+				CurrentMatch.AddEntity(entityID, unitType, cordX, cordY, cordZ, team, playerID);
 				
 			}
 				break;
