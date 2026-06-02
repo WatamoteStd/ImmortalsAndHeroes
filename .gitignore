@@ -10,6 +10,9 @@ export_presets.cfg
 *.csproj.tmp
 *.sln.DotSettings.user
 *.DotSettings.user
+*.dll
+*.pdb
+*.exe
 project.godot.lock
 
 bin/

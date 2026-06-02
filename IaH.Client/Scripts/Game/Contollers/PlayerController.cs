@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using Iah.Shared.Entities;
+using Iah.Shared.Packets;
 
 public partial class PlayerController : Node
 {
