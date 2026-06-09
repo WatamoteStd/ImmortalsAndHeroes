@@ -170,13 +170,23 @@ size = Vector3(250, 2, 99.70703)
 [sub_resource type="BoxShape3D" id="BoxShape3D_vewm7"]
 size = Vector3(140.00586, 2, 88.44226)
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ww23v"]
+
+[sub_resource type="Sky" id="Sky_bapf2"]
+sky_material = SubResource("ProceduralSkyMaterial_ww23v")
+
 [sub_resource type="Environment" id="Environment_vf887"]
 background_mode = 2
+sky = SubResource("Sky_bapf2")
 ssil_radius = 2.45
 ssil_sharpness = 0.96
+glow_enabled = true
+fog_sun_scatter = 0.09
+fog_height_density = -3.0
 
-[node name="Map" type="Node3D" unique_id=1532550231]
+[node name="Map" type="Node3D" unique_id=1532550231 node_paths=PackedStringArray("Anim")]
 script = ExtResource("1_prkeu")
+Anim = NodePath("")
 
 [node name="Controllers" type="Node" parent="." unique_id=1552959191]
 

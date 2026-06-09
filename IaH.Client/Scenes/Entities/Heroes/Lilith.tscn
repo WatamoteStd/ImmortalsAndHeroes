@@ -3,8 +3,9 @@
 [ext_resource type="Script" uid="uid://cuqml8urk51gy" path="res://Scripts/Game/Entities/HeroEntityClient.cs" id="1_x2xai"]
 [ext_resource type="PackedScene" uid="uid://oq7r5d3tnvi3" path="res://Scenes/Entities/UI/HealthBar.tscn" id="2_pfdol"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_8kqxt"]
-size = Vector3(1.6, 2.1, 1.4)
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_x2xai"]
+height = 2.1
+radius = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v6dm7"]
 albedo_color = Color(0.44263107, 0.43674842, 0.47135592, 1)
@@ -20,7 +21,7 @@ viewport_path = NodePath("HealthBar3D/SubViewport")
 script = ExtResource("1_x2xai")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=672782514]
-shape = SubResource("BoxShape3D_8kqxt")
+shape = SubResource("CylinderShape3D_x2xai")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1686638741]
 mesh = SubResource("BoxMesh_3116b")

@@ -81,12 +81,12 @@ namespace IaH.Server.Entities
                     Vector3 TargetPos = _attackTarget.GetWorldPosition();
                     Vector3 MyPosition = GetWorldPosition();
 
-                    if (Vector3.Distance(TargetPos, MyPosition) > AttackRange)
+                    if (Vector3.Distance(TargetPos, MyPosition) > _attackRange)
                     {
                         _moveTarget = TargetPos;
                         Move(deltaTime);
                     }
-                    else if (Vector3.Distance(TargetPos, MyPosition) <= AttackRange)
+                    else if (Vector3.Distance(TargetPos, MyPosition) <= _attackRange)
                     {
                         
                         CurrentState = State.Attack;
@@ -108,7 +108,7 @@ namespace IaH.Server.Entities
                         }
                         Vector3 targetPos = _attackTarget.GetWorldPosition();
                         Vector3 myPos = GetWorldPosition();
-                        if (Vector3.Distance(targetPos, myPos) > AttackRange) 
+                        if (Vector3.Distance(targetPos, myPos) > _attackRange) 
                         {
                             CurrentState = State.Chase;
                             return;
@@ -118,7 +118,7 @@ namespace IaH.Server.Entities
                         // ATTACK
                         if (_attackCooldown <= 0)
                         {
-                            _attackTarget.TakeDamage(20, this); // hardcode
+                            _attackTarget.TakeDamage(20, DamageType.Physsical, this); // hardcode
                             _attackCooldown = 1.7f;
                             _match.BroadcastDamage(20, _attackTarget.ID);
                         }
@@ -203,9 +203,9 @@ namespace IaH.Server.Entities
             _attackTarget = enemy;
         }
 
-        public override void TakeDamage(float dmg, HeroEntity attacker)
+        public override void TakeDamage(float dmg, DamageType type, HeroEntity attacker)
         {
-            base.TakeDamage(dmg, attacker);
+            base.TakeDamage(dmg, type,attacker);
             Console.WriteLine($"[{Unit}] Take {dmg} damage. Health: {Health}/{GetMaxHealth()}");
 
 

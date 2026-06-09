@@ -9,6 +9,9 @@ namespace IaH.Server.Entities
     
     public class BaseEntity : IDamagable
     {
+
+        public float HitboxHeight;
+        public float HitboxRadius;
         
         public EntityStats Stats;
         public ushort ID {get; set;}
@@ -18,11 +21,11 @@ namespace IaH.Server.Entities
         public int Y {get; set;} = 0;
         public int Z {get; set;} = 0;
         public bool IsDead = false;
-        protected float _attackCooldown = 1.7f;
 
         // BATTLE SYSTEM
         protected float _health;
         protected float _maxHealth;
+        protected float _healthRegeneration;
         public float Health
         {
             get => _health;
@@ -32,10 +35,11 @@ namespace IaH.Server.Entities
             }
 
         }
-        public float AttackRange = 5.0f;
+
         protected float _baseSpeed;
         protected float _manna;
         protected float _maxManna;
+        protected float _mannaRegeneration;
         public float Manna
         {
             get => _manna;
@@ -44,20 +48,37 @@ namespace IaH.Server.Entities
                 _manna = Math.Clamp(value, 0, _maxManna);
             }
         }
-        public float Damage;
+        protected float _armor;
+
+        protected float _damage;
+        protected float _attackCooldown;
+        protected float _attackRange;
+        protected float _projectileSpeed;
+        protected AttackTypes _attackType;
+
 
         public BaseEntity(ushort id, UnitList type, Team team)
         {
             EntityTeam = team;
             ID = id;
             Unit = type;
+
             Stats = EntityRegistry.GetStats(Unit);
+            HitboxHeight = Stats.HitboxHeight;
+            HitboxRadius = Stats.HitboxRadius;
             _health = Stats.MaxHealth;
             _maxHealth = Stats.MaxHealth;
+            _healthRegeneration = Stats.RegenHealh;
+            _mannaRegeneration = Stats.RegenMana;
             _manna = Stats.Mana;
             _maxManna = Stats.Mana;
             _baseSpeed = Stats.MoveSpeed;
-            Damage = Stats.Damage;
+            _damage = Stats.Damage;
+            _attackCooldown = Stats.AttackSpeed;
+            _projectileSpeed = Stats.ProjectileSpeed;
+            _armor = Stats.Armor;
+            _attackType = Stats.AttackType;
+            _attackRange = Stats.AttackRange;
 
         }
 
@@ -80,13 +101,46 @@ namespace IaH.Server.Entities
             return pos;
         }
 
+        // GAME FUNC ===========================================================
+
         public virtual void Update(float deltaTime)
         {
             
         }
-        public virtual void TakeDamage(float dmg, HeroEntity attacker)
+        public virtual void TakeDamage(float dmg, DamageType type,HeroEntity attacker)
         {
-            Health -= dmg;
+            
+            switch (type)
+            {
+                
+                case DamageType.Physsical:
+                    {
+                        
+                        float armorDecrease = _armor / (_armor + 30);
+                        float reduction = 1f - armorDecrease;
+                        Health -= dmg * reduction;
+
+                    }
+                break;
+                case DamageType.Mage:
+                    {
+                        
+                        Health -= dmg;
+
+                    }
+                break;
+
+                 case DamageType.Pure:
+                    {
+                        
+                        Health -= dmg * 1.1f;
+
+                    }
+                break;
+
+
+            }
+
         }
         
 

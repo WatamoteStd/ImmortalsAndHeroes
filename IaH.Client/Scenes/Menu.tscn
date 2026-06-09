@@ -9,14 +9,13 @@
 
 [sub_resource type="Gradient" id="Gradient_syfuq"]
 interpolation_color_space = 1
-offsets = PackedFloat32Array(0, 0.44011977, 1)
-colors = PackedColorArray(0.05755859, 0.062216647, 0.14014277, 1, 0.05466959, 0.06283862, 0.1416285, 1, 0.056749135, 0.024035424, 0.10144264, 1)
+colors = PackedColorArray(0.05755859, 0.062216647, 0.14014277, 1, 0.062105604, 0.11925582, 0.19661471, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_s2c3o"]
 gradient = SubResource("Gradient_syfuq")
-width = 1024
-height = 1024
-fill_to = Vector2(1, 1)
+width = 512
+height = 512
+fill_to = Vector2(0.43589744, 0.35042736)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_syfuq"]
 content_margin_left = 2.0
@@ -294,20 +293,29 @@ content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-bg_color = Color(0.1461868, 0.25036287, 0.44734484, 1)
-skew = Vector2(0.3, 0)
+bg_color = Color(0.34829435, 5.023647e-07, 1.5642495e-07, 1)
 border_color = Color(0.050980393, 0.07450981, 0.16862746, 1)
 border_blend = true
 corner_detail = 1
 shadow_size = 2
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ma218"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ksqlk"]
 content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-bg_color = Color(0.092964, 0.1707328, 0.31517467, 1)
-skew = Vector2(0.3, 0)
+bg_color = Color(0.25332752, 2.45166e-07, 2.4065375e-08, 1)
+border_color = Color(0.050980393, 0.07450981, 0.16862746, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vkgky"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.5726692, 1.0227784e-06, 1.92523e-07, 1)
 border_color = Color(0.050980393, 0.07450981, 0.16862746, 1)
 border_blend = true
 corner_detail = 1
@@ -328,6 +336,28 @@ border_blend = true
 [sub_resource type="FontVariation" id="FontVariation_3feh0"]
 base_font = ExtResource("4_s2c3o")
 variation_embolden = 0.1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3feh0"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.035185743, 0.17004246, 0.32491192, 1)
+border_blend = true
+corner_detail = 1
+shadow_size = 3
+
+[sub_resource type="Gradient" id="Gradient_ksqlk"]
+interpolation_mode = 2
+colors = PackedColorArray(0, 0.16862746, 0.36862746, 0.73333335, 0.019607844, 0.09411765, 0.15686275, 0.7176471)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vkgky"]
+gradient = SubResource("Gradient_ksqlk")
+width = 128
+height = 128
+fill_from = Vector2(0.0997151, 0.116809115)
+fill_to = Vector2(1, 1)
 
 [node name="Menu" type="Control" unique_id=269866567]
 layout_mode = 3
@@ -586,7 +616,6 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_du1yi")
 text = "SEARCH THE GAME"
 
 [node name="AuthWindow" type="PanelContainer" parent="." unique_id=774084447]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -619,7 +648,8 @@ placeholder_text = "Nickname
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_s2c3o")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ma218")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ksqlk")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vkgky")
 text = "LOGIN"
 
 [node name="SearchTimePanel" type="MarginContainer" parent="." unique_id=1986447269 node_paths=PackedStringArray("_timeLabel")]
@@ -657,3 +687,23 @@ layout_mode = 2
 theme_override_fonts/font = SubResource("FontVariation_3feh0")
 theme_override_font_sizes/font_size = 26
 text = "0:00"
+
+[node name="ProfilePanel" type="PanelContainer" parent="." unique_id=1449227623]
+visible = false
+custom_minimum_size = Vector2(250, 450)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -200.0
+offset_right = 250.0
+offset_bottom = 200.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3feh0")
+
+[node name="MarginContainer" type="MarginContainer" parent="ProfilePanel" unique_id=1790916366]
+layout_mode = 2
+
+[node name="Bg" type="TextureRect" parent="ProfilePanel" unique_id=30713801]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_vkgky")

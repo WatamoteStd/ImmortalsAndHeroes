@@ -12,5 +12,11 @@ namespace Iah.Shared.Packets
         Black
 
     }
+    public enum DamageType : byte
+    {
+        Physsical,
+        Mage,
+        Pure
+    }
 
 }

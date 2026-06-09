@@ -61,7 +61,7 @@ namespace IaH.Server.Ability
             {
                 
                 if (target == Caster) continue;
-                target.TakeDamage(absoluteDamage, Caster);
+                target.TakeDamage(absoluteDamage, Iah.Shared.Packets.DamageType.Physsical,Caster);
                 Console.WriteLine($"[RELEASE OF COSMIC ENERGY] Hit {target.ID} for {absoluteDamage} damage!");
                 _match.BroadcastDamage((ushort)absoluteDamage, target.ID);
 
