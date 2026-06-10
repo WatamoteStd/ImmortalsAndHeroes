@@ -177,18 +177,7 @@ namespace IaH.Server.Managers
                 break;
 
                 // SKILLS
-                case PacketType.SkillExecuteSelf:
-                    {
-                        
-                        Player p = _peerToPlayer[peer.Id];
-                        WorldMatch m = GetMatch(p);
-                        if (m == null) return;
-                        byte slotIndex = reader.GetByte();
-                        m.SkillExecute(slotIndex, p, null, 0, 0, 0);
-                        
-
-                    }
-                break;
+                
 
             }
 

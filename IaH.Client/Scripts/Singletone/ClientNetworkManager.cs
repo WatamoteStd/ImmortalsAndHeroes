@@ -216,13 +216,7 @@ public partial class ClientNetworkManager : Node
 	}
 
 	// SKILLS 
-	public void SendSkillExecute(byte index)
-	{
-		_writer.Reset();
-		_writer.Put((byte)PacketType.SkillExecuteSelf);
-		_writer.Put(index);
-		_serverPeer.Send(_writer, DeliveryMethod.ReliableOrdered);
-	}
+	
 
 
 

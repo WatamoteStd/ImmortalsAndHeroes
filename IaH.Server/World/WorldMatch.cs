@@ -96,7 +96,7 @@ namespace IaH.Server.World
 
             foreach (var p in playersList)
             {
-                HeroEntity newHero = new HeroEntity( 0, p.SelectedHero, p, this, p.TeamID); // ID 0 BCS ENTITY MANAGER REWRITE IT
+                HeroEntity newHero = new HeroEntity( 0, p.SelectedHero, p.TeamID, p, this); // ID 0 BCS ENTITY MANAGER REWRITE IT
                 _entityManager.AddEntity(newHero);
                 _playerToHero[p] = newHero;
 
@@ -127,22 +127,6 @@ namespace IaH.Server.World
 
         }
 
-        // FOR NETWORK MANAGER -> MATCH COMMUNICATION
-        public void SkillExecute(byte slotIndex, Player p, BaseEntity? target, short x, short y, short z)
-        {
-            
-            if (_playerToHero.TryGetValue(p, out HeroEntity hero))
-            {
-                
-                hero.ExecuteSkill(slotIndex, target, _entityManager, x, y, z);
-                hero.CurrentState = HeroEntity.State.Casting;
-                
-
-            }
-
-        }
-
-
 
 
         // FOR ENTITY -> NETWORK COMMUNICATION
@@ -155,24 +139,6 @@ namespace IaH.Server.World
             _writer.Put((ushort)dmg);
             _writer.Put((ushort)_entityManager.EntityById(targetId).Health);
             SendToAll(_writer, DeliveryMethod.ReliableOrdered);
-        }
-        public void BroadcastSkillCast(ushort casterId, byte index)
-        {
-            _writer.Reset();
-            _writer.Put((byte)PacketType.SkillExecuteSelf);
-            _writer.Put((ushort)casterId);
-            _writer.Put((byte)index);
-            SendToAll(_writer, DeliveryMethod.ReliableOrdered);
-        }
-        public void BroadcastSkillRelease(ushort casterId, byte slotIndex)
-        {
-            
-            _writer.Reset();
-            _writer.Put((byte)PacketType.SkillRelease);
-            _writer.Put((ushort)casterId);
-            _writer.Put((byte)slotIndex);
-            SendToAll(_writer, DeliveryMethod.ReliableOrdered);
-            
         }
 
 

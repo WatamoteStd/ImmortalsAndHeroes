@@ -53,6 +53,7 @@ public partial class GameMatch : Node
 			
 			entity.TargetPosition = new Vector3(x,y,z);
 			entity.LookDirection = lookDir;
+			entity.CurrentState = BaseEntityClient.State.Move;
 			
 		}
 	}	

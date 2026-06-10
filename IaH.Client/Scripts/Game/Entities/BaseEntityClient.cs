@@ -5,6 +5,14 @@ using System;
 
 public partial class BaseEntityClient : CharacterBody3D
 {
+	// STATES ===========================
+	
+	public enum State {Idle, Move, Attack, Cast};
+	public State CurrentState = State.Idle;
+
+
+
+	// STATS==========================
 	private HealthBar _healthBar;
 	private EntityStats Stats;
 
@@ -23,6 +31,49 @@ public partial class BaseEntityClient : CharacterBody3D
 		
 		Callable.From(() => InitHealthBar((ushort)Stats.MaxHealth)).CallDeferred();
 	}
+
+	// STATE MACHINE ========================================
+	public override void _Process(double delta)
+	{
+
+		switch (CurrentState)
+		{
+			
+			case State.Idle:
+				{
+					
+				}
+				break;
+
+			case State.Move:
+				{
+					
+					if (Position.DistanceTo(TargetPosition) > 0.001f)
+					{
+						Position = Position.Lerp(TargetPosition, (float)delta * 15.0f);
+					}
+					else
+					{
+						CurrentState = State.Idle;
+					}
+					if (LookDirection.Length() > 0.1f)
+					{
+			
+						var targetTransform = Transform.LookingAt(Position + LookDirection, Vector3.Up);
+
+						GlobalTransform = GlobalTransform.InterpolateWith(targetTransform, (float)delta * 10.0f);
+
+					}
+
+				}	
+				break;
+
+
+
+		}
+
+	}
+
 
 
 

@@ -40,7 +40,7 @@ public partial class PlayerController : Node
 		if (@event.IsActionPressed("skill1"))
 		{
 			
-			ClientNetworkManager.Instance.SendSkillExecute(0);
+		
 
 		}
 
