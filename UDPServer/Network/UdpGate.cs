@@ -45,9 +45,6 @@ public class UdpGate
 
             ReadOnlySpan<byte> packetSpan = _bufferMemory.Span[..request.ReceivedBytes];
 
-            //Console.WriteLine($"[Server] Received new connection from: {request.RemoteEndPoint}");
-            //Console.WriteLine($"[Server] Data:{request.ReceivedBytes}");
-
             _onPacketReceived(packetSpan, request.RemoteEndPoint);
            
 

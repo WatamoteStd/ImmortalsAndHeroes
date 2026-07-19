@@ -57,7 +57,10 @@ public class AuthController : ControllerBase
             var token = tokenHandler.CreateToken(tokenDescription);
             var tokenString = tokenHandler.WriteToken(token);
 
-            return Ok(new { Token = tokenString});
+            // UDP TIKET
+            long ticket = Random.Shared.NextInt64();
+
+            return Ok(new { Token = tokenString, Ticket = ticket});
 
         }
         else return Unauthorized("Invalid data.");

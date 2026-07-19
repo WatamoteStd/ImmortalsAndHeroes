@@ -5,20 +5,20 @@ namespace Shared.Network.Packets;
 
 public struct C2S_HandshakePacket : INetworkPacket
 {
-    public long PlayerId;
+    public long Ticket;
     public int Length => 8;
 
     public void Serialize(Span<byte> buffer)
     {
         
-        BinaryPrimitives.WriteInt64LittleEndian(buffer, PlayerId);
+        BinaryPrimitives.WriteInt64LittleEndian(buffer, Ticket);
 
     }
 
     public void Deserialize(ReadOnlySpan<byte> buffer)
     {
         
-        PlayerId = BinaryPrimitives.ReadInt64LittleEndian(buffer);
+        Ticket = BinaryPrimitives.ReadInt64LittleEndian(buffer);
 
     }
 

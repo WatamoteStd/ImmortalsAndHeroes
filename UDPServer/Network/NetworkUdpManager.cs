@@ -11,8 +11,6 @@ public class NetworkUdpManager
     
     public void OnPacketReceived(ReadOnlySpan<byte> packetData, EndPoint remoteEndPoint)
     {
-        
-        //Console.WriteLine($"[NetworkManager] Packet received.");
 
         if (packetData.Length < 2) return;
 
@@ -26,7 +24,8 @@ public class NetworkUdpManager
                 {
                     
                     C2S_HandshakePacket handshake = PacketSerializer.Deserialize<C2S_HandshakePacket>(packetData);
-                    Console.WriteLine($"[NetworkManager] Player:{handshake.PlayerId} requests handshake from: {remoteEndPoint}");
+                    Console.WriteLine($"[Server] New connection! Ticket:{handshake.Ticket}");
+                    
 
                 }
             break;

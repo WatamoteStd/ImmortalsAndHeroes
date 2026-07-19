@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Net.Http.Json;
 using System.Collections.Generic;
+using System.Text.Json;
 
 public partial class LoginWindow : PanelContainer
 {
@@ -24,20 +25,28 @@ public partial class LoginWindow : PanelContainer
 
     private async void LoginRequest()
     {
-        
+
         var responseMessage = await HttpsMasterClient.Instanсe.LoginRequestAsync(_loginLine.Text, _passwordLine.Text);
+
 
         if (responseMessage.StatusCode == HttpStatusCode.OK)
         {
             
-            var data = await responseMessage.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+            var data = await responseMessage.Content.ReadFromJsonAsync<Dictionary<string, object>>();
 
-            if (data != null && data.TryGetValue("token", out var token))
+
+            if (data != null && data.TryGetValue("token", out var tokenObj) && data.TryGetValue("ticket", out var ticketObj))
             {
-                
-                _answerCodeLabel.Text = $"Succesful login.";
-                GD.Print(token);
+                long ticket = ((JsonElement)ticketObj).GetInt64();
+                string token = ((JsonElement)tokenObj).GetString();
 
+                GD.Print($"TICKET UDP: {ticket}");
+                GD.Print($"TOKEN HTTP: {token}");
+
+                NetworkUdpClient.Instance.Connect(ticket);
+                
+                // VISUAL CHANGES +++++++++++++++++++++++++++++++++++++++++++
+                _answerCodeLabel.Text = $"Succesful login.";
                  await Task.Delay(1500);
                 _heroSelectWindow.Visible = true;
 
