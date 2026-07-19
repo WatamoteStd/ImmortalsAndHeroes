@@ -77,6 +77,22 @@ public partial class NetworkUdpClient : Node
 
 	}
 
+	public void SendEnterTheWorld()
+	{
+		
+		Span<byte> buffer = stackalloc byte[3];
+
+		C2S_EnterTheWorldPacket packet = new C2S_EnterTheWorldPacket()
+		{
+			Status = 1
+		};
+
+		int packetLenght = PacketSerializer.Serialize<C2S_EnterTheWorldPacket>(buffer, PacketType.C2S_EnterTheWorld, packet);
+
+		socket.SendTo(buffer[..packetLenght], SocketFlags.None, serverEndPoint);
+
+	}
+
 	private async Task ReceiveListenerAsync()
 	{
 		

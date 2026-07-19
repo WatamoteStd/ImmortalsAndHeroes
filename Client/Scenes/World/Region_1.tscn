@@ -1,12 +1,15 @@
 [gd_scene format=3 uid="uid://cu4mbwq4su4ns"]
 
+[ext_resource type="Script" uid="uid://ny42nftt6fab" path="res://Scripts/World/RegionClient.cs" id="1_4jbj3"]
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_t3xac"]
 size = Vector2(50, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hjl0q"]
 size = Vector3(50, 0.05, 50)
 
-[node name="World" type="Node3D" unique_id=388387032]
+[node name="WorldRegion" type="Node3D" unique_id=388387032]
+script = ExtResource("1_4jbj3")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=487756432]
 

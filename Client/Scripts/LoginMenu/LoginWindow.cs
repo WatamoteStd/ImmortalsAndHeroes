@@ -48,7 +48,7 @@ public partial class LoginWindow : PanelContainer
                 // VISUAL CHANGES +++++++++++++++++++++++++++++++++++++++++++
                 _answerCodeLabel.Text = $"Succesful login.";
                  await Task.Delay(1500);
-                _heroSelectWindow.Visible = true;
+                Callable.From(() => GetTree().ChangeSceneToFile("res://Scenes/World/Region_1.tscn")).Call();;
 
             }
 
