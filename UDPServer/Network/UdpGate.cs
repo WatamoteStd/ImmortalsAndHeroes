@@ -7,7 +7,7 @@ namespace UDPServer.Network;
 public class UdpGate
 {
 
-    public delegate void PacketReceiveHandler(ReadOnlySpan<byte> packetData, EndPoint remoteEndPoint); // новый тип данных
+    public delegate void PacketReceiveHandler(ReadOnlySpan<byte> packetData, EndPoint remoteEndPoint, Socket serverSocket); // новый тип данных
     private readonly PacketReceiveHandler _onPacketReceived;
 
     private bool _isRunning = false;
@@ -45,7 +45,7 @@ public class UdpGate
 
             ReadOnlySpan<byte> packetSpan = _bufferMemory.Span[..request.ReceivedBytes];
 
-            _onPacketReceived(packetSpan, request.RemoteEndPoint);
+            _onPacketReceived(packetSpan, request.RemoteEndPoint, _socket);
            
 
         };

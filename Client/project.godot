@@ -18,6 +18,7 @@ config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 
 HttpsMasterClient="*uid://cwtyu54awxh0j"
 NetworkUdpClient="*uid://b107rmfvyeih3"
+NetworkPacketManager="*uid://buuobfp7slijv"
 
 [display]
 
