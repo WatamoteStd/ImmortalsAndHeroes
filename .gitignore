@@ -515,3 +515,5 @@ dist/
 Thumbs.db
 *.db
 *.localtoken
+
+**/appsettings.Development.json

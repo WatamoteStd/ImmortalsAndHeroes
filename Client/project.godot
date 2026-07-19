@@ -16,7 +16,7 @@ config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 
 [autoload]
 
-NetworkManager="*uid://b73pb1bnuap1i"
+HttpsMasterClient="*uid://cwtyu54awxh0j"
 
 [display]
 
