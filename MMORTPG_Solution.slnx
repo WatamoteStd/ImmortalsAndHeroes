@@ -4,7 +4,7 @@
       <BuildType Project="Debug" />
     </Project>
   </Folder>
-  <Project Path="Server/Server.csproj" />
+  <Project Path="MasterServer/MasterServer.csproj" />
   <Project Path="Shared/Shared.csproj" />
   <Project Path="UDPServer/UDPServer.csproj" />
 </Solution>
