@@ -1,0 +1,237 @@
+[gd_scene format=3 uid="uid://dg8iiokql2t1a"]
+
+[ext_resource type="Script" uid="uid://i1o1pxuoeire" path="res://Scripts/PreGame/LoginMenu/LoginMenuManager.cs" id="1_2dg57"]
+[ext_resource type="Script" uid="uid://b38o456p4glg2" path="res://Scripts/PreGame/LoginMenu/ErorCode.cs" id="2_rnfkj"]
+[ext_resource type="Texture2D" uid="uid://crqm7ts7mtdk0" path="res://Assets/temp/iconHero1.png" id="3_67t46"]
+[ext_resource type="Script" uid="uid://t4m63dygdrwc" path="res://Scripts/PreGame/HeroChoice/HeroChoiceManager.cs" id="3_81lqm"]
+[ext_resource type="Texture2D" uid="uid://dvks1mef37ryy" path="res://Assets/temp/iconHero1Hover.png" id="4_81lqm"]
+[ext_resource type="Texture2D" uid="uid://b43cxlo44gkgl" path="res://Assets/temp/iconHero2Hover.png" id="5_gnnrq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2dg57"]
+bg_color = Color(0.6031903, 0.069335096, 0, 1)
+
+[sub_resource type="CSharpScript" id="CSharpScript_rnfkj"]
+script/source = "using Godot;
+using System;
+using System.Net.Http;
+
+public partial class LoginButton : Button
+{
+
+	[Export] private LineEdit _loginEdit;
+	[Export] private LineEdit _passwordEdit;
+
+	public override void _Ready()
+	{
+		
+		Pressed += OnPressed;
+
+	}
+
+	private async void OnPressed()
+	{
+
+		
+		string login = ParseText(_loginEdit.Text);
+		string password = ParseText(_passwordEdit.Text);
+		
+		HttpResponseMessage response = await NetworkManager.Instance.LoginAsync(login,password);
+
+		if (response == null)
+		{
+			GD.Print($\"Something went wrong...\");
+			return;
+		}
+
+		switch (response.StatusCode)
+		{
+			
+			case System.Net.HttpStatusCode.OK:
+
+				GD.Print($\"Login succesfully accepted!. Status code:{response.StatusCode}\");
+
+			break;
+
+			default:
+
+				GD.PrintErr($\"Login denied. Status code: {response.StatusCode}\");
+
+			break;
+
+		}
+
+
+	}
+
+	private string ParseText(string text)
+	{
+		
+		if (string.IsNullOrEmpty(text)) return null;
+		string formatetText = text.Trim();
+		return formatetText;
+
+	}
+
+
+}
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rnfkj"]
+bg_color = Color(0.45711088, 0.45711094, 0.45711076, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gebhc"]
+load_path = "res://.godot/imported/iconHero2.png-82d72c2eba45a7e690b7d9b840a1c682.ctex"
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_67t46"]
+color = Color(1, 1, 1, 1)
+grow_begin = 120.0
+grow_end = 120.0
+thickness = 2
+
+[node name="Control" type="Control" unique_id=1309026328]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Window" type="PanelContainer" parent="." unique_id=249116576 node_paths=PackedStringArray("_loginText", "_passwordText", "_loginButton", "_errorLabel", "_heroChoiceWindow")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2dg57")
+script = ExtResource("1_2dg57")
+_loginText = NodePath("VBoxContainer/Login")
+_passwordText = NodePath("VBoxContainer/Password")
+_loginButton = NodePath("VBoxContainer/HBoxContainer/LoginButton")
+_errorLabel = NodePath("ErorCode")
+_heroChoiceWindow = NodePath("../HeroChoiceWindow")
+
+[node name="WindowName" type="Label" parent="Window" unique_id=1616061156]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "LOGIN TO ENTER THE GAME"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Window" unique_id=52396801]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Login" type="LineEdit" parent="Window/VBoxContainer" unique_id=642441356]
+layout_mode = 2
+size_flags_vertical = 0
+placeholder_text = "Login"
+
+[node name="Password" type="LineEdit" parent="Window/VBoxContainer" unique_id=1577642758]
+layout_mode = 2
+size_flags_vertical = 0
+placeholder_text = "Password"
+secret = true
+
+[node name="HSeparator" type="HSeparator" parent="Window/VBoxContainer" unique_id=127732715]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Window/VBoxContainer" unique_id=482934690]
+layout_mode = 2
+
+[node name="RegisterButton" type="Button" parent="Window/VBoxContainer/HBoxContainer" unique_id=1028900108]
+custom_minimum_size = Vector2(160, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "REGISTER"
+
+[node name="LoginButton" type="Button" parent="Window/VBoxContainer/HBoxContainer" unique_id=2060809153 node_paths=PackedStringArray("_loginEdit", "_passwordEdit")]
+custom_minimum_size = Vector2(260, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "LOGIN"
+script = SubResource("CSharpScript_rnfkj")
+_loginEdit = NodePath("../../Login")
+_passwordEdit = NodePath("../../Password")
+
+[node name="ErorCode" type="Label" parent="Window" unique_id=804571914]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.19009724, 0.5977975, 1.92523e-07, 1)
+theme_override_font_sizes/font_size = 21
+horizontal_alignment = 1
+script = ExtResource("2_rnfkj")
+
+[node name="HeroChoiceWindow" type="PanelContainer" parent="." unique_id=499955933 node_paths=PackedStringArray("_hero1", "_hero2", "_selectHeroButton")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rnfkj")
+script = ExtResource("3_81lqm")
+_hero1 = NodePath("Borders/VBoxContainer/HBoxContainer/hero1")
+_hero2 = NodePath("Borders/VBoxContainer/HBoxContainer/hero2")
+_selectHeroButton = NodePath("Borders/VBoxContainer/EnterTheWorld")
+
+[node name="Borders" type="MarginContainer" parent="HeroChoiceWindow" unique_id=967595495]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="WindowName" type="Label" parent="HeroChoiceWindow/Borders" unique_id=1998954749]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.8942932, 0, 0.1539791, 1)
+theme_override_font_sizes/font_size = 30
+text = "CHOOSE YOUR HERO"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HeroChoiceWindow/Borders" unique_id=1143922702]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HeroChoiceWindow/Borders/VBoxContainer" unique_id=584330723]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="hero1" type="TextureButton" parent="HeroChoiceWindow/Borders/VBoxContainer/HBoxContainer" unique_id=1275138586]
+custom_minimum_size = Vector2(140, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("3_67t46")
+texture_hover = ExtResource("4_81lqm")
+stretch_mode = 4
+
+[node name="hero2" type="TextureButton" parent="HeroChoiceWindow/Borders/VBoxContainer/HBoxContainer" unique_id=872254740]
+custom_minimum_size = Vector2(140, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = SubResource("CompressedTexture2D_gebhc")
+texture_hover = ExtResource("5_gnnrq")
+stretch_mode = 4
+
+[node name="HSeparator" type="HSeparator" parent="HeroChoiceWindow/Borders/VBoxContainer" unique_id=929210618]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_67t46")
+
+[node name="EnterTheWorld" type="Button" parent="HeroChoiceWindow/Borders/VBoxContainer" unique_id=628710448]
+custom_minimum_size = Vector2(230, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "ENTER THE GAME"

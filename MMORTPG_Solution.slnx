@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/Client/">
+    <Project Path="Client/MMORPGClient.csproj">
+      <BuildType Project="Debug" />
+    </Project>
+  </Folder>
+  <Project Path="Server/Server.csproj" />
+  <Project Path="Shared/Shared.csproj" />
+  <Project Path="UDPServer/UDPServer.csproj" />
+</Solution>

@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://bb6skeww6pvx7"]
+
+[ext_resource type="Texture2D" uid="uid://ch71deh5517kd" path="res://Assets/temp/2535466.svg" id="1_dgq6a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3q8sy"]
+bg_color = Color(0.13883072, 0.197606, 0.24329525, 1)
+border_width_top = 3
+border_color = Color(0.36409298, 0.40384758, 0.46630293, 1)
+border_blend = true
+shadow_size = 2
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_au1dw"]
+color = Color(0.53568584, 0.5356859, 0.5356859, 1)
+thickness = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dgq6a"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.09627318, 0.24845389, 0.3122132, 1)
+
+[node name="GUILDHALL" type="PanelContainer" unique_id=1800120852]
+custom_minimum_size = Vector2(1050, 500)
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_3q8sy")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1157647397]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1995108115]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Name" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1949331866]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_colors/font_color = Color(0.88916004, 0.8047755, 0.74296194, 1)
+theme_override_font_sizes/font_size = 32
+text = "GUILDHALL"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=722395344]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_au1dw")
+
+[node name="GuildInfo" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=667988259]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dgq6a")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/GuildInfo" unique_id=935201929]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LeftPart" type="HBoxContainer" parent="MarginContainer/VBoxContainer/GuildInfo/HBoxContainer" unique_id=237158928]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="GuildLogo" type="TextureRect" parent="MarginContainer/VBoxContainer/GuildInfo/HBoxContainer/LeftPart" unique_id=512025642]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+texture = ExtResource("1_dgq6a")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="ShortGuildInfo" type="VBoxContainer" parent="MarginContainer/VBoxContainer/GuildInfo/HBoxContainer/LeftPart" unique_id=1370835213]
+layout_mode = 2
+
+[node name="GuildName" type="Label" parent="MarginContainer/VBoxContainer/GuildInfo/HBoxContainer/LeftPart/ShortGuildInfo" unique_id=1377617092]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Guild Name"
+
+[node name="GuildName2" type="Label" parent="MarginContainer/VBoxContainer/GuildInfo/HBoxContainer/LeftPart/ShortGuildInfo" unique_id=1214173103]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Members"
+
+[node name="GuildName3" type="Label" parent="MarginContainer/VBoxContainer/GuildInfo/HBoxContainer/LeftPart/ShortGuildInfo" unique_id=416963776]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Goverment term"
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/GuildInfo/HBoxContainer" unique_id=1037360381]
+layout_mode = 2
+
+[node name="MiddlePart" type="VBoxContainer" parent="MarginContainer/VBoxContainer/GuildInfo/HBoxContainer" unique_id=391636794]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="Label" parent="MarginContainer/VBoxContainer/GuildInfo/HBoxContainer/MiddlePart" unique_id=1414208913]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 0.37228176, 0.29389417, 1)
+theme_override_font_sizes/font_size = 18
+text = "MESSAGE FOR WANDERERS:"
+
+[node name="Message" type="Label" parent="MarginContainer/VBoxContainer/GuildInfo/HBoxContainer/MiddlePart" unique_id=899246296]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.8576015, 0.8849803, 0.8949004, 1)
+text = "We welcome everyone to our city. 
+We are happy to see every traveler and hope you enjoy your stay."
+
+[node name="RightPart" type="VBoxContainer" parent="MarginContainer/VBoxContainer/GuildInfo/HBoxContainer" unique_id=864128681]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="RulerText" type="Label" parent="MarginContainer/VBoxContainer/GuildInfo/HBoxContainer/RightPart" unique_id=496196972]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 16
+text = "THE RULER"
+
+[node name="Ruler" type="Label" parent="MarginContainer/VBoxContainer/GuildInfo/HBoxContainer/RightPart" unique_id=1668494849]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.790002, 0.65289474, 0.07089756, 1)
+theme_override_font_sizes/font_size = 28
+text = "Nickname"
