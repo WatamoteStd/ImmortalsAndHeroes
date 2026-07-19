@@ -33,7 +33,7 @@ public partial class HttpsMasterClient : Node
 
 	}
 
-	public async Task<HttpStatusCode> LoginRequestAsync(string username, string password)
+	public async Task<HttpResponseMessage> LoginRequestAsync(string username, string password)
 	{
 		
 		var loginDTO = new
@@ -44,7 +44,7 @@ public partial class HttpsMasterClient : Node
 
 		var response = await client.PostAsJsonAsync("api/auth/login", loginDTO);
 
-		return response.StatusCode;
+		return response;
 
 	}
 

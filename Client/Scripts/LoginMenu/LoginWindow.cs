@@ -3,6 +3,8 @@ using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net.Http.Json;
+using System.Collections.Generic;
 
 public partial class LoginWindow : PanelContainer
 {
@@ -23,15 +25,25 @@ public partial class LoginWindow : PanelContainer
     private async void LoginRequest()
     {
         
-        var responseCode = await HttpsMasterClient.Instanсe.LoginRequestAsync(_loginLine.Text, _passwordLine.Text);
+        var responseMessage = await HttpsMasterClient.Instanсe.LoginRequestAsync(_loginLine.Text, _passwordLine.Text);
 
-        if (responseCode == HttpStatusCode.OK)
+        if (responseMessage.StatusCode == HttpStatusCode.OK)
         {
             
-            _answerCodeLabel.Text = "succesful login";
-            await Task.Delay(1500);
+            var data = await responseMessage.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+
+            if (data != null && data.TryGetValue("token", out var token))
+            {
+                
+                _answerCodeLabel.Text = $"Succesful login.";
+                GD.Print(token);
+
+                 await Task.Delay(1500);
+                _heroSelectWindow.Visible = true;
+
+            }
+
             
-            _heroSelectWindow.Visible = true;
 
         }
 
