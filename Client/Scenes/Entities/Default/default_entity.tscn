@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dpvb613krplgp"]
+
+[ext_resource type="Script" uid="uid://jhgn5gucmusd" path="res://Scripts/Entities/EntityClient.cs" id="1_4152v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xe5ny"]
+albedo_color = Color(0.20937365, 0.388142, 0.3665529, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4152v"]
+material = SubResource("StandardMaterial3D_xe5ny")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4eppn"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=387657557]
+script = ExtResource("1_4152v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1880903828]
+mesh = SubResource("CapsuleMesh_4152v")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=75417351]
+shape = SubResource("CapsuleShape3D_4eppn")
