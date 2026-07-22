@@ -64,10 +64,10 @@ public class NetworkUdpManager
             case PacketType.C2S_EnterTheWorld:
                 {
 
-                    if (_players.TryGetValue(ipEndPoint, out PlayerClient client))
+                    if (_players.TryGetValue(ipEndPoint, out PlayerClient? client) && client != null)
                     {
                         
-                        Console.WriteLine($"PlayerID:{client.PlayerId} enter the world. Searching region...");
+                        Console.WriteLine($"[Server] PlayerID:{client.PlayerId} enter the world. Searching region...");
 
                         var region = _world.GetRegion(0);
 
@@ -77,8 +77,9 @@ public class NetworkUdpManager
                             client.Region = region;
 
                             // CREATING CHARACTER FOR PLAYER
-                            Entity newEntity = new Entity(Random.Shared.NextInt64(), region.RegionId);
+                            Entity newEntity = new Entity((uint)Random.Shared.Next(), region.RegionId, Random.Shared.NextInt64());
                             client.Character = newEntity;
+                            client.NetworkId = newEntity.NetworkId;
                             Console.WriteLine($"[Server] PlayerId{client.PlayerId} new character created.");
 
 

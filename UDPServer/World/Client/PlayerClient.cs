@@ -12,6 +12,7 @@ public class PlayerClient
 
     // ENET INFO ===================================================
     public readonly long PlayerId;
+    public uint NetworkId {get; set;}
     public IPEndPoint RemoveEndPoint {get; set;} // adress to send packets
     public WorldRegion? Region {get; set;}
 

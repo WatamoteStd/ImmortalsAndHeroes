@@ -119,7 +119,7 @@ public partial class NetworkUdpClient : Node
 
 				default:
 
-					GD.Print("Some shit packet");
+					GD.Print("Some ass packet");
 
 				break;
 

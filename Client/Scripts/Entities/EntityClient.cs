@@ -7,7 +7,7 @@ public partial class EntityClient : CharacterBody3D
 	public enum EntityState { Idle, Move, Chase, Attack, Cast, Dead}
 	public EntityState CurrentState = EntityState.Idle;
 
-	public long Id {get; set;}
+	public uint NetworkId {get; set;}
 	public int Health {get; set;}
 	public float CurrentSpeed {get; set;}
 

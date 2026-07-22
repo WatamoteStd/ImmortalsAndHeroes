@@ -6,18 +6,20 @@ namespace UDPServer.World.Entities;
 public class Entity
 {
     
-    public readonly long Id;
+    public  uint NetworkId {get; set;}
+    public long GlobalId { get; set; }
     public long RegionId {get; set;}
 
     // GAME INFO & STATS
     public ushort Health {get; set;}
     public Vector3 Position {get; set;} = new Vector3(0, 0, 0);
 
-    public Entity(long id, long regionId)
+    public Entity(uint networkId, long regionId, long globalId)
     {
         
-        Id = id;
+        NetworkId = networkId;
         RegionId = regionId;
+        GlobalId = globalId;
 
     }
 

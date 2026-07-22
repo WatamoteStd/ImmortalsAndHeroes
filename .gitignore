@@ -517,3 +517,4 @@ Thumbs.db
 *.localtoken
 
 **/appsettings.Development.json
+project_summary.txt
