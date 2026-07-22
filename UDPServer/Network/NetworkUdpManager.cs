@@ -86,6 +86,45 @@ public class NetworkUdpManager
                             region.AddPlayer(client);
                             Console.WriteLine($"[Server] PlayerId:{client.PlayerId} added to regionID:{region.RegionId}");
 
+                            // CREATING REGION PACKET FOR CLIENT ==============================
+
+                            var regionEntites = region.Entities;
+                            var snapshots = new S2C_RegionEnter.EntitySnapshotData[regionEntites.Count];
+
+                           int i = 0;
+
+                            foreach (var kvp in regionEntites)
+                            {
+                                Entity ent = kvp.Value;
+                                
+                                snapshots[i] = new S2C_RegionEnter.EntitySnapshotData
+                                {
+                                    NetworkId = ent.NetworkId,
+                                    EntityType = ent.Type,
+                                    PositionX = ent.Position.X,
+                                    PositionY = ent.Position.Y,
+                                    PositionZ = ent.Position.Z,
+                                    Health = ent.Health
+                                };
+
+                                i++;
+
+                            }
+
+                            S2C_RegionEnter snapshotPacket = new S2C_RegionEnter()
+                            {
+                                
+                                MyNetworkId = client.NetworkId,
+                                EntityCount = (ushort)snapshots.Length,
+                                Entities = snapshots
+
+                            };
+
+                            Span<byte> buffer = stackalloc byte[8 + (snapshots.Length * 19)];
+                            int packetLenght = PacketSerializer.Serialize<S2C_RegionEnter>(buffer, PacketType.S2C_RegionEnter, snapshotPacket);
+
+                            serverSocket.SendTo(buffer[..packetLenght], SocketFlags.None, remoteEndPoint);
+
                         }
 
 

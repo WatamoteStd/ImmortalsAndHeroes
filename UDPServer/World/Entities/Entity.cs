@@ -12,6 +12,7 @@ public class Entity
 
     // GAME INFO & STATS
     public ushort Health {get; set;}
+    public byte Type {get; set;} = 0;
     public Vector3 Position {get; set;} = new Vector3(0, 0, 0);
 
     public Entity(uint networkId, long regionId, long globalId)

@@ -9,8 +9,8 @@ public class WorldRegion
 {
 
     // DATA
-    ConcurrentDictionary<uint, Entity> _entities;
-    ConcurrentDictionary<long, PlayerClient> _players;
+    public readonly ConcurrentDictionary<uint, Entity> Entities;
+    public readonly ConcurrentDictionary<long, PlayerClient> Players;
 
 
     public readonly long RegionId;
@@ -19,23 +19,36 @@ public class WorldRegion
     {
         
         RegionId = id;
-        _entities = new ConcurrentDictionary<uint, Entity>();
-        _players = new ConcurrentDictionary<long, PlayerClient>();
+        Entities = new ConcurrentDictionary<uint, Entity>();
+        Players = new ConcurrentDictionary<long, PlayerClient>();
 
     }
 
     public void AddPlayer(PlayerClient player)
     {
         
-        _players.TryAdd(player.PlayerId, player);
+        Players.TryAdd(player.PlayerId, player);
         if (player.Character != null)
         {
-            _entities.TryAdd(player.Character.NetworkId, player.Character);
+            Entities.TryAdd(player.Character.NetworkId, player.Character);
         }
         else
         {
             Console.WriteLine($"[WorldHolder: ERROR] Player:{player.PlayerId} character is null.");
         }
+
+    }
+
+    public Entity? GetEntity(uint id)
+    {
+        
+        if (Entities.TryGetValue(id, out Entity? entity) && entity != null)
+        {
+            
+            return entity;
+
+        }
+        else return null;
 
     }
 

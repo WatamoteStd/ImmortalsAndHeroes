@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cu4mbwq4su4ns"]
 
-[ext_resource type="Script" uid="uid://ny42nftt6fab" path="res://Scripts/World/RegionClient.cs" id="1_4jbj3"]
+[ext_resource type="Script" uid="uid://ny42nftt6fab" path="res://Scripts/World/RegionClient.cs" id="1_lqec6"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_t3xac"]
 size = Vector2(50, 50)
@@ -8,8 +8,18 @@ size = Vector2(50, 50)
 [sub_resource type="BoxShape3D" id="BoxShape3D_hjl0q"]
 size = Vector3(50, 0.05, 50)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_6u82b"]
+size = Vector3(1, 5, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ichqs"]
+albedo_color = Color(0.16078432, 0.30980393, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_83fg3"]
+material = SubResource("StandardMaterial3D_ichqs")
+size = Vector3(1, 5, 2)
+
 [node name="WorldRegion" type="Node3D" unique_id=388387032]
-script = ExtResource("1_4jbj3")
+script = ExtResource("1_lqec6")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=487756432]
 
@@ -24,3 +34,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.369549, 7.6412106)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=268547051]
 transform = Transform3D(-0.6843574, -0.2065887, 0.6992682, 0.6799258, 0.16557273, 0.71434355, -0.2633551, 0.9643169, 0.027154047, 0, 23.304485, 0.38732862)
+
+[node name="Temp" type="StaticBody3D" parent="." unique_id=307920044]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Temp" unique_id=912158272]
+shape = SubResource("BoxShape3D_6u82b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Temp" unique_id=1476344560]
+mesh = SubResource("BoxMesh_83fg3")

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Http.Json;
 using System.Collections.Generic;
 using System.Text.Json;
+using Shared.Network.Packets;
 
 public partial class LoginWindow : PanelContainer
 {
@@ -20,6 +21,7 @@ public partial class LoginWindow : PanelContainer
     {
         _heroSelectWindow.Visible = false;
         _loginButton.Pressed += LoginRequest;
+        NetworkPacketManager.Instance.OnHandshakeResponse += EnterWorld;
 
     }
 
@@ -40,15 +42,11 @@ public partial class LoginWindow : PanelContainer
                 long ticket = ((JsonElement)ticketObj).GetInt64();
                 string token = ((JsonElement)tokenObj).GetString();
 
-                GD.Print($"TICKET UDP: {ticket}");
-                GD.Print($"TOKEN HTTP: {token}");
+                GameSession.Instance.AuthTicket = ticket;
+                GameSession.Instance.AuthToken = token;
+                GameSession.Instance.CurrentSessionState = GameSession.State.Loading;
 
-                NetworkUdpClient.Instance.Connect(ticket);
-                
-                // VISUAL CHANGES +++++++++++++++++++++++++++++++++++++++++++
-                _answerCodeLabel.Text = $"Succesful login.";
-                 await Task.Delay(1500);
-                Callable.From(() => GetTree().ChangeSceneToFile("res://Scenes/World/Region_1.tscn")).Call();;
+                NetworkUdpClient.Instance.Connect(ticket);  
 
             }
 
@@ -57,6 +55,33 @@ public partial class LoginWindow : PanelContainer
         }
 
     }
+
+    private async void EnterWorld(S2C_HandshakeResponse response)
+    {
+        
+        if (response.Status == 1)
+        {
+            
+            _answerCodeLabel.Text = $"Succesful login.";
+            await Task.Delay(1500);
+            Callable.From(() => GetTree().ChangeSceneToFile("res://Scenes/World/Region_0.tscn")).Call();
+
+        }
+        else
+        {
+            _answerCodeLabel.Text = $"Can't connect to the UDP server. Try again...";
+        }
+
+    }
+
+    public override void _ExitTree()
+    {
+        if (NetworkPacketManager.Instance != null)
+        {
+            NetworkPacketManager.Instance.OnHandshakeResponse -= EnterWorld;
+        }
+    }
+
 
 
 }
