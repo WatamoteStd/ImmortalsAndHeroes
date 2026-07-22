@@ -120,7 +120,7 @@ public class NetworkUdpManager
 
                             };
 
-                            Span<byte> buffer = stackalloc byte[8 + (snapshots.Length * 19)];
+                            Span<byte> buffer = stackalloc byte[10 + (snapshots.Length * 19)];
                             int packetLenght = PacketSerializer.Serialize<S2C_RegionEnter>(buffer, PacketType.S2C_RegionEnter, snapshotPacket);
 
                             serverSocket.SendTo(buffer[..packetLenght], SocketFlags.None, remoteEndPoint);

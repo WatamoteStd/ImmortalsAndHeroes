@@ -117,6 +117,15 @@ public partial class NetworkUdpClient : Node
 					}
 				break;
 
+				case PacketType.S2C_RegionEnter:
+					{
+						
+						S2C_RegionEnter packet = PacketSerializer.Deserialize<S2C_RegionEnter>(_bufferMemory.Span[..byteCount]);
+						PacketQueue.Enqueue(packet);
+
+					}
+				break;	
+
 				default:
 
 					GD.Print("Some ass packet");

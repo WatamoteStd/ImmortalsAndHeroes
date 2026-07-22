@@ -3,6 +3,8 @@ using System;
 
 public partial class EntityClient : CharacterBody3D
 {
+
+	[Export] private Camera3D _camera;
 	
 	public enum EntityState { Idle, Move, Chase, Attack, Cast, Dead}
 	public EntityState CurrentState = EntityState.Idle;
@@ -31,6 +33,16 @@ public partial class EntityClient : CharacterBody3D
 				}
 			break;
 
+		}
+
+	}
+
+	public void MakeLocalPlayer()
+	{
+		
+		if (_camera != null)
+		{
+			_camera.Current = true;
 		}
 
 	}

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cu4mbwq4su4ns"]
 
 [ext_resource type="Script" uid="uid://ny42nftt6fab" path="res://Scripts/World/RegionClient.cs" id="1_lqec6"]
+[ext_resource type="PackedScene" uid="uid://dpvb613krplgp" path="res://Scenes/Entities/Default/default_entity.tscn" id="2_cuonp"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_t3xac"]
 size = Vector2(50, 50)
@@ -20,6 +21,7 @@ size = Vector3(1, 5, 2)
 
 [node name="WorldRegion" type="Node3D" unique_id=388387032]
 script = ExtResource("1_lqec6")
+_modelPrefab = ExtResource("2_cuonp")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=487756432]
 
@@ -29,14 +31,11 @@ mesh = SubResource("PlaneMesh_t3xac")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=2145081111]
 shape = SubResource("BoxShape3D_hjl0q")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=987706390]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.369549, 7.6412106)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=268547051]
 transform = Transform3D(-0.6843574, -0.2065887, 0.6992682, 0.6799258, 0.16557273, 0.71434355, -0.2633551, 0.9643169, 0.027154047, 0, 23.304485, 0.38732862)
 
 [node name="Temp" type="StaticBody3D" parent="." unique_id=307920044]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.862295, 2, -8.533048)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Temp" unique_id=912158272]
 shape = SubResource("BoxShape3D_6u82b")

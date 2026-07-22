@@ -10,11 +10,15 @@ material = SubResource("StandardMaterial3D_xe5ny")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4eppn"]
 
-[node name="CharacterBody3D" type="CharacterBody3D" unique_id=387657557]
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=387657557 node_paths=PackedStringArray("_camera")]
 script = ExtResource("1_4152v")
+_camera = NodePath("Camera3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1880903828]
 mesh = SubResource("CapsuleMesh_4152v")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=75417351]
 shape = SubResource("CapsuleShape3D_4eppn")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=745353625]
+transform = Transform3D(0.99282193, 0.0629287, -0.10170845, 0, 0.8503911, 0.5261511, 0.119601965, -0.52237433, 0.844287, -0.3738184, 5.830763, 4.420889)

@@ -6,6 +6,7 @@ public partial class NetworkPacketManager : Node
 {
 
 	public event Action<S2C_HandshakeResponse>? OnHandshakeResponse;
+	public event Action<S2C_RegionEnter> OnServerEnterResponse;
 
 	public static NetworkPacketManager Instance {get; set;}
 
@@ -44,6 +45,15 @@ public partial class NetworkPacketManager : Node
 
 						}
 						else GD.PrintErr("Can't connect to the UDP server. Please try again later.");
+
+					}
+				break;
+
+				case S2C_RegionEnter response:
+					{
+						
+						GameSession.Instance.NetworkId = response.MyNetworkId;
+						OnServerEnterResponse?.Invoke(response);
 
 					}
 				break;
