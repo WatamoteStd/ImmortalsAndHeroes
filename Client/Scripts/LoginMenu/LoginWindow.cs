@@ -28,17 +28,16 @@ public partial class LoginWindow : PanelContainer
     private async void LoginRequest()
     {
 
-        var responseMessage = await HttpsMasterClient.Instanсe.LoginRequestAsync(_loginLine.Text, _passwordLine.Text);
 
+        var responseMessage = await HttpsMasterClient.Instanсe.LoginRequestAsync(_loginLine.Text, _passwordLine.Text);
 
         if (responseMessage.StatusCode == HttpStatusCode.OK)
         {
-            
             var data = await responseMessage.Content.ReadFromJsonAsync<Dictionary<string, object>>();
-
 
             if (data != null && data.TryGetValue("token", out var tokenObj) && data.TryGetValue("ticket", out var ticketObj))
             {
+
                 long ticket = ((JsonElement)ticketObj).GetInt64();
                 string token = ((JsonElement)tokenObj).GetString();
 

@@ -25,11 +25,13 @@ public partial class HttpsMasterClient : Node
 		var handler = new HttpClientHandler
 		{
 			ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+			
 		};
 
 		
 		client = new System.Net.Http.HttpClient(handler);
 		client.BaseAddress = new Uri("https://localhost:29557/");
+		client.Timeout = TimeSpan.FromSeconds(5);
 
 	}
 

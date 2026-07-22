@@ -63,7 +63,7 @@ public partial class NetworkUdpClient : Node
 
 	public void Connect(long ticket)
 	{
-		
+		GD.Print($"[NetworkUdpClient] Connect func was triggered.");
 		Span<byte> buffer = stackalloc byte[10];
 
 		C2S_HandshakePacket packet = new C2S_HandshakePacket()
@@ -74,6 +74,7 @@ public partial class NetworkUdpClient : Node
 		int packetLenght = PacketSerializer.Serialize<C2S_HandshakePacket>(buffer, PacketType.C2S_Handshake, packet);
 		
 		socket.SendTo(buffer[..packetLenght], SocketFlags.None, serverEndPoint);
+		GD.Print($"[NetworkUdpClient] Send Info To Serser");
 
 	}
 

@@ -9,8 +9,10 @@ public class WorldRegion
 {
 
     // DATA
-    public readonly ConcurrentDictionary<uint, Entity> Entities;
-    public readonly ConcurrentDictionary<long, PlayerClient> Players;
+    public readonly Dictionary<uint, Entity> Entities = new();
+    public readonly Dictionary<long, PlayerClient> Players = new();
+
+    private Entity[] _entitiesArray = Array.Empty<Entity>();
 
 
     public readonly long RegionId;
@@ -19,8 +21,6 @@ public class WorldRegion
     {
         
         RegionId = id;
-        Entities = new ConcurrentDictionary<uint, Entity>();
-        Players = new ConcurrentDictionary<long, PlayerClient>();
 
     }
 
@@ -30,7 +30,10 @@ public class WorldRegion
         Players.TryAdd(player.PlayerId, player);
         if (player.Character != null)
         {
-            Entities.TryAdd(player.Character.NetworkId, player.Character);
+            if (Entities.TryAdd(player.Character.NetworkId, player.Character))
+            {
+                _entitiesArray = Entities.Values.ToArray();
+            }
         }
         else
         {
@@ -55,7 +58,12 @@ public class WorldRegion
     public void Update(float deltaTime)
     {
         
+        for (int i = 0; i < _entitiesArray.Length; i++)
+        {
+            
+            _entitiesArray[i].Update(deltaTime);
 
+        }
 
     }
 
