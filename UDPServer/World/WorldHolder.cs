@@ -1,13 +1,18 @@
 using System;
 using System.Collections.Concurrent;
 using System.Net;
+using UDPServer.Network;
 
 namespace UDPServer.World;
 
 public class WorldHolder
 {
+
+    NetworkUdpManager? NetworkManager;
+
     private float _timer;
-    private int _frameCount;
+    private float _netTimer;
+
     private Dictionary<long, WorldRegion> _regions = new(); // USER FRIENDLY ARRAY 
     private WorldRegion[] _regionsArray = Array.Empty<WorldRegion>(); // CACHE FRIENDLY :)
     public WorldHolder()
@@ -15,6 +20,11 @@ public class WorldHolder
         
         AddRegion(new WorldRegion(0));
 
+    }
+
+    public void Initialize(NetworkUdpManager netManager)
+    {
+        NetworkManager = netManager;
     }
 
     public void AddRegion(WorldRegion region)
@@ -31,6 +41,7 @@ public class WorldHolder
 
     public void Update(float deltaTime)
     {
+        // GAME WORLD ===========================================================
 
         for (int i = 0; i < _regionsArray.Length; i++)
         {
@@ -39,9 +50,34 @@ public class WorldHolder
 
         }
 
+        // NETWORK ==============================================================
 
+        _netTimer += deltaTime;
+
+        if (_netTimer >= 0.05f) // 20 ticks
+        {
+            
+            _netTimer = 0.0f;
+
+            for (int i = 0; i < _regionsArray.Length; i++)
+            {
+                
+                var entities = _regionsArray[i].GetEntityToUpdate();
+
+                if (entities.Length > 0)
+                {
+                    
+                    
+
+                }
+
+            } 
+
+        }
+        
+
+        // FOR DEBUG=============================================================
         _timer += deltaTime;
-        _frameCount++;
         if (_timer >= 10.0f)
         {
             long bytes = GC.GetTotalMemory(false);
@@ -49,8 +85,6 @@ public class WorldHolder
 
             Console.WriteLine($"[10s Check] GC Heap: {mb:F3} MB");
 
-            _frameCount = 0;
-            _timer = 0;
         }
 
     }

@@ -13,8 +13,8 @@ public class PlayerClient
     // ENET INFO ===================================================
     public readonly long PlayerId;
     public uint NetworkId {get; set;}
-    public IPEndPoint RemoveEndPoint {get; set;} // adress to send packets
-    public WorldRegion? Region {get; set;}
+    public IPEndPoint RemoteIpEndPoint {get; set;} // adress to send packets
+    public long RegionId {get; set;}
 
     // GAME ==========================================================
     public Entity? Character;
@@ -22,7 +22,7 @@ public class PlayerClient
     public PlayerClient(IPEndPoint endPoint, long id)
     {
         
-        RemoveEndPoint = endPoint;
+        RemoteIpEndPoint = endPoint;
         PlayerId = id;
 
     }

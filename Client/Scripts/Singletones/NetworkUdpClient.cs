@@ -7,6 +7,7 @@ using Shared.Network.Packets;
 using System.Threading.Tasks;
 using System.Buffers.Binary;
 using System.Collections.Concurrent;
+using Shared.Network.Packets.GamePackets;
 
 public partial class NetworkUdpClient : Node
 {
@@ -91,6 +92,24 @@ public partial class NetworkUdpClient : Node
 		int packetLenght = PacketSerializer.Serialize<C2S_EnterTheWorldPacket>(buffer, PacketType.C2S_EnterTheWorld, packet);
 
 		socket.SendTo(buffer[..packetLenght], SocketFlags.None, serverEndPoint);
+
+	}
+
+	// ==================  PLAYER CONTOLLER FUNC ===========================================
+	public void PCSendMoveRequest(float x, float y, float z)
+	{
+		
+		var packet = new C2S_MoveRequestPacket
+		{
+			PositionX = x,
+			PositionY = y,
+			PositionZ = z
+		};
+
+		Span<byte> buffer = stackalloc byte[14];
+		int bytes = PacketSerializer.Serialize<C2S_MoveRequestPacket>(buffer, PacketType.C2S_MoveRequest, packet);
+
+		socket.SendTo(buffer, SocketFlags.None, serverEndPoint);
 
 	}
 

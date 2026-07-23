@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using Shared.Network;
 using Shared.Network.Packets;
+using Shared.Network.Packets.GamePackets;
 using UDPServer.Network.Client;
 using UDPServer.World;
 using UDPServer.World.Entities;
@@ -17,6 +18,8 @@ public class NetworkUdpManager
     private ConcurrentDictionary<IPEndPoint, PlayerClient> _players = new();
     private readonly WorldHolder _world;
 
+    private Socket? _serverSocket;
+
     public NetworkUdpManager(WorldHolder world)
     {
         
@@ -28,6 +31,11 @@ public class NetworkUdpManager
     {
 
         if (packetData.Length < 2) return;
+
+        if (_serverSocket == null)
+        {
+            _serverSocket = serverSocket;
+        }
 
         IPEndPoint ipEndPoint = (IPEndPoint)remoteEndPoint;
 
@@ -45,7 +53,7 @@ public class NetworkUdpManager
                     PlayerClient newPlayerConnection = new PlayerClient(ipEndPoint, Random.Shared.NextInt64());
                     _players.TryAdd(ipEndPoint, newPlayerConnection);
                     
-                    Console.WriteLine($"[Server] PlayerId:{newPlayerConnection.PlayerId} connected to the server! IP:{newPlayerConnection.RemoveEndPoint}");
+                    Console.WriteLine($"[Server] PlayerId:{newPlayerConnection.PlayerId} connected to the server! IP:{newPlayerConnection.RemoteIpEndPoint}");
 
                     // RESPONSE TO CLIENT ============================================================
                     S2C_HandshakeResponse response = new S2C_HandshakeResponse()
@@ -74,7 +82,7 @@ public class NetworkUdpManager
                         if (region != null )
                         {
                             
-                            client.Region = region;
+                            client.RegionId = region.RegionId;
 
                             // CREATING CHARACTER FOR PLAYER
                             Entity newEntity = new Entity((uint)Random.Shared.Next(), region.RegionId, Random.Shared.NextInt64());
@@ -133,9 +141,86 @@ public class NetworkUdpManager
                 }
             break;
 
+            case PacketType.C2S_MoveRequest:
+                {
+                    
+                    C2S_MoveRequestPacket packet = PacketSerializer.Deserialize<C2S_MoveRequestPacket>(packetData);
+
+                    if (_players.TryGetValue(ipEndPoint, out PlayerClient? client) && client != null)
+                    {
+                        
+                        WorldRegion? region = GetClientRegion(client);
+
+                        if (region == null)
+                        {
+                            Console.WriteLine($"[Server] PlayerId:{client.PlayerId} can't send move packet. It's region id is null.");
+                        }
+                        else
+                        {
+                            
+                            region.MoveEntity(client.PlayerId, packet.PositionX, packet.PositionY, packet.PositionZ);
+
+                        }
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("[Server] Unregistred account move request declined.");
+                    }
+
+                }
+            break;
+
             default:
 
             break;
+
+        }
+
+    }
+
+    private WorldRegion? GetClientRegion(PlayerClient playerClient)
+    {
+        
+        WorldRegion? region = _world.GetRegion(playerClient.RegionId);
+
+        return region;
+
+    }
+
+    // ============================== WORLD HOLDER PACKETS =================== \\
+
+    public void WHSendRegionPacket(WorldRegion region, ReadOnlySpan<Entity> entities)
+    {
+        
+        var players = region.GetPlayers();
+        if (players.Length == 0) return;
+
+        Span<byte> buffer = stackalloc byte[64];
+
+        for (int i = 0; i < entities.Length; i++)
+        {
+            
+            var entity = entities[i];
+
+            var movePacket = new S2C_MoveEntityPacket
+            {
+                NetworkEntityId = entity.NetworkId,
+                PositionX = entity.Position.X,
+                PositionY = entity.Position.Y,
+                PositionZ = entity.Position.Z
+            };
+
+            int packetSize = PacketSerializer.Serialize<S2C_MoveEntityPacket>(buffer, PacketType.S2C_MoveEntity, movePacket);
+
+            ReadOnlySpan<byte> packetBytes = buffer[..packetSize];
+
+            for (int p = 0; p < players.Length; p++)
+            {
+                
+                _serverSocket!.SendTo(packetBytes, SocketFlags.None, players[p].RemoteIpEndPoint);
+
+            }
 
         }
 

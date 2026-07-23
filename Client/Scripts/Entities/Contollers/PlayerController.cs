@@ -35,7 +35,9 @@ public partial class PlayerController : Node
                 
                 Vector3 clickPosition = _cameraRay.GetCollisionPoint();
 
-                GD.Print($"Точка клика: {clickPosition}");
+                NetworkUdpClient.Instance.PCSendMoveRequest(clickPosition.X, clickPosition.Y, clickPosition.Z);
+
+                GD.Print($"Click point: {clickPosition}");
 
             }
 
