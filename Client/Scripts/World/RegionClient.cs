@@ -47,6 +47,7 @@ public partial class RegionClient : Node3D
 					
 					GameSession.Instance.Character = character;
 					character.MakeLocalPlayer();
+					
 
 				}
 				

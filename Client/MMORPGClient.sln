@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMORPGClient", "MMORPGClient.csproj", "{AFD9F8B8-93EC-4309-9E52-06A49A7B9173}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMORPGClient", "MMORPGClient.csproj", "{F88D3370-A16E-4092-985B-50B53D64D758}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,11 +9,11 @@ Global
 	ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AFD9F8B8-93EC-4309-9E52-06A49A7B9173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFD9F8B8-93EC-4309-9E52-06A49A7B9173}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AFD9F8B8-93EC-4309-9E52-06A49A7B9173}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
-		{AFD9F8B8-93EC-4309-9E52-06A49A7B9173}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
-		{AFD9F8B8-93EC-4309-9E52-06A49A7B9173}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
-		{AFD9F8B8-93EC-4309-9E52-06A49A7B9173}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{F88D3370-A16E-4092-985B-50B53D64D758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F88D3370-A16E-4092-985B-50B53D64D758}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F88D3370-A16E-4092-985B-50B53D64D758}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{F88D3370-A16E-4092-985B-50B53D64D758}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{F88D3370-A16E-4092-985B-50B53D64D758}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{F88D3370-A16E-4092-985B-50B53D64D758}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
 	EndGlobalSection
 EndGlobal

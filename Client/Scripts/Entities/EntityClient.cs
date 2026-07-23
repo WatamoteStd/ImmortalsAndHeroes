@@ -4,7 +4,9 @@ using System;
 public partial class EntityClient : CharacterBody3D
 {
 
-	[Export] private Camera3D _camera;
+	private Camera3D _camera;
+	private RayCast3D _cameraRay;
+	private PlayerController _playerContoller;
 	
 	public enum EntityState { Idle, Move, Chase, Attack, Cast, Dead}
 	public EntityState CurrentState = EntityState.Idle;
@@ -14,6 +16,15 @@ public partial class EntityClient : CharacterBody3D
 	public float CurrentSpeed {get; set;}
 
 	public Vector3 TargetPosition {get; set;}
+
+	public override void _Ready()
+	{
+		
+		_camera = GetNode<Camera3D>("Camera3D");
+		_cameraRay = GetNode<RayCast3D>("Camera3D/RayCast3D");
+
+	}
+
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -40,9 +51,15 @@ public partial class EntityClient : CharacterBody3D
 	public void MakeLocalPlayer()
 	{
 		
-		if (_camera != null)
+		if (_camera != null || _cameraRay != null) 
 		{
+
 			_camera.Current = true;
+
+			_playerContoller = new PlayerController();
+			_playerContoller.Initialize(_camera, _cameraRay);
+			AddChild(_playerContoller);
+
 		}
 
 	}
