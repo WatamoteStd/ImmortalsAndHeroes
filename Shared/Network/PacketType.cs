@@ -9,6 +9,7 @@ public enum PacketType : ushort
     S2C_RegionEnter = 4,
 
     // GAME UDP
+    C2S_MoveRequest = 99,
     C2S_PlayerInput = 100,
     S2C_WorldState = 101
 
