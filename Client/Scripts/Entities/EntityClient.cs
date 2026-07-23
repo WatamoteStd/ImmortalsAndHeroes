@@ -13,9 +13,9 @@ public partial class EntityClient : CharacterBody3D
 
 	public uint NetworkId {get; set;}
 	public int Health {get; set;}
-	public float CurrentSpeed {get; set;}
+	public float CurrentSpeed = 1.0f;
 
-	public Vector3 TargetPosition {get; set;}
+	public Vector3 _targetPosition {get; private set;}
 
 	public override void _Ready()
 	{
@@ -39,7 +39,15 @@ public partial class EntityClient : CharacterBody3D
 			case EntityState.Move:
 				{
 					
+					GlobalPosition = GlobalPosition.Lerp(_targetPosition, (float)delta * 8.0f);
 
+					if (GlobalPosition.DistanceTo(_targetPosition) < 0.1f)
+					{
+						
+						GlobalPosition = _targetPosition;
+						CurrentState = EntityState.Idle;
+
+					}
 
 				}
 			break;
@@ -67,7 +75,8 @@ public partial class EntityClient : CharacterBody3D
 	public virtual void MoveToPosition(Vector3 position)
 	{
 		
-		
+		CurrentState = EntityState.Move;
+		_targetPosition = position;
 
 	}
 

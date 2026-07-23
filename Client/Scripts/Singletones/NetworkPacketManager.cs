@@ -1,12 +1,14 @@
 using Godot;
 using Shared.Network.Packets;
+using Shared.Network.Packets.GamePackets;
 using System;
 
 public partial class NetworkPacketManager : Node
 {
 
-	public event Action<S2C_HandshakeResponse>? OnHandshakeResponse;
+	public event Action<S2C_HandshakeResponse> OnHandshakeResponse;
 	public event Action<S2C_RegionEnter> OnServerEnterResponse;
+	public event Action<S2C_MoveEntityPacket> OnMovePacketReceived;
 
 	public static NetworkPacketManager Instance {get; set;}
 
@@ -54,6 +56,13 @@ public partial class NetworkPacketManager : Node
 						
 						GameSession.Instance.NetworkId = response.MyNetworkId;
 						OnServerEnterResponse?.Invoke(response);
+
+					}
+				break;
+
+				case S2C_MoveEntityPacket response:
+					{
+						OnMovePacketReceived?.Invoke(response);
 
 					}
 				break;

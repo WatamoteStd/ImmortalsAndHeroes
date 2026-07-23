@@ -146,6 +146,15 @@ public partial class NetworkUdpClient : Node
 					}
 				break;	
 
+				case PacketType.S2C_MoveEntity:
+					{
+						
+						S2C_MoveEntityPacket packet = PacketSerializer.Deserialize<S2C_MoveEntityPacket>(_bufferMemory.Span[..byteCount]);
+						PacketQueue.Enqueue(packet);
+
+					}
+				break;
+
 				default:
 
 					GD.Print("Some ass packet");

@@ -1,5 +1,6 @@
 using Godot;
 using Shared.Network.Packets;
+using Shared.Network.Packets.GamePackets;
 using System;
 
 public partial class RegionClient : Node3D
@@ -11,7 +12,10 @@ public partial class RegionClient : Node3D
 	public override void _Ready()
 	{
 
-		NetworkPacketManager.Instance.OnServerEnterResponse += EnterRegion;		
+		NetworkPacketManager.Instance.OnServerEnterResponse += EnterRegion;
+
+		NetworkPacketManager.Instance.OnMovePacketReceived += OnEntityMove;
+
 		NetworkUdpClient.Instance.SendEnterTheWorld(); // UDP REQUEST TO SERVER
 
 	}
@@ -58,11 +62,25 @@ public partial class RegionClient : Node3D
 		GameSession.Instance.CurrentSessionState = GameSession.State.InGame;
 	}
 
+	private void OnEntityMove(S2C_MoveEntityPacket movePacket)
+	{
+		
+		if (_regionEntities.TryGetValue(movePacket.NetworkEntityId, out EntityClient entity))
+		{
+			
+			var newPosition = new Vector3(movePacket.PositionX, movePacket.PositionY, movePacket.PositionZ);
+			entity.MoveToPosition(newPosition);
+
+		}
+
+	}
+
 	public override void _ExitTree()
 	{
 		if (NetworkPacketManager.Instance != null)
 		{
 			NetworkPacketManager.Instance.OnServerEnterResponse -= EnterRegion;
+			NetworkPacketManager.Instance.OnMovePacketReceived -= OnEntityMove;
 		}
 	}
 

@@ -67,7 +67,8 @@ public class WorldHolder
                 if (entities.Length > 0)
                 {
                     
-                    
+                    NetworkManager!.WHSendRegionPacket(_regionsArray[i], entities);
+                    _regionsArray[i].ClearChangedEntities();
 
                 }
 
@@ -80,6 +81,7 @@ public class WorldHolder
         _timer += deltaTime;
         if (_timer >= 10.0f)
         {
+            _timer = 0;
             long bytes = GC.GetTotalMemory(false);
             double mb = bytes / 1024.0 / 1024.0;
 
