@@ -10,6 +10,8 @@ public partial class NetworkPacketManager : Node
 	public event Action<S2C_RegionEnter> OnServerEnterResponse;
 	public event Action<S2C_MoveEntityPacket> OnMovePacketReceived;
 
+	public event Action<S2C_RegionEnterFM> OnNewEnterRegion;
+
 	public static NetworkPacketManager Instance {get; set;}
 
 	public override void _EnterTree()
@@ -63,6 +65,14 @@ public partial class NetworkPacketManager : Node
 				case S2C_MoveEntityPacket response:
 					{
 						OnMovePacketReceived?.Invoke(response);
+
+					}
+				break;
+
+				case S2C_RegionEnterFM response:
+					{
+						
+						OnNewEnterRegion?.Invoke(response);
 
 					}
 				break;
