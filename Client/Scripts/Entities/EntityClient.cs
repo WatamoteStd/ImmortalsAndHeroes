@@ -39,7 +39,7 @@ public partial class EntityClient : CharacterBody3D
 			case EntityState.Move:
 				{
 					
-					GlobalPosition = GlobalPosition.Lerp(_targetPosition, (float)delta * 8.0f);
+					GlobalPosition = GlobalPosition.Lerp(_targetPosition, (float)delta * 3.0f);
 
 					if (GlobalPosition.DistanceTo(_targetPosition) < 0.1f)
 					{
