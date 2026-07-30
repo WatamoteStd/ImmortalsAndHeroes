@@ -8,6 +8,7 @@ public enum PacketType : ushort
     C2S_EnterTheWorld = 3,
     S2C_RegionEnter = 4,
     S2C_MoveEntity = 5,
+    S2C_RegionEnterFn = 6, // for new entity
 
     // GAME UDP
     C2S_MoveRequest = 99,

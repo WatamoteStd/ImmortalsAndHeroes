@@ -74,8 +74,6 @@ public class NetworkUdpManager
 
                     if (_players.TryGetValue(ipEndPoint, out PlayerClient? client) && client != null)
                     {
-                        
-                        Console.WriteLine($"[Server] PlayerID:{client.PlayerId} enter the world. Searching region...");
 
                         var region = _world.GetRegion(0);
 
@@ -88,7 +86,6 @@ public class NetworkUdpManager
                             Entity newEntity = new Entity((uint)Random.Shared.Next(), region.RegionId, Random.Shared.NextInt64());
                             client.Character = newEntity;
                             client.NetworkId = newEntity.NetworkId;
-                            Console.WriteLine($"[Server] PlayerId{client.PlayerId} new character created.");
 
 
                             region.AddPlayer(client);
@@ -132,6 +129,35 @@ public class NetworkUdpManager
                             int packetLenght = PacketSerializer.Serialize<S2C_RegionEnter>(buffer, PacketType.S2C_RegionEnter, snapshotPacket);
 
                             serverSocket.SendTo(buffer[..packetLenght], SocketFlags.None, remoteEndPoint);
+
+                            // CRAFTING NEW PLAYER PACKET FOR OLD PLAYERS
+
+                            var oldPlayers = region.GetPlayers();
+
+                            Span<byte> cacheBuffer = stackalloc byte[20];
+
+                            if (oldPlayers != null && oldPlayers.Length > 0)
+                            {
+                                
+                                S2C_RegionEnterFM data = new S2C_RegionEnterFM()
+                                {
+                                    NetworkId = newEntity.NetworkId,
+                                    posX = newEntity.Position.X,
+                                    posY = newEntity.Position.Y,
+                                    posZ = newEntity.Position.Z,
+                                    Health = newEntity.Health
+                                };
+                                
+                                int dataLength = PacketSerializer.Serialize<S2C_RegionEnterFM>(cacheBuffer, PacketType.S2C_RegionEnterFn, data);
+
+                                foreach (var player in oldPlayers)
+                                {
+                                    
+                                    serverSocket.SendTo(cacheBuffer[..dataLength], SocketFlags.None, player.RemoteIpEndPoint);
+
+                                }
+
+                            }
 
                         }
 
@@ -190,7 +216,7 @@ public class NetworkUdpManager
 
     // ============================== WORLD HOLDER PACKETS =================== \\
 
-    public void WHSendRegionPacket(WorldRegion region, ReadOnlySpan<Entity> entities)
+    public void WHSendRegionMovePacket(WorldRegion region, ReadOnlySpan<Entity> entities)
     {
         
         var players = region.GetPlayers();

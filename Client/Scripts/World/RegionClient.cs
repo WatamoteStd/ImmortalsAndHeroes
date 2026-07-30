@@ -15,6 +15,12 @@ public partial class RegionClient : Node3D
 		NetworkPacketManager.Instance.OnServerEnterResponse += EnterRegion;
 
 		NetworkPacketManager.Instance.OnMovePacketReceived += OnEntityMove;
+		NetworkPacketManager.Instance.OnNewEnterRegion += (entityData) =>
+		{
+			Vector3 pos = new Vector3(entityData.posX, entityData.posY, entityData.posZ);
+			AddEntity(entityData.NetworkId, pos, entityData.Health);
+
+		};
 
 		NetworkUdpClient.Instance.SendEnterTheWorld(); // UDP REQUEST TO SERVER
 

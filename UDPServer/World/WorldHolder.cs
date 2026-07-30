@@ -67,7 +67,7 @@ public class WorldHolder
                 if (entities.Length > 0)
                 {
                     
-                    NetworkManager!.WHSendRegionPacket(_regionsArray[i], entities);
+                    NetworkManager!.WHSendRegionMovePacket(_regionsArray[i], entities);
                     _regionsArray[i].ClearChangedEntities();
 
                 }
