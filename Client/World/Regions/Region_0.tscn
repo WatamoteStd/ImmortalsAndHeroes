@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cu4mbwq4su4ns"]
 
-[ext_resource type="Script" uid="uid://ny42nftt6fab" path="res://Scripts/World/RegionClient.cs" id="1_lqec6"]
-[ext_resource type="PackedScene" uid="uid://dpvb613krplgp" path="res://Scenes/Entities/Default/default_entity.tscn" id="2_cuonp"]
+[ext_resource type="Script" uid="uid://ny42nftt6fab" path="res://World/Regions/RegionClient.cs" id="1_oo82x"]
+[ext_resource type="PackedScene" uid="uid://dpvb613krplgp" path="res://Entities/Default/default_entity.tscn" id="2_tqto2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4152v"]
 albedo_color = Color(0.12559065, 0.3282594, 0.10849259, 1)
@@ -24,8 +24,8 @@ material = SubResource("StandardMaterial3D_ichqs")
 size = Vector3(1, 5, 2)
 
 [node name="WorldRegion" type="Node3D" unique_id=388387032]
-script = ExtResource("1_lqec6")
-_modelPrefab = ExtResource("2_cuonp")
+script = ExtResource("1_oo82x")
+_modelPrefab = ExtResource("2_tqto2")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=487756432]
 
