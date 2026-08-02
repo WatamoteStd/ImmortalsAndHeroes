@@ -53,6 +53,27 @@ public class AuthController : ControllerBase
     }
 
 
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginRequestDto dto)
+    {
+        
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == dto.Username);
+
+        if (user == null)
+        {
+            
+            return BadRequest("Invalid user or password.");
+
+        }
+
+        bool isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
+
+        if (!isPasswordValid) return BadRequest("Invalid user or password.");
+
+        return Ok("Successful login!");
+
+    }
+
 }
 
     

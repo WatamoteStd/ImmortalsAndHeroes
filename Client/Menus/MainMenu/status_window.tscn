@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://bl8fdbktqdobx"]
+
+[ext_resource type="Script" uid="uid://gpv75u2lgwwc" path="res://Menus/MainMenu/StatusWindow.cs" id="1_q3hmv"]
+[ext_resource type="FontFile" uid="uid://cj1dc8n6u71yt" path="res://Assets/Fonts/Inter/Inter-VariableFont_opsz,wght.ttf" id="1_uwwue"]
+[ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="2_q3hmv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6u82b"]
+bg_color = Color(0.13186473, 0.2585333, 0.29646575, 1)
+border_width_left = 1
+border_width_top = 1
+border_color = Color(0.26713166, 0.47069645, 0.5320984, 1)
+border_blend = true
+shadow_size = 2
+
+[node name="StatusWindow" type="PanelContainer" unique_id=911583890 node_paths=PackedStringArray("_statusName", "_statusMessage")]
+custom_minimum_size = Vector2(250, 125)
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_6u82b")
+script = ExtResource("1_q3hmv")
+_statusName = NodePath("VBoxContainer/StatusCode")
+_statusMessage = NodePath("VBoxContainer/ServerMessage")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1380584778]
+layout_mode = 2
+
+[node name="StatusCode" type="Label" parent="VBoxContainer" unique_id=135112551]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.13546264, 0.560758, 0.6888931, 1)
+theme_override_fonts/font = ExtResource("1_uwwue")
+text = "STATUS CODE"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=1644888743]
+layout_mode = 2
+
+[node name="ServerMessage" type="Label" parent="VBoxContainer" unique_id=1770761906]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.6776394, 0.96724373, 0.9999998, 1)
+theme_override_fonts/font = ExtResource("2_q3hmv")
+text = "serverMessage"

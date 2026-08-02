@@ -20,9 +20,7 @@ public partial class LoginWindow : PanelContainer
 	[Export] private HBoxContainer _emailField;
 
 	// REGISTER & LOGIN STATUS LOG WINDOW
-	[Export] private Label _statusCode;
-	[Export] private Label _serverMessage;
-	[Export] private PanelContainer _statusWindow;
+	[Export] private StatusWindow _statusWindow;
 
 	private float _timeFromLastRequestToServer = 0.0f;
 
@@ -70,6 +68,10 @@ public partial class LoginWindow : PanelContainer
 		{
 			_ = RegisterAsync();
 		};
+		_loginButton.Pressed += () =>
+		{
+			_ = LoginAsync();
+		};
 
 	}
 
@@ -85,48 +87,78 @@ public partial class LoginWindow : PanelContainer
 	private async Task RegisterAsync()
 	{
 
-		if (_timeFromLastRequestToServer < 1.0f)
-		{
-			
-			_statusWindow.Visible = true;
-			_statusCode.Text = "Slow down";
-			_serverMessage.Text = "Wait at least secound before trying again";
-			return;
-
-		}
-		_timeFromLastRequestToServer = 0.0f;
+		if (!DontSpamFilter() || !NullFilter()) return;
 		
-		// PROTECTION FROM EMPTY REQUESTS
-		if (string.IsNullOrWhiteSpace(_loginLine.Text) || string.IsNullOrWhiteSpace(_passwordLine.Text) || string.IsNullOrWhiteSpace(_emailLine.Text))
-		{
-			_statusWindow.Visible = true;
-			_statusCode.Text = "Invalid at player";
-			_serverMessage.Text = "Fill all data.";
-			return;
-		}
-
 		try
 		{
 			
 			var response = await HttpsMasterClient.Instanсe.RegisterRequestAsync(_loginLine.Text, _passwordLine.Text, _emailLine.Text);
 
-			_statusWindow.Visible = true;
-			_statusCode.Text = response.isSuccess ? "Success" : "Error";
-			_serverMessage.Text = response.message;
-
+			if (response.isSuccess) _statusWindow.ShowMessage("Success!", response.message);
+			else _statusWindow.ShowMessage("Fault!", response.message);
 		}
 		catch (Exception e)
 		{
-			GD.PrintErr($"[LoginWindow] Error when try register. {e.Message}");
-			_statusWindow.Visible = true;
-			_statusCode.Text = "Client Error";
-			_serverMessage.Text = "Something went wrong on the client.";
+			GD.PrintErr($"[LoginWindow] Registration error. {e.Message}");
+			_statusWindow.ShowMessage("Client error!", "Something went wrong on the client side.");
+
 		}
 
 
 
 	}
  
+	private async Task LoginAsync()
+	{
+		
+		if (!DontSpamFilter() || !NullFilter()) return;
 
+		try
+		{
+			
+			var response = await HttpsMasterClient.Instanсe.LoginRequestAsync(_loginLine.Text, _passwordLine.Text);
+
+			if (response.isSuccess) _statusWindow.ShowMessage("Successful login!", response.message);
+			else _statusWindow.ShowMessage("Failure!", response.message);
+
+		}
+		catch (Exception e)
+		{
+			
+			GD.Print($"[Login Window] Server error. {e.Message}");
+			_statusWindow.ShowMessage("Server error!", "Please try again");
+
+		}
+		
+	}
+
+	private bool DontSpamFilter()
+	{
+		
+		if (_timeFromLastRequestToServer < 1.0f)
+		{
+			
+			_statusWindow.ShowMessage("Slow down!", "Wait at least secound before trying again");
+			return false;
+
+		}
+		_timeFromLastRequestToServer = 0.0f;
+		return true;
+
+	}
+	private bool NullFilter()
+	{
+		
+		if (string.IsNullOrWhiteSpace(_loginLine.Text) || string.IsNullOrWhiteSpace(_passwordLine.Text) || string.IsNullOrWhiteSpace(_emailLine.Text))
+		{
+			
+			_statusWindow.ShowMessage("Invalid at player", "Fill all data");
+			return false;
+		}
+		return true;
+
+	}
+
+	
 
 }

@@ -67,4 +67,37 @@ public partial class HttpsMasterClient : Node
 	}
 
 
+	public async Task<(bool isSuccess, string message)> LoginRequestAsync(string login, string password)
+	{
+		
+		var loginDto = new
+		{
+			Username = login,
+			Password = password
+		};
+
+		try
+		{
+			
+			var response = await client.PostAsJsonAsync("api/auth/login", loginDto);
+
+			var serverResponse = await response.Content.ReadAsStringAsync();
+
+			if (response.IsSuccessStatusCode) return (true, serverResponse);
+			else return (false, serverResponse);
+
+		}
+		catch (Exception e)
+		{
+			
+			GD.Print($"[HTTP CLIENT] Server error. {e.Message}");
+			return (false, "Server error. Try again.");
+
+		}
+
+
+
+
+	}
+
 }
