@@ -3,11 +3,15 @@
 [ext_resource type="Script" uid="uid://ny42nftt6fab" path="res://Scripts/World/RegionClient.cs" id="1_lqec6"]
 [ext_resource type="PackedScene" uid="uid://dpvb613krplgp" path="res://Scenes/Entities/Default/default_entity.tscn" id="2_cuonp"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4152v"]
+albedo_color = Color(0.12559065, 0.3282594, 0.10849259, 1)
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_t3xac"]
-size = Vector2(50, 50)
+material = SubResource("StandardMaterial3D_4152v")
+size = Vector2(120, 120)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hjl0q"]
-size = Vector3(50, 0.05, 50)
+size = Vector3(120, 0.05, 120)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6u82b"]
 size = Vector3(1, 5, 2)

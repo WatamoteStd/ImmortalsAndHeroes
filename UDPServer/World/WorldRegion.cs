@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Runtime.InteropServices;
 using UDPServer.Network.Client;
 using UDPServer.World.Entities;
+using UDPServer.World.Entities.Enemy;
 
 namespace UDPServer.World;
 
@@ -24,6 +25,9 @@ public class WorldRegion
     {
         
         RegionId = id;
+        OrkEnemy testEnemy = new OrkEnemy((uint)Random.Shared.Next(), RegionId, Random.Shared.NextInt64());
+        Entities.TryAdd(testEnemy.NetworkId, testEnemy);
+        _entitiesArray = Entities.Values.ToArray();
 
     }
 

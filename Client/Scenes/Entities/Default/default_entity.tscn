@@ -1,26 +1,38 @@
 [gd_scene format=3 uid="uid://dpvb613krplgp"]
 
 [ext_resource type="Script" uid="uid://jhgn5gucmusd" path="res://Scripts/Entities/EntityClient.cs" id="1_4152v"]
+[ext_resource type="PackedScene" uid="uid://blucpl6jh4spb" path="res://Scenes/UI/ProgressBars/HealthBar.tscn" id="2_4eppn"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xe5ny"]
-albedo_color = Color(0.20937365, 0.388142, 0.3665529, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8g0fj"]
+albedo_color = Color(0, 0.24902773, 0.41412342, 1)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_4152v"]
-material = SubResource("StandardMaterial3D_xe5ny")
+[sub_resource type="BoxMesh" id="BoxMesh_b3ioa"]
+material = SubResource("StandardMaterial3D_8g0fj")
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4eppn"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_5xfkr"]
 
-[node name="CharacterBody3D" type="CharacterBody3D" unique_id=387657557 node_paths=PackedStringArray("_camera")]
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=387657557]
 script = ExtResource("1_4152v")
-_camera = NodePath("Camera3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1880903828]
-mesh = SubResource("CapsuleMesh_4152v")
+mesh = SubResource("BoxMesh_b3ioa")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=75417351]
-shape = SubResource("CapsuleShape3D_4eppn")
+shape = SubResource("BoxShape3D_5xfkr")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=745353625]
 transform = Transform3D(0.99282193, 0.0629287, -0.10170845, 0, 0.8503911, 0.5261511, 0.119601965, -0.52237433, 0.844287, -0.3738184, 5.830763, 4.420889)
 
 [node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=1312395833]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1119579900]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1142673353]
+size = Vector2i(256, 30)
+
+[node name="CanvasLayer" parent="SubViewportContainer/SubViewport" unique_id=588373170 instance=ExtResource("2_4eppn")]

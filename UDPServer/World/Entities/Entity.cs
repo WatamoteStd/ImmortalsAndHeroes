@@ -15,10 +15,10 @@ public class Entity
     public long RegionId {get; set;}
 
     // GAME INFO & STATS
-    public ushort Health {get; set;}
+    public ushort Health {get; set;} = 100;
     public float Speed = 1.0f;
     public byte Type {get; set;} = 0;
-    public Vector3 Position {get; set;} = new Vector3(0, 0, 0);
+    public Vector3 Position {get; set;} = new Vector3(0, 0.5f, 0);
     public Vector3 MoveTarget {get; set;} = new();
 
     public Entity(uint networkId, long regionId, long globalId)
