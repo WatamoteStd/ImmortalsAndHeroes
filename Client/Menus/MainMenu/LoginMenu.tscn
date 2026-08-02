@@ -1,39 +1,102 @@
 [gd_scene format=3 uid="uid://dg8iiokql2t1a"]
 
-[ext_resource type="Script" uid="uid://3gpxiuob804m" path="res://Menus/MainMenu/LoginWindow.cs" id="1_s5m5r"]
+[ext_resource type="Script" uid="uid://3gpxiuob804m" path="res://Menus/MainMenu/LoginWindow.cs" id="1_jleeg"]
+[ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="2_bww52"]
+[ext_resource type="FontFile" uid="uid://cj1dc8n6u71yt" path="res://Assets/Fonts/Inter/Inter-VariableFont_opsz,wght.ttf" id="3_bww52"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2dg57"]
-bg_color = Color(0.6031903, 0.069335096, 0, 1)
+bg_color = Color(0.15400285, 0.33430475, 0.3850845, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xclrw"]
+[sub_resource type="Gradient" id="Gradient_jleeg"]
+colors = PackedColorArray(0.030933155, 0.030933155, 0.030933155, 1, 0.15294118, 0.33333334, 0.38431373, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6u82b"]
+gradient = SubResource("Gradient_jleeg")
+fill_from = Vector2(0.53197676, 1)
+fill_to = Vector2(0.44476745, 0)
+
+[sub_resource type="FontVariation" id="FontVariation_6ifa7"]
+base_font = ExtResource("2_bww52")
+variation_embolden = 0.6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83fg3"]
+bg_color = Color(0, 0, 0, 0)
+border_color = Color(0.18616447, 0.5251402, 0.42841062, 1)
+border_blend = true
+shadow_size = 4
+
+[sub_resource type="Gradient" id="Gradient_bww52"]
+colors = PackedColorArray(0.003921569, 0.011764706, 0.019607844, 0.21960784, 0.17893612, 0.35339394, 0.40834785, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_83fg3"]
+gradient = SubResource("Gradient_bww52")
+fill_from = Vector2(0.50872093, 1)
+fill_to = Vector2(0.5261628, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kaoi8"]
 content_margin_left = 10.0
-bg_color = Color(0.13333334, 0.13333334, 0.13333334, 0.95686275)
+bg_color = Color(0.082207926, 0.1875866, 0.21766034, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.052135058, 0.03990484, 0.03788033, 1)
+border_color = Color(0.031008717, 0.2776593, 0.48494035, 1)
 border_blend = true
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d8a1h"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jleeg"]
 content_margin_left = 10.0
-bg_color = Color(0.19434929, 0.19434926, 0.19434926, 0.95686275)
+bg_color = Color(0.10251003, 0.22343472, 0.2592814, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.09243461, 0.45148492, 0.76085943, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bww52"]
+content_margin_left = 10.0
+bg_color = Color(0.082207926, 0.1875866, 0.21766034, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.81953675, 0.7842501, 0.7841735, 1)
+border_color = Color(0.031008717, 0.2776593, 0.48494035, 1)
 border_blend = true
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_67t46"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2u4ud"]
 content_margin_left = 10.0
-bg_color = Color(0.19434929, 0.19434926, 0.19434926, 0.95686275)
-border_width_left = 1
-border_width_top = 1
+bg_color = Color(0.10251003, 0.22343472, 0.2592814, 1)
+border_width_left = 2
+border_width_top = 2
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.81953675, 0.7842501, 0.7841735, 1)
+border_color = Color(0.09243461, 0.45148492, 0.76085943, 1)
 border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ootas"]
+bg_color = Color(0.5449217, 0, 0.04980871, 1)
+border_blend = true
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ygr85"]
+draw_center = false
+border_width_left = 1
+border_color = Color(0.16059169, 0.2762958, 0.3172093, 1)
+border_blend = true
+
+[sub_resource type="Gradient" id="Gradient_kaoi8"]
+colors = PackedColorArray(0.019607844, 0.12941177, 0.15294118, 0, 0.05882353, 0.11372549, 0.13333334, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vcdtc"]
+gradient = SubResource("Gradient_kaoi8")
+fill_from = Vector2(1, 0.008720931)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="FontVariation" id="FontVariation_2u4ud"]
+base_font = ExtResource("3_bww52")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_83fg3"]
+content_margin_left = 10.0
 
 [node name="Control" type="Control" unique_id=1309026328]
 layout_mode = 3
@@ -43,7 +106,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LoginWindow" type="PanelContainer" parent="." unique_id=249116576 node_paths=PackedStringArray("_loginLine", "_passwordLine", "_loginButton", "_answerCodeLabel", "_heroSelectWindow")]
+[node name="LoginWindow" type="PanelContainer" parent="." unique_id=249116576 node_paths=PackedStringArray("_loginLine", "_passwordLine", "_loginButton", "_registerText", "_registerButton", "_emailField")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,66 +114,178 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2dg57")
-script = ExtResource("1_s5m5r")
-_loginLine = NodePath("VBoxContainer/Login")
-_passwordLine = NodePath("VBoxContainer/Password")
-_loginButton = NodePath("VBoxContainer/HBoxContainer/LoginButton")
-_answerCodeLabel = NodePath("ErorCode")
-_heroSelectWindow = NodePath("")
+script = ExtResource("1_jleeg")
+_loginLine = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/LoginField/Login")
+_passwordLine = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/PasswordField/Password")
+_loginButton = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/LoginButton")
+_registerText = NodePath("VStruct/Register_Login_Panel/Borders/PanelContainer/HBoxContainer/RegisterText")
+_registerButton = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/RegisterButton")
+_emailField = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/EmailField")
 
-[node name="WindowName" type="Label" parent="LoginWindow" unique_id=1616061156]
+[node name="bg" type="TextureRect" parent="LoginWindow" unique_id=1422086461]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_6u82b")
+
+[node name="VStruct" type="VBoxContainer" parent="LoginWindow" unique_id=1749422669]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="naming" type="VBoxContainer" parent="LoginWindow/VStruct" unique_id=1039888256]
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="Name" type="Label" parent="LoginWindow/VStruct/naming" unique_id=1616061156]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
-theme_override_font_sizes/font_size = 30
-text = "LOGIN TO ENTER THE GAME"
+theme_override_colors/font_color = Color(0.84757054, 0.93490934, 0.97515494, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.08627451)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = SubResource("FontVariation_6ifa7")
+theme_override_font_sizes/font_size = 52
+text = "IMMORTALS AND HEROES"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LoginWindow" unique_id=52396801]
+[node name="Name2" type="Label" parent="LoginWindow/VStruct/naming" unique_id=2091924420]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.85107774, 0.076924376, 7.70092e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.105882354)
+theme_override_fonts/font = SubResource("FontVariation_6ifa7")
+theme_override_font_sizes/font_size = 45
+text = "Online"
+horizontal_alignment = 1
+
+[node name="Register_Login_Panel" type="PanelContainer" parent="LoginWindow/VStruct" unique_id=223215725]
+custom_minimum_size = Vector2(550, 400)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-alignment = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_83fg3")
 
-[node name="Login" type="LineEdit" parent="LoginWindow/VBoxContainer" unique_id=642441356]
+[node name="bg" type="TextureRect" parent="LoginWindow/VStruct/Register_Login_Panel" unique_id=2139112675]
 layout_mode = 2
-size_flags_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_xclrw")
-theme_override_styles/focus = SubResource("StyleBoxFlat_d8a1h")
-placeholder_text = "Login"
+texture = SubResource("GradientTexture2D_83fg3")
 
-[node name="Password" type="LineEdit" parent="LoginWindow/VBoxContainer" unique_id=1577642758]
+[node name="Borders" type="MarginContainer" parent="LoginWindow/VStruct/Register_Login_Panel" unique_id=1711140305]
 layout_mode = 2
-size_flags_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_xclrw")
-theme_override_styles/focus = SubResource("StyleBoxFlat_67t46")
-placeholder_text = "Password"
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LoginWindow/VStruct/Register_Login_Panel/Borders" unique_id=52396801]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Fields" type="VBoxContainer" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/VBoxContainer" unique_id=480252378]
+layout_mode = 2
+
+[node name="LoginField" type="HBoxContainer" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields" unique_id=1016601087]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/LoginField" unique_id=152631326]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.44705883, 0.6509804, 0.7254902, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.15294118)
+theme_override_font_sizes/font_size = 20
+text = "LOGIN         "
+
+[node name="Login" type="LineEdit" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/LoginField" unique_id=642441356]
+custom_minimum_size = Vector2(350, 35)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_kaoi8")
+theme_override_styles/focus = SubResource("StyleBoxFlat_jleeg")
+
+[node name="PasswordField" type="HBoxContainer" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields" unique_id=539449618]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/PasswordField" unique_id=2020533375]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.44860363, 0.65205145, 0.72561854, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.19607843)
+theme_override_font_sizes/font_size = 20
+text = "PASSWORD"
+
+[node name="Password" type="LineEdit" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/PasswordField" unique_id=1577642758]
+custom_minimum_size = Vector2(350, 35)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_bww52")
+theme_override_styles/focus = SubResource("StyleBoxFlat_2u4ud")
 secret = true
 
-[node name="HSeparator" type="HSeparator" parent="LoginWindow/VBoxContainer" unique_id=127732715]
+[node name="EmailField" type="HBoxContainer" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields" unique_id=692899465]
+visible = false
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="LoginWindow/VBoxContainer" unique_id=482934690]
+[node name="Email" type="Label" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/EmailField" unique_id=1805016166]
 layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.44860363, 0.65205145, 0.72561854, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.19607843)
+theme_override_font_sizes/font_size = 20
+text = "EMAIL          "
 
-[node name="RegisterButton" type="Button" parent="LoginWindow/VBoxContainer/HBoxContainer" unique_id=1028900108]
-custom_minimum_size = Vector2(160, 50)
+[node name="Email2" type="LineEdit" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/EmailField" unique_id=1569252465]
+custom_minimum_size = Vector2(350, 35)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 6
 size_flags_vertical = 4
-text = "REGISTER"
+theme_override_styles/normal = SubResource("StyleBoxFlat_bww52")
+theme_override_styles/focus = SubResource("StyleBoxFlat_2u4ud")
+secret = true
 
-[node name="LoginButton" type="Button" parent="LoginWindow/VBoxContainer/HBoxContainer" unique_id=2060809153]
+[node name="HSeparator" type="HSeparator" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields" unique_id=127732715]
+layout_mode = 2
+
+[node name="LoginButton" type="Button" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/VBoxContainer" unique_id=2060809153]
 custom_minimum_size = Vector2(260, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("StyleBoxFlat_ootas")
 text = "LOGIN"
 
-[node name="ErorCode" type="Label" parent="LoginWindow" unique_id=804571914]
+[node name="RegisterButton" type="Button" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/VBoxContainer" unique_id=1160905847]
+visible = false
+custom_minimum_size = Vector2(260, 50)
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 19
+theme_override_styles/normal = SubResource("StyleBoxFlat_ootas")
+text = "REGISTER ACCOUNT"
+
+[node name="PanelContainer" type="PanelContainer" parent="LoginWindow/VStruct/Register_Login_Panel/Borders" unique_id=236120332]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
 size_flags_vertical = 8
-theme_override_colors/font_color = Color(0.19009724, 0.5977975, 1.92523e-07, 1)
-theme_override_font_sizes/font_size = 21
-horizontal_alignment = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_ygr85")
+
+[node name="bg" type="TextureRect" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/PanelContainer" unique_id=1479614255]
+custom_maximum_size = Vector2(-1, 35)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_vcdtc")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/PanelContainer" unique_id=533631668]
+layout_mode = 2
+
+[node name="RegisterText" type="Label" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/PanelContainer/HBoxContainer" unique_id=1546981102]
+layout_mode = 2
+mouse_filter = 0
+theme_override_colors/font_color = Color(0.16470589, 0.49803922, 0.65882355, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_fonts/font = SubResource("FontVariation_2u4ud")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxEmpty_83fg3")
+text = "Don't have an account? Register it"

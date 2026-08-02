@@ -14,71 +14,52 @@ public partial class LoginWindow : PanelContainer
 	[Export] private LineEdit _loginLine;
 	[Export] private LineEdit _passwordLine;
 	[Export] private Button _loginButton;
-	[Export] private Label _answerCodeLabel;
-	[Export] private PanelContainer _heroSelectWindow;
+	[Export] private Label _registerText;
+	[Export] private Button _registerButton;
+	[Export] private HBoxContainer _emailField;
+
+	private bool isRegisterModeOn = false;
 
 	public override void _Ready()
 	{
-		_heroSelectWindow.Visible = false;
-		_loginButton.Pressed += LoginRequest;
-		NetworkPacketManager.Instance.OnHandshakeResponse += EnterWorld;
-
-	}
-
-	private async void LoginRequest()
-	{
-
-
-		var responseMessage = await HttpsMasterClient.Instanсe.LoginRequestAsync(_loginLine.Text, _passwordLine.Text);
-
-		if (responseMessage.StatusCode == HttpStatusCode.OK)
+		
+		_registerText.MouseEntered += () =>
 		{
-			var data = await responseMessage.Content.ReadFromJsonAsync<Dictionary<string, object>>();
-
-			if (data != null && data.TryGetValue("token", out var tokenObj) && data.TryGetValue("ticket", out var ticketObj))
+			_registerText.SelfModulate = new Color(0.279f, 0.629f, 0.86f);
+		};
+		_registerText.MouseExited += () =>
+		{
+			_registerText.SelfModulate = new Color(0.165f, 0.498f, 0.659f);
+		};
+		_registerText.GuiInput += (InputEvent @event) =>
+		{
+			if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
 			{
+				
+				if (!isRegisterModeOn)
+				{
+					
+					_registerText.Text = "Already registered? Log in";
+					_loginButton.Visible = false;
+					_registerButton.Visible = true;
+					_emailField.Visible = true;
+					isRegisterModeOn = true;
 
-				long ticket = ((JsonElement)ticketObj).GetInt64();
-				string token = ((JsonElement)tokenObj).GetString();
-
-				GameSession.Instance.AuthTicket = ticket;
-				GameSession.Instance.AuthToken = token;
-				GameSession.Instance.CurrentSessionState = GameSession.State.Loading;
-
-				NetworkUdpClient.Instance.Connect(ticket);  
+				}
+				else
+				{
+					_registerText.Text = "Don't have an account? Register it";
+					_loginButton.Visible = true;
+					_registerButton.Visible = false;
+					_emailField.Visible = false;
+					isRegisterModeOn = false;
+				}
 
 			}
+		};
 
-			
-
-		}
-
-	}
-
-	private async void EnterWorld(S2C_HandshakeResponse response)
-	{
 		
-		if (response.Status == 1)
-		{
-			
-			_answerCodeLabel.Text = $"Succesful login.";
-			await Task.Delay(1500);
-			Callable.From(() => GetTree().ChangeSceneToFile("res://Scenes/World/Region_0.tscn")).Call();
 
-		}
-		else
-		{
-			_answerCodeLabel.Text = $"Can't connect to the UDP server. Try again...";
-		}
-
-	}
-
-	public override void _ExitTree()
-	{
-		if (NetworkPacketManager.Instance != null)
-		{
-			NetworkPacketManager.Instance.OnHandshakeResponse -= EnterWorld;
-		}
 	}
 
 
