@@ -1,72 +1,59 @@
+using System;
+using MasterServer.Data;
+using MasterServer.DTO;
+using MasterServer.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace MasterServer.Controllers;
 
 [ApiController]
-[Route("api/auth")]
+[Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
+    
+    private readonly AppDbContext _context;
 
-    private readonly IConfiguration _configuration;
-    public AuthController(IConfiguration configuration)
+    public AuthController(AppDbContext context)
     {
         
-        _configuration = configuration;
+        _context = context;
 
     }
 
-    private LoginDTO _testDTO = new LoginDTO("Admin", "123123");
-    
-    [HttpPost("login")]
-    
-    public IActionResult Login( [FromBody]LoginDTO data)
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterRequestDto dto)
     {
         
-        if (data.Username == _testDTO.Username && data.Password == _testDTO.Password)
+        bool userExists = await _context.Users.AnyAsync(u => u.Login == dto.Username || u.Email == dto.Email);
+
+        if (userExists)
         {
             
-            // TOKEN SETTINGS =======================================================
-            var jwtSettings = _configuration.GetSection("JwtSettings");
-            var secretKey = System.Text.Encoding.UTF8.GetBytes(jwtSettings["Secret"]!);
-
-            var key = new SymmetricSecurityKey(secretKey);
-
-            // TOKEN DESCrIPTION =======================================================
-
-            var tokenDescription = new SecurityTokenDescriptor
-            {
-                
-                Subject = new ClaimsIdentity(new[]
-                {
-                    
-                    new Claim(ClaimTypes.Name, data.Username)
-
-                }),
-                Expires = DateTime.UtcNow.AddMinutes(60),
-                Issuer = jwtSettings["Issuer"],
-                Audience = jwtSettings["Audience"],
-                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
-
-            };
-
-            // TOKEN CREATE=================================================================
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(tokenDescription);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            // UDP TIKET
-            long ticket = Random.Shared.NextInt64();
-
-            return Ok(new { Token = tokenString, Ticket = ticket});
+            return BadRequest("Player with this username or email already exists. Try another one.");
 
         }
-        else return Unauthorized("Invalid data.");
+     
+        string passwordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+        var user = new User
+        {
+            Login = dto.Username,
+            Email = dto.Email,
+            PasswordHash = passwordHash,
+            CreatedAt = DateTime.UtcNow
+        };
 
+         _context.Users.Add(user);
+        await _context.SaveChangesAsync();
+
+        return Ok("Account created succesfully!");
+
+    
     }
+
 
 }
 
-public record LoginDTO(string Username, string Password);
+    
+

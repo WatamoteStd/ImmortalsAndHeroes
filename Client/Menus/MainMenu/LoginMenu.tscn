@@ -98,6 +98,14 @@ base_font = ExtResource("3_bww52")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_83fg3"]
 content_margin_left = 10.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6u82b"]
+bg_color = Color(0.13186473, 0.2585333, 0.29646575, 1)
+border_width_left = 1
+border_width_top = 1
+border_color = Color(0.26713166, 0.47069645, 0.5320984, 1)
+border_blend = true
+shadow_size = 2
+
 [node name="Control" type="Control" unique_id=1309026328]
 layout_mode = 3
 anchors_preset = 15
@@ -106,7 +114,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LoginWindow" type="PanelContainer" parent="." unique_id=249116576 node_paths=PackedStringArray("_loginLine", "_passwordLine", "_loginButton", "_registerText", "_registerButton", "_emailField")]
+[node name="LoginWindow" type="PanelContainer" parent="." unique_id=249116576 node_paths=PackedStringArray("_loginLine", "_passwordLine", "_emailLine", "_loginButton", "_registerText", "_registerButton", "_emailField", "_statusCode", "_serverMessage", "_statusWindow")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -117,10 +125,14 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_2dg57")
 script = ExtResource("1_jleeg")
 _loginLine = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/LoginField/Login")
 _passwordLine = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/PasswordField/Password")
+_emailLine = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/EmailField/Email2")
 _loginButton = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/LoginButton")
 _registerText = NodePath("VStruct/Register_Login_Panel/Borders/PanelContainer/HBoxContainer/RegisterText")
 _registerButton = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/RegisterButton")
 _emailField = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/EmailField")
+_statusCode = NodePath("StatusWindow/VBoxContainer/StatusCode")
+_serverMessage = NodePath("StatusWindow/VBoxContainer/ServerMessage")
+_statusWindow = NodePath("StatusWindow")
 
 [node name="bg" type="TextureRect" parent="LoginWindow" unique_id=1422086461]
 layout_mode = 2
@@ -242,7 +254,6 @@ size_flags_horizontal = 6
 size_flags_vertical = 4
 theme_override_styles/normal = SubResource("StyleBoxFlat_bww52")
 theme_override_styles/focus = SubResource("StyleBoxFlat_2u4ud")
-secret = true
 
 [node name="HSeparator" type="HSeparator" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields" unique_id=127732715]
 layout_mode = 2
@@ -289,3 +300,31 @@ theme_override_fonts/font = SubResource("FontVariation_2u4ud")
 theme_override_font_sizes/font_size = 12
 theme_override_styles/normal = SubResource("StyleBoxEmpty_83fg3")
 text = "Don't have an account? Register it"
+
+[node name="StatusWindow" type="PanelContainer" parent="LoginWindow" unique_id=1406886433]
+custom_minimum_size = Vector2(250, 125)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_6u82b")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LoginWindow/StatusWindow" unique_id=657455262]
+layout_mode = 2
+
+[node name="StatusCode" type="Label" parent="LoginWindow/StatusWindow/VBoxContainer" unique_id=2062642370]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.13546264, 0.560758, 0.6888931, 1)
+theme_override_fonts/font = ExtResource("3_bww52")
+text = "STATUS CODE"
+
+[node name="HSeparator" type="HSeparator" parent="LoginWindow/StatusWindow/VBoxContainer" unique_id=1717785532]
+layout_mode = 2
+
+[node name="ServerMessage" type="Label" parent="LoginWindow/StatusWindow/VBoxContainer" unique_id=843967476]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.6776394, 0.96724373, 0.9999998, 1)
+theme_override_fonts/font = ExtResource("2_bww52")
+text = "serverMessage"

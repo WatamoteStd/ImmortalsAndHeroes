@@ -31,22 +31,38 @@ public partial class HttpsMasterClient : Node
 		
 		client = new System.Net.Http.HttpClient(handler);
 		client.BaseAddress = new Uri("https://localhost:29557/");
-		client.Timeout = TimeSpan.FromSeconds(5);
+		client.Timeout = TimeSpan.FromSeconds(15);
 
 	}
 
-	public async Task<HttpResponseMessage> LoginRequestAsync(string username, string password)
+	public async Task<(bool isSuccess, string message)> RegisterRequestAsync(string login, string password, string email)
 	{
 		
-		var loginDTO = new
+		var registerDto = new
 		{
-			Username = username,
-			Password = password
+			Username = login,
+			Password = password,
+			Email = email
 		};
+		try
+		{
 
-		var response = await client.PostAsJsonAsync("api/auth/login", loginDTO);
+			HttpResponseMessage response = await client.PostAsJsonAsync("api/auth/register", registerDto);
 
-		return response;
+			string serverMessage = await response.Content.ReadAsStringAsync();
+
+			if (response.IsSuccessStatusCode) return (true, serverMessage);
+			else return (false, serverMessage);
+
+		}
+		catch (Exception e)
+		{
+			GD.Print($"[HTTP MASTER] Eror when try register user. {e.Message}");
+			return (false, "Can't connect to the server. Try again.");
+		}
+
+
+
 
 	}
 
