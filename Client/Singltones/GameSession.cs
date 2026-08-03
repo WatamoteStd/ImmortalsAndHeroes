@@ -8,8 +8,7 @@ public partial class GameSession : Node
 	
 	public uint NetworkId {get; set;}
 	public long GlobalId { get; set;}
-	public string AuthToken {get; set;} = ""; // for https
-	public long AuthTicket {get; set;} // for udp
+	public string Username {get; set;}
 
 	public EntityClient Character { get; set;}
 

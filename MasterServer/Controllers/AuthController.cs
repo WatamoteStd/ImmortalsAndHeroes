@@ -70,7 +70,14 @@ public class AuthController : ControllerBase
 
         if (!isPasswordValid) return BadRequest("Invalid user or password.");
 
-        return Ok("Successful login!");
+        var response = new LoginResponseDto
+        {
+            Username = user.Login,
+            UserId = user.Id,
+            CreatedAt = user.CreatedAt
+        };
+
+        return Ok(response);
 
     }
 

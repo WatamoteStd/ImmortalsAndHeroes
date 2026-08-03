@@ -87,7 +87,7 @@ public partial class LoginWindow : PanelContainer
 	private async Task RegisterAsync()
 	{
 
-		if (!DontSpamFilter() || !NullFilter()) return;
+		if (!DontSpamFilter() || !NullFilter(1)) return;
 		
 		try
 		{
@@ -111,14 +111,24 @@ public partial class LoginWindow : PanelContainer
 	private async Task LoginAsync()
 	{
 		
-		if (!DontSpamFilter() || !NullFilter()) return;
+		if (!DontSpamFilter() || !NullFilter(0)) return;
 
 		try
 		{
 			
 			var response = await HttpsMasterClient.Instanсe.LoginRequestAsync(_loginLine.Text, _passwordLine.Text);
 
-			if (response.isSuccess) _statusWindow.ShowMessage("Successful login!", response.message);
+			if (response.isSuccess) 
+			{
+
+				_statusWindow.ShowMessage("Successful login!", response.message);
+				GetTree().CreateTimer(2.5f).Timeout += () =>
+				{
+					GetTree().ChangeSceneToFile("res://Menus/GameMenu/GameMenu.tscn");
+				};
+
+			}
+
 			else _statusWindow.ShowMessage("Failure!", response.message);
 
 		}
@@ -146,16 +156,34 @@ public partial class LoginWindow : PanelContainer
 		return true;
 
 	}
-	private bool NullFilter()
+	private bool NullFilter(byte mode) // 0 pass and login check. other - full check
 	{
-		
-		if (string.IsNullOrWhiteSpace(_loginLine.Text) || string.IsNullOrWhiteSpace(_passwordLine.Text) || string.IsNullOrWhiteSpace(_emailLine.Text))
+		if (mode == 0)
 		{
 			
-			_statusWindow.ShowMessage("Invalid at player", "Fill all data");
-			return false;
+			if (string.IsNullOrWhiteSpace(_loginLine.Text) || string.IsNullOrWhiteSpace(_passwordLine.Text))
+			{
+				
+				_statusWindow.ShowMessage("Invalid at player", "Fill all data");
+				return false;
+
+			}
+			return true;
+
 		}
-		return true;
+		else
+		{
+			
+			if (string.IsNullOrWhiteSpace(_loginLine.Text) || string.IsNullOrWhiteSpace(_passwordLine.Text) || string.IsNullOrWhiteSpace(_emailLine.Text))
+			{
+			
+				_statusWindow.ShowMessage("Invalid at player", "Fill all data");
+				return false;
+			}
+			return true;
+
+		}
+		
 
 	}
 

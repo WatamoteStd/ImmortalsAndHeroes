@@ -293,4 +293,5 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_83fg3")
 text = "Don't have an account? Register it"
 
 [node name="StatusWindow" parent="LoginWindow" unique_id=911583890 instance=ExtResource("4_kaoi8")]
+visible = false
 layout_mode = 2

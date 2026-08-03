@@ -81,10 +81,21 @@ public partial class HttpsMasterClient : Node
 			
 			var response = await client.PostAsJsonAsync("api/auth/login", loginDto);
 
-			var serverResponse = await response.Content.ReadAsStringAsync();
+			if (response.IsSuccessStatusCode)
+			{
+				var result = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
 
-			if (response.IsSuccessStatusCode) return (true, serverResponse);
-			else return (false, serverResponse);
+				if (result != null)
+				{
+					GameSession.Instance.GlobalId = result.UserId;
+					GameSession.Instance.Username = result.Username;
+					return (true, "Successful login!");
+				}
+				else return (false, "Failed when reading result response");
+
+			}
+			var errorResponse = await response.Content.ReadAsStringAsync();
+            return (false, errorResponse);
 
 		}
 		catch (Exception e)
@@ -99,5 +110,7 @@ public partial class HttpsMasterClient : Node
 
 
 	}
+
+	public record LoginResponseDto(string Username, long UserId, DateTime CreatedAt);
 
 }
