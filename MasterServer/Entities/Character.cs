@@ -1,4 +1,5 @@
 using System;
+using Shared.Characters;
 
 namespace MasterServer.Entities;
 
@@ -13,6 +14,15 @@ public class Character
     public float PosZ {get; set;}
     public long UserId {get; set;}
     public User User {get; set;} = null!;
+
+    // CHARACTER
+
+    public CharacterType Type {get; set;} = CharacterType.Default;
+    public int CurrentHp {get; set;} = 220;
+    public int CurrentMp {get; set;} = 100;
+    public int Lvl {get; set;} = 1;
+    public long Silver {get; set;} = 0;
+
 
 
 }

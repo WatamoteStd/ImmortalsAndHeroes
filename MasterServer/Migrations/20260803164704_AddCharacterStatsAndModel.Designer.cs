@@ -3,6 +3,7 @@ using System;
 using MasterServer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MasterServer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260803164704_AddCharacterStatsAndModel")]
+    partial class AddCharacterStatsAndModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,6 +42,9 @@ namespace MasterServer.Migrations
                     b.Property<int>("Lvl")
                         .HasColumnType("integer");
 
+                    b.Property<int>("ModelId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -53,12 +59,6 @@ namespace MasterServer.Migrations
                         .HasColumnType("real");
 
                     b.Property<long>("RegionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Silver")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Type")
                         .HasColumnType("bigint");
 
                     b.Property<long>("UserId")

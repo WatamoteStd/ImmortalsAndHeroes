@@ -1,4 +1,5 @@
 using Godot;
+using Shared.Characters;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -111,6 +112,60 @@ public partial class HttpsMasterClient : Node
 
 	}
 
+	// CHARACTER TASKS
+
+	public async Task<(bool isSucces, CharacterCreatedResponseDto? character, string message)> CreateCharacterAsync(string nickname, CharacterType type)
+	{
+		
+		var cDto = new CharacterCreateRequestDto(
+			
+			GameSession.Instance.GlobalId,
+			nickname,
+			type
+
+		);
+
+		try
+		{
+			
+			var response = await client.PostAsJsonAsync("api/character/create", cDto);
+
+			if (response.IsSuccessStatusCode)
+			{
+
+				var charInfo = await response.Content.ReadFromJsonAsync<CharacterCreatedResponseDto>();
+
+				if (charInfo != null)
+				{
+					return (true, charInfo, "Character created!");
+				}
+				else return (false, null, "Server data error.");
+
+			}
+			else 
+			{
+				var error = await response.Content.ReadAsStringAsync();
+				return (false, null, error);
+			}
+
+		}
+		catch (Exception e)
+		{
+			
+			return (false, null, "Connection with server lost. Try again..");
+
+		}
+
+		
+
+	}
+
+	#region DTOS
+
 	public record LoginResponseDto(string Username, long UserId, DateTime CreatedAt);
+	public record CharacterCreateRequestDto(long UserId, string Nickname, CharacterType Type);
+	public record CharacterCreatedResponseDto(string Nickname, long Silver, CharacterType Type, long Id);
+
+	#endregion
 
 }

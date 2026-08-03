@@ -8,6 +8,9 @@ public partial class GameMenu : Control
 	[Export] private CharacterCreateWindow _createMenu;
 	[Export] private Label _userId;
 	[Export] private Label _username;
+	[Export] private StatusWindow _statusWindow;
+	
+	// CHARACTER WINDOW
 
 	public override void _Ready()
 	{

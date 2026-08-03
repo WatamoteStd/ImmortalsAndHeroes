@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://bdnbyoilupi3c" path="res://Menus/GameMenu/GameMenu.cs" id="1_084tt"]
 [ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="1_khm7e"]
 [ext_resource type="Script" uid="uid://dbis053we3ws0" path="res://Menus/GameMenu/CharacterCreateWindow.cs" id="3_cu48p"]
+[ext_resource type="Script" uid="uid://bmywisunlmscd" path="res://Menus/GameMenu/CharacterWindow.cs" id="3_lunjg"]
+[ext_resource type="PackedScene" uid="uid://bl8fdbktqdobx" path="res://Menus/MainMenu/status_window.tscn" id="4_qy3an"]
 
 [sub_resource type="Gradient" id="Gradient_084tt"]
 colors = PackedColorArray(0.15529254, 0.54511577, 0.6064992, 1, 0.45633996, 0.0736899, 0, 1)
@@ -250,7 +252,7 @@ border_color = Color(0.48886585, 0.4888667, 0.48293018, 1)
 border_blend = true
 shadow_size = 2
 
-[node name="Control" type="Control" unique_id=1766940450 node_paths=PackedStringArray("_openCreateMenu", "_createMenu", "_userId", "_username")]
+[node name="Control" type="Control" unique_id=1766940450 node_paths=PackedStringArray("_openCreateMenu", "_createMenu", "_userId", "_username", "_statusWindow")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -262,6 +264,7 @@ _openCreateMenu = NodePath("MarginContainer/CharacterWindow/Borders/CharacterCre
 _createMenu = NodePath("MarginContainer/CharacterCreateWindow")
 _userId = NodePath("MarginContainer/HBoxContainer/AccountPanel/Borders/VBoxContainer/userId/Id")
 _username = NodePath("MarginContainer/HBoxContainer/AccountPanel/Borders/VBoxContainer/Login/Login")
+_statusWindow = NodePath("StatusWindow")
 
 [node name="Bg" type="TextureRect" parent="." unique_id=798071866]
 layout_mode = 1
@@ -368,12 +371,16 @@ layout_mode = 2
 size_flags_horizontal = 2
 text = "10.04.2004"
 
-[node name="CharacterWindow" type="PanelContainer" parent="MarginContainer" unique_id=1663994570]
+[node name="CharacterWindow" type="PanelContainer" parent="MarginContainer" unique_id=1663994570 node_paths=PackedStringArray("_nickname", "_id", "_silver")]
 custom_minimum_size = Vector2(800, 350)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 theme_override_styles/panel = SubResource("StyleBoxFlat_vcdtc")
+script = ExtResource("3_lunjg")
+_nickname = NodePath("Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer/Nickname/Nickname")
+_id = NodePath("Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer/Id/CID")
+_silver = NodePath("Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer/Silver/Silver")
 
 [node name="bg" type="TextureRect" parent="MarginContainer/CharacterWindow" unique_id=1359504776]
 layout_mode = 2
@@ -416,7 +423,56 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_khm7e")
 theme_override_styles/hover = SubResource("StyleBoxFlat_084tt")
 text = "CREATE NEW"
 
-[node name="CharacterCreateWindow" type="PanelContainer" parent="MarginContainer" unique_id=1485543295 node_paths=PackedStringArray("_backButton", "_createCharacter", "_nickname", "_skillType")]
+[node name="CharacterInfo" type="PanelContainer" parent="MarginContainer/CharacterWindow/Borders" unique_id=303137900]
+custom_minimum_size = Vector2(500, 250)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Borders" type="MarginContainer" parent="MarginContainer/CharacterWindow/Borders/CharacterInfo" unique_id=688300935]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CharacterWindow/Borders/CharacterInfo/Borders" unique_id=1670960785]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CharacterWindow/Borders/CharacterInfo/Borders/HBoxContainer" unique_id=1805076689]
+layout_mode = 2
+
+[node name="Nickname" type="HBoxContainer" parent="MarginContainer/CharacterWindow/Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer" unique_id=2034975660]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/CharacterWindow/Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer/Nickname" unique_id=62809818]
+layout_mode = 2
+text = "NICKNAME:"
+
+[node name="Nickname" type="Label" parent="MarginContainer/CharacterWindow/Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer/Nickname" unique_id=1195789635]
+layout_mode = 2
+
+[node name="Id" type="HBoxContainer" parent="MarginContainer/CharacterWindow/Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer" unique_id=701009480]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/CharacterWindow/Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer/Id" unique_id=1285363038]
+layout_mode = 2
+text = "ID:"
+
+[node name="CID" type="Label" parent="MarginContainer/CharacterWindow/Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer/Id" unique_id=322963296]
+layout_mode = 2
+
+[node name="Silver" type="HBoxContainer" parent="MarginContainer/CharacterWindow/Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer" unique_id=1000784788]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/CharacterWindow/Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer/Silver" unique_id=2022818265]
+layout_mode = 2
+text = "SILVER:"
+
+[node name="Silver" type="Label" parent="MarginContainer/CharacterWindow/Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer/Silver" unique_id=167163418]
+layout_mode = 2
+
+[node name="CharacterCreateWindow" type="PanelContainer" parent="MarginContainer" unique_id=1485543295 node_paths=PackedStringArray("_backButton", "_createCharacter", "_nickname", "_skillType", "_statusWindow", "_characterWindow")]
 visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qm0se")
@@ -424,7 +480,9 @@ script = ExtResource("3_cu48p")
 _backButton = NodePath("Border/HBoxContainer/Back")
 _createCharacter = NodePath("Border/HBoxContainer/Create")
 _nickname = NodePath("Border/VBoxContainer/Nickname/NicknameEdit")
-_skillType = NodePath("Border/VBoxContainer/HBoxContainer/OptionButton")
+_skillType = NodePath("Border/VBoxContainer/Visual/SkinTypes")
+_statusWindow = NodePath("../../StatusWindow")
+_characterWindow = NodePath("../CharacterWindow")
 
 [node name="bg" type="TextureRect" parent="MarginContainer/CharacterCreateWindow" unique_id=1625519988]
 layout_mode = 2
@@ -481,34 +539,32 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_cu48p")
 theme_override_styles/focus = SubResource("StyleBoxFlat_qy3an")
 max_length = 16
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CharacterCreateWindow/Border/VBoxContainer" unique_id=1971852864]
+[node name="Visual" type="HBoxContainer" parent="MarginContainer/CharacterCreateWindow/Border/VBoxContainer" unique_id=1971852864]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="MarginContainer/CharacterCreateWindow/Border/VBoxContainer/HBoxContainer" unique_id=526063281]
+[node name="Name" type="Label" parent="MarginContainer/CharacterCreateWindow/Border/VBoxContainer/Visual" unique_id=526063281]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7907749, 0.8352928, 0.8685704, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
 theme_override_fonts/font = SubResource("FontVariation_83fg3")
 theme_override_font_sizes/font_size = 20
-text = "START SKILL PREFERRED TYPE"
+text = "SKIN "
 
-[node name="OptionButton" type="OptionButton" parent="MarginContainer/CharacterCreateWindow/Border/VBoxContainer/HBoxContainer" unique_id=1443726216]
+[node name="SkinTypes" type="OptionButton" parent="MarginContainer/CharacterCreateWindow/Border/VBoxContainer/Visual" unique_id=1443726216]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_lunjg")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_1ym0r")
 theme_override_styles/hover = SubResource("StyleBoxFlat_rf60l")
-item_count = 5
-popup/item_0/text = "ATTACK"
-popup/item_0/id = 0
-popup/item_1/text = "PROTECTION"
-popup/item_1/id = 1
-popup/item_2/text = "SURVIVAL"
-popup/item_2/id = 2
-popup/item_3/text = "PEACEFUL"
-popup/item_3/id = 3
-popup/item_4/text = "%^$#@^$#@&^"
-popup/item_4/id = 4
+item_count = 4
+popup/item_0/text = "Default"
+popup/item_0/id = 1
+popup/item_1/text = "Male"
+popup/item_1/id = 2
+popup/item_2/text = "Female"
+popup/item_2/id = 3
+popup/item_3/text = "Human"
+popup/item_3/id = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CharacterCreateWindow/Border" unique_id=268951694]
 layout_mode = 2
@@ -536,3 +592,13 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_7wkxe")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_5yqie")
 theme_override_styles/hover = SubResource("StyleBoxFlat_mg7dy")
 text = "CREATE"
+
+[node name="StatusWindow" parent="." unique_id=911583890 instance=ExtResource("4_qy3an")]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -250.0
+offset_bottom = 125.0
+grow_horizontal = 0
