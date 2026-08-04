@@ -3,6 +3,7 @@ using Shared.Characters;
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
@@ -90,6 +91,10 @@ public partial class HttpsMasterClient : Node
 				{
 					GameSession.Instance.GlobalId = result.UserId;
 					GameSession.Instance.Username = result.Username;
+					GameSession.Instance.MasterToken = result.Token;
+
+					client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.Token);
+					
 					return (true, "Successful login!");
 				}
 				else return (false, "Failed when reading result response");
@@ -117,13 +122,7 @@ public partial class HttpsMasterClient : Node
 	public async Task<(bool isSucces, CharacterCreatedResponseDto? character, string message)> CreateCharacterAsync(string nickname, CharacterType type)
 	{
 		
-		var cDto = new CharacterCreateRequestDto(
-			
-			GameSession.Instance.GlobalId,
-			nickname,
-			type
-
-		);
+		var cDto = new CharacterCreateRequestDto(nickname, type);
 
 		try
 		{
@@ -160,10 +159,42 @@ public partial class HttpsMasterClient : Node
 
 	}
 
+	public async Task<(bool isSussec, CharacterCreatedResponseDto? character, string message)> GetCharacter()
+	{
+
+		try
+		{
+
+			var response = await client.GetAsync("api/character/get");
+
+			if (response.IsSuccessStatusCode)
+			{
+
+				var character = await response.Content.ReadFromJsonAsync<CharacterCreatedResponseDto>();
+				return (true, character, "Character loaded");
+
+			}
+			else if (response.StatusCode == HttpStatusCode.NotFound)
+			{
+				return (false, null, "No character");
+			}
+
+			string error = await response.Content.ReadAsStringAsync();
+			return (false, null, error);
+
+		}
+		catch (Exception e)
+		{
+			GD.Print($"[HTTP MASTER] Error getting character: {e.Message}");
+			return (false, null, "Connection lost.");
+		}
+
+	}
+	
 	#region DTOS
 
-	public record LoginResponseDto(string Username, long UserId, DateTime CreatedAt);
-	public record CharacterCreateRequestDto(long UserId, string Nickname, CharacterType Type);
+	public record LoginResponseDto(string Username, long UserId, DateTime CreatedAt, string Token);
+	public record CharacterCreateRequestDto(string Nickname, CharacterType Type);
 	public record CharacterCreatedResponseDto(string Nickname, long Silver, CharacterType Type, long Id);
 
 	#endregion

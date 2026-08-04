@@ -371,7 +371,7 @@ layout_mode = 2
 size_flags_horizontal = 2
 text = "10.04.2004"
 
-[node name="CharacterWindow" type="PanelContainer" parent="MarginContainer" unique_id=1663994570 node_paths=PackedStringArray("_nickname", "_id", "_silver")]
+[node name="CharacterWindow" type="PanelContainer" parent="MarginContainer" unique_id=1663994570 node_paths=PackedStringArray("_nickname", "_id", "_silver", "_characterCard", "_statusWindow", "_characterCreateButton")]
 custom_minimum_size = Vector2(800, 350)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -381,6 +381,9 @@ script = ExtResource("3_lunjg")
 _nickname = NodePath("Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer/Nickname/Nickname")
 _id = NodePath("Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer/Id/CID")
 _silver = NodePath("Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer/Silver/Silver")
+_characterCard = NodePath("Borders/CharacterInfo")
+_statusWindow = NodePath("../../StatusWindow")
+_characterCreateButton = NodePath("Borders/CharacterCreate")
 
 [node name="bg" type="TextureRect" parent="MarginContainer/CharacterWindow" unique_id=1359504776]
 layout_mode = 2
@@ -424,6 +427,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_084tt")
 text = "CREATE NEW"
 
 [node name="CharacterInfo" type="PanelContainer" parent="MarginContainer/CharacterWindow/Borders" unique_id=303137900]
+visible = false
 custom_minimum_size = Vector2(500, 250)
 layout_mode = 2
 size_flags_horizontal = 0

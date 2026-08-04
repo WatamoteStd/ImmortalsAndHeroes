@@ -1,9 +1,13 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using MasterServer.Data;
 using MasterServer.DTO;
 using MasterServer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 
 namespace MasterServer.Controllers;
@@ -14,11 +18,13 @@ public class AuthController : ControllerBase
 {
     
     private readonly AppDbContext _context;
+    private readonly IConfiguration _configuration;
 
-    public AuthController(AppDbContext context)
+    public AuthController(AppDbContext context, IConfiguration configuration)
     {
         
         _context = context;
+        _configuration = configuration;
 
     }
 
@@ -70,14 +76,51 @@ public class AuthController : ControllerBase
 
         if (!isPasswordValid) return BadRequest("Invalid user or password.");
 
+        string jwtToken = GenerateJwtToken(user);
+        
+
         var response = new LoginResponseDto
         {
             Username = user.Login,
             UserId = user.Id,
-            CreatedAt = user.CreatedAt
+            CreatedAt = user.CreatedAt,
+            Token = jwtToken
         };
 
         return Ok(response);
+
+    }
+
+    private string GenerateJwtToken(User user)
+    {
+
+        var jwtSecret = _configuration["JwtSettings:Secret"] // GET THE CONFIGURATION
+                        ?? throw new InvalidOperationException("JWT secret miss");
+        var key = Encoding.UTF8.GetBytes(jwtSecret);
+        
+        // Injecting data in token ====================================================
+
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        };
+        // CREATE TOKEN SETTINGS ============================
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.UtcNow.AddDays(1),
+            SigningCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha256Signature
+            )
+        };
+        
+        // GENERATE TOKEN STRING
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
 
     }
 

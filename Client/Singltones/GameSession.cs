@@ -8,6 +8,7 @@ public partial class GameSession : Node
 	
 	public uint NetworkId {get; set;}
 	public long GlobalId { get; set;}
+	public string MasterToken { get; set; }
 	public string Username {get; set;}
 
 	public EntityClient Character { get; set;}
