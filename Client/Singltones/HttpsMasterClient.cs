@@ -190,12 +190,48 @@ public partial class HttpsMasterClient : Node
 		}
 
 	}
+
+	public async Task<(bool isSucces, string message)> EnterWorldAsync()
+	{
+
+		try
+		{
+
+			var response = await client.GetAsync("/api/gamesession/enter");
+
+			if (response.IsSuccessStatusCode)
+			{
+				var data = await response.Content.ReadFromJsonAsync<EnterWorldResponseDto>();
+
+				GameSession.Instance.UdpToken = data.Ticket;
+				GameSession.Instance.UdpIp = data.UdpIp;
+				GameSession.Instance.UdpPort = data.Port;
+
+				return (true, "Entering world...");
+			}
+			else
+			{
+				var errorMessage = await response.Content.ReadAsStringAsync();
+				return (false, errorMessage);
+			}
+		}
+		catch (Exception e)
+		{
+			GD.PrintErr($"Server error. {e.Message}");
+			return (false, "Server error. Please try again.");
+		}
+		
+		
+
+	}
 	
 	#region DTOS
 
 	public record LoginResponseDto(string Username, long UserId, DateTime CreatedAt, string Token);
 	public record CharacterCreateRequestDto(string Nickname, CharacterType Type);
 	public record CharacterCreatedResponseDto(string Nickname, long Silver, CharacterType Type, long Id);
+
+	public record EnterWorldResponseDto(string Ticket, string UdpIp, int Port);
 
 	#endregion
 

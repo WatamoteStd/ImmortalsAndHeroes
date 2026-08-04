@@ -1,5 +1,6 @@
 using System.Text;
 using MasterServer.Data;
+using MasterServer.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -31,6 +32,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     }));
 
 builder.Services.AddAuthorization();
+
+// SINGLETONES
+builder.Services.AddSingleton<ITicketService, TicketService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -371,7 +371,7 @@ layout_mode = 2
 size_flags_horizontal = 2
 text = "10.04.2004"
 
-[node name="CharacterWindow" type="PanelContainer" parent="MarginContainer" unique_id=1663994570 node_paths=PackedStringArray("_nickname", "_id", "_silver", "_characterCard", "_statusWindow", "_characterCreateButton")]
+[node name="CharacterWindow" type="PanelContainer" parent="MarginContainer" unique_id=1663994570 node_paths=PackedStringArray("_nickname", "_id", "_silver", "_characterCard", "_statusWindow", "_characterCreateButton", "_enterWorldButton")]
 custom_minimum_size = Vector2(800, 350)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -384,6 +384,7 @@ _silver = NodePath("Borders/CharacterInfo/Borders/HBoxContainer/VBoxContainer/Si
 _characterCard = NodePath("Borders/CharacterInfo")
 _statusWindow = NodePath("../../StatusWindow")
 _characterCreateButton = NodePath("Borders/CharacterCreate")
+_enterWorldButton = NodePath("../../EnterWorld")
 
 [node name="bg" type="TextureRect" parent="MarginContainer/CharacterWindow" unique_id=1359504776]
 layout_mode = 2
@@ -606,3 +607,25 @@ anchor_right = 1.0
 offset_left = -250.0
 offset_bottom = 125.0
 grow_horizontal = 0
+
+[node name="EnterWorld" type="Button" parent="." unique_id=628771630]
+visible = false
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -43.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 10
+theme_override_colors/font_color = Color(0.7990741, 0.79907465, 0.7990742, 1)
+theme_override_fonts/font = SubResource("FontVariation_khm7e")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_7wkxe")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5yqie")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mg7dy")
+text = "Enter World"

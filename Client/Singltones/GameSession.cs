@@ -5,11 +5,15 @@ public partial class GameSession : Node
 {
 
 	public static GameSession Instance {get; private set;}
-	
+	public string Username {get; set;}
 	public uint NetworkId {get; set;}
 	public long GlobalId { get; set;}
+	
 	public string MasterToken { get; set; }
-	public string Username {get; set;}
+	public string UdpToken { get; set; }
+	public string UdpIp { get; set; }
+	public int UdpPort { get; set; }
+
 
 	public EntityClient Character { get; set;}
 
