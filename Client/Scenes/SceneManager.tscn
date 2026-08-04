@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://b3es76lgiqsc2"]
+
+[ext_resource type="Script" uid="uid://d0v3qnfk76ppm" path="res://Scenes/SceneManager.cs" id="1_hjya1"]
+[ext_resource type="Shader" uid="uid://hromedeur3bd" path="res://Scenes/BgShader.gdshader" id="1_yueht"]
+[ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="2_ebsso"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_83fg3"]
+shader = ExtResource("1_yueht")
+shader_parameter/color_left = Color(0.05490196, 0.16862746, 0.26666668, 1)
+shader_parameter/color_right = Color(0.84313726, 0.8784314, 0.9647059, 1)
+shader_parameter/speed = 0.1
+
+[sub_resource type="Gradient" id="Gradient_ebsso"]
+colors = PackedColorArray(0.056856483, 0.16821796, 0.26707155, 1, 0.84225845, 0.87982595, 0.96557885, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_83fg3"]
+gradient = SubResource("Gradient_ebsso")
+fill_from = Vector2(0.99025977, 1)
+fill_to = Vector2(0.60714287, 0)
+
+[sub_resource type="FontVariation" id="FontVariation_yueht"]
+base_font = ExtResource("2_ebsso")
+variation_opentype = {
+2003265652: 550
+}
+variation_face_index = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83fg3"]
+bg_color = Color(0.12949562, 0.24811032, 0.413585, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.030933153, 0.030933162, 0.03093312, 1)
+border_blend = true
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7xrkh"]
+bg_color = Color(0.25074232, 0.42937437, 0.6751075, 1)
+border_width_right = 2
+border_color = Color(0.4744426, 0.6408677, 0.87593853, 1)
+border_blend = true
+shadow_size = 1
+
+[sub_resource type="Animation" id="Animation_hjya1"]
+resource_name = "Idle"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Content/ProgressBar:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.9666667, 2.8666666, 3.1666667, 3.4333334, 4.266667, 6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 35.0, 35.0, 45.0, 50.0, 50.0, 100.0]
+}
+
+[sub_resource type="Animation" id="Animation_7xrkh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Content/ProgressBar:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_83gc0"]
+_data = {
+&"Idle": SubResource("Animation_hjya1"),
+&"RESET": SubResource("Animation_7xrkh")
+}
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator")]
+script = ExtResource("1_hjya1")
+_animator = NodePath("AnimationPlayer")
+
+[node name="Bg" type="TextureRect" parent="." unique_id=1002927567]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_83fg3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_83fg3")
+
+[node name="Content" type="MarginContainer" parent="." unique_id=478584111]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 35
+theme_override_constants/margin_top = 120
+theme_override_constants/margin_right = 35
+theme_override_constants/margin_bottom = 40
+
+[node name="Label" type="Label" parent="Content" unique_id=1455401952]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.2276704, 0.44531405, 0.55503446, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/font = SubResource("FontVariation_yueht")
+theme_override_font_sizes/font_size = 58
+text = "IMMORTALS AND HEROES"
+
+[node name="ProgressBar" type="ProgressBar" parent="Content" unique_id=1048724829]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/background = SubResource("StyleBoxFlat_83fg3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7xrkh")
+show_percentage = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2069832628]
+libraries/ = SubResource("AnimationLibrary_83gc0")
