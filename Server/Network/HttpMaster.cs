@@ -2,7 +2,7 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using Shared.Characters;
-using Server.DTO.HTTP;
+using Shared.DataTransferObjects;
 
 namespace Server.Network;
 

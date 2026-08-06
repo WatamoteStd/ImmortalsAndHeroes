@@ -119,7 +119,12 @@ public class SessionManager
     }
 
 
+    public void HandshakeRequest(string ticket, IPEndPoint iPEnd)
+    {
+        
+        
 
+    }
 
 
 }

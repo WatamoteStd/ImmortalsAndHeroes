@@ -1,8 +1,8 @@
- using Shared.Characters;
- 
+using Shared.Characters;
 
- namespace Server.DTO.HTTP;
- public record HandshakeResponseDto
+namespace Shared.DataTransferObjects;
+
+public record HandshakeResponseDto
     {
         
         public long Id {get; set;} 
