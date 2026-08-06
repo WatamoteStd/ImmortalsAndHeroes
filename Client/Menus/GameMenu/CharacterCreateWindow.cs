@@ -51,7 +51,7 @@ public partial class CharacterCreateWindow : PanelContainer
 			
 
 		}
-		else
+		else 
 		{
 			_statusWindow.ShowMessage("Failure!", response.message);
 		}

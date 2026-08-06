@@ -14,9 +14,6 @@ public partial class GameSession : Node
 	public string UdpIp { get; set; }
 	public int UdpPort { get; set; }
 
-
-	public EntityClient Character { get; set;}
-
 	public enum State
 	{
 		Authorizing,
