@@ -28,7 +28,8 @@ public class PacketReader
                 {
                     
                     var packet = PacketSerialier.Deserialize<C2S_HandshakePacket>(buffer[2..]);
-                    _sessionManager.HandshakeRequest(packet.Ticket, clientIp);
+
+                    _ = _sessionManager.HandshakeRequest(packet.Ticket, clientIp);
 
                 }
             break;

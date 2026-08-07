@@ -206,6 +206,7 @@ public partial class HttpsMasterClient : Node
 				GameSession.Instance.UdpToken = data.Ticket;
 				GameSession.Instance.UdpIp = data.UdpIp;
 				GameSession.Instance.UdpPort = data.Port;
+				ServerMaster.Instance.ConnectToServer();
 
 				return (true, "Entering world...");
 			}

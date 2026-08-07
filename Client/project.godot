@@ -19,6 +19,7 @@ config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 HttpsMasterClient="*uid://cwtyu54awxh0j"
 GameSession="*uid://6dhtswk5p8yp"
 SceneManager="*uid://b3es76lgiqsc2"
+ServerMaster="*uid://d8v828puul48"
 
 [display]
 

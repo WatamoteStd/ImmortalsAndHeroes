@@ -14,6 +14,9 @@ public class SessionManager
     public SessionPool GuestPool {get; private set;} 
     public SessionPool MainPool {get; private set;} 
 
+    // HTTP
+    private readonly HttpMaster _httpMaster = new HttpMaster();
+
     private byte MainPoolDeleted, GuestPoolDeleted;
 
     public SessionManager()
@@ -119,10 +122,19 @@ public class SessionManager
     }
 
 
-    public void HandshakeRequest(string ticket, IPEndPoint iPEnd)
+    public async Task HandshakeRequest(string ticket, IPEndPoint iPEnd)
     {
         
-        
+        var (isValid, characterData, message) = await _httpMaster.ValidateSessionAsync(ticket);
+
+        if (!isValid || characterData == null)
+        {
+            
+            Console.WriteLine($"[HTTP] Handshake for {iPEnd} failed. Message{message}");
+            return;
+
+        }
+        Console.WriteLine($"[HTTP] Succesfull login. Character: {characterData.Id}");
 
     }
 

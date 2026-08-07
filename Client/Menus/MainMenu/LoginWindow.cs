@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Net.Http.Json;
 using System.Collections.Generic;
 using System.Text.Json;
-using Shared.Network.Packets;
 
 public partial class LoginWindow : PanelContainer
 {
