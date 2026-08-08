@@ -20,12 +20,14 @@ public class SessionManager
 
     // HTTP
     private readonly HttpMaster _httpMaster = new HttpMaster();
+    private readonly PacketSender _packetSender;
 
     private byte MainPoolDeleted, GuestPoolDeleted;
 
-    public SessionManager()
+    public SessionManager(PacketSender packetSender)
     {
         _packetReader = new PacketReader(this);
+        _packetSender = packetSender;
 
         GuestPool = new SessionPool(300, 300);
         MainPool = new SessionPool(2000, 6000);
@@ -159,7 +161,7 @@ public class SessionManager
 
             Console.WriteLine($"[SESSIONS] New active session created! UserId:{session.UserId}");
 
-            
+            _packetSender.SM_SendHandhsakeResult(true, characterData, userIp);
 
         }
 
@@ -180,6 +182,7 @@ public class SessionManager
         {
             
             Console.WriteLine($"[HTTP] Handshake for {iPEnd} failed. Message{message}");
+            _packetSender.SM_SendHandhsakeResult(false, null, iPEnd);
 
             return;
 
