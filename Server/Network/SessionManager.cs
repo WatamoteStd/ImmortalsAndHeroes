@@ -23,6 +23,7 @@ public class SessionManager : IWorldBroadcaster
     // HTTP
     private readonly HttpMaster _httpMaster = new HttpMaster();
     private readonly PacketSender _packetSender;
+    private IWorldHolder? _worldHolder;
 
     private byte MainPoolDeleted, GuestPoolDeleted;
 
@@ -43,6 +44,11 @@ public class SessionManager : IWorldBroadcaster
 
 
 
+    }
+
+    public void InitializeWorld(IWorldHolder holder)
+    {
+        _worldHolder = holder;
     }
 
     public void PacketGateway(IPEndPoint endPoint, ReadOnlySpan<byte> data)
@@ -164,6 +170,14 @@ public class SessionManager : IWorldBroadcaster
             Console.WriteLine($"[SESSIONS] New active session created! UserId:{session.UserId}");
 
             _packetSender.SM_SendHandhsakeResult(true, characterData, userIp);
+            if (_worldHolder != null)
+            {
+                _worldHolder.AddPlayer((uint)characterData.RegionId, characterData);
+            }
+            else
+            {
+                Console.WriteLine($"[ERROR] Cannot add new player. WorldHolder is null!");
+            }
 
         }
 

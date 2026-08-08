@@ -10,9 +10,11 @@ networkManager.NetStart();
 IWorldBroadcaster broadcaster = networkManager.sessionManager;
 WorldHolder worldHolder = new WorldHolder(broadcaster);
 
+networkManager.sessionManager.InitializeWorld(worldHolder);
+
 Console.WriteLine("================= Server Started ==============");
 
-Loop loop = new Loop(60);
+Loop loop = new Loop(60, worldHolder);
 loop.Start();
 
 long lastCleanupTime = Environment.TickCount64;

@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Server.World.Zone;
 
 namespace Server.World;
 
@@ -19,13 +20,15 @@ public class Loop
     public bool IsRunning {get; private set;} = false;
     private Thread? _loopThread;
 
+    private readonly WorldHolder _world;
 
-    public Loop(int tickrateHz)
+
+    public Loop(int tickrateHz, WorldHolder world)
     {
         
+        _world = world;
         TickrateHz = tickrateHz;
         _targetTicksPerFrame = Stopwatch.Frequency / TickrateHz;
-        Console.WriteLine($"[SERVER LOOP] Hz:{TickrateHz} Tacts:{_targetTicksPerFrame}");
         TimeBeginPeriod(1);
 
     }
@@ -45,10 +48,6 @@ public class Loop
         long startTick;
         long targetTick;
         long lastTickTime = Stopwatch.GetTimestamp();
-
-        //DEBUG
-        int tickCount = 0;
-        float frameTimer = 0f;
         
         while(IsRunning)
         {
@@ -60,18 +59,7 @@ public class Loop
 
             targetTick = startTick + _targetTicksPerFrame;
 
-            //DEBUG
-            tickCount++;
-            frameTimer += deltaTime;
-
-            if (frameTimer > 1.0f)
-            {
-                Console.WriteLine($"TICKS: {tickCount} | FrameTimer:{frameTimer}");
-                frameTimer -= 1.0f;
-                tickCount = 0;
-            }
-
-
+            _world.Update(deltaTime);
 
 
             while (Stopwatch.GetTimestamp() < targetTick)
