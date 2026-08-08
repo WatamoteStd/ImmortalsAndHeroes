@@ -1,9 +1,14 @@
 ﻿using Server.Network;
+using Server.Network.Interfaces;
 using Server.World;
+using Server.World.Zone;
 
 
 NetworkManager networkManager = new NetworkManager(29555);
 networkManager.NetStart();
+
+IWorldBroadcaster broadcaster = networkManager.sessionManager;
+WorldHolder worldHolder = new WorldHolder(broadcaster);
 
 Console.WriteLine("================= Server Started ==============");
 

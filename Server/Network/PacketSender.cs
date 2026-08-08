@@ -3,6 +3,8 @@ using System.Net;
 using Shared.DataTransferObjects;
 using Shared.Udp.Packets;
 using Shared.Udp.Packets.Category;
+using System.Security;
+using Shared.Udp.Interfaces;
 
 namespace Server.Network;
 
@@ -55,5 +57,16 @@ public class PacketSender
     }
 
 
+    public void SendPacket<T>(IPEndPoint clientIp, PacketTypes packetType, T packet) 
+        where T: struct, INetworkPacket
+    {
+        
+        Span<byte> buffer = stackalloc byte[512];
+
+        int length = PacketSerialier.Serialize<T>(buffer, packetType, packet);
+
+        _socket.SendTo(buffer[..length], SocketFlags.None, clientIp);
+
+    }
 
 }

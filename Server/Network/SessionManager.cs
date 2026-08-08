@@ -1,14 +1,16 @@
 using System;
 using System.Data.Common;
 using System.Net;
+using Server.Network.Interfaces;
 using Server.Pools;
 using Server.Pools.Session;
 using Shared.DataTransferObjects;
+using Shared.Udp.Interfaces;
 using Shared.Udp.Packets;
 
 namespace Server.Network;
 
-public class SessionManager
+public class SessionManager : IWorldBroadcaster
 {
     
     private Stack<ushort> guestIds = new(); 
@@ -188,6 +190,19 @@ public class SessionManager
 
         }
         AuthorizeSession(iPEnd, characterData);
+
+    }
+
+    // =========== WORLD HOLDER ======================================
+
+    public void SendToPlayer<T>(uint userId, PacketTypes packetType, T packet) 
+        where T : struct, INetworkPacket
+    {
+
+        var session = MainPool.GetSession(userId);
+        if (session == null) return;
+        
+        _packetSender.SendPacket(session.IpEnd, packetType, packet);
 
     }
 
