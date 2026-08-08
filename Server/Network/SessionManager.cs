@@ -58,10 +58,13 @@ public class SessionManager
             {
                 
                 session.LastPacketTime = Environment.TickCount64;
+
+                if (session.IsAuthorazing) return;
                 
                 if (_packetReader.ReadPacketType(data) == PacketTypes.C2S_Handshake)
                 {
                     _packetReader.PacketDeserialize(data, endPoint);
+                    session.IsAuthorazing = true;
                 }
 
             }
@@ -83,6 +86,7 @@ public class SessionManager
             {
                 
                 _packetReader.PacketDeserialize(data, endPoint);
+                newSession.IsAuthorazing = true;
 
             }
 
@@ -155,6 +159,8 @@ public class SessionManager
 
             Console.WriteLine($"[SESSIONS] New active session created! UserId:{session.UserId}");
 
+            
+
         }
 
     }
@@ -167,12 +173,14 @@ public class SessionManager
     public async Task HandshakeRequest(string ticket, IPEndPoint iPEnd)
     {
         
+
         var (isValid, characterData, message) = await _httpMaster.ValidateSessionAsync(ticket);
 
         if (!isValid || characterData == null)
         {
             
             Console.WriteLine($"[HTTP] Handshake for {iPEnd} failed. Message{message}");
+
             return;
 
         }

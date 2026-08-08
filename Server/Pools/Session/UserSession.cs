@@ -8,6 +8,7 @@ public class UserSession
     
      public enum SessionState { Guest, Active, Disconnect };
     public SessionState State = SessionState.Guest;
+    public bool IsAuthorazing {get; set;} = false;
     public IPEndPoint IpEnd;
         // MASTER SERVER DATA
     public uint UserId {get; set;}

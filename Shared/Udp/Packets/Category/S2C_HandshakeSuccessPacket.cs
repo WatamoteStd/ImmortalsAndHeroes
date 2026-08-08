@@ -26,7 +26,7 @@ public struct S2C_HandshakeSuccessPacket() : INetworkPacket
     public int Lvl {get; set;} = 1;
     public uint Silver {get; set;} 
 
-    public void Serialize(Span<byte> buffer)
+    public int Serialize(Span<byte> buffer)
     {
         Length = 0;
 
@@ -62,7 +62,7 @@ public struct S2C_HandshakeSuccessPacket() : INetworkPacket
         BinaryPrimitives.WriteUInt32LittleEndian(buffer[Length..], Silver);
         Length += 4;
 
-
+        return Length;
 
     }
 

@@ -16,8 +16,8 @@ public static class PacketSerialier
 
         BinaryPrimitives.WriteUInt16LittleEndian(buffer, (ushort)packetType);
         offset += 2;
-        data.Serialize(buffer[offset..]);
-        offset += (int)data.Length;
+
+        offset += data.Serialize(buffer[offset..]);
         
         return offset;
 

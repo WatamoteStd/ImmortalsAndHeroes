@@ -9,7 +9,7 @@ public interface INetworkPacket
     
     public int Length {get;}
 
-    public void Serialize(Span<byte> buffer);
+    public int Serialize(Span<byte> buffer);
     public void Deserialize(ReadOnlySpan<byte> buffer);
 
 
