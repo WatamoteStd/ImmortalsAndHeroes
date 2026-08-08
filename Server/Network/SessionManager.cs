@@ -3,6 +3,8 @@ using System.Data.Common;
 using System.Net;
 using Server.Pools;
 using Server.Pools.Session;
+using Shared.DataTransferObjects;
+using Shared.Udp.Packets;
 
 namespace Server.Network;
 
@@ -14,6 +16,8 @@ public class SessionManager
     public SessionPool GuestPool {get; private set;} 
     public SessionPool MainPool {get; private set;} 
 
+    private readonly PacketReader _packetReader;
+
     // HTTP
     private readonly HttpMaster _httpMaster = new HttpMaster();
 
@@ -21,6 +25,7 @@ public class SessionManager
 
     public SessionManager()
     {
+        _packetReader = new PacketReader(this);
 
         GuestPool = new SessionPool(300, 300);
         MainPool = new SessionPool(2000, 6000);
@@ -36,27 +41,30 @@ public class SessionManager
 
     }
 
-    public void PacketGateway(IPEndPoint endPoint)
+    public void PacketGateway(IPEndPoint endPoint, ReadOnlySpan<byte> data)
     {
         
         if (ipToSession.TryGetValue(endPoint, out UserSession? session))
         {
-                
-            if (session.State == UserSession.SessionState.Guest)
-            {
-
-                session.LastPacketTime = Environment.TickCount64;
-                Console.WriteLine("[Server] Received new packet from 'GUEST' user.");
-
-            }
-            else if (session.State == UserSession.SessionState.Active)
+            if (session.State == UserSession.SessionState.Active)
             {
                 
                 session.LastPacketTime = Environment.TickCount64;
                 Console.WriteLine("[Server] Received new packet from 'ACTIVE' user.");
+                _packetReader.PacketDeserialize( data, endPoint);
 
             }
+            else if (session.State == UserSession.SessionState.Guest)
+            {
+                
+                session.LastPacketTime = Environment.TickCount64;
+                
+                if (_packetReader.ReadPacketType(data) == PacketTypes.C2S_Handshake)
+                {
+                    _packetReader.PacketDeserialize(data, endPoint);
+                }
 
+            }
         }
         else
             {
@@ -71,11 +79,19 @@ public class SessionManager
             GuestPool.AddSession(newSession);
             ipToSession[endPoint] = newSession;
 
+            if (_packetReader.ReadPacketType(data) == PacketTypes.C2S_Handshake)
+            {
+                
+                _packetReader.PacketDeserialize(data, endPoint);
+
+            }
+
+
         }
 
     }
 
-    public void Cleaner(long timeoutTimeMs)
+    public void Cleaner(long timeoutTimeMs, long mainTimeouteMs)
     {
         
         long now = Environment.TickCount64;
@@ -93,7 +109,8 @@ public class SessionManager
                 GuestPool.DeleteSession(session);
 
                 GuestPoolDeleted++;
-                Console.WriteLine($"[CLEANER DEBUG] Deleted Users statistics. Total: {MainPoolDeleted + GuestPoolDeleted}. MainPool:{MainPoolDeleted}. GuestPool{GuestPoolDeleted}");
+                Console.WriteLine($"[CLEANER DEBUG] Deleted Users statistics. | MainPool:{MainPoolDeleted}. GuestPool{GuestPoolDeleted}");
+                Console.WriteLine();
                 Console.WriteLine($"[CLEANER DEBUG] Free guest ID'S:{guestIds.Count} | Total Players:{MainPool.Count}. | Total Guest:{GuestPool.Count}");
 
             }
@@ -104,14 +121,15 @@ public class SessionManager
             
             var session = MainPool.Dense[i];
             
-            if (now - session.LastPacketTime > timeoutTimeMs)
+            if (now - session.LastPacketTime > mainTimeouteMs)
             {
                 
                 ipToSession.Remove(session.IpEnd);
                 MainPool.DeleteSession(session);
 
                 MainPoolDeleted++;
-                Console.WriteLine($"[CLEANER DEBUG] Deleted Users statistics. Total: {MainPoolDeleted + GuestPoolDeleted}. MainPool:{MainPoolDeleted}. GuestPool{GuestPoolDeleted}");
+                Console.WriteLine($"[CLEANER DEBUG] Deleted Users statistics. | MainPool:{MainPoolDeleted}. GuestPool{GuestPoolDeleted}");
+                Console.WriteLine();
                 Console.WriteLine($"[CLEANER DEBUG] Free guest ID'S:{guestIds.Count} | Total Players:{MainPool.Count}. | Total Guest:{GuestPool.Count}");
 
             }
@@ -120,6 +138,30 @@ public class SessionManager
         
 
     }
+
+    public void AuthorizeSession(IPEndPoint userIp, HandshakeResponseDto characterData)
+    {
+        
+        if (ipToSession.TryGetValue(userIp, out UserSession? session))
+        {
+            
+            // DELETE FROM GUEST
+            GuestPool.DeleteSession(session);
+            guestIds.Push((ushort)session.UserId);
+    
+            session.State = UserSession.SessionState.Active;
+            session.UserId = (uint)characterData.UserId;
+            MainPool.AddSession(session);
+
+            Console.WriteLine($"[SESSIONS] New active session created! UserId:{session.UserId}");
+
+        }
+
+    }
+
+
+
+
 
 
     public async Task HandshakeRequest(string ticket, IPEndPoint iPEnd)
@@ -134,7 +176,7 @@ public class SessionManager
             return;
 
         }
-        Console.WriteLine($"[HTTP] Succesfull login. Character: {characterData.Id}");
+        AuthorizeSession(iPEnd, characterData);
 
     }
 

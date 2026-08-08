@@ -11,17 +11,15 @@ public class NetworkListener
     private readonly Socket _socket;
     EndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
     private readonly SessionManager _sessionManager;
-    private readonly PacketReader _packetReader;
     byte[] buffer = new byte[4096];
 
     bool isRunning;
 
 
-    public NetworkListener(Socket socket, SessionManager _manager, PacketReader packetReader)
+    public NetworkListener(Socket socket, SessionManager _manager)
     {
         _socket = socket;
         _sessionManager = _manager;
-        _packetReader = packetReader;
     }
 
     public void Start()
@@ -44,8 +42,7 @@ public class NetworkListener
 
             if (count >= 2 && remoteEndPoint is IPEndPoint clientIp)
             {
-                _sessionManager.PacketGateway(clientIp);
-                _packetReader.PacketDeserialize(buffer[..count], clientIp);
+                _sessionManager.PacketGateway(clientIp, buffer[..count]);
             }
 
         }

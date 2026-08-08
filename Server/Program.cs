@@ -16,7 +16,7 @@ while(true)
 
     if (now - lastCleanupTime >= 2500)
     {
-        networkManager.sessionManager.Cleaner(15000);
+        networkManager.sessionManager.Cleaner(15000, 30000);
         lastCleanupTime = now;
     }
     Thread.Sleep(15);

@@ -38,4 +38,12 @@ public class PacketReader
 
     }
 
+    public PacketTypes ReadPacketType(ReadOnlySpan<byte> data)
+    {
+        
+        PacketTypes packetType = (PacketTypes)BinaryPrimitives.ReadUInt16LittleEndian(data);
+
+        return packetType;
+    }
+
 }

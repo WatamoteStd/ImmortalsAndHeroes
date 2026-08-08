@@ -26,8 +26,14 @@ public class SessionPool
     public void AddSession(UserSession user)
     {
         
-        if (user.UserId >= Sparse.Length) return;
+        if (user.UserId >= Sparse.Length) 
+        {
+            Console.WriteLine($"[ERROR] Sparse array boundary reached for UserId {user.UserId}!");
+            return;
+        }
+
         if (Dense.Length <= Count) return;
+
 
         Dense[Count] = user;
         Sparse[user.UserId] = Count;
