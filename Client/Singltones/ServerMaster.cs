@@ -1,8 +1,11 @@
+using Client.NO_NODE;
 using Godot;
+using Shared.Udp.Interfaces;
 using Shared.Udp.Packets;
 using Shared.Udp.Packets.Category;
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
 
@@ -12,6 +15,9 @@ public partial class ServerMaster : Node
     private Socket _socket;
     private IPEndPoint _serverEndPoint;
     public static ServerMaster Instance {get; private set;}
+    private PacketReaderClient _packetReader;
+
+    private ConcurrentQueue<INetworkPacket> _packetQeueue = new ConcurrentQueue<INetworkPacket>();
 
     public override void _Ready()
     {
@@ -40,6 +46,10 @@ public partial class ServerMaster : Node
 
         _serverEndPoint = new IPEndPoint(IPAddress.Parse(GameSession.Instance.UdpIp), GameSession.Instance.UdpPort);
         _socket.Connect(_serverEndPoint);
+
+        _packetReader = new PacketReaderClient(_socket, _packetQeueue);
+        _packetReader.Start();
+
         ValidateConnection();
 
     }
@@ -59,6 +69,27 @@ public partial class ServerMaster : Node
         _socket.Send(buffer);
 
     }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        _packetReader.Stop();
+    }
+
+
+    public override void _Process(double delta)
+    {
+        
+        while(_packetQeueue.TryDequeue(out INetworkPacket packet))
+        {
+            
+
+
+        }
+
+    }
+
+
 
 
 }
