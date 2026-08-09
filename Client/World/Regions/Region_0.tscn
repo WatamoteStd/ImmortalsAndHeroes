@@ -22,8 +22,9 @@ albedo_color = Color(0.16078432, 0.30980393, 1, 1)
 material = SubResource("StandardMaterial3D_ichqs")
 size = Vector3(1, 5, 2)
 
-[node name="WorldRegion" type="Node3D" unique_id=388387032]
+[node name="WorldRegion" type="Node3D" unique_id=388387032 node_paths=PackedStringArray("RegionCamera")]
 script = ExtResource("1_o80bx")
+RegionCamera = NodePath("LocalPlayerCamera")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=487756432]
 
@@ -44,3 +45,6 @@ shape = SubResource("BoxShape3D_6u82b")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Temp" unique_id=1476344560]
 mesh = SubResource("BoxMesh_83fg3")
+
+[node name="LocalPlayerCamera" type="Camera3D" parent="." unique_id=1740577100]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.875309, 13.775667)

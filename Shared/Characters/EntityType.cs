@@ -4,7 +4,7 @@ namespace Shared.Characters;
 
 public enum EntityType : uint
 {
-    
+    None = 0,
     // 1 - 300 players
     Default = 1,
     Male = 2,

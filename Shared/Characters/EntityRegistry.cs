@@ -8,10 +8,12 @@ public static class EntityRegistry
     private static Dictionary<EntityType, EntityData> _entitiesRegistry = new Dictionary<EntityType, EntityData>()
     {
         
-        {EntityType.WolfWeak, new EntityData(1f, 0.4f, "res://Models/Mobs/Wolf/WeakWolf.tscn", 80)}
+        {EntityType.WolfWeak, new EntityData(1f, 0.4f, "res://Entities/Mobs/Wolf/WeakWolf.tscn", 80)},
+        {EntityType.Default, new EntityData(2f, 0.5f, "res://Entities/Character/Default/character_default.tscn", 220)},
+        {EntityType.Male, new EntityData(2f, 0.5f,"res://Entities/Character/Male/character_male.tscn", 220)}
 
     };
-    private static EntityData _baseData = new EntityData(1.5f, 0.5f,"res://Models/Default.tscn", 50);
+    private static EntityData _baseData = new EntityData(2f, 0.5f,"res://Models/Default.tscn", 50);
 
     public static EntityData GetEntityData(EntityType entityType)
     {

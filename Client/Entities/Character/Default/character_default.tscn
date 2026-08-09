@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://x7qmhlormvit"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mp7yq"]
+albedo_color = Color(0.22560841, 0.4665709, 0.2885948, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_83fg3"]
+material = SubResource("StandardMaterial3D_mp7yq")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6u82b"]
+
+[node name="Character" type="CharacterBody3D" unique_id=28815386]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=370042432]
+mesh = SubResource("CapsuleMesh_83fg3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=195493098]
+shape = SubResource("CapsuleShape3D_6u82b")
