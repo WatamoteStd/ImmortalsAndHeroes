@@ -40,7 +40,7 @@ public class WorldHolder : IWorldHolder
         {
 
             Vector3 startPos = new Vector3(character.PosX, character.PosY, character.PosZ);
-            PlayerEntity newPlayer = new PlayerEntity((uint)character.UserId, (uint)character.Id, startPos, character.Name);
+            PlayerEntity newPlayer = new PlayerEntity((uint)character.Id, startPos, character.Type, character.Name,(uint)character.UserId, (uint)character.RegionId, (uint)character.Silver, (uint)character.Lvl);
             
             zone.AddPlayer(newPlayer);
             idToPlayer[(uint)character.UserId] = newPlayer;

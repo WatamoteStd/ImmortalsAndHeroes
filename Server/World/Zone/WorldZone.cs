@@ -40,6 +40,7 @@ public class WorldZone
     {
         
         _players[player.PlayerId] = player;
+        _entities[player.EntityId] = player;
 
     }
 

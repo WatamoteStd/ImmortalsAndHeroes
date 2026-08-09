@@ -28,7 +28,9 @@ public static class EntityRegistry
 
 
 
-    public readonly struct EntityData
+
+}
+public readonly struct EntityData
     {
         
         public readonly float Height;
@@ -47,5 +49,3 @@ public static class EntityRegistry
         }
 
     }
-
-}

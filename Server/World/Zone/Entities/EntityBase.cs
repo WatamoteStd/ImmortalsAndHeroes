@@ -1,4 +1,3 @@
-
 using System.Numerics;
 using Shared.Characters;
 
@@ -8,22 +7,25 @@ public class EntityBase
 {
     
     public uint EntityId {get; protected set;}
+    public uint RegionId {get; protected set;}
     public Vector3 Position {get; protected set;}
+    protected readonly EntityData _data;
 
     public EntityType ModelType {get; protected set;}
 
-    public float Radius {get; protected set;} = 0.5f;
-    public float Height {get; protected set;} = 1.8f;
+    public float Radius => _data.Radius;
+    public float Height => _data.Height;
 
-    public EntityBase(uint entityId, Vector3 pos, EntityType type, float radius = 0.5f, float height = 1.8f)
+
+
+    public EntityBase(uint entityId, Vector3 pos, EntityType type, uint regionId)
     {
         
         EntityId = entityId;
         Position = pos;
-
-        Radius = radius;
-        Height = height;
         ModelType = type;
+        RegionId = regionId;
+        _data = EntityRegistry.GetEntityData(type);
 
     }
 
