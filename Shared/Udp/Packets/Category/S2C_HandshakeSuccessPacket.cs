@@ -20,7 +20,7 @@ public struct S2C_HandshakeSuccessPacket() : INetworkPacket
 
     // CHARACTER
 
-    public CharacterType Type {get; set;} = CharacterType.Default;
+    public EntityType Type {get; set;} = EntityType.Default;
     public int CurrentHp {get; set;} 
     public int CurrentMp {get; set;} 
     public int Lvl {get; set;} = 1;
@@ -96,7 +96,7 @@ public struct S2C_HandshakeSuccessPacket() : INetworkPacket
         UserId = BinaryPrimitives.ReadUInt32LittleEndian(buffer[Length..]);
         Length += 4;
 
-        Type = (CharacterType)BinaryPrimitives.ReadUInt32LittleEndian(buffer[Length..]);
+        Type = (EntityType)BinaryPrimitives.ReadUInt32LittleEndian(buffer[Length..]);
         Length += 4;
 
         CurrentHp = BinaryPrimitives.ReadInt32LittleEndian(buffer[Length..]);

@@ -41,7 +41,7 @@ public partial class CharacterCreateWindow : PanelContainer
 	{
 		
 		_createCharacter.Disabled = true;
-		var response = await HttpsMasterClient.Instanсe.CreateCharacterAsync(_nickname.Text, (CharacterType)_skillType.Selected);
+		var response = await HttpsMasterClient.Instanсe.CreateCharacterAsync(_nickname.Text, (EntityType)_skillType.Selected);
 
 		if (response.isSucces == true && response.character != null)
 		{

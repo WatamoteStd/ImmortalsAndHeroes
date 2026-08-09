@@ -95,6 +95,6 @@ public class CharacterController : ControllerBase
 
    
     
-    private record CharacterCreatedDto(string Nickname, long Silver, CharacterType Type, long Id);
+    private record CharacterCreatedDto(string Nickname, long Silver, EntityType Type, long Id);
 
 }

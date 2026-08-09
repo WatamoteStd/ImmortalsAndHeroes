@@ -119,7 +119,7 @@ public partial class HttpsMasterClient : Node
 
 	// CHARACTER TASKS
 
-	public async Task<(bool isSucces, CharacterCreatedResponseDto? character, string message)> CreateCharacterAsync(string nickname, CharacterType type)
+	public async Task<(bool isSucces, CharacterCreatedResponseDto? character, string message)> CreateCharacterAsync(string nickname, EntityType type)
 	{
 		
 		var cDto = new CharacterCreateRequestDto(nickname, type);
@@ -229,8 +229,8 @@ public partial class HttpsMasterClient : Node
 	#region DTOS
 
 	public record LoginResponseDto(string Username, long UserId, DateTime CreatedAt, string Token);
-	public record CharacterCreateRequestDto(string Nickname, CharacterType Type);
-	public record CharacterCreatedResponseDto(string Nickname, long Silver, CharacterType Type, long Id);
+	public record CharacterCreateRequestDto(string Nickname, EntityType Type);
+	public record CharacterCreatedResponseDto(string Nickname, long Silver, EntityType Type, long Id);
 
 	public record EnterWorldResponseDto(string Ticket, string UdpIp, int Port);
 

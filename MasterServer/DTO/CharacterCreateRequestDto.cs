@@ -7,6 +7,6 @@ public record CharacterCreateRequestDto
 {
     
     public string Nickname {get; set;} = null!;
-    public CharacterType Type {get; set;}
+    public EntityType Type {get; set;}
 
 }

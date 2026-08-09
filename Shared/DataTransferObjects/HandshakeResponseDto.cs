@@ -15,7 +15,7 @@ public record HandshakeResponseDto
 
     // CHARACTER
 
-        public CharacterType Type {get; set;} = CharacterType.Default;
+        public EntityType Type {get; set;} = EntityType.Default;
         public int CurrentHp {get; set;} = 220;
         public int CurrentMp {get; set;} = 100;
         public int Lvl {get; set;} = 1;

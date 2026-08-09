@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using Server.Network.Interfaces;
 using Server.World;
 using Server.World.Zone.Entities;
@@ -35,9 +36,11 @@ public class WorldHolder : IWorldHolder
     public void AddPlayer(uint zoneId, HandshakeResponseDto character)
     {
         
-        PlayerEntity newPlayer = new PlayerEntity(character.Name, (uint)character.UserId);
         if (idToZone.TryGetValue(zoneId, out WorldZone? zone))
         {
+
+            Vector3 startPos = new Vector3(character.PosX, character.PosY, character.PosZ);
+            PlayerEntity newPlayer = new PlayerEntity((uint)character.UserId, (uint)character.Id, startPos, character.Name);
             
             zone.AddPlayer(newPlayer);
             idToPlayer[(uint)character.UserId] = newPlayer;
