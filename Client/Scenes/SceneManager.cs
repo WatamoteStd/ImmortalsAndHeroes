@@ -7,6 +7,7 @@ public partial class SceneManager : CanvasLayer
 {
 
     [Export] private AnimationPlayer _animator;
+    [Export] private Hud _hud;
     public static SceneManager Instance { get; private set; }
 
     public Dictionary<uint, string> regIdToScenePath;
@@ -49,6 +50,7 @@ public partial class SceneManager : CanvasLayer
 
    public async Task LoadRegion(uint regionId)
     {
+        HideHud();
 
         if (!regIdToScenePath.TryGetValue(regionId, out string path))
         {
@@ -65,8 +67,26 @@ public partial class SceneManager : CanvasLayer
 
         GameSession.Instance.CurrentSessionState = GameSession.State.InGame;
         Visible = false;
+        ShowHud();
 
     }
     
+    private void ShowHud()
+    {
+        
+        _hud.Visible = true;
+
+    }
+    private void HideHud()
+    {
+        _hud.Visible = false;
+    }
+
+    public void InitPlayerHud(uint hp, uint mp, uint silver, uint lvl, string name)
+    {
+        
+        _hud.InitHud(hp,mp,silver,lvl,name);
+
+    }
     
 }

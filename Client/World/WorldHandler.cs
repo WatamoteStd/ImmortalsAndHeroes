@@ -32,6 +32,8 @@ public partial class WorldHandler : Node3D
 
 		RegionCamera.GlobalPosition = cameraPos;
 		RegionCamera.RotationDegrees = new Vector3(-40f, 0f, 0f);
+
+		SceneManager.Instance.InitPlayerHud((uint)playerPacket.CurrentHp, (uint)playerPacket.CurrentMp, playerPacket.Silver, (uint)playerPacket.Lvl, playerPacket.Name);
 		
 
 

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://d0v3qnfk76ppm" path="res://Scenes/SceneManager.cs" id="1_hjya1"]
 [ext_resource type="Shader" uid="uid://hromedeur3bd" path="res://Scenes/BgShader.gdshader" id="1_yueht"]
 [ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="2_ebsso"]
+[ext_resource type="Script" uid="uid://cmgj83a0b8x66" path="res://Scenes/Hud.cs" id="4_7xrkh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_83fg3"]
 shader = ExtResource("1_yueht")
@@ -79,9 +80,49 @@ _data = {
 &"RESET": SubResource("Animation_7xrkh")
 }
 
-[node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6u82b"]
+bg_color = Color(0.21568628, 0.44313726, 0.58431375, 0.28235295)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hjya1"]
+bg_color = Color(0.5016195, 0, 0.03945552, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.36443856, 1.8259603e-06, 0.01985651, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83gc0"]
+bg_color = Color(0.66840637, 1.1334791e-05, 0.067387864, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.36443856, 1.8259603e-06, 0.01985651, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ichqs"]
+bg_color = Color(0.06376105, 0.25879088, 0.4652695, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.088650845, 0.32247528, 0.57111853, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ysa5"]
+bg_color = Color(0.08442689, 0.3125228, 0.55490476, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.04398883, 0.21494454, 0.39395973, 1)
+border_blend = true
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator", "_hud")]
 script = ExtResource("1_hjya1")
 _animator = NodePath("AnimationPlayer")
+_hud = NodePath("CanvasLayer")
 
 [node name="Bg" type="TextureRect" parent="." unique_id=1002927567]
 texture_repeat = 2
@@ -127,3 +168,88 @@ show_percentage = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2069832628]
 libraries/ = SubResource("AnimationLibrary_83gc0")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1081374653 node_paths=PackedStringArray("_healthBar", "_manaBar", "_silver", "_lvl", "_nickname")]
+layer = 100
+visible = false
+script = ExtResource("4_7xrkh")
+_healthBar = NodePath("PanelContainer/MiddleBlock/HpBar")
+_manaBar = NodePath("PanelContainer/MiddleBlock/MpBar")
+_silver = NodePath("PanelContainer/LeftBlock/SilveBlock/Silver")
+_lvl = NodePath("PanelContainer/LeftBlock/LvlBlock/Lvl")
+_nickname = NodePath("PanelContainer/Nickname")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=383323327]
+custom_minimum_size = Vector2(700, 100)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6u82b")
+
+[node name="LeftBlock" type="VBoxContainer" parent="CanvasLayer/PanelContainer" unique_id=439506789]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="LvlBlock" type="HBoxContainer" parent="CanvasLayer/PanelContainer/LeftBlock" unique_id=1934392959]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="name" type="Label" parent="CanvasLayer/PanelContainer/LeftBlock/LvlBlock" unique_id=836865036]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "LVL:"
+
+[node name="Lvl" type="Label" parent="CanvasLayer/PanelContainer/LeftBlock/LvlBlock" unique_id=55715438]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "none"
+
+[node name="SilveBlock" type="HBoxContainer" parent="CanvasLayer/PanelContainer/LeftBlock" unique_id=2039140100]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="name" type="Label" parent="CanvasLayer/PanelContainer/LeftBlock/SilveBlock" unique_id=1937063498]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Silver:"
+
+[node name="Silver" type="Label" parent="CanvasLayer/PanelContainer/LeftBlock/SilveBlock" unique_id=1502581446]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "none"
+
+[node name="MiddleBlock" type="VBoxContainer" parent="CanvasLayer/PanelContainer" unique_id=1882101431]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HpBar" type="ProgressBar" parent="CanvasLayer/PanelContainer/MiddleBlock" unique_id=856579824]
+custom_minimum_size = Vector2(300, 15)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hjya1")
+theme_override_styles/fill = SubResource("StyleBoxFlat_83gc0")
+value = 50.0
+show_percentage = false
+
+[node name="MpBar" type="ProgressBar" parent="CanvasLayer/PanelContainer/MiddleBlock" unique_id=1807221081]
+custom_minimum_size = Vector2(300, 15)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ichqs")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8ysa5")
+value = 25.0
+show_percentage = false
+
+[node name="Nickname" type="Label" parent="CanvasLayer/PanelContainer" unique_id=1949083075]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.85753846, 0.87636775, 0.76328087, 1)
+theme_override_font_sizes/font_size = 19
+text = "Nickname"
