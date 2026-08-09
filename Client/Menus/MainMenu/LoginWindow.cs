@@ -121,9 +121,9 @@ public partial class LoginWindow : PanelContainer
 			{
 
 				_statusWindow.ShowMessage("Successful login!", response.message);
-				GetTree().CreateTimer(2.5f).Timeout += () =>
+				GetTree().CreateTimer(1.25f).Timeout += () =>
 				{
-					GetTree().ChangeSceneToFile("res://Menus/GameMenu/GameMenu.tscn");
+					_ = SceneManager.Instance.AuthToMainMenu();
 				};
 
 			}

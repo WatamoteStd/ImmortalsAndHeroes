@@ -6,6 +6,7 @@ using Shared.Udp.Packets.Category;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 
@@ -16,6 +17,36 @@ public partial class ServerMaster : Node
     private IPEndPoint _serverEndPoint;
     public static ServerMaster Instance {get; private set;}
     private PacketReaderClient _packetReader;
+
+
+    // FOR WORLD MAnAGER
+    private List<INetworkPacket> _regionPacketsBuffer = new();
+
+    
+
+    private WorldHandler _worldManager;
+    public WorldHandler WorldManager
+    {
+        
+        get => _worldManager;
+        set
+        {
+            
+            _worldManager = value;
+            if (_worldManager != null && _regionPacketsBuffer.Count > 0)
+            {
+                
+                foreach(var packet in _regionPacketsBuffer)
+                {
+                    HandlePacket(packet);
+                }
+                _regionPacketsBuffer.Clear();
+
+            }
+
+        }
+
+    }
 
     private ConcurrentQueue<INetworkPacket> _packetQeueue = new ConcurrentQueue<INetworkPacket>();
 
@@ -82,8 +113,37 @@ public partial class ServerMaster : Node
         
         while(_packetQeueue.TryDequeue(out INetworkPacket packet))
         {
-            
 
+            if (packet is S2C_HandshakeSuccessPacket handshake)
+            {
+            _ = SceneManager.Instance.LoadRegion(handshake.RegionId);
+            }
+            
+            if (WorldManager == null)
+            {
+                _regionPacketsBuffer.Add(packet);
+            }
+            else
+            {
+                HandlePacket(packet);
+            }
+
+
+        }
+
+    }
+
+    private void HandlePacket(INetworkPacket packet)
+    {
+        
+        switch(packet)
+        {
+            
+            case S2C_HandshakeSuccessPacket handshake:
+                {
+                    WorldManager?.SpawnLocalPlayer(handshake);
+                }
+            break;
 
         }
 

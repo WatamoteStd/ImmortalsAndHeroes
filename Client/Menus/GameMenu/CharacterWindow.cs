@@ -44,7 +44,7 @@ public partial class CharacterWindow : PanelContainer
         {
 
             _statusWindow.ShowMessage("Success!", response.message);
-            SceneManager.Instance.LoadRegionFromMenu("res://World/Regions/Region_0.tscn");
+            _ = SceneManager.Instance.LoadRegion(GameSession.Instance.PlayerCache.RegionId);
             return;
 
         }

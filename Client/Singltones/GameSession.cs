@@ -1,4 +1,5 @@
 using Godot;
+using Shared.Udp.Packets.Category;
 using System;
 
 public partial class GameSession : Node
@@ -14,9 +15,12 @@ public partial class GameSession : Node
 	public string UdpIp { get; set; }
 	public int UdpPort { get; set; }
 
+	public S2C_HandshakeSuccessPacket PlayerCache;
+
 	public enum State
 	{
 		Authorizing,
+		Menu,
 		Loading,
 		InGame,
 		Disconnected,

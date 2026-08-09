@@ -27,9 +27,9 @@ public class WorldZone
     {
         
         latensy += deltaTime;
-        if (latensy >= 10.0f)
+        if (latensy >= 30.0f)
         {
-            Console.WriteLine($"[10s Debug| N:{iterationCount}] RegionId:{Id}. Players: {_players.Count}");
+            Console.WriteLine($"[30s Debug| N:{iterationCount}] RegionId:{Id}. Players: {_players.Count}");
             latensy = 0f;
             iterationCount++;
         }
