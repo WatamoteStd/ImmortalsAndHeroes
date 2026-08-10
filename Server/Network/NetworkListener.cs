@@ -38,11 +38,18 @@ public class NetworkListener
         while(isRunning)
         {
             
-            int count = _socket.ReceiveFrom(buffer, SocketFlags.None, ref remoteEndPoint);
-
-            if (count >= 2 && remoteEndPoint is IPEndPoint clientIp)
+            try
             {
-                _sessionManager.PacketGateway(clientIp, buffer[..count]);
+                int count = _socket.ReceiveFrom(buffer, SocketFlags.None, ref remoteEndPoint);
+
+                if (count >= 2 && remoteEndPoint is IPEndPoint clientIp)
+                {
+                    _sessionManager.PacketGateway(clientIp, buffer[..count]);
+                }
+            }
+            catch
+            {
+                Console.WriteLine($"[NETWORK LISTENER] Lost connetion with client");
             }
 
         }

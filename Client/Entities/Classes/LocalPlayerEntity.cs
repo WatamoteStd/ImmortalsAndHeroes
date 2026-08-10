@@ -27,13 +27,6 @@ public partial class LocalPlayerEntity : Entity
 
 	}
 
-	public override void Move(Vector3 position)
-	{
-		
-		
-
-	}
-
-
+	
 
 }

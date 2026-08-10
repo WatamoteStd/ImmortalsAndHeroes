@@ -9,6 +9,8 @@ public partial class Entity : CharacterBody3D
 	protected int _health;
 	protected int _maxHealth;
 	public string EntityName {get; private set;}
+
+	protected Vector3 _moveTarget;
 	public int Health
 	{
 		
@@ -35,12 +37,18 @@ public partial class Entity : CharacterBody3D
 		}
 
 	}
+
+	public override void _Process(double delta)
+	{
+		GlobalPosition = GlobalPosition.MoveToward(_moveTarget, (float)delta * 5.0f);
+	}
+
 	
 
 	public virtual void Move(Vector3 position)
 	{
 		
-
+		_moveTarget = position;
 
 	}
 

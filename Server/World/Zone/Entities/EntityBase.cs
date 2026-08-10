@@ -5,6 +5,9 @@ namespace Server.World.Zone.Entities;
 
 public class EntityBase
 {
+
+    public enum State { Idle, Move, Chase, Attack, Controlled, Cast, ProtectedCast, Dead}
+    public State CurrentState = State.Idle;
     
     public uint EntityId {get; protected set;}
     public uint RegionId {get; protected set;}
@@ -26,6 +29,13 @@ public class EntityBase
         ModelType = type;
         RegionId = regionId;
         _data = EntityRegistry.GetEntityData(type);
+
+    }
+
+    public virtual void Update(float deltaTime)
+    {
+        
+
 
     }
 

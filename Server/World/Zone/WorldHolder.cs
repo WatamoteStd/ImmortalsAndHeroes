@@ -4,6 +4,7 @@ using Server.Network.Interfaces;
 using Server.World;
 using Server.World.Zone.Entities;
 using Shared.DataTransferObjects;
+using Shared.Udp.Packets.Category.Game;
 
 namespace Server.World.Zone;
 
@@ -50,8 +51,19 @@ public class WorldHolder : IWorldHolder
 
         }
         Console.WriteLine($"[WORLD] Can't add player to ZoneId:{zoneId}. Doest exists.");
-            
+
+    }
+
+    public void MovePlayer(uint userId, C2S_MoveRequestPacket packet)
+    {
         
+        if (idToPlayer.TryGetValue(userId, out PlayerEntity? player))
+        {
+            Console.WriteLine($"[Server Receive] Player wants to go to: X={packet.X:F2}, Y={packet.Y:F2}, Z={packet.Z:F2}");
+            idToZone[player.RegionId].MovePlayer(player, packet.X, packet.Y + 1, packet.Z);
+            Console.WriteLine($"[WORLD HOLDER] Move player task for Region:{player.RegionId}");
+
+        }
 
     }
 

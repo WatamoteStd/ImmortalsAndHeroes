@@ -7,6 +7,7 @@ using Server.Pools.Session;
 using Shared.DataTransferObjects;
 using Shared.Udp.Interfaces;
 using Shared.Udp.Packets;
+using Shared.Udp.Packets.Category.Game;
 
 namespace Server.Network;
 
@@ -60,8 +61,8 @@ public class SessionManager : IWorldBroadcaster
             {
                 
                 session.LastPacketTime = Environment.TickCount64;
-                Console.WriteLine("[Server] Received new packet from 'ACTIVE' user.");
-                _packetReader.PacketDeserialize( data, endPoint);
+                Console.WriteLine($"[Server] Received new packet from Player:{session.UserId}.");
+                _packetReader.PacketDeserialize(data, session);
 
             }
             else if (session.State == UserSession.SessionState.Guest)
@@ -73,7 +74,7 @@ public class SessionManager : IWorldBroadcaster
                 
                 if (_packetReader.ReadPacketType(data) == PacketTypes.C2S_Handshake)
                 {
-                    _packetReader.PacketDeserialize(data, endPoint);
+                    _packetReader.PacketDeserialize(data, session);
                     session.IsAuthorazing = true;
                 }
 
@@ -95,7 +96,7 @@ public class SessionManager : IWorldBroadcaster
             if (_packetReader.ReadPacketType(data) == PacketTypes.C2S_Handshake)
             {
                 
-                _packetReader.PacketDeserialize(data, endPoint);
+                _packetReader.PacketDeserialize(data, newSession);
                 newSession.IsAuthorazing = true;
 
             }
@@ -164,6 +165,7 @@ public class SessionManager : IWorldBroadcaster
             guestIds.Push((ushort)session.UserId);
     
             session.State = UserSession.SessionState.Active;
+            session.IsAuthorazing = false;
             session.UserId = (uint)characterData.UserId;
             session.LastPacketTime = Environment.TickCount64;
             MainPool.AddSession(session);
@@ -218,6 +220,13 @@ public class SessionManager : IWorldBroadcaster
         if (session == null) return;
         
         _packetSender.SendPacket(session.IpEnd, packetType, packet);
+
+    }
+
+    public void PlayerMoveRequest(UserSession session, C2S_MoveRequestPacket packet)
+    {
+        
+        _worldHolder?.MovePlayer(session.UserId, packet);
 
     }
 

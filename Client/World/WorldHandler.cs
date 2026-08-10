@@ -72,6 +72,19 @@ public partial class WorldHandler : Node3D
 
 	}
 
+	public void MoveEntity(uint id, float x, float y, float z)
+	{
+		
+		if (RegionEntities.TryGetValue(id, out Entity entity))
+		{
+			Vector3 movePos = new Vector3(x, y, z);
+			
+			entity.Move(movePos);
+
+		}
+
+	}
+
 	public override void _ExitTree()
 	{
 		

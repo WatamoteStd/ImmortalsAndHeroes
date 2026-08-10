@@ -1,6 +1,7 @@
 using Server.World.Zone.Entities;
 using Shared.Udp.Packets.Category.Game;
 using Shared.Udp.Packets;
+using System.Numerics;
 
 namespace Server.World.Zone;
 
@@ -28,6 +29,7 @@ public class WorldZone
     public void Update(float deltaTime)
     {
         
+        // DEBUG ===============
         latensy += deltaTime;
         if (latensy >= 45.0f)
         {
@@ -35,6 +37,12 @@ public class WorldZone
             latensy = 0f;
             iterationCount++;
         }
+
+        foreach (var entity in _entities.Values)
+        {
+            entity.Update(deltaTime);    
+        }
+
 
     }
 
@@ -74,6 +82,29 @@ public class WorldZone
         
         _players[player.PlayerId] = player;
         _entities[player.EntityId] = player;
+
+    }
+
+    public void MovePlayer(PlayerEntity player, float x, float y, float z)
+    {
+        
+        Console.WriteLine($"[REGION:{Id}] Take move task for player:{player.Name}");
+        player.MoveToPosition(new Vector3(x,y,z));
+
+        foreach (var curPlayer in _players.Values)
+        {
+            
+            var movePacket = new S2C_MoveEntityPacket
+            {
+                Id = player.EntityId,
+                PosX = x,
+                PosY = y,
+                PosZ = z
+            };
+
+            _worldHolder.Broadcaster.SendToPlayer(curPlayer.PlayerId, PacketTypes.S2C_MoveEntity, movePacket);
+
+        }
 
     }
 

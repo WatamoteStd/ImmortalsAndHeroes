@@ -61,6 +61,9 @@ public partial class ServerMaster : Node
         }
         else Instance = this;
 
+        PlayerController.OnMoveRequest -= LocalPlayerMoveRequest;
+        PlayerController.OnMoveRequest += LocalPlayerMoveRequest;
+
     }
 
 
@@ -105,6 +108,7 @@ public partial class ServerMaster : Node
     public override void _ExitTree()
     {
         base._ExitTree();
+        PlayerController.OnMoveRequest -= LocalPlayerMoveRequest;
         _packetReader.Stop();
     }
 
@@ -148,14 +152,38 @@ public partial class ServerMaster : Node
 
             case S2C_SpawnEntityPacket entityPacket:
                 {
-                    GD.Print("Entity spawn packed arrived");
                     WorldManager?.AddEntity(entityPacket);
+                }
+            break;
+
+            case S2C_MoveEntityPacket move:
+                {
+                    
+                    WorldManager?.MoveEntity(move.Id, move.PosX, move.PosY, move.PosZ);
+
                 }
             break;
 
             
 
         }
+
+    }
+
+    private void LocalPlayerMoveRequest(Vector3 pos)
+    {
+        
+        Span<byte> buffer = stackalloc byte[14]; // 44 + 4 + 4 (cords) + 2 (packetYType)
+
+        var posPacket = new C2S_MoveRequestPacket
+        {
+            X = pos.X,
+            Y = pos.Y,
+            Z = pos.Z
+        };
+        int length = PacketSerialier.Serialize<C2S_MoveRequestPacket>(buffer, PacketTypes.C2S_MoveRequest, posPacket);
+
+        _socket.Send(buffer); 
 
     }
 
