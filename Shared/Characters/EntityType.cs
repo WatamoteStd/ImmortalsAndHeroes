@@ -20,3 +20,17 @@ public enum EntityType : uint
 
 
 }
+
+public static class EntityTypeExtensions
+{
+    
+    public static bool IsPlayer(this EntityType type) 
+        => type is >= EntityType.Default and <= (EntityType)300;
+    
+    public static bool IsMob(this EntityType type)
+        => type is >= EntityType.WolfWeak and <= (EntityType)20000;
+
+    public static bool IsEnvirmoment(this EntityType type)
+        => type >= (EntityType)20001;
+
+}

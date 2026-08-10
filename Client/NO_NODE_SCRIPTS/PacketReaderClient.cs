@@ -9,6 +9,7 @@ using Godot;
 using Shared.Udp.Interfaces;
 using Shared.Udp.Packets;
 using Shared.Udp.Packets.Category;
+using Shared.Udp.Packets.Category.Game;
 
 
 namespace Client.NO_NODE;
@@ -87,6 +88,19 @@ public class PacketReaderClient
 
                         }
                     break;
+
+                    case PacketTypes.S2C_SpawnEntity:
+                        {
+                            var packet = PacketSerialier.Deserialize<S2C_SpawnEntityPacket>(payload);
+                            _networkPackets.Enqueue(packet);
+                        }
+                    break;
+
+                    default:
+                        {
+                            GD.PrintErr($"[PACK READER] Unknown packet type.");
+                        }
+                        break;
                     
                 }
 

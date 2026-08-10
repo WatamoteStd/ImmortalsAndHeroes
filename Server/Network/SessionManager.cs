@@ -123,7 +123,7 @@ public class SessionManager : IWorldBroadcaster
                 GuestPool.DeleteSession(session);
 
                 GuestPoolDeleted++;
-                Console.WriteLine($"[CLEANER DEBUG] Deleted Users statistics. | MainPool:{MainPoolDeleted}. GuestPool{GuestPoolDeleted}");
+                Console.WriteLine($"[CLEANER DEBUG] Cleared-Users| MainPool:{MainPoolDeleted}. GuestPool{GuestPoolDeleted}");
                 Console.WriteLine();
                 Console.WriteLine($"[CLEANER DEBUG] Free guest ID'S:{guestIds.Count} | Total Players:{MainPool.Count}. | Total Guest:{GuestPool.Count}");
 
@@ -165,6 +165,7 @@ public class SessionManager : IWorldBroadcaster
     
             session.State = UserSession.SessionState.Active;
             session.UserId = (uint)characterData.UserId;
+            session.LastPacketTime = Environment.TickCount64;
             MainPool.AddSession(session);
 
             Console.WriteLine($"[SESSIONS] New active session created! UserId:{session.UserId}");

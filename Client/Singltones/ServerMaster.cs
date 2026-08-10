@@ -3,6 +3,7 @@ using Godot;
 using Shared.Udp.Interfaces;
 using Shared.Udp.Packets;
 using Shared.Udp.Packets.Category;
+using Shared.Udp.Packets.Category.Game;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -144,6 +145,15 @@ public partial class ServerMaster : Node
                     WorldManager?.SpawnLocalPlayer(handshake);
                 }
             break;
+
+            case S2C_SpawnEntityPacket entityPacket:
+                {
+                    GD.Print("Entity spawn packed arrived");
+                    WorldManager?.AddEntity(entityPacket);
+                }
+            break;
+
+            
 
         }
 

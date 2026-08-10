@@ -48,7 +48,7 @@ public class PacketSender
             return;
 
         }
-
+        Console.WriteLine($"[HANDSHAKE FAILED] Reason: isOk={isOk}, dataIsNull={data == null} for IP {clientIp}");
         int bytes = PacketSerialier.Serialize<S2C_HandshakeFailedPacket>(buffer, PacketTypes.S2C_HandshakeFailed, new S2C_HandshakeFailedPacket{});
         _socket.SendTo(buffer[..bytes], SocketFlags.None, clientIp);
 

@@ -15,6 +15,7 @@ public class WorldHolder : IWorldHolder
     public Dictionary<uint, WorldZone> idToZone = new Dictionary<uint, WorldZone>();
     
     private readonly IWorldBroadcaster _broadcaster;
+    public IWorldBroadcaster Broadcaster => _broadcaster;
 
     public WorldHolder(IWorldBroadcaster broadcaster)
     {

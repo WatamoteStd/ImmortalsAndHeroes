@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dj6wqb3g7xlng" path="res://Entities/Character/LocalPlayer.tscn" id="3_cfrud"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4152v"]
-albedo_color = Color(0.12559065, 0.3282594, 0.10849259, 1)
+albedo_color = Color(0.10421745, 0.2833985, 0.09041683, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_t3xac"]
 material = SubResource("StandardMaterial3D_4152v")
@@ -24,6 +24,18 @@ albedo_color = Color(0.16078432, 0.30980393, 1, 1)
 material = SubResource("StandardMaterial3D_ichqs")
 size = Vector3(1, 5, 2)
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vcdtc"]
+sky_top_color = Color(0.33051398, 0.42534807, 0.76464385, 1)
+sky_horizon_color = Color(0.60844123, 0.6166084, 0.6329462, 1)
+
+[sub_resource type="Sky" id="Sky_6u82b"]
+sky_material = SubResource("ProceduralSkyMaterial_vcdtc")
+
+[sub_resource type="Environment" id="Environment_83fg3"]
+background_mode = 2
+background_energy_multiplier = 1.1
+sky = SubResource("Sky_6u82b")
+
 [node name="WorldRegion" type="Node3D" unique_id=388387032]
 script = ExtResource("1_o80bx")
 _remotePlayerScene = ExtResource("2_tqto2")
@@ -38,7 +50,7 @@ mesh = SubResource("PlaneMesh_t3xac")
 shape = SubResource("BoxShape3D_hjl0q")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=268547051]
-transform = Transform3D(-0.6843574, -0.2065887, 0.6992682, 0.6799258, 0.16557273, 0.71434355, -0.2633551, 0.9643169, 0.027154047, 0, 23.304485, 0.38732862)
+transform = Transform3D(-0.83125937, -0.24112102, 0.50086814, 0.48954278, 0.10933407, 0.8650976, -0.26335514, 0.9643168, 0.027154068, 89.61493, 60.43427, 0.38732862)
 
 [node name="Temp" type="StaticBody3D" parent="." unique_id=307920044]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.862295, 2, -8.533048)
@@ -48,3 +60,6 @@ shape = SubResource("BoxShape3D_6u82b")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Temp" unique_id=1476344560]
 mesh = SubResource("BoxMesh_83fg3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1233666863]
+environment = SubResource("Environment_83fg3")

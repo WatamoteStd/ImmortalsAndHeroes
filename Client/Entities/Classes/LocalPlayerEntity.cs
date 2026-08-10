@@ -17,9 +17,9 @@ public partial class LocalPlayerEntity : Entity
 		}
 	}
 
-	public void InitEntity(uint id, int health, int maxHealth, uint locPlayeId, int mana, int maxMana)
+	public void InitEntity(uint id, int health, int maxHealth, string name, uint locPlayeId, int mana, int maxMana)
 	{
-		base.InitEntity(id, health, maxHealth);
+		base.InitEntity(id, health, maxHealth, name);
 
 		_mana = mana;
 		_maxMana = maxMana;

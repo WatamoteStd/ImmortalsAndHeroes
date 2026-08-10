@@ -8,6 +8,7 @@ public partial class Entity : CharacterBody3D
 	public uint Id {get; protected set;}
 	protected int _health;
 	protected int _maxHealth;
+	public string EntityName {get; private set;}
 	public int Health
 	{
 		
@@ -20,12 +21,13 @@ public partial class Entity : CharacterBody3D
 
 	}
 
-	public virtual void InitEntity(uint id, int health, int maxHealth)
+	public virtual void InitEntity(uint id, int health, int maxHealth, string name)
 	{
 		
 		Id = id;
 		_health = health;
 		_maxHealth = maxHealth;
+		EntityName = name;
 		if (_healthBar != null)
 		{
 			_healthBar.MaxValue = _maxHealth;
