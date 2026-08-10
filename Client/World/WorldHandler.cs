@@ -8,9 +8,8 @@ public partial class WorldHandler : Node3D
 {
 	
 	public uint RegionId {get; private set;} = 0;
-	[Export] public Camera3D RegionCamera { get; set; }
-
-
+	[Export] private PackedScene _remotePlayerScene;
+	[Export] private PackedScene _localPlayerScene;
 
 	public override void _Ready()
 	{
@@ -23,15 +22,15 @@ public partial class WorldHandler : Node3D
 	{
 		
 		PackedScene model = ResourceLoader.Load<PackedScene>(EntityRegistry.GetEntityData(playerPacket.Type).ScenePath);
-		var locPlayer = model.Instantiate<CharacterBody3D>();
-		AddChild(locPlayer);
+		var localPlayer = _localPlayerScene.Instantiate<LocalPlayerEntity>();
+		var locPlayerModel = model.Instantiate<Node3D>();
+		
+		AddChild(localPlayer);
+		localPlayer.GetNode<Node3D>("Model").AddChild(locPlayerModel);
 
 		Vector3 dataPos = new Vector3(playerPacket.PosX, playerPacket.PosY, playerPacket.PosZ);
-		Vector3 cameraPos = dataPos + new Vector3(0f, 7f, 7f);
-		locPlayer.GlobalPosition = dataPos;
-
-		RegionCamera.GlobalPosition = cameraPos;
-		RegionCamera.RotationDegrees = new Vector3(-40f, 0f, 0f);
+		localPlayer.InitEntity(playerPacket.Id, playerPacket.CurrentHp, playerPacket.CurrentHp, playerPacket.UserId, playerPacket.CurrentMp, playerPacket.CurrentMp);
+		localPlayer.GlobalPosition = dataPos;
 
 		SceneManager.Instance.InitPlayerHud((uint)playerPacket.CurrentHp, (uint)playerPacket.CurrentMp, playerPacket.Silver, (uint)playerPacket.Lvl, playerPacket.Name);
 		

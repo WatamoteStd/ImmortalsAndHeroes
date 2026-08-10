@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://b4v3nmvo7nhxw"]
+
+[ext_resource type="Script" uid="uid://cqvgshg0a2npu" path="res://Entities/Classes/PlayerEntity.cs" id="1_jegbe"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1223504242]
+script = ExtResource("1_jegbe")
+
+[node name="Model" type="Node3D" parent="." unique_id=267137872]
