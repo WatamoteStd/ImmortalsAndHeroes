@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cqa7psxm0fij7"]
+
+[ext_resource type="Texture2D" uid="uid://cklbvmhla28vy" path="res://Scenes/Inventory/Items/Resource/tomato.png" id="1_ibioh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qm0se"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.73902, 0.43850094, 3.85046e-07, 1)
+
+[node name="Slot" type="PanelContainer" unique_id=1609103383]
+custom_minimum_size = Vector2(64, 64)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qm0se")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1941947576]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Icon" type="TextureRect" parent="MarginContainer" unique_id=1868850055]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("1_ibioh")
+expand_mode = 1
+stretch_mode = 3

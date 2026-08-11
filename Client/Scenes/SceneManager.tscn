@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://hromedeur3bd" path="res://Scenes/BgShader.gdshader" id="1_yueht"]
 [ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="2_ebsso"]
 [ext_resource type="Script" uid="uid://cmgj83a0b8x66" path="res://Scenes/Hud.cs" id="4_7xrkh"]
+[ext_resource type="PackedScene" uid="uid://cqa7psxm0fij7" path="res://Scenes/Inventory/Items/SlotDefault.tscn" id="5_83gc0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_83fg3"]
 shader = ExtResource("1_yueht")
@@ -119,6 +120,15 @@ border_width_bottom = 1
 border_color = Color(0.04398883, 0.21494454, 0.39395973, 1)
 border_blend = true
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vcdtc"]
+bg_color = Color(0.42784098, 0.31262082, 0.15132266, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_bottom = 1
+border_color = Color(0.23471117, 0.16576827, 0.067964055, 1)
+border_blend = true
+shadow_size = 2
+
 [node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator", "_hud")]
 script = ExtResource("1_hjya1")
 _animator = NodePath("AnimationPlayer")
@@ -180,7 +190,7 @@ _lvl = NodePath("PanelContainer/LeftBlock/LvlBlock/Lvl")
 _nickname = NodePath("PanelContainer/Nickname")
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=383323327]
-custom_minimum_size = Vector2(700, 100)
+custom_minimum_size = Vector2(600, 100)
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -253,3 +263,28 @@ size_flags_horizontal = 0
 theme_override_colors/font_color = Color(0.85753846, 0.87636775, 0.76328087, 1)
 theme_override_font_sizes/font_size = 19
 text = "Nickname"
+
+[node name="Inventory" type="PanelContainer" parent="CanvasLayer" unique_id=1740792429]
+visible = false
+custom_minimum_size = Vector2(400, 500)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vcdtc")
+
+[node name="Slots" type="GridContainer" parent="CanvasLayer/Inventory" unique_id=1860133313]
+layout_mode = 2
+columns = 4
+
+[node name="Slot" parent="CanvasLayer/Inventory/Slots" unique_id=1609103383 instance=ExtResource("5_83gc0")]
+layout_mode = 2
+
+[node name="Slot2" parent="CanvasLayer/Inventory/Slots" unique_id=619290918 instance=ExtResource("5_83gc0")]
+layout_mode = 2

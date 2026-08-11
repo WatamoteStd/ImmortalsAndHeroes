@@ -8,6 +8,7 @@ public partial class SceneManager : CanvasLayer
 
     [Export] private AnimationPlayer _animator;
     [Export] private Hud _hud;
+    [Export] private PanelContainer _inventory;
     public static SceneManager Instance { get; private set; }
 
     public Dictionary<uint, string> regIdToScenePath;
@@ -31,6 +32,9 @@ public partial class SceneManager : CanvasLayer
             {0, "res://World/Regions/Region_0.tscn"}
 
         };
+
+        PlayerController.OnInventoryAction -= InventoryAction;
+        PlayerController.OnInventoryAction += InventoryAction;
 
     }
 
@@ -88,5 +92,13 @@ public partial class SceneManager : CanvasLayer
         _hud.InitHud(hp,mp,silver,lvl,name);
 
     }
+
+    private void InventoryAction()
+    {
+        
+        _inventory.Visible = !_inventory.Visible;
+
+    }
+
     
 }

@@ -10,6 +10,8 @@ public partial class PlayerController : Node
 
 	public static Action<Vector3> OnMoveRequest;
 
+	public static Action OnInventoryAction;
+
 	private void SendMoveToServer(Vector3 targetPos)
 	{
 		OnMoveRequest?.Invoke(targetPos);
@@ -35,6 +37,13 @@ public partial class PlayerController : Node
 			else GD.Print("[RAW CLICK] Null click, i get it");
 		}
 	}
+
+	if (@event.IsActionPressed("Inventory"))
+		{
+			OnInventoryAction?.Invoke();
+		}
+
+
 }
 
 

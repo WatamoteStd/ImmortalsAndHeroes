@@ -2,6 +2,7 @@ using Server.World.Zone.Entities;
 using Shared.Udp.Packets.Category.Game;
 using Shared.Udp.Packets;
 using System.Numerics;
+using Shared.Items;
 
 namespace Server.World.Zone;
 
@@ -83,6 +84,8 @@ public class WorldZone
         _players[player.PlayerId] = player;
         _entities[player.EntityId] = player;
 
+        AddItemToPlayer();
+
     }
 
     public void MovePlayer(PlayerEntity player, float x, float y, float z)
@@ -104,6 +107,24 @@ public class WorldZone
 
             _worldHolder.Broadcaster.SendToPlayer(curPlayer.PlayerId, PacketTypes.S2C_MoveEntity, movePacket);
 
+        }
+
+    }
+
+    public void AddItemToPlayer()
+    {
+
+        
+        foreach(var player in _players.Values)
+        {
+            player.AddItem(ItemType.IronOre_Horrible, 200);
+            player.AddItem(ItemType.IronOre_Normal, 1);
+        }
+
+        foreach(var player in _players.Values)
+        {
+            player.AddItem(ItemType.IronOre_Horrible, 2000);
+            player.AddItem(ItemType.IronOre_Normal, 1);
         }
 
     }
