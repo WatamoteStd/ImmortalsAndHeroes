@@ -84,8 +84,6 @@ public class WorldZone
         _players[player.PlayerId] = player;
         _entities[player.EntityId] = player;
 
-        AddItemToPlayer();
-
     }
 
     public void MovePlayer(PlayerEntity player, float x, float y, float z)
@@ -115,17 +113,13 @@ public class WorldZone
     {
 
         
-        foreach(var player in _players.Values)
-        {
-            player.AddItem(ItemType.IronOre_Horrible, 200);
-            player.AddItem(ItemType.IronOre_Normal, 1);
-        }
+       
 
-        foreach(var player in _players.Values)
-        {
-            player.AddItem(ItemType.IronOre_Horrible, 2000);
-            player.AddItem(ItemType.IronOre_Normal, 1);
-        }
+    }
+    public void RemoveItemPlayer()
+    {
+        
+       
 
     }
 

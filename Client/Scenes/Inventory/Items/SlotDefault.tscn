@@ -3,12 +3,14 @@
 [ext_resource type="Texture2D" uid="uid://cklbvmhla28vy" path="res://Scenes/Inventory/Items/Resource/tomato.png" id="1_ibioh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qm0se"]
-draw_center = false
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.73902, 0.43850094, 3.85046e-07, 1)
+bg_color = Color(0.3281245, 0.15413958, 0.0477153, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.70010334, 0.6931211, 0.60378057, 1)
+border_blend = true
+shadow_size = 1
 
 [node name="Slot" type="PanelContainer" unique_id=1609103383]
 custom_minimum_size = Vector2(64, 64)

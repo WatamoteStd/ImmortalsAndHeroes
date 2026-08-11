@@ -121,7 +121,7 @@ border_color = Color(0.04398883, 0.21494454, 0.39395973, 1)
 border_blend = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vcdtc"]
-bg_color = Color(0.42784098, 0.31262082, 0.15132266, 1)
+bg_color = Color(0.4105808, 0.20150769, 0.0688674, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_bottom = 1
@@ -129,10 +129,12 @@ border_color = Color(0.23471117, 0.16576827, 0.067964055, 1)
 border_blend = true
 shadow_size = 2
 
-[node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator", "_hud")]
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator", "_hud", "_inventory")]
+visible = false
 script = ExtResource("1_hjya1")
 _animator = NodePath("AnimationPlayer")
 _hud = NodePath("CanvasLayer")
+_inventory = NodePath("CanvasLayer/Inventory")
 
 [node name="Bg" type="TextureRect" parent="." unique_id=1002927567]
 texture_repeat = 2
@@ -181,7 +183,6 @@ libraries/ = SubResource("AnimationLibrary_83gc0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1081374653 node_paths=PackedStringArray("_healthBar", "_manaBar", "_silver", "_lvl", "_nickname")]
 layer = 100
-visible = false
 script = ExtResource("4_7xrkh")
 _healthBar = NodePath("PanelContainer/MiddleBlock/HpBar")
 _manaBar = NodePath("PanelContainer/MiddleBlock/MpBar")
@@ -265,7 +266,6 @@ theme_override_font_sizes/font_size = 19
 text = "Nickname"
 
 [node name="Inventory" type="PanelContainer" parent="CanvasLayer" unique_id=1740792429]
-visible = false
 custom_minimum_size = Vector2(400, 500)
 anchors_preset = 6
 anchor_left = 1.0
@@ -281,6 +281,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_vcdtc")
 
 [node name="Slots" type="GridContainer" parent="CanvasLayer/Inventory" unique_id=1860133313]
 layout_mode = 2
+theme_override_constants/h_separation = 2
 columns = 4
 
 [node name="Slot" parent="CanvasLayer/Inventory/Slots" unique_id=1609103383 instance=ExtResource("5_83gc0")]

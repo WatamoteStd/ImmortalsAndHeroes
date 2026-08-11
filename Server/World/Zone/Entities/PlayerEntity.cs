@@ -28,15 +28,16 @@ public class PlayerEntity : LivingEntity
     public ushort AddItem(ItemType item, ushort count)
     {
         ushort less = Inventory.AddItem(item, count);
-
-        Console.WriteLine($"[Player:{Name}] Inventory Status ========================");
-        for(int i = 0; i < Inventory.Capacity; i++)
-        {
-            ref readonly var slot = ref Inventory[i];
-            Console.WriteLine($"[SLOT:{i}] Item:{slot.ItemId} Count:{slot.Count}");
-        }
-
         return less;
+    }
+
+    public bool RemoveItem(ItemType item, ushort count)
+    {
+        
+        bool isOk = Inventory.RemoveItem(item, count);
+        return isOk;
+
+
     }
     
 

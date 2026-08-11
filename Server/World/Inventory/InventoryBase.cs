@@ -76,4 +76,58 @@ public class InventoryBase
 
     }
 
+    public uint GetItemCount(ItemType item)
+    {
+        ushort count = 0;
+        
+        for (int i = 0; i < _slots.Length; i++)
+        {
+            
+            ref readonly ItemSlot curSlot = ref _slots[i];
+
+            if (curSlot.ItemId == item)
+            {
+                
+                count += curSlot.Count;
+
+            }
+
+        }
+        return count;
+
+    }
+
+    public bool RemoveItem(ItemType item, ushort count)
+    {
+        
+        uint readCount = GetItemCount(item);
+
+        if (readCount < count) return false;
+        
+            
+        for(int i = _slots.Length - 1; i >= 0; i--)
+        {
+                
+            ref ItemSlot curSlot = ref _slots[i];
+
+            if (curSlot.ItemId == item)
+            {
+                    
+                if (curSlot.Count >= count)
+                {
+                    curSlot.Count -= count;
+                    return true;
+                }
+                count -= curSlot.Count;
+                curSlot = new ItemSlot(ItemType.None, 0);
+
+
+            }
+
+        }
+        return true;
+
+
+    }
+
 }
