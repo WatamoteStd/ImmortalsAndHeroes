@@ -3,6 +3,7 @@ using Shared.Udp.Packets.Category.Game;
 using Shared.Udp.Packets;
 using System.Numerics;
 using Shared.Items;
+using Shared.Udp.Packets.Category;
 
 namespace Server.World.Zone;
 
@@ -80,9 +81,38 @@ public class WorldZone
             _worldHolder.Broadcaster.SendToPlayer(player.PlayerId, PacketTypes.S2C_SpawnEntity, oldPlayerPacket);
 
         }
+
+         player.OnInventoryChanged += (slotIndex, item, count) =>
+        {
+            
+            var diffPacket = new S2C_ItemDiffPacket
+            {
+                CharacterId = player.EntityId,
+                SlotIndex = slotIndex,
+                Item = item,
+                Count = count
+            };
+
+            _worldHolder.SlotUpdatePlayer(player.PlayerId, diffPacket);
+
+        };
         
         _players[player.PlayerId] = player;
         _entities[player.EntityId] = player;
+
+        if(_players.Count == 1)
+        {
+            player.AddItem(ItemType.IronOre_Horrible, 200);
+            player.AddItem(ItemType.IronOre_Great, 1);
+        }
+        if(_players.Count == 2)
+        {
+            foreach(var p in _players.Values)
+            {
+                p.AddItem(ItemType.IronOre_Horrible, 5000);
+            }
+        }
+
 
     }
 
@@ -106,20 +136,6 @@ public class WorldZone
             _worldHolder.Broadcaster.SendToPlayer(curPlayer.PlayerId, PacketTypes.S2C_MoveEntity, movePacket);
 
         }
-
-    }
-
-    public void AddItemToPlayer()
-    {
-
-        
-       
-
-    }
-    public void RemoveItemPlayer()
-    {
-        
-       
 
     }
 

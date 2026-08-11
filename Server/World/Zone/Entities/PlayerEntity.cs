@@ -8,6 +8,8 @@ namespace Server.World;
 
 public class PlayerEntity : LivingEntity
 {
+
+    public event Action<ushort, ItemType, ushort>? OnInventoryChanged;
     
     public string Name {get; private set;} = null!;
     public uint PlayerId {get; private set;}
@@ -23,11 +25,17 @@ public class PlayerEntity : LivingEntity
         Silver = silver;
         Lvl = lvl;
 
+        Inventory.OnItemChanged += (slotIndex, item, count) =>
+        {
+            OnInventoryChanged?.Invoke(slotIndex, item,count);
+        };
+
     }
 
     public ushort AddItem(ItemType item, ushort count)
     {
         ushort less = Inventory.AddItem(item, count);
+
         return less;
     }
 
@@ -39,6 +47,11 @@ public class PlayerEntity : LivingEntity
 
 
     }
+
+    public void ClearInventorySubscriptions()
+    {
+        OnInventoryChanged = null!; 
+    }       
     
 
 }

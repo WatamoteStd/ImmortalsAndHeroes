@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://hromedeur3bd" path="res://Scenes/BgShader.gdshader" id="1_yueht"]
 [ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="2_ebsso"]
 [ext_resource type="Script" uid="uid://cmgj83a0b8x66" path="res://Scenes/Hud.cs" id="4_7xrkh"]
+[ext_resource type="Script" uid="uid://c2pd0kmiwqjkm" path="res://Scenes/Inventory/Inventory.cs" id="5_8ysa5"]
 [ext_resource type="PackedScene" uid="uid://cqa7psxm0fij7" path="res://Scenes/Inventory/Items/SlotDefault.tscn" id="5_83gc0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_83fg3"]
@@ -122,15 +123,22 @@ border_blend = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vcdtc"]
 bg_color = Color(0.4105808, 0.20150769, 0.0688674, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_bottom = 1
 border_color = Color(0.23471117, 0.16576827, 0.067964055, 1)
 border_blend = true
 shadow_size = 2
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qm0se"]
+bg_color = Color(0.22380942, 0.097150065, 0.020760117, 1)
+border_width_bottom = 3
+border_color = Color(0.09239707, 0.09239706, 0.09239706, 1)
+border_blend = true
+shadow_size = 2
+
+[sub_resource type="FontVariation" id="FontVariation_83fg3"]
+base_font = ExtResource("2_ebsso")
+variation_embolden = 0.63
+
 [node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator", "_hud", "_inventory")]
-visible = false
 script = ExtResource("1_hjya1")
 _animator = NodePath("AnimationPlayer")
 _hud = NodePath("CanvasLayer")
@@ -183,6 +191,7 @@ libraries/ = SubResource("AnimationLibrary_83gc0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1081374653 node_paths=PackedStringArray("_healthBar", "_manaBar", "_silver", "_lvl", "_nickname")]
 layer = 100
+visible = false
 script = ExtResource("4_7xrkh")
 _healthBar = NodePath("PanelContainer/MiddleBlock/HpBar")
 _manaBar = NodePath("PanelContainer/MiddleBlock/MpBar")
@@ -266,7 +275,8 @@ theme_override_font_sizes/font_size = 19
 text = "Nickname"
 
 [node name="Inventory" type="PanelContainer" parent="CanvasLayer" unique_id=1740792429]
-custom_minimum_size = Vector2(400, 500)
+visible = false
+custom_minimum_size = Vector2(350, 500)
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -278,14 +288,58 @@ offset_bottom = 20.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vcdtc")
+script = ExtResource("5_8ysa5")
 
-[node name="Slots" type="GridContainer" parent="CanvasLayer/Inventory" unique_id=1860133313]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Inventory" unique_id=2017661304]
 layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Header" type="PanelContainer" parent="CanvasLayer/Inventory/VBoxContainer" unique_id=530941613]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qm0se")
+
+[node name="Label" type="Label" parent="CanvasLayer/Inventory/VBoxContainer/Header" unique_id=1730869598]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.8127129, 0.8455433, 0.8618154, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 26
+text = "INVENTORY"
+
+[node name="Slots" type="GridContainer" parent="CanvasLayer/Inventory/VBoxContainer" unique_id=1860133313]
+layout_mode = 2
+size_flags_horizontal = 4
 theme_override_constants/h_separation = 2
 columns = 4
 
-[node name="Slot" parent="CanvasLayer/Inventory/Slots" unique_id=1609103383 instance=ExtResource("5_83gc0")]
+[node name="Slot1" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=1609103383 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot2" parent="CanvasLayer/Inventory/Slots" unique_id=619290918 instance=ExtResource("5_83gc0")]
+[node name="Slot2" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=158006091 instance=ExtResource("5_83gc0")]
+layout_mode = 2
+
+[node name="Slot3" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=106425847 instance=ExtResource("5_83gc0")]
+layout_mode = 2
+
+[node name="Slot4" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=536414281 instance=ExtResource("5_83gc0")]
+layout_mode = 2
+
+[node name="Slot5" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=2011650220 instance=ExtResource("5_83gc0")]
+layout_mode = 2
+
+[node name="Slot6" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=844681337 instance=ExtResource("5_83gc0")]
+layout_mode = 2
+
+[node name="Slot7" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=1877923527 instance=ExtResource("5_83gc0")]
+layout_mode = 2
+
+[node name="Slot8" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=1271336900 instance=ExtResource("5_83gc0")]
+layout_mode = 2
+
+[node name="Slot9" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=161001819 instance=ExtResource("5_83gc0")]
+layout_mode = 2
+
+[node name="Slot10" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=1774147062 instance=ExtResource("5_83gc0")]
 layout_mode = 2

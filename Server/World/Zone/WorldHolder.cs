@@ -4,6 +4,8 @@ using Server.Network.Interfaces;
 using Server.World;
 using Server.World.Zone.Entities;
 using Shared.DataTransferObjects;
+using Shared.Udp.Packets.Category;
+using Shared.Udp.Packets;
 using Shared.Udp.Packets.Category.Game;
 
 namespace Server.World.Zone;
@@ -54,6 +56,17 @@ public class WorldHolder : IWorldHolder
 
     }
 
+    public void SlotUpdatePlayer(uint userId, S2C_ItemDiffPacket packet)
+    {
+        
+        _broadcaster.SendToPlayer(userId, PacketTypes.S2C_ItemDiff, packet);
+
+    }
+
+
+
+    // =============================== FROM PLAYER TO REGION PACKETS ==================
+
     public void MovePlayer(uint userId, C2S_MoveRequestPacket packet)
     {
         
@@ -66,5 +79,7 @@ public class WorldHolder : IWorldHolder
         }
 
     }
+
+    
 
 }

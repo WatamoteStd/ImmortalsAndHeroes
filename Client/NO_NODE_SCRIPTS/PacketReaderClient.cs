@@ -105,6 +105,13 @@ public class PacketReaderClient
                         }
                     break;
 
+                    case PacketTypes.S2C_ItemDiff:
+                        {
+                            var packet = PacketSerialier.Deserialize<S2C_ItemDiffPacket>(payload);
+                            _networkPackets.Enqueue(packet);
+                        }
+                    break;
+
                     default:
                         {
                             GD.PrintErr($"[PACK READER] Unknown packet type.");

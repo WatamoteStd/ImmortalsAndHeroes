@@ -7,6 +7,7 @@ using Server.Pools.Session;
 using Shared.DataTransferObjects;
 using Shared.Udp.Interfaces;
 using Shared.Udp.Packets;
+using Shared.Udp.Packets.Category;
 using Shared.Udp.Packets.Category.Game;
 
 namespace Server.Network;

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cqa7psxm0fij7"]
 
-[ext_resource type="Texture2D" uid="uid://cklbvmhla28vy" path="res://Scenes/Inventory/Items/Resource/tomato.png" id="1_ibioh"]
+[ext_resource type="Script" uid="uid://hxtqhxtj1tvj" path="res://Scenes/Inventory/Items/SlotDefault.cs" id="1_ms0ve"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qm0se"]
 bg_color = Color(0.3281245, 0.15413958, 0.0477153, 1)
@@ -12,11 +12,25 @@ border_color = Color(0.70010334, 0.6931211, 0.60378057, 1)
 border_blend = true
 shadow_size = 1
 
-[node name="Slot" type="PanelContainer" unique_id=1609103383]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83fg3"]
+content_margin_left = 5.0
+content_margin_right = 5.0
+bg_color = Color(0.5985474, 0.5375752, 0.44420075, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.6313726, 0.59607846, 0.5019608, 1)
+border_blend = true
+
+[node name="Slot" type="PanelContainer" unique_id=1609103383 node_paths=PackedStringArray("_icon", "_count")]
 custom_minimum_size = Vector2(64, 64)
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_qm0se")
+script = ExtResource("1_ms0ve")
+_icon = NodePath("MarginContainer/Icon")
+_count = NodePath("Count/Label")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1941947576]
 layout_mode = 2
@@ -28,6 +42,16 @@ theme_override_constants/margin_bottom = 5
 [node name="Icon" type="TextureRect" parent="MarginContainer" unique_id=1868850055]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-texture = ExtResource("1_ibioh")
 expand_mode = 1
 stretch_mode = 3
+
+[node name="Count" type="PanelContainer" parent="." unique_id=1621794604]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_83fg3")
+
+[node name="Label" type="Label" parent="Count" unique_id=585383727]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "0"

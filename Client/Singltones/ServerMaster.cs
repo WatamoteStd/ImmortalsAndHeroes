@@ -164,6 +164,11 @@ public partial class ServerMaster : Node
                 }
             break;
 
+            case S2C_ItemDiffPacket itemDiff:
+                {
+                    SceneManager.Instance.UpdateInventoryCell(itemDiff.SlotIndex, itemDiff.Item, itemDiff.Count);
+                }
+            break;
             
 
         }
@@ -173,7 +178,7 @@ public partial class ServerMaster : Node
     private void LocalPlayerMoveRequest(Vector3 pos)
     {
         
-        Span<byte> buffer = stackalloc byte[14]; // 44 + 4 + 4 (cords) + 2 (packetYType)
+        Span<byte> buffer = stackalloc byte[14]; // 4 + 4 + 4 (cords) + 2 (packetYType)
 
         var posPacket = new C2S_MoveRequestPacket
         {

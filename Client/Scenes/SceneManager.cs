@@ -1,4 +1,5 @@
 using Godot;
+using Shared.Items;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ public partial class SceneManager : CanvasLayer
 
 	[Export] private AnimationPlayer _animator;
 	[Export] private Hud _hud;
-	[Export] private PanelContainer _inventory;
+	[Export] private Inventory _inventory;
 	public static SceneManager Instance { get; private set; }
 
 	public Dictionary<uint, string> regIdToScenePath;
@@ -95,9 +96,11 @@ public partial class SceneManager : CanvasLayer
 
 	private void InventoryAction()
 	{
-		
 		_inventory.Visible = !_inventory.Visible;
-
+	}
+	public void UpdateInventoryCell(ushort slotIndex, ItemType item, ushort count)
+	{
+		_inventory.UpdateCell(slotIndex,item, count);
 	}
 
 	
