@@ -1,6 +1,7 @@
-
-
+using Server.Pools.Session;
+using Server.World.Zone;
 using Shared.DataTransferObjects;
+using Shared.Udp.Packets.Category;
 using Shared.Udp.Packets.Category.Game;
 
 namespace Server.Network.Interfaces;
@@ -8,7 +9,6 @@ namespace Server.Network.Interfaces;
 public interface IWorldHolder
 {
 
-    void AddPlayer(uint regionId, HandshakeResponseDto characterData);
-    void MovePlayer(uint userId, C2S_MoveRequestPacket packet);
+    void EnqueueCommand(NetworkCommand data);
 
 }

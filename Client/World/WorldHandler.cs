@@ -26,6 +26,16 @@ public partial class WorldHandler : Node3D
 		if (data.Type.IsPlayer())
 		{
 			SpawnRemotePlayer(data);
+		}
+
+	}
+	public void RemoveEntity(uint entityId)
+	{
+		
+		if (RegionEntities.TryGetValue(entityId, out Entity entity))
+		{
+			RegionEntities.Remove(entityId);
+			entity.QueueFree();
 
 		}
 

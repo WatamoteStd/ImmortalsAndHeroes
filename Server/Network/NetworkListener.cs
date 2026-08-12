@@ -1,4 +1,5 @@
 using System;
+using System.Buffers;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -11,7 +12,6 @@ public class NetworkListener
     private readonly Socket _socket;
     EndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
     private readonly SessionManager _sessionManager;
-    byte[] buffer = new byte[4096];
 
     bool isRunning;
 
@@ -37,6 +37,8 @@ public class NetworkListener
         
         while(isRunning)
         {
+            var buffer = ArrayPool<byte>.Shared.Rent(1024);
+            bool memoryOwnerTransferred = false;
             
             try
             {
@@ -44,12 +46,20 @@ public class NetworkListener
 
                 if (count >= 2 && remoteEndPoint is IPEndPoint clientIp)
                 {
-                    _sessionManager.PacketGateway(clientIp, buffer[..count]);
+                    _sessionManager.PacketGateway(clientIp, buffer, (ushort)count);
+                    memoryOwnerTransferred = true;
                 }
             }
             catch
             {
                 Console.WriteLine($"[NETWORK LISTENER] Lost connetion with client");
+            }
+            finally
+            {
+                if (!memoryOwnerTransferred)
+                {
+                    ArrayPool<byte>.Shared.Return(buffer);
+                }
             }
 
         }

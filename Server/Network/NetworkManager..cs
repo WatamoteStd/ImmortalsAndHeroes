@@ -11,15 +11,12 @@ public class NetworkManager
     public SessionManager sessionManager { get; }
     public NetworkListener networkListener { get; }
     public PacketSender packetSender { get; }
+    public PacketReader packetReader { get;}
     
     public NetworkManager(int port)
     {
         
-        IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, port);
-        packetSender = new PacketSender(_socket);
-        sessionManager = new SessionManager(packetSender);
-        _socket.Bind(endPoint);
-        networkListener = new NetworkListener(_socket, sessionManager);
+        
 
     }
 

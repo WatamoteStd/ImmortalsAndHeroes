@@ -100,31 +100,16 @@ public class WorldZone
         _players[player.PlayerId] = player;
         _entities[player.EntityId] = player;
 
-        if(_players.Count == 1)
-        {
-            player.AddItem(ItemType.IronOre_Horrible, 200);
-            player.AddItem(ItemType.IronOre_Great, 1);
-        }
-        if(_players.Count == 2)
-        {
-            foreach(var p in _players.Values)
-            {
-                p.AddItem(ItemType.IronOre_Horrible, 5000);
-            }
-        }
-
-
     }
 
+
+    // =========================== FROM PLAYER TO REGION REQUESTS ======================
     public void MovePlayer(PlayerEntity player, float x, float y, float z)
     {
-        
-        Console.WriteLine($"[REGION:{Id}] Take move task for player:{player.Name}");
-        player.MoveToPosition(new Vector3(x,y,z));
+        player.MoveToPosition(new Vector3(x,1,z));
 
         foreach (var curPlayer in _players.Values)
         {
-            
             var movePacket = new S2C_MoveEntityPacket
             {
                 Id = player.EntityId,
@@ -132,10 +117,41 @@ public class WorldZone
                 PosY = y,
                 PosZ = z
             };
-
             _worldHolder.Broadcaster.SendToPlayer(curPlayer.PlayerId, PacketTypes.S2C_MoveEntity, movePacket);
+        }
+    }
+
+    public void NETWORK_RemovePlayer(uint playerId)
+    {
+        
+        if (_players.TryGetValue(playerId, out PlayerEntity? player))
+        {
+            
+            var packet = new S2C_RemoveEntityPacket
+        {
+            Id = player.EntityId
+        };
+        
+        foreach (var p in _players.Values)
+        {
+            
+            if (p == player) continue;
+            _worldHolder.Broadcaster.SendToPlayer(p.PlayerId, PacketTypes.S2C_RemoveEntity, packet);
 
         }
+
+        player.ClearInventorySubscriptions();
+        _players.Remove(player.PlayerId);
+        _entities.Remove(player.EntityId);
+
+
+        Console.WriteLine($"[REGION {Id}] Character:{player.Name} has been removed from region!");
+        return;
+
+        }
+        Console.WriteLine($"[REGION {Id}] Can't find PlayerId:{playerId} at this region");
+        
+
 
     }
 

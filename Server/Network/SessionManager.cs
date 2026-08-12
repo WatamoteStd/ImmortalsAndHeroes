@@ -1,9 +1,11 @@
 using System;
+using System.Buffers;
 using System.Data.Common;
 using System.Net;
 using Server.Network.Interfaces;
 using Server.Pools;
 using Server.Pools.Session;
+using Server.World.Zone;
 using Shared.DataTransferObjects;
 using Shared.Udp.Interfaces;
 using Shared.Udp.Packets;
@@ -25,7 +27,7 @@ public class SessionManager : IWorldBroadcaster
     // HTTP
     private readonly HttpMaster _httpMaster = new HttpMaster();
     private readonly PacketSender _packetSender;
-    private IWorldHolder? _worldHolder;
+    private IWorldHolder? _worldApi;
 
     private byte MainPoolDeleted, GuestPoolDeleted;
 
@@ -50,10 +52,10 @@ public class SessionManager : IWorldBroadcaster
 
     public void InitializeWorld(IWorldHolder holder)
     {
-        _worldHolder = holder;
+        _worldApi = holder;
     }
 
-    public void PacketGateway(IPEndPoint endPoint, ReadOnlySpan<byte> data)
+    public void PacketGateway(IPEndPoint endPoint, byte[] data, ushort dataLength)
     {
         
         if (ipToSession.TryGetValue(endPoint, out UserSession? session))
@@ -63,7 +65,14 @@ public class SessionManager : IWorldBroadcaster
                 
                 session.LastPacketTime = Environment.TickCount64;
                 Console.WriteLine($"[Server] Received new packet from Player:{session.UserId}.");
-                _packetReader.PacketDeserialize(data, session);
+
+                var localPacket = new NetworkCommand
+                {
+                    Session = session,
+                    Data = data,
+                    Length = dataLength
+                };
+                _worldApi?.EnqueueCommand(localPacket);
 
             }
             else if (session.State == UserSession.SessionState.Guest)
@@ -174,9 +183,9 @@ public class SessionManager : IWorldBroadcaster
             Console.WriteLine($"[SESSIONS] New active session created! UserId:{session.UserId}");
 
             _packetSender.SM_SendHandhsakeResult(true, characterData, userIp);
-            if (_worldHolder != null)
+            if (_worldApi != null)
             {
-                _worldHolder.AddPlayer((uint)characterData.RegionId, characterData);
+                _worldApi.AddPlayer((uint)characterData.RegionId, characterData);
             }
             else
             {
@@ -186,12 +195,6 @@ public class SessionManager : IWorldBroadcaster
         }
 
     }
-
-
-
-
-
-
     public async Task HandshakeRequest(string ticket, IPEndPoint iPEnd)
     {
         
@@ -211,7 +214,7 @@ public class SessionManager : IWorldBroadcaster
 
     }
 
-    // =========== WORLD HOLDER ======================================
+    // =========== API METHODS ======================================
 
     public void SendToPlayer<T>(uint userId, PacketTypes packetType, T packet) 
         where T : struct, INetworkPacket
@@ -221,13 +224,6 @@ public class SessionManager : IWorldBroadcaster
         if (session == null) return;
         
         _packetSender.SendPacket(session.IpEnd, packetType, packet);
-
-    }
-
-    public void PlayerMoveRequest(UserSession session, C2S_MoveRequestPacket packet)
-    {
-        
-        _worldHolder?.MovePlayer(session.UserId, packet);
 
     }
 

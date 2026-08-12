@@ -46,6 +46,16 @@ public class PacketReader
                 }
             break;
 
+            case PacketTypes.C2S_ChangeRegionRequest:
+                {
+                    
+                    var packet = PacketSerialier.Deserialize<C2S_ChangeRegionRequestPacket>(buffer[2..]);
+
+                    _sessionManager.WH_PlayerChangeRegionRequest(session, packet);
+
+                }
+            break;
+
         }
 
     }

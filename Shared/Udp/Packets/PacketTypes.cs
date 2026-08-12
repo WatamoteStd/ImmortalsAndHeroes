@@ -11,6 +11,10 @@ public enum PacketTypes : ushort
     S2C_MoveEntity = 4,
     C2S_MoveRequest = 5,
     S2C_ItemDiff = 6,
-    S2C_InventorySnapshot = 7
+    S2C_InventorySnapshot = 7,
+
+    C2S_ChangeRegionRequest = 8,
+    S2C_ChangeRegion = 9,
+    S2C_RemoveEntity = 10
 
 }

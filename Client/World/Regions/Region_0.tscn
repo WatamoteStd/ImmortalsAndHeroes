@@ -3,16 +3,17 @@
 [ext_resource type="Script" uid="uid://dufeppnhj2h7k" path="res://World/WorldHandler.cs" id="1_o80bx"]
 [ext_resource type="PackedScene" uid="uid://b4v3nmvo7nhxw" path="res://Entities/Character/RemotePlayer.tscn" id="2_tqto2"]
 [ext_resource type="PackedScene" uid="uid://dj6wqb3g7xlng" path="res://Entities/Character/LocalPlayer.tscn" id="3_cfrud"]
+[ext_resource type="Script" uid="uid://c5ysdl0g5sriv" path="res://World/RegionChangeArea.cs" id="4_cfrud"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4152v"]
 albedo_color = Color(0.10421745, 0.2833985, 0.09041683, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_t3xac"]
 material = SubResource("StandardMaterial3D_4152v")
-size = Vector2(120, 120)
+size = Vector2(250, 250)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hjl0q"]
-size = Vector3(120, 0.05, 120)
+size = Vector3(250, 0.05, 250)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6u82b"]
 size = Vector3(1, 5, 2)
@@ -35,6 +36,46 @@ sky_material = SubResource("ProceduralSkyMaterial_vcdtc")
 background_mode = 2
 background_energy_multiplier = 1.1
 sky = SubResource("Sky_6u82b")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tqto2"]
+albedo_color = Color(0.3863839, 0.4024678, 0.04164865, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6u82b"]
+material = SubResource("StandardMaterial3D_tqto2")
+size = Vector2(120, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qm0se"]
+albedo_color = Color(0.14580792, 0.30682528, 0.20073566, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ichqs"]
+size = Vector3(7, 3, 7)
+
+[sub_resource type="Curve" id="Curve_cfrud"]
+_limits = [-200.0, 200.0, 0.0, 1.0]
+_data = [Vector2(0, 3.0769348), 0.0, 0.0, 0, 0, Vector2(1, -40), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_w4wer"]
+curve = SubResource("Curve_cfrud")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ichqs"]
+emission_shape = 3
+emission_box_extents = Vector3(4, 3, 4)
+gravity = Vector3(0, -0.2, 0)
+tangential_accel_curve = SubResource("CurveTexture_w4wer")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vcdtc"]
+transparency = 1
+depth_draw_mode = 1
+albedo_color = Color(0.8520722, 0.8553199, 0.8524433, 1)
+emission_enabled = true
+emission = Color(1.2032688e-06, 0.5223868, 0.5417709, 1)
+emission_energy_multiplier = 2.14
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_6u82b"]
+material = SubResource("StandardMaterial3D_vcdtc")
+size = Vector2(0.05, 0.1)
 
 [node name="WorldRegion" type="Node3D" unique_id=388387032]
 script = ExtResource("1_o80bx")
@@ -63,3 +104,45 @@ mesh = SubResource("BoxMesh_83fg3")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1233666863]
 environment = SubResource("Environment_83fg3")
+
+[node name="RoadToCity" type="MeshInstance3D" parent="." unique_id=1918239163]
+transform = Transform3D(0.9999221, 0, 0.01248173, 0, 1, 0, -0.01248173, 0, 0.9999221, -56.57049, 0.01, 0)
+mesh = SubResource("PlaneMesh_6u82b")
+
+[node name="Walls" type="CSGCombiner3D" parent="." unique_id=1643989351]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Walls" unique_id=1149594944]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -126.5, 5, 0)
+size = Vector3(3, 10, 250)
+material = SubResource("StandardMaterial3D_qm0se")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Walls" unique_id=1082710846]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.5, 5, 0)
+size = Vector3(3, 10, 250)
+material = SubResource("StandardMaterial3D_qm0se")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Walls" unique_id=1712956419]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 126.5)
+size = Vector3(250, 10, 3)
+material = SubResource("StandardMaterial3D_qm0se")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Walls" unique_id=303347997]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -126.5)
+size = Vector3(250, 10, 3)
+material = SubResource("StandardMaterial3D_qm0se")
+
+[node name="EnterToCity" type="Area3D" parent="." unique_id=78318268]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -117.59556, 0, 0)
+script = ExtResource("4_cfrud")
+EnterZoneId = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnterToCity" unique_id=2003826237]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.623, 1.5, 0)
+shape = SubResource("BoxShape3D_ichqs")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="EnterToCity" unique_id=795731295]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9891205, 3.885572, 0.70467925)
+amount = 100
+lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_ichqs")
+draw_pass_1 = SubResource("QuadMesh_6u82b")

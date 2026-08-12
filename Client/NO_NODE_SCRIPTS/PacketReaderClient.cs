@@ -112,6 +112,15 @@ public class PacketReaderClient
                         }
                     break;
 
+                    case PacketTypes.S2C_RemoveEntity:
+                        {
+                            
+                            var packet = PacketSerialier.Deserialize<S2C_RemoveEntityPacket>(payload);
+                            _networkPackets.Enqueue(packet);
+
+                        }
+                    break;
+
                     default:
                         {
                             GD.PrintErr($"[PACK READER] Unknown packet type.");

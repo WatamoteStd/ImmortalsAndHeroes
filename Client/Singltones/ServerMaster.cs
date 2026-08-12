@@ -170,6 +170,12 @@ public partial class ServerMaster : Node
                 }
             break;
             
+            case S2C_RemoveEntityPacket remove:
+                {
+                    _worldManager.RemoveEntity(remove.Id);
+                }
+            break;
+            
 
         }
 
@@ -189,6 +195,21 @@ public partial class ServerMaster : Node
         int length = PacketSerialier.Serialize<C2S_MoveRequestPacket>(buffer, PacketTypes.C2S_MoveRequest, posPacket);
 
         _socket.Send(buffer); 
+
+    }
+
+    public void LocalPlayerChangeRegionRequest(uint regionId)
+    {
+        
+        Span<byte> buffer = stackalloc byte[6];
+
+        var packet = new C2S_ChangeRegionRequestPacket
+        {
+            RegionId = regionId
+        };
+        int length = PacketSerialier.Serialize<C2S_ChangeRegionRequestPacket>(buffer, PacketTypes.C2S_ChangeRegionRequest, packet);
+        _socket.Send(buffer);
+
 
     }
 
