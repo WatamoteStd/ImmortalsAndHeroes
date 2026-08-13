@@ -4,6 +4,8 @@
 [ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="2_bww52"]
 [ext_resource type="FontFile" uid="uid://cj1dc8n6u71yt" path="res://Assets/Fonts/Inter/Inter-VariableFont_opsz,wght.ttf" id="3_bww52"]
 [ext_resource type="PackedScene" uid="uid://bl8fdbktqdobx" path="res://Menus/MainMenu/status_window.tscn" id="4_kaoi8"]
+[ext_resource type="FontFile" uid="uid://dpj5yrqog00fh" path="res://Assets/Fonts/Cinzel_Decorative/CinzelDecorative-Bold.ttf" id="5_2u4ud"]
+[ext_resource type="AudioStream" uid="uid://bvcmxihkekakw" path="res://Assets/Audio/backgroundMusic.wav" id="6_prgkh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2dg57"]
 bg_color = Color(0.15400285, 0.33430475, 0.3850845, 1)
@@ -99,6 +101,34 @@ base_font = ExtResource("3_bww52")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_83fg3"]
 content_margin_left = 10.0
 
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_83fg3"]
+color = Color(0.16862746, 0.41960785, 0.5254902, 0.5294118)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6u82b"]
+bg_color = Color(0.05592802, 0.06776049, 0.07925216, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_83fg3"]
+base_font = ExtResource("2_bww52")
+variation_embolden = 0.3
+
+[sub_resource type="FontVariation" id="FontVariation_6u82b"]
+base_font = ExtResource("2_bww52")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ichqs"]
+bg_color = Color(0.09439064, 0.15169862, 0.21199599, 1)
+border_blend = true
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prgkh"]
+bg_color = Color(0.068328, 0.117166854, 0.16599622, 1)
+border_blend = true
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q5c8y"]
+bg_color = Color(0.12207519, 0.1915468, 0.26103762, 1)
+border_blend = true
+shadow_size = 2
+
 [node name="Control" type="Control" unique_id=1309026328]
 layout_mode = 3
 anchors_preset = 15
@@ -107,7 +137,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LoginWindow" type="PanelContainer" parent="." unique_id=249116576 node_paths=PackedStringArray("_loginLine", "_passwordLine", "_emailLine", "_loginButton", "_registerText", "_registerButton", "_emailField", "_statusWindow")]
+[node name="LoginWindow" type="PanelContainer" parent="." unique_id=249116576 node_paths=PackedStringArray("_loginLine", "_passwordLine", "_emailLine", "_loginButton", "_registerText", "_registerButton", "_emailField", "_statusWindow", "_tempText", "_tempWindow", "_tempButton")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -120,10 +150,13 @@ _loginLine = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields
 _passwordLine = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/PasswordField/Password")
 _emailLine = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/EmailField/Email2")
 _loginButton = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/LoginButton")
-_registerText = NodePath("VStruct/Register_Login_Panel/Borders/PanelContainer/HBoxContainer/RegisterText")
+_registerText = NodePath("VStruct/Register_Login_Panel/Borders/Options/V/RegisterText")
 _registerButton = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/RegisterButton")
 _emailField = NodePath("VStruct/Register_Login_Panel/Borders/VBoxContainer/Fields/EmailField")
 _statusWindow = NodePath("StatusWindow")
+_tempText = NodePath("VStruct/Register_Login_Panel/Borders/Options/V/StuckHereText")
+_tempWindow = NodePath("ForPlayerWindow")
+_tempButton = NodePath("ForPlayerWindow/Content/VBoxContainer/LeaveButtpn")
 
 [node name="bg" type="TextureRect" parent="LoginWindow" unique_id=1422086461]
 layout_mode = 2
@@ -268,21 +301,22 @@ theme_override_font_sizes/font_size = 19
 theme_override_styles/normal = SubResource("StyleBoxFlat_ootas")
 text = "REGISTER ACCOUNT"
 
-[node name="PanelContainer" type="PanelContainer" parent="LoginWindow/VStruct/Register_Login_Panel/Borders" unique_id=236120332]
-custom_minimum_size = Vector2(0, 35)
+[node name="Options" type="PanelContainer" parent="LoginWindow/VStruct/Register_Login_Panel/Borders" unique_id=236120332]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_styles/panel = SubResource("StyleBoxFlat_ygr85")
 
-[node name="bg" type="TextureRect" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/PanelContainer" unique_id=1479614255]
-custom_maximum_size = Vector2(-1, 35)
+[node name="bg" type="TextureRect" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/Options" unique_id=1479614255]
+custom_maximum_size = Vector2(-1, 50)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_vcdtc")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/PanelContainer" unique_id=533631668]
+[node name="V" type="VBoxContainer" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/Options" unique_id=1254529686]
 layout_mode = 2
+size_flags_vertical = 4
 
-[node name="RegisterText" type="Label" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/PanelContainer/HBoxContainer" unique_id=1546981102]
+[node name="RegisterText" type="Label" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/Options/V" unique_id=1546981102]
 layout_mode = 2
 mouse_filter = 0
 theme_override_colors/font_color = Color(0.16470589, 0.49803922, 0.65882355, 1)
@@ -292,6 +326,94 @@ theme_override_font_sizes/font_size = 12
 theme_override_styles/normal = SubResource("StyleBoxEmpty_83fg3")
 text = "Don't have an account? Register it"
 
+[node name="HSeparator" type="HSeparator" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/Options/V" unique_id=1853844754]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_styles/separator = SubResource("StyleBoxLine_83fg3")
+
+[node name="StuckHereText" type="Label" parent="LoginWindow/VStruct/Register_Login_Panel/Borders/Options/V" unique_id=360070583]
+layout_mode = 2
+mouse_filter = 0
+theme_override_colors/font_color = Color(0.16470589, 0.49803922, 0.65882355, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_fonts/font = SubResource("FontVariation_2u4ud")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxEmpty_83fg3")
+text = "Stuck here? Click there"
+
 [node name="StatusWindow" parent="LoginWindow" unique_id=911583890 instance=ExtResource("4_kaoi8")]
 visible = false
 layout_mode = 2
+
+[node name="ForPlayerWindow" type="PanelContainer" parent="LoginWindow" unique_id=1111626965]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6u82b")
+
+[node name="Content" type="MarginContainer" parent="LoginWindow/ForPlayerWindow" unique_id=284705671]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LoginWindow/ForPlayerWindow/Content" unique_id=55361729]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="LoginWindow/ForPlayerWindow/Content/VBoxContainer" unique_id=219867467]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.82748455, 0.8274846, 0.82748455, 1)
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 32
+text = "DEAR WARRIOR, WANDERER, ADVENTURER 
+OR 
+WHOEVER THE HELL YOU MAY BE."
+horizontal_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LoginWindow/ForPlayerWindow/Content/VBoxContainer" unique_id=99505263]
+custom_minimum_size = Vector2(1000, 300)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/default_color = Color(0.7914411, 0.82652193, 0.9224164, 1)
+theme_override_fonts/normal_font = SubResource("FontVariation_6u82b")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "
+At this moment, the Lands of the Immortals are not yet ready to feel the weight of your step.
+
+If you are dying to become one of the very first to set foot on these soils, and want them to open their gates to your kind as soon as possible, I highly recommend crossing over to the official Tree of Knowledge. You can track it down within the world wide spider-web by casting this exact magical spell:"
+scroll_active = false
+
+[node name="LinkButton" type="LinkButton" parent="LoginWindow/ForPlayerWindow/Content/VBoxContainer" unique_id=808773910]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("5_2u4ud")
+theme_override_font_sizes/font_size = 21
+action_mode = 0
+text = "             CAST"
+underline = 1
+uri = "https://watashiwadesu.itch.io/immortals-and-heroes-online"
+
+[node name="LeaveButtpn" type="Button" parent="LoginWindow/ForPlayerWindow/Content/VBoxContainer" unique_id=1170470557]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_colors/font_hover_color = Color(0.47356004, 0.61835754, 0.74588275, 1)
+theme_override_fonts/font = ExtResource("2_bww52")
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("StyleBoxFlat_ichqs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_prgkh")
+theme_override_styles/hover = SubResource("StyleBoxFlat_q5c8y")
+text = "LEAVE"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2010923129]
+stream = ExtResource("6_prgkh")
+autoplay = true
+bus = &"Menu"

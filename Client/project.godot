@@ -14,6 +14,10 @@ config/name="MMORPGClient"
 run/main_scene="uid://dg8iiokql2t1a"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 
+[audio]
+
+buses/default_bus_layout="uid://gjanol50g3hx"
+
 [autoload]
 
 HttpsMasterClient="*uid://cwtyu54awxh0j"

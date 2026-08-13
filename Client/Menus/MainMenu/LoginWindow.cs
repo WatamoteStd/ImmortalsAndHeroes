@@ -20,6 +20,9 @@ public partial class LoginWindow : PanelContainer
 
 	// REGISTER & LOGIN STATUS LOG WINDOW
 	[Export] private StatusWindow _statusWindow;
+	[Export] private Label _tempText;
+	[Export] private PanelContainer _tempWindow;
+	[Export] private Button _tempButton;
 
 	private float _timeFromLastRequestToServer = 0.0f;
 
@@ -61,6 +64,29 @@ public partial class LoginWindow : PanelContainer
 				}
 
 			}
+		};
+		_tempText.MouseEntered += () =>
+		{
+			_tempText.SelfModulate = new Color(0.279f, 0.629f, 0.86f);
+		};
+		_tempText.MouseEntered += () =>
+		{
+			_registerText.SelfModulate = new Color(0.165f, 0.498f, 0.659f);
+		};
+
+		// DELETE
+		_tempText.GuiInput += (InputEvent @event) =>
+		{
+			if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+			{
+				
+				_tempWindow.Visible = true;
+
+			}
+		};
+		_tempButton.Pressed += () =>
+		{
+			_tempWindow.Visible = false;
 		};
 
 		_registerButton.Pressed += () =>
