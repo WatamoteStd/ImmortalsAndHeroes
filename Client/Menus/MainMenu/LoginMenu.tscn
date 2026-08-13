@@ -415,5 +415,6 @@ text = "LEAVE"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2010923129]
 stream = ExtResource("6_prgkh")
+volume_db = -11.632
 autoplay = true
 bus = &"Menu"

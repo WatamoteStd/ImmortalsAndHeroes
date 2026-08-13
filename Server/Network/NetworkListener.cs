@@ -50,9 +50,9 @@ public class NetworkListener
                     memoryOwnerTransferred = true;
                 }
             }
-            catch
+            catch(Exception e)
             {
-                Console.WriteLine($"[NETWORK LISTENER] Lost connetion with client");
+                Console.WriteLine($"[NETWORK LISTENER] Eror:{e.Message}");
             }
             finally
             {

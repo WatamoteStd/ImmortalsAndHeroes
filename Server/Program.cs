@@ -11,6 +11,7 @@ IWorldBroadcaster broadcaster = networkManager.sessionManager;
 WorldHolder worldHolder = new WorldHolder(broadcaster);
 
 networkManager.sessionManager.InitializeWorld(worldHolder);
+networkManager.packetReader.InitializeWorld(worldHolder);
 
 Console.WriteLine("================= Server Started ==============");
 

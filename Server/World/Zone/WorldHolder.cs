@@ -10,6 +10,7 @@ using Shared.Udp.Packets.Category.Game;
 using System.Collections.Concurrent;
 using Server.Pools.Session;
 using System.Buffers.Binary;
+using System.Buffers;
 
 namespace Server.World.Zone;
 
@@ -20,7 +21,10 @@ public class WorldHolder : IWorldHolder
     public Dictionary<uint, PlayerEntity> idToPlayer = new Dictionary<uint, PlayerEntity>();
     public Dictionary<uint, WorldZone> idToZone = new Dictionary<uint, WorldZone>();
 
+
+
     private ConcurrentQueue<NetworkCommand> CommandsQueue = new ConcurrentQueue<NetworkCommand>();
+    private ConcurrentQueue<HandshakeResponseDto> InitPlayerQueue = new();
 
     
     private readonly IWorldBroadcaster _broadcaster;
@@ -38,18 +42,23 @@ public class WorldHolder : IWorldHolder
     public void Update(float deltaTime)
     {
 
+        while(InitPlayerQueue.TryDequeue(out var newData))
+        {
+            AddPlayer((uint)newData.RegionId, newData);
+        }
+
         while(CommandsQueue.TryDequeue(out var cmd))
         {
-            
-            var packetType = (PacketTypes)BinaryPrimitives.ReadUInt16LittleEndian(cmd.Data);
 
-            switch (packetType)
+            switch (cmd.PacketType)
             {
                 
                 case PacketTypes.C2S_MoveRequest:
                     {
                         var packet = PacketSerialier.Deserialize<C2S_MoveRequestPacket>(cmd.Data[2..]);
                         MovePlayer(cmd.Session.UserId, packet);
+
+                        ArrayPool<byte>.Shared.Return(cmd.Data);
                     }
                 break;
 
@@ -108,7 +117,6 @@ public class WorldHolder : IWorldHolder
         {
             Console.WriteLine($"[Server Receive] Player wants to go to: X={packet.X:F2}, Y={packet.Y:F2}, Z={packet.Z:F2}");
             idToZone[player.RegionId].MovePlayer(player, packet.X, packet.Y + 1, packet.Z);
-            Console.WriteLine($"[WORLD HOLDER] Move player task for Region:{player.RegionId}");
         }
     }
 
@@ -137,6 +145,11 @@ public class WorldHolder : IWorldHolder
         }
         Console.WriteLine($"[CHANGE REGION] Unknown player try to change region");
 
+    }
+
+    public void InitiateNewPlayer(HandshakeResponseDto data)
+    {
+        InitPlayerQueue.Enqueue(data);
     }
 
 

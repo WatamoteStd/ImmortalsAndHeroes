@@ -14,7 +14,7 @@ using Shared.Udp.Packets.Category.Game;
 
 namespace Server.Network;
 
-public class SessionManager : IWorldBroadcaster
+public class SessionManager : IWorldBroadcaster, ISessionPacketHandler
 {
     
     private Stack<ushort> guestIds = new(); 
@@ -26,14 +26,15 @@ public class SessionManager : IWorldBroadcaster
 
     // HTTP
     private readonly HttpMaster _httpMaster = new HttpMaster();
+
     private readonly PacketSender _packetSender;
     private IWorldHolder? _worldApi;
 
     private byte MainPoolDeleted, GuestPoolDeleted;
 
-    public SessionManager(PacketSender packetSender)
+    public SessionManager(PacketSender packetSender, PacketReader packetReader)
     {
-        _packetReader = new PacketReader(this);
+        _packetReader = packetReader;
         _packetSender = packetSender;
 
         GuestPool = new SessionPool(300, 300);
@@ -60,38 +61,20 @@ public class SessionManager : IWorldBroadcaster
         
         if (ipToSession.TryGetValue(endPoint, out UserSession? session))
         {
-            if (session.State == UserSession.SessionState.Active)
+
+            session.LastPacketTime = Environment.TickCount64;
+            if (session.IsAuthorazing)
             {
-                
-                session.LastPacketTime = Environment.TickCount64;
-                Console.WriteLine($"[Server] Received new packet from Player:{session.UserId}.");
-
-                var localPacket = new NetworkCommand
-                {
-                    Session = session,
-                    Data = data,
-                    Length = dataLength
-                };
-                _worldApi?.EnqueueCommand(localPacket);
-
+                ArrayPool<byte>.Shared.Return(data);
+                return;
             }
-            else if (session.State == UserSession.SessionState.Guest)
-            {
-                
-                session.LastPacketTime = Environment.TickCount64;
 
-                if (session.IsAuthorazing) return;
-                
-                if (_packetReader.ReadPacketType(data) == PacketTypes.C2S_Handshake)
-                {
-                    _packetReader.PacketDeserialize(data, session);
-                    session.IsAuthorazing = true;
-                }
+            Console.WriteLine($"[Server] Received new packet from UserId:{session.UserId}.");
 
-            }
+            _packetReader.PacketDeserialize(data, dataLength, session);
         }
         else
-            {
+        {
             if (guestIds.Count == 0)
             {
                 Console.WriteLine("[WARNING] GuestPool is full!");
@@ -106,15 +89,13 @@ public class SessionManager : IWorldBroadcaster
             if (_packetReader.ReadPacketType(data) == PacketTypes.C2S_Handshake)
             {
                 
-                _packetReader.PacketDeserialize(data, newSession);
+                _packetReader.PacketDeserialize(data, dataLength, newSession);
                 newSession.IsAuthorazing = true;
 
             }
-
-
         }
-
     }
+
 
     public void Cleaner(long timeoutTimeMs, long mainTimeouteMs)
     {
@@ -185,7 +166,7 @@ public class SessionManager : IWorldBroadcaster
             _packetSender.SM_SendHandhsakeResult(true, characterData, userIp);
             if (_worldApi != null)
             {
-                _worldApi.AddPlayer((uint)characterData.RegionId, characterData);
+                _worldApi.InitiateNewPlayer(characterData);
             }
             else
             {
@@ -197,21 +178,16 @@ public class SessionManager : IWorldBroadcaster
     }
     public async Task HandshakeRequest(string ticket, IPEndPoint iPEnd)
     {
-        
-
         var (isValid, characterData, message) = await _httpMaster.ValidateSessionAsync(ticket);
 
         if (!isValid || characterData == null)
         {
-            
             Console.WriteLine($"[HTTP] Handshake for {iPEnd} failed. Message{message}");
             _packetSender.SM_SendHandhsakeResult(false, null, iPEnd);
 
             return;
-
         }
         AuthorizeSession(iPEnd, characterData);
-
     }
 
     // =========== API METHODS ======================================

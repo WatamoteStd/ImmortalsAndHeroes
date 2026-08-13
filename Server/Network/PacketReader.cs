@@ -5,23 +5,32 @@ using Shared.Udp.Packets.Category;
 using System.Net;
 using Shared.Udp.Packets.Category.Game;
 using Server.Pools.Session;
+using Server.Network.Interfaces;
+using System.Buffers;
 
 namespace Server.Network;
 
 public class PacketReader
 {
     
-    private readonly SessionManager _sessionManager;
+    private readonly Lazy<ISessionPacketHandler> _sessionManagerApi;
+    private IWorldHolder? _worldApi;
 
-    public PacketReader(SessionManager manager)
+    public PacketReader(Lazy<ISessionPacketHandler> manager)
     {
-        _sessionManager = manager;
+        _sessionManagerApi = manager;
+    }
+    public void InitializeWorld(IWorldHolder world)
+    {
+        _worldApi = world;
     }
 
-    public void PacketDeserialize(ReadOnlySpan<byte> buffer, UserSession session)
+    public void PacketDeserialize(byte[] rawData, ushort length, UserSession session)
     {
         
-        PacketTypes packetType = (PacketTypes)BinaryPrimitives.ReadUInt16LittleEndian(buffer);
+        ReadOnlySpan<byte> clearSpan = rawData.AsSpan(0, length);
+
+        PacketTypes packetType = (PacketTypes)BinaryPrimitives.ReadUInt16LittleEndian(clearSpan);
 
         switch (packetType)
         {
@@ -29,9 +38,10 @@ public class PacketReader
             case PacketTypes.C2S_Handshake:
                 {
                     
-                    var packet = PacketSerialier.Deserialize<C2S_HandshakePacket>(buffer[2..]);
+                    var packet = PacketSerialier.Deserialize<C2S_HandshakePacket>(clearSpan[2..]);
 
-                    _ = _sessionManager.HandshakeRequest(packet.Ticket, session.IpEnd);
+                    _ = _sessionManagerApi.Value.HandshakeRequest(packet.Ticket, session.IpEnd);
+                    ArrayPool<byte>.Shared.Return(rawData);
 
                 }
             break;
@@ -39,9 +49,15 @@ public class PacketReader
             case PacketTypes.C2S_MoveRequest:
                 {
                     
-                    var packet = PacketSerialier.Deserialize<C2S_MoveRequestPacket>(buffer[2..]);
+                    var cmd = new NetworkCommand
+                    {
+                        Session = session,
+                        Data = rawData,
+                        PacketType = packetType,
+                        Length = length
 
-                    _sessionManager.PlayerMoveRequest(session, packet);
+                    };
+                    _worldApi?.EnqueueCommand(cmd);
 
                 }
             break;
@@ -49,12 +65,19 @@ public class PacketReader
             case PacketTypes.C2S_ChangeRegionRequest:
                 {
                     
-                    var packet = PacketSerialier.Deserialize<C2S_ChangeRegionRequestPacket>(buffer[2..]);
+                    //var packet = PacketSerialier.Deserialize<C2S_ChangeRegionRequestPacket>(buffer[2..]);
 
-                    _sessionManager.WH_PlayerChangeRegionRequest(session, packet);
+                    //_sessionManager.WH_PlayerChangeRegionRequest(session, packet);
 
                 }
             break;
+
+            default:
+                {
+                    ArrayPool<byte>.Shared.Return(rawData);
+                    Console.WriteLine("[Packet Reader] Unknown packet received");
+                }
+                break;
 
         }
 
