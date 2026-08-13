@@ -11,5 +11,6 @@ public interface IWorldHolder
 
     void EnqueueCommand(NetworkCommand data);
     void InitiateNewPlayer(HandshakeResponseDto characterData);
+    void SM_RemovePlayer(UserSession session);
 
 }

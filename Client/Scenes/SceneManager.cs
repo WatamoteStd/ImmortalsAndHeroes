@@ -30,7 +30,8 @@ public partial class SceneManager : CanvasLayer
 		regIdToScenePath = new Dictionary<uint, string>
 		{
 			
-			{0, "res://World/Regions/Region_0.tscn"}
+			{0, "res://World/Regions/Region_0.tscn"},
+			{1, "res://World/Regions/Region_1_City.tscn"}
 
 		};
 
@@ -74,6 +75,14 @@ public partial class SceneManager : CanvasLayer
 		Visible = false;
 		ShowHud();
 
+	}
+
+	public void ConnectionLostScren()
+	{
+		HideHud();
+		Visible = false;
+    	_inventory.Visible = false;
+		GetTree().ChangeSceneToFile("res://Menus/MainMenu/LoginMenu.tscn");
 	}
 	
 	private void ShowHud()

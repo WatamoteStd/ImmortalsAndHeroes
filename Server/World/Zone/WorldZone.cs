@@ -121,7 +121,7 @@ public class WorldZone
         }
     }
 
-    public void NETWORK_RemovePlayer(uint playerId)
+    public void RemovePlayer(uint playerId)
     {
         
         if (_players.TryGetValue(playerId, out PlayerEntity? player))
@@ -134,10 +134,7 @@ public class WorldZone
         
         foreach (var p in _players.Values)
         {
-            
-            if (p == player) continue;
             _worldHolder.Broadcaster.SendToPlayer(p.PlayerId, PacketTypes.S2C_RemoveEntity, packet);
-
         }
 
         player.ClearInventorySubscriptions();

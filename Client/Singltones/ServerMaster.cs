@@ -172,7 +172,16 @@ public partial class ServerMaster : Node
             
             case S2C_RemoveEntityPacket remove:
                 {
-                    _worldManager.RemoveEntity(remove.Id);
+                    _worldManager?.RemoveEntity(remove.Id);
+                    if (remove.Id == GameSession.Instance.PlayerCache.Id)
+                    {
+                        SceneManager.Instance.ConnectionLostScren();
+                        _packetReader?.Stop();
+                        _socket?.Close();
+                        _socket = null!;
+                        GameSession.Instance.CurrentSessionState = GameSession.State.Disconnected;
+
+                    }
                 }
             break;
             

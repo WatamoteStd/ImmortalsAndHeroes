@@ -141,8 +141,8 @@ variation_embolden = 0.63
 [node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator", "_hud", "_inventory")]
 script = ExtResource("1_hjya1")
 _animator = NodePath("AnimationPlayer")
-_hud = NodePath("CanvasLayer")
-_inventory = NodePath("CanvasLayer/Inventory")
+_hud = NodePath("UI")
+_inventory = NodePath("UI/Inventory")
 
 [node name="Bg" type="TextureRect" parent="." unique_id=1002927567]
 texture_repeat = 2
@@ -189,7 +189,7 @@ show_percentage = false
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2069832628]
 libraries/ = SubResource("AnimationLibrary_83gc0")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1081374653 node_paths=PackedStringArray("_healthBar", "_manaBar", "_silver", "_lvl", "_nickname")]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1081374653 node_paths=PackedStringArray("_healthBar", "_manaBar", "_silver", "_lvl", "_nickname")]
 layer = 100
 visible = false
 script = ExtResource("4_7xrkh")
@@ -199,7 +199,7 @@ _silver = NodePath("PanelContainer/LeftBlock/SilveBlock/Silver")
 _lvl = NodePath("PanelContainer/LeftBlock/LvlBlock/Lvl")
 _nickname = NodePath("PanelContainer/Nickname")
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=383323327]
+[node name="PanelContainer" type="PanelContainer" parent="UI" unique_id=383323327]
 custom_minimum_size = Vector2(600, 100)
 anchors_preset = 7
 anchor_left = 0.5
@@ -213,45 +213,45 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_6u82b")
 
-[node name="LeftBlock" type="VBoxContainer" parent="CanvasLayer/PanelContainer" unique_id=439506789]
+[node name="LeftBlock" type="VBoxContainer" parent="UI/PanelContainer" unique_id=439506789]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 
-[node name="LvlBlock" type="HBoxContainer" parent="CanvasLayer/PanelContainer/LeftBlock" unique_id=1934392959]
+[node name="LvlBlock" type="HBoxContainer" parent="UI/PanelContainer/LeftBlock" unique_id=1934392959]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="name" type="Label" parent="CanvasLayer/PanelContainer/LeftBlock/LvlBlock" unique_id=836865036]
+[node name="name" type="Label" parent="UI/PanelContainer/LeftBlock/LvlBlock" unique_id=836865036]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "LVL:"
 
-[node name="Lvl" type="Label" parent="CanvasLayer/PanelContainer/LeftBlock/LvlBlock" unique_id=55715438]
+[node name="Lvl" type="Label" parent="UI/PanelContainer/LeftBlock/LvlBlock" unique_id=55715438]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "none"
 
-[node name="SilveBlock" type="HBoxContainer" parent="CanvasLayer/PanelContainer/LeftBlock" unique_id=2039140100]
+[node name="SilveBlock" type="HBoxContainer" parent="UI/PanelContainer/LeftBlock" unique_id=2039140100]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="name" type="Label" parent="CanvasLayer/PanelContainer/LeftBlock/SilveBlock" unique_id=1937063498]
+[node name="name" type="Label" parent="UI/PanelContainer/LeftBlock/SilveBlock" unique_id=1937063498]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Silver:"
 
-[node name="Silver" type="Label" parent="CanvasLayer/PanelContainer/LeftBlock/SilveBlock" unique_id=1502581446]
+[node name="Silver" type="Label" parent="UI/PanelContainer/LeftBlock/SilveBlock" unique_id=1502581446]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "none"
 
-[node name="MiddleBlock" type="VBoxContainer" parent="CanvasLayer/PanelContainer" unique_id=1882101431]
+[node name="MiddleBlock" type="VBoxContainer" parent="UI/PanelContainer" unique_id=1882101431]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="HpBar" type="ProgressBar" parent="CanvasLayer/PanelContainer/MiddleBlock" unique_id=856579824]
+[node name="HpBar" type="ProgressBar" parent="UI/PanelContainer/MiddleBlock" unique_id=856579824]
 custom_minimum_size = Vector2(300, 15)
 layout_mode = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_hjya1")
@@ -259,7 +259,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_83gc0")
 value = 50.0
 show_percentage = false
 
-[node name="MpBar" type="ProgressBar" parent="CanvasLayer/PanelContainer/MiddleBlock" unique_id=1807221081]
+[node name="MpBar" type="ProgressBar" parent="UI/PanelContainer/MiddleBlock" unique_id=1807221081]
 custom_minimum_size = Vector2(300, 15)
 layout_mode = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_ichqs")
@@ -267,14 +267,14 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_8ysa5")
 value = 25.0
 show_percentage = false
 
-[node name="Nickname" type="Label" parent="CanvasLayer/PanelContainer" unique_id=1949083075]
+[node name="Nickname" type="Label" parent="UI/PanelContainer" unique_id=1949083075]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_colors/font_color = Color(0.85753846, 0.87636775, 0.76328087, 1)
 theme_override_font_sizes/font_size = 19
 text = "Nickname"
 
-[node name="Inventory" type="PanelContainer" parent="CanvasLayer" unique_id=1740792429]
+[node name="Inventory" type="PanelContainer" parent="UI" unique_id=1740792429]
 visible = false
 custom_minimum_size = Vector2(350, 500)
 anchors_preset = 6
@@ -290,16 +290,16 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vcdtc")
 script = ExtResource("5_8ysa5")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Inventory" unique_id=2017661304]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Inventory" unique_id=2017661304]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="Header" type="PanelContainer" parent="CanvasLayer/Inventory/VBoxContainer" unique_id=530941613]
+[node name="Header" type="PanelContainer" parent="UI/Inventory/VBoxContainer" unique_id=530941613]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qm0se")
 
-[node name="Label" type="Label" parent="CanvasLayer/Inventory/VBoxContainer/Header" unique_id=1730869598]
+[node name="Label" type="Label" parent="UI/Inventory/VBoxContainer/Header" unique_id=1730869598]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.8127129, 0.8455433, 0.8618154, 1)
@@ -308,38 +308,38 @@ theme_override_fonts/font = SubResource("FontVariation_83fg3")
 theme_override_font_sizes/font_size = 26
 text = "INVENTORY"
 
-[node name="Slots" type="GridContainer" parent="CanvasLayer/Inventory/VBoxContainer" unique_id=1860133313]
+[node name="Slots" type="GridContainer" parent="UI/Inventory/VBoxContainer" unique_id=1860133313]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/h_separation = 2
 columns = 4
 
-[node name="Slot1" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=1609103383 instance=ExtResource("5_83gc0")]
+[node name="Slot1" parent="UI/Inventory/VBoxContainer/Slots" unique_id=1609103383 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot2" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=158006091 instance=ExtResource("5_83gc0")]
+[node name="Slot2" parent="UI/Inventory/VBoxContainer/Slots" unique_id=158006091 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot3" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=106425847 instance=ExtResource("5_83gc0")]
+[node name="Slot3" parent="UI/Inventory/VBoxContainer/Slots" unique_id=106425847 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot4" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=536414281 instance=ExtResource("5_83gc0")]
+[node name="Slot4" parent="UI/Inventory/VBoxContainer/Slots" unique_id=536414281 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot5" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=2011650220 instance=ExtResource("5_83gc0")]
+[node name="Slot5" parent="UI/Inventory/VBoxContainer/Slots" unique_id=2011650220 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot6" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=844681337 instance=ExtResource("5_83gc0")]
+[node name="Slot6" parent="UI/Inventory/VBoxContainer/Slots" unique_id=844681337 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot7" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=1877923527 instance=ExtResource("5_83gc0")]
+[node name="Slot7" parent="UI/Inventory/VBoxContainer/Slots" unique_id=1877923527 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot8" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=1271336900 instance=ExtResource("5_83gc0")]
+[node name="Slot8" parent="UI/Inventory/VBoxContainer/Slots" unique_id=1271336900 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot9" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=161001819 instance=ExtResource("5_83gc0")]
+[node name="Slot9" parent="UI/Inventory/VBoxContainer/Slots" unique_id=161001819 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot10" parent="CanvasLayer/Inventory/VBoxContainer/Slots" unique_id=1774147062 instance=ExtResource("5_83gc0")]
+[node name="Slot10" parent="UI/Inventory/VBoxContainer/Slots" unique_id=1774147062 instance=ExtResource("5_83gc0")]
 layout_mode = 2

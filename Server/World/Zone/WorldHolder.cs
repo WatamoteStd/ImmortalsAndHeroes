@@ -61,6 +61,20 @@ public class WorldHolder : IWorldHolder
                         ArrayPool<byte>.Shared.Return(cmd.Data);
                     }
                 break;
+                case PacketTypes.S2C_RemoveEntity: // INTERNAL PACKET UNIQUE LOGIC!!!
+                    {
+                        if (idToPlayer.TryGetValue(cmd.Session.UserId, out PlayerEntity? player))
+                        {
+                            RemovePlayer(player.RegionId, player.PlayerId);
+                            SuccessfulDeletePlayer(cmd.Session);
+                            
+                        }
+                        else
+                        {
+                            Console.WriteLine($"[WORLD HOLDER] Can't delete Userd:{cmd.Session.UserId}");
+                        }                       
+                    }
+                break;
 
             }
 
@@ -97,7 +111,9 @@ public class WorldHolder : IWorldHolder
         
         if (idToZone.TryGetValue(zoneId, out WorldZone? zone))
         {
-            zone.NETWORK_RemovePlayer(playerId);
+            zone.RemovePlayer(playerId);
+            idToPlayer.Remove(playerId);
+            Console.WriteLine($"[WORLD HOLDER] PlayerID{playerId} leave from the world.");
         }
 
     }
@@ -132,7 +148,7 @@ public class WorldHolder : IWorldHolder
                 if(idToZone.TryGetValue(player.RegionId, out WorldZone? oldRegion) && idToZone.TryGetValue(packet.RegionId, out WorldZone? newRegion))
                 {
                     
-                    oldRegion.NETWORK_RemovePlayer(player.PlayerId);
+                    oldRegion.RemovePlayer(player.PlayerId);
                     newRegion.AddPlayer(player);
 
                     return;
@@ -156,6 +172,23 @@ public class WorldHolder : IWorldHolder
     public void EnqueueCommand(NetworkCommand cmd)
     {
         CommandsQueue.Enqueue(cmd);
+    }
+    public void SM_RemovePlayer(UserSession session)
+    {
+        
+        var cmd = new NetworkCommand
+        {
+            Session = session,
+            Data = null!,
+            PacketType = PacketTypes.S2C_RemoveEntity,
+            Length = 0
+        };
+        CommandsQueue.Enqueue(cmd);
+
+    }
+    public void SuccessfulDeletePlayer(UserSession session)
+    {
+        _broadcaster.API_RemoveSession(session);
     }
 
     

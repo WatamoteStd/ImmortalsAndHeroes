@@ -129,14 +129,8 @@ public class SessionManager : IWorldBroadcaster, ISessionPacketHandler
             
             if (now - session.LastPacketTime > mainTimeouteMs)
             {
-                
-                ipToSession.Remove(session.IpEnd);
-                MainPool.DeleteSession(session);
-
-                MainPoolDeleted++;
-                Console.WriteLine($"[CLEANER DEBUG] Deleted Users statistics. | MainPool:{MainPoolDeleted}. GuestPool{GuestPoolDeleted}");
-                Console.WriteLine();
-                Console.WriteLine($"[CLEANER DEBUG] Free guest ID'S:{guestIds.Count} | Total Players:{MainPool.Count}. | Total Guest:{GuestPool.Count}");
+    
+                _worldApi!.SM_RemovePlayer(session);
 
             }
 
@@ -200,6 +194,16 @@ public class SessionManager : IWorldBroadcaster, ISessionPacketHandler
         if (session == null) return;
         
         _packetSender.SendPacket(session.IpEnd, packetType, packet);
+
+    }
+
+    public void API_RemoveSession(UserSession session)
+    {
+        
+        Console.WriteLine($"[SM] Session{session.UserId} disconnect from the server!");
+        ipToSession.Remove(session.IpEnd);
+        MainPool.DeleteSession(session);
+        MainPoolDeleted++;
 
     }
 
