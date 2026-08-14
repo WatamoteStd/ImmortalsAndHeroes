@@ -12,6 +12,9 @@ public partial class SceneManager : CanvasLayer
 	[Export] private Inventory _inventory;
 	public static SceneManager Instance { get; private set; }
 
+	[Export] private PanelContainer _connectionLostWindow;
+	[Export] private Button _connectionLostButton;
+
 	public Dictionary<uint, string> regIdToScenePath;
 
 	public override void _Ready()
@@ -34,6 +37,12 @@ public partial class SceneManager : CanvasLayer
 			{1, "res://World/Regions/Region_1_City.tscn"}
 
 		};
+
+		_connectionLostButton.Pressed += () =>
+		{
+			BackToMenuConnectionLost();
+		};
+		_connectionLostWindow.Visible = false;
 
 		PlayerController.OnInventoryAction -= InventoryAction;
 		PlayerController.OnInventoryAction += InventoryAction;
@@ -80,20 +89,28 @@ public partial class SceneManager : CanvasLayer
 	public void ConnectionLostScren()
 	{
 		HideHud();
-		Visible = false;
+		Visible = true;
     	_inventory.Visible = false;
+		_connectionLostWindow.Visible = true;
+	}
+	private void BackToMenuConnectionLost()
+	{
 		GetTree().ChangeSceneToFile("res://Menus/MainMenu/LoginMenu.tscn");
+		_connectionLostWindow.Visible = false;
+		Visible = false;
 	}
 	
 	private void ShowHud()
 	{
 		
 		_hud.Visible = true;
+		_hud.ProcessMode = ProcessModeEnum.Always;
 
 	}
 	private void HideHud()
 	{
 		_hud.Visible = false;
+		_hud.ProcessMode = ProcessModeEnum.Disabled;
 	}
 
 	public void InitPlayerHud(uint hp, uint mp, uint silver, uint lvl, string name)

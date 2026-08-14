@@ -147,6 +147,9 @@ public partial class ServerMaster : Node
             case S2C_HandshakeSuccessPacket handshake:
                 {
                     WorldManager?.SpawnLocalPlayer(handshake);
+                    GameSession.Instance.NetworkId = handshake.Id;
+                    GameSession.Instance.PlayerCache = handshake;
+
                 }
             break;
 
@@ -178,7 +181,7 @@ public partial class ServerMaster : Node
                         SceneManager.Instance.ConnectionLostScren();
                         _packetReader?.Stop();
                         _socket?.Close();
-                        _socket = null!;
+                        _socket = null!;   
                         GameSession.Instance.CurrentSessionState = GameSession.State.Disconnected;
 
                     }

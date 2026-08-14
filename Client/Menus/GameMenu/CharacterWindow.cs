@@ -64,7 +64,6 @@ public partial class CharacterWindow : PanelContainer
         }
         else
         {
-            
             UpdateChracter(response.character.Nickname, response.character.Id.ToString(), response.character.Silver.ToString());
             _statusWindow.ShowMessage("Server Information", response.message);
             

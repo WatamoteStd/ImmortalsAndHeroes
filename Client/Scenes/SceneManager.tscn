@@ -138,11 +138,29 @@ shadow_size = 2
 base_font = ExtResource("2_ebsso")
 variation_embolden = 0.63
 
-[node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator", "_hud", "_inventory")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w4wer"]
+bg_color = Color(0.12156863, 0.12156863, 0.12156863, 0.92941177)
+
+[sub_resource type="FontVariation" id="FontVariation_6u82b"]
+base_font = ExtResource("2_ebsso")
+variation_embolden = 0.55
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ygr85"]
+bg_color = Color(0.7696197, 0.8007572, 0.8053603, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cmid"]
+bg_color = Color(0.6851024, 0.7241215, 0.7290107, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q4unc"]
+bg_color = Color(0.81961036, 0.8449592, 0.84812224, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator", "_hud", "_inventory", "_connectionLostWindow", "_connectionLostButton")]
 script = ExtResource("1_hjya1")
 _animator = NodePath("AnimationPlayer")
 _hud = NodePath("UI")
 _inventory = NodePath("UI/Inventory")
+_connectionLostWindow = NodePath("ConnectionLostWindow")
+_connectionLostButton = NodePath("ConnectionLostWindow/VBoxContainer/MenuButton")
 
 [node name="Bg" type="TextureRect" parent="." unique_id=1002927567]
 texture_repeat = 2
@@ -343,3 +361,36 @@ layout_mode = 2
 
 [node name="Slot10" parent="UI/Inventory/VBoxContainer/Slots" unique_id=1774147062 instance=ExtResource("5_83gc0")]
 layout_mode = 2
+
+[node name="ConnectionLostWindow" type="PanelContainer" parent="." unique_id=690597117]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w4wer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConnectionLostWindow" unique_id=1928071222]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="ConnectionLostWindow/VBoxContainer" unique_id=1290293560]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8525921, 0.9273058, 0.9750549, 1)
+theme_override_fonts/font = SubResource("FontVariation_6u82b")
+theme_override_font_sizes/font_size = 32
+text = "CONNECTION LOST..."
+
+[node name="MenuButton" type="Button" parent="ConnectionLostWindow/VBoxContainer" unique_id=32593234]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.1895665, 0.18956706, 0.1895667, 1)
+theme_override_colors/font_pressed_color = Color(0.07683582, 0.07683582, 0.07683582, 1)
+theme_override_colors/font_hover_color = Color(0.34532204, 0.34532225, 0.34532303, 1)
+theme_override_fonts/font = ExtResource("2_ebsso")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ygr85")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2cmid")
+theme_override_styles/hover = SubResource("StyleBoxFlat_q4unc")
+text = "Back"
