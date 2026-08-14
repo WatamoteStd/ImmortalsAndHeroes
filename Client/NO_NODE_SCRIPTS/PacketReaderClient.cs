@@ -120,6 +120,14 @@ public class PacketReaderClient
 
                         }
                     break;
+                    case PacketTypes.S2C_ChangeRegion:
+                        {
+                            
+                            var packet = PacketSerialier.Deserialize<S2C_ChangeRegionPacket>(payload);
+                            _networkPackets.Enqueue(packet);
+
+                        }
+                        break;
 
                     default:
                         {

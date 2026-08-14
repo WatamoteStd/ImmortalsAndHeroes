@@ -52,7 +52,7 @@ public partial class WorldHandler : Node3D
 		AddChild(newPlayer);
 		newPlayer.GetNode<Node3D>("Model").AddChild(playerModel);
 
-		newPlayer.InitEntity(data.Id, data.Health, data.Health, data.Name);
+		newPlayer.InitEntity(data.Id, data.Health, data.Health, data.Name, data.Type);
 		Vector3 pos = new Vector3(data.PosX, data.PosY, data.PosZ);
 		newPlayer.GlobalPosition = pos;
 
@@ -71,7 +71,7 @@ public partial class WorldHandler : Node3D
 		localPlayer.GetNode<Node3D>("Model").AddChild(locPlayerModel);
 
 		Vector3 dataPos = new Vector3(playerPacket.PosX + 2, playerPacket.PosY, playerPacket.PosZ + 2);
-		localPlayer.InitEntity(playerPacket.Id, playerPacket.CurrentHp, playerPacket.CurrentHp, playerPacket.Name, playerPacket.UserId, playerPacket.CurrentMp, playerPacket.CurrentMp);
+		localPlayer.InitEntity(playerPacket.Id, playerPacket.CurrentHp, playerPacket.CurrentHp, playerPacket.Name, playerPacket.Type, playerPacket.UserId, playerPacket.CurrentMp, playerPacket.CurrentMp);
 		localPlayer.GlobalPosition = dataPos;
 
 		RegionEntities.Add(localPlayer.Id, localPlayer);

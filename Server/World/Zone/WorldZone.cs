@@ -13,7 +13,7 @@ public class WorldZone
     public uint Id {get; private set;}
     private readonly WorldHolder _worldHolder;
 
-    private readonly Dictionary<uint, PlayerEntity> _players = new();
+    public Dictionary<uint, PlayerEntity> _players {get; private set;}= new();
     private Dictionary<uint, EntityBase> _entities = new();
 
     private float latensy;
@@ -121,35 +121,35 @@ public class WorldZone
         }
     }
 
-    public void RemovePlayer(uint playerId)
+    public void RemovePlayer(uint playerId, bool notifySelf = false)
     {
         
         if (_players.TryGetValue(playerId, out PlayerEntity? player))
         {
+
+            player.ClearInventorySubscriptions();
+            _players.Remove(player.PlayerId);
+            _entities.Remove(player.EntityId);
             
-            var packet = new S2C_RemoveEntityPacket
-        {
-            Id = player.EntityId
-        };
+            var packet = new S2C_RemoveEntityPacket { Id = player.EntityId};
         
-        foreach (var p in _players.Values)
-        {
-            _worldHolder.Broadcaster.SendToPlayer(p.PlayerId, PacketTypes.S2C_RemoveEntity, packet);
-        }
+            foreach (var p in _players.Values)
+            {
+                _worldHolder.Broadcaster.SendToPlayer(p.PlayerId, PacketTypes.S2C_RemoveEntity, packet);
+            }
 
-        player.ClearInventorySubscriptions();
-        _players.Remove(player.PlayerId);
-        _entities.Remove(player.EntityId);
+            if (notifySelf)
+            {
+                _worldHolder.Broadcaster.SendToPlayer(player.PlayerId, PacketTypes.S2C_RemoveEntity, packet);
+            }
 
+            Console.WriteLine($"[REGION {Id}] Character:{player.Name} has been removed from region!");
+            return;
 
-        Console.WriteLine($"[REGION {Id}] Character:{player.Name} has been removed from region!");
-        return;
+            }
 
-        }
         Console.WriteLine($"[REGION {Id}] Can't find PlayerId:{playerId} at this region");
         
-
-
     }
 
 }

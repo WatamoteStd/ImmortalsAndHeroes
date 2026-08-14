@@ -15,8 +15,10 @@ public partial class RegionChangeArea : Area3D
 
 	private void ChangeRegionRequest(Node body)
 	{
+
 		if (body is LocalPlayerEntity)
 		{
+			GD.Print($"[CHANGE LOC AREA] IT'S LOCAL PLAYER!");
 			ServerMaster.Instance.LocalPlayerChangeRegionRequest(EnterZoneId);
 		}
 

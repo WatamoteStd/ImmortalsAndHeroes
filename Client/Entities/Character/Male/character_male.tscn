@@ -8,7 +8,7 @@ material = SubResource("StandardMaterial3D_ichqs")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_83fg3"]
 
-[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1459843614]
+[node name="CharacterBody3D" type="Node3D" unique_id=1611367857]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1180601102]
 mesh = SubResource("CapsuleMesh_6u82b")

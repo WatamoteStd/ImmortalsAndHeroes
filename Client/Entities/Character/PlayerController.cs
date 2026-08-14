@@ -29,9 +29,6 @@ public partial class PlayerController : Node
 
 			if (clickPoint.HasValue)
 			{
-				GD.Print($"[RAW CLICK] X={clickPoint.Value.X:F2}, Z={clickPoint.Value.Z:F2}");
-				
-				
 				OnMoveRequest?.Invoke(clickPoint.Value);
 			}
 			else GD.Print("[RAW CLICK] Null click, i get it");

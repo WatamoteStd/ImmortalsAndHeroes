@@ -76,6 +76,17 @@ public class WorldHolder : IWorldHolder
                     }
                 break;
 
+                case PacketTypes.C2S_ChangeRegionRequest:
+                    {
+                        
+                        var packet = PacketSerialier.Deserialize<C2S_ChangeRegionRequestPacket>(cmd.Data[2..]);
+                        ChangePlayerRegion(cmd.Session.UserId, packet);
+
+                        ArrayPool<byte>.Shared.Return(cmd.Data);
+
+                    }
+                break;
+
             }
 
         }
@@ -111,7 +122,7 @@ public class WorldHolder : IWorldHolder
         
         if (idToZone.TryGetValue(zoneId, out WorldZone? zone))
         {
-            zone.RemovePlayer(playerId);
+            zone.RemovePlayer(playerId, notifySelf: true);
             idToPlayer.Remove(playerId);
             Console.WriteLine($"[WORLD HOLDER] PlayerID{playerId} leave from the world.");
         }
@@ -132,7 +143,7 @@ public class WorldHolder : IWorldHolder
         if (idToPlayer.TryGetValue(userId, out PlayerEntity? player))
         {
             Console.WriteLine($"[Server Receive] Player wants to go to: X={packet.X:F2}, Y={packet.Y:F2}, Z={packet.Z:F2}");
-            idToZone[player.RegionId].MovePlayer(player, packet.X, packet.Y + 1, packet.Z);
+            idToZone[player.RegionId].MovePlayer(player, packet.X, 1, packet.Z);
         }
     }
 
@@ -148,8 +159,36 @@ public class WorldHolder : IWorldHolder
                 if(idToZone.TryGetValue(player.RegionId, out WorldZone? oldRegion) && idToZone.TryGetValue(packet.RegionId, out WorldZone? newRegion))
                 {
                     
-                    oldRegion.RemovePlayer(player.PlayerId);
+                    oldRegion.RemovePlayer(player.PlayerId, notifySelf: false);
+                    player.RegionId = newRegion.Id;
+
+                    var changeRegPacket = new S2C_ChangeRegionPacket
+                    {
+                        CharacterId = player.EntityId,
+                        RegionId = packet.RegionId
+                    };
+                    player.SetPosition(0,1,0);
+                    player.MoveToPosition(new Vector3(0,1,0));
+                    var characterDataPacket = new S2C_HandshakeSuccessPacket
+                    {
+                        Id = player.EntityId,
+                        RegionId = player.RegionId,
+                        Name = player.Name,
+                        PosX = player.Position.X,
+                        PosY = player.Position.Y,
+                        PosZ = player.Position.Z,
+                        UserId = player.PlayerId,
+                        Type = player.ModelType,
+                        CurrentHp = player.Health,
+                        CurrentMp = player.Health,
+                        Lvl = (int)player.Lvl,
+                        Silver = player.Silver
+                    };
+
+                    _broadcaster.SendToPlayer<S2C_ChangeRegionPacket>(player.PlayerId, PacketTypes.S2C_ChangeRegion, changeRegPacket);
+                    _broadcaster.SendToPlayer<S2C_HandshakeSuccessPacket>(player.PlayerId, PacketTypes.S2C_HandshakeSuccess, characterDataPacket);
                     newRegion.AddPlayer(player);
+
 
                     return;
                 }

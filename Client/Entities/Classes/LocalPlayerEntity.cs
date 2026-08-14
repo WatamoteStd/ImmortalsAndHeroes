@@ -1,4 +1,5 @@
 using Godot;
+using Shared.Characters;
 using System;
 
 public partial class LocalPlayerEntity : Entity
@@ -17,9 +18,9 @@ public partial class LocalPlayerEntity : Entity
 		}
 	}
 
-	public void InitEntity(uint id, int health, int maxHealth, string name, uint locPlayeId, int mana, int maxMana)
+	public void InitEntity(uint id, int health, int maxHealth, string name, EntityType type, uint locPlayeId, int mana, int maxMana)
 	{
-		base.InitEntity(id, health, maxHealth, name);
+		base.InitEntity(id, health, maxHealth, name, type);
 
 		_mana = mana;
 		_maxMana = maxMana;
@@ -27,6 +28,5 @@ public partial class LocalPlayerEntity : Entity
 
 	}
 
-	
 
 }

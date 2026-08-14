@@ -1,4 +1,5 @@
 using Godot;
+using Shared.Characters;
 using System;
 
 public partial class Entity : CharacterBody3D
@@ -9,6 +10,10 @@ public partial class Entity : CharacterBody3D
 	protected int _health;
 	protected int _maxHealth;
 	public string EntityName {get; private set;}
+
+
+	public EntityType Type;
+	[Export] public CollisionShape3D CollisionNode { get; set; } = null!;
 
 	protected Vector3 _moveTarget;
 	public int Health
@@ -23,7 +28,7 @@ public partial class Entity : CharacterBody3D
 
 	}
 
-	public virtual void InitEntity(uint id, int health, int maxHealth, string name)
+	public virtual void InitEntity(uint id, int health, int maxHealth, string name, EntityType type)
 	{
 		
 		Id = id;
@@ -35,6 +40,9 @@ public partial class Entity : CharacterBody3D
 			_healthBar.MaxValue = _maxHealth;
 			_healthBar.Value = _health;
 		}
+		Type = type;
+		var data = EntityRegistry.GetEntityData(type);
+		SetCollisionSize(data.Height, data.Radius);
 
 	}
 
@@ -51,5 +59,28 @@ public partial class Entity : CharacterBody3D
 		_moveTarget = position;
 
 	}
+
+	protected void SetCollisionSize(float height, float radius)
+	{
+		CollisionNode ??= GetNodeOrNull<CollisionShape3D>("CollisionShape3D");
+		
+		if (CollisionNode.Shape is CapsuleShape3D capsule)
+		{
+			
+			if (!CollisionNode.Shape.IsLocalToScene())
+			{
+				capsule = (CapsuleShape3D)capsule.Duplicate();
+				CollisionNode.Shape = capsule;
+			}
+
+			capsule.Radius = radius;
+			capsule.Height = height;
+
+			GD.Print($"[COLLISION] Updated size: Height={height}, Radius={radius}");
+
+		}
+
+	}
+
 
 }

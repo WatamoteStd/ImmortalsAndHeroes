@@ -64,10 +64,17 @@ public class PacketReader
 
             case PacketTypes.C2S_ChangeRegionRequest:
                 {
-                    
-                    //var packet = PacketSerialier.Deserialize<C2S_ChangeRegionRequestPacket>(buffer[2..]);
 
-                    //_sessionManager.WH_PlayerChangeRegionRequest(session, packet);
+                    Console.WriteLine($"[PacketReader] Change region packet!");
+                    
+                    var cmd = new NetworkCommand
+                    {
+                        Session = session,
+                        Data = rawData,
+                        PacketType = packetType,
+                        Length = length
+                    };
+                    _worldApi?.EnqueueCommand(cmd);
 
                 }
             break;

@@ -34,6 +34,10 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="MMORPGClient"
 
+[global_group]
+
+LocalPlayer="ONLY FOR LOCAL PLAYER!!!"
+
 [input]
 
 Inventory={

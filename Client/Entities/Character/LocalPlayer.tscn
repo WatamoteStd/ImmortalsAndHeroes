@@ -3,8 +3,13 @@
 [ext_resource type="Script" uid="uid://lxcmupkpih0u" path="res://Entities/Classes/LocalPlayerEntity.cs" id="1_dm67a"]
 [ext_resource type="Script" uid="uid://c4lfs47dmh2xp" path="res://Entities/Character/PlayerController.cs" id="2_id7e5"]
 
-[node name="CharacterBody3D" type="CharacterBody3D" unique_id=2043490650]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_83fg3"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=2043490650 node_paths=PackedStringArray("CollisionNode") groups=["LocalPlayer"]]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_dm67a")
+CollisionNode = NodePath("CollisionShape3D")
 
 [node name="Model" type="Node3D" parent="." unique_id=1213344726]
 
@@ -19,3 +24,6 @@ _player = NodePath("..")
 
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=1427856926]
 target_position = Vector3(0, 0, -100)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=954040238]
+shape = SubResource("CapsuleShape3D_83fg3")

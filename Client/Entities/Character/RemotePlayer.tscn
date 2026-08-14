@@ -11,10 +11,15 @@ bg_color = Color(0.5461161, 0, 0.014243814, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jegbe"]
 bg_color = Color(0.73239285, 0, 0.030770086, 1)
 
-[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1223504242 node_paths=PackedStringArray("_name", "_healthBar")]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_83fg3"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1223504242 node_paths=PackedStringArray("_name", "_healthBar", "CollisionNode")]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_jegbe")
 _name = NodePath("HealthBarSprite/SubViewport/HealthBarUI/VBoxContainer/Name")
 _healthBar = NodePath("HealthBarSprite/SubViewport/HealthBarUI/VBoxContainer/HealthBar")
+CollisionNode = NodePath("CollisionShape3D")
 
 [node name="Model" type="Node3D" parent="." unique_id=267137872]
 
@@ -57,3 +62,6 @@ size_flags_vertical = 3
 theme_override_styles/background = SubResource("StyleBoxFlat_83fg3")
 theme_override_styles/fill = SubResource("StyleBoxFlat_jegbe")
 show_percentage = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=23379643]
+shape = SubResource("CapsuleShape3D_83fg3")

@@ -119,10 +119,21 @@ public partial class ServerMaster : Node
         while(_packetQeueue.TryDequeue(out INetworkPacket packet))
         {
 
-            if (packet is S2C_HandshakeSuccessPacket handshake)
+            if (packet is S2C_HandshakeSuccessPacket data)
             {
-            _ = SceneManager.Instance.LoadRegion(handshake.RegionId);
+
+                WorldManager = null; 
+                _ = SceneManager.Instance.LoadRegion(data.RegionId);
+                _regionPacketsBuffer.Add(packet);
+                continue;
             }
+            if (packet is S2C_ChangeRegionPacket dataPacket)
+            {
+                WorldManager = null; 
+                _ = SceneManager.Instance.LoadRegion(dataPacket.RegionId);
+                continue;     
+            }
+            
             
             if (WorldManager == null)
             {
@@ -186,8 +197,7 @@ public partial class ServerMaster : Node
 
                     }
                 }
-            break;
-            
+            break;       
 
         }
 
@@ -219,6 +229,7 @@ public partial class ServerMaster : Node
         {
             RegionId = regionId
         };
+        GD.Print($"[SERVER MASTER]Send player change region packet to server");
         int length = PacketSerialier.Serialize<C2S_ChangeRegionRequestPacket>(buffer, PacketTypes.C2S_ChangeRegionRequest, packet);
         _socket.Send(buffer);
 

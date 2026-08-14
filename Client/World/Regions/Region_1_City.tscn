@@ -1,5 +1,10 @@
 [gd_scene format=3 uid="uid://che2dft4rp2ro"]
 
+[ext_resource type="Script" uid="uid://dufeppnhj2h7k" path="res://World/WorldHandler.cs" id="1_s2f4u"]
+[ext_resource type="PackedScene" uid="uid://b4v3nmvo7nhxw" path="res://Entities/Character/RemotePlayer.tscn" id="2_isuyp"]
+[ext_resource type="PackedScene" uid="uid://dj6wqb3g7xlng" path="res://Entities/Character/LocalPlayer.tscn" id="3_0pbcf"]
+[ext_resource type="PackedScene" uid="uid://cwfns60gnqt7l" path="res://World/Regions/LocationChanger.tscn" id="4_isuyp"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ichqs"]
 albedo_color = Color(0.24697644, 0.228971, 0.15267801, 1)
 
@@ -29,7 +34,17 @@ size = Vector3(6, 4, 7)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ichqs"]
 size = Vector3(6, 4, 7)
 
+[sub_resource type="BoxMesh" id="BoxMesh_isuyp"]
+material = SubResource("StandardMaterial3D_vcdtc")
+size = Vector3(6, 4, 7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0pbcf"]
+size = Vector3(6, 4, 7)
+
 [node name="Node3D" type="Node3D" unique_id=1231749597]
+script = ExtResource("1_s2f4u")
+_remotePlayerScene = ExtResource("2_isuyp")
+_localPlayerScene = ExtResource("3_0pbcf")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=538823357]
 
@@ -46,21 +61,32 @@ environment = SubResource("Environment_83fg3")
 transform = Transform3D(1, 0, 0, 0, 0.00077636633, 0.9999997, 0, -0.9999997, 0.00077636633, 0, 355.11234, 0)
 
 [node name="Building1" type="StaticBody3D" parent="." unique_id=1003977053]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.069756, 1.961947, -11.469999)
+transform = Transform3D(0.9963592, 0, 0.08525459, 0, 1, 0, -0.08525459, 0, 0.9963592, 77.16631, 1.961947, -7.83819)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Building1" unique_id=307162677]
-transform = Transform3D(0.9987856, 0, -0.049267404, 0, 1, 0, 0.049267404, 0, 0.9987856, 0, 0, 3.5754032)
 mesh = SubResource("BoxMesh_83fg3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Building1" unique_id=48562843]
 shape = SubResource("BoxShape3D_ichqs")
 
 [node name="Building2" type="StaticBody3D" parent="." unique_id=1695981938]
-transform = Transform3D(0.99667937, 0, 0.08142632, 0, 1, 0, -0.08142632, 0, 0.99667937, 86.865814, 1.961947, -9.416804)
+transform = Transform3D(0.9953256, 0, -0.09657609, 0, 1, 0, 0.09657609, 0, 0.9953256, 86.3862, 1.961947, -9.064442)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Building2" unique_id=85781289]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.8642197)
-mesh = SubResource("BoxMesh_83fg3")
+mesh = SubResource("BoxMesh_isuyp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Building2" unique_id=2006615868]
-shape = SubResource("BoxShape3D_ichqs")
+shape = SubResource("BoxShape3D_0pbcf")
+
+[node name="Building3" type="StaticBody3D" parent="." unique_id=1531084563]
+transform = Transform3D(0.44777334, 0, -0.894147, 0, 1, 0, 0.894147, 0, 0.44777334, 22.921604, 1.961947, -13.899248)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building3" unique_id=113769770]
+mesh = SubResource("BoxMesh_isuyp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building3" unique_id=236222554]
+shape = SubResource("BoxShape3D_0pbcf")
+
+[node name="EnterToCity" parent="." unique_id=667303599 instance=ExtResource("4_isuyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.98025, 0.582957, 0)
+EnterZoneId = 0

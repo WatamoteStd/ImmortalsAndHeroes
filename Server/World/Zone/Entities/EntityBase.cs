@@ -10,7 +10,7 @@ public class EntityBase
     public State CurrentState = State.Idle;
     
     public uint EntityId {get; protected set;}
-    public uint RegionId {get; protected set;}
+    public uint RegionId {get; set;}
     public Vector3 Position {get; protected set;}
     protected readonly EntityData _data;
 
@@ -37,6 +37,11 @@ public class EntityBase
         
 
 
+    }
+
+    public virtual void SetPosition(float x, float y, float z)
+    {
+        Position = new Vector3(x,y,z);
     }
 
 }

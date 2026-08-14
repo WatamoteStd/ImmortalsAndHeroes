@@ -16,7 +16,7 @@ public class LivingEntity : EntityBase
     
     }
 
-    public float Speed {get; protected set;} = 2.0f;
+    public float Speed {get; protected set;} = 4.0f;
 
     protected Vector3 _moveTarget;
 
