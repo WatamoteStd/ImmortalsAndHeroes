@@ -229,7 +229,6 @@ public partial class ServerMaster : Node
         {
             RegionId = regionId
         };
-        GD.Print($"[SERVER MASTER]Send player change region packet to server");
         int length = PacketSerialier.Serialize<C2S_ChangeRegionRequestPacket>(buffer, PacketTypes.C2S_ChangeRegionRequest, packet);
         _socket.Send(buffer);
 

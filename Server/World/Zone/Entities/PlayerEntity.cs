@@ -11,7 +11,6 @@ public class PlayerEntity : LivingEntity
 
     public event Action<ushort, ItemType, ushort>? OnInventoryChanged;
     
-    public string Name {get; private set;} = null!;
     public uint PlayerId {get; private set;}
     public uint Silver {get; private set;}
     public uint Lvl {get; private set;}

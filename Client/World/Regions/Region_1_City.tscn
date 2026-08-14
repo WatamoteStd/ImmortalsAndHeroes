@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dufeppnhj2h7k" path="res://World/WorldHandler.cs" id="1_s2f4u"]
 [ext_resource type="PackedScene" uid="uid://b4v3nmvo7nhxw" path="res://Entities/Character/RemotePlayer.tscn" id="2_isuyp"]
 [ext_resource type="PackedScene" uid="uid://dj6wqb3g7xlng" path="res://Entities/Character/LocalPlayer.tscn" id="3_0pbcf"]
+[ext_resource type="PackedScene" uid="uid://bluish8t2ir6o" path="res://Entities/Character/Entity.tscn" id="4_0pbcf"]
 [ext_resource type="PackedScene" uid="uid://cwfns60gnqt7l" path="res://World/Regions/LocationChanger.tscn" id="4_isuyp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ichqs"]
@@ -45,6 +46,7 @@ size = Vector3(6, 4, 7)
 script = ExtResource("1_s2f4u")
 _remotePlayerScene = ExtResource("2_isuyp")
 _localPlayerScene = ExtResource("3_0pbcf")
+_entityScene = ExtResource("4_0pbcf")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=538823357]
 

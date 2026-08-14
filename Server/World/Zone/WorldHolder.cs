@@ -142,7 +142,7 @@ public class WorldHolder : IWorldHolder
     {
         if (idToPlayer.TryGetValue(userId, out PlayerEntity? player))
         {
-            Console.WriteLine($"[Server Receive] Player wants to go to: X={packet.X:F2}, Y={packet.Y:F2}, Z={packet.Z:F2}");
+
             idToZone[player.RegionId].MovePlayer(player, packet.X, 1, packet.Z);
         }
     }

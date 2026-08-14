@@ -13,7 +13,7 @@ public class WorldZone
     public uint Id {get; private set;}
     private readonly WorldHolder _worldHolder;
 
-    public Dictionary<uint, PlayerEntity> _players {get; private set;}= new();
+    public Dictionary<uint, PlayerEntity> _players {get; private set;} = new();
     private Dictionary<uint, EntityBase> _entities = new();
 
     private float latensy;
@@ -25,6 +25,8 @@ public class WorldZone
         _worldHolder = world;
         Type = type;
         Id = id;
+        LivingEntity wolfWeak = new LivingEntity(999, new Vector3(15,1,15), Shared.Characters.EntityType.WolfWeak, Id);
+        _entities[wolfWeak.EntityId] = wolfWeak;
 
     }
 
@@ -35,7 +37,7 @@ public class WorldZone
         latensy += deltaTime;
         if (latensy >= 45.0f)
         {
-            Console.WriteLine($"[45s Debug| N:{iterationCount}] RegionId:{Id}. Players: {_players.Count}");
+            Console.WriteLine($"[45s Debug| N:{iterationCount}] RegionId:{Id}. Players: {_players.Count} Entities:{_entities.Count}");
             latensy = 0f;
             iterationCount++;
         }
@@ -64,21 +66,28 @@ public class WorldZone
 
         foreach (var oldPlayer in _players.Values)
         {
-            
             _worldHolder.Broadcaster.SendToPlayer(oldPlayer.PlayerId, PacketTypes.S2C_SpawnEntity, newPlayerPacket);
+        }
 
-            var oldPlayerPacket = new S2C_SpawnEntityPacket
+        _players[player.PlayerId] = player;
+        _entities[player.EntityId] = player;
+
+        foreach (var entity in _entities.Values)
+        {
+            if (entity.EntityId == player.EntityId) continue;
+            
+            var oldEntityPacket = new S2C_SpawnEntityPacket
             {
-                Id = oldPlayer.EntityId,
-                Health = oldPlayer.Health,
-                Name = oldPlayer.Name,
-                PosX = oldPlayer.Position.X,
-                PosY  = oldPlayer.Position.Y,
-                PosZ = oldPlayer.Position.Z,
-                Type = oldPlayer.ModelType
+                Id = entity.EntityId,
+                Health = entity.Health,
+                Name = entity.Name,
+                PosX = entity.Position.X,
+                PosY  = entity.Position.Y,
+                PosZ = entity.Position.Z,
+                Type = entity.ModelType
             };
 
-            _worldHolder.Broadcaster.SendToPlayer(player.PlayerId, PacketTypes.S2C_SpawnEntity, oldPlayerPacket);
+            _worldHolder.Broadcaster.SendToPlayer(player.PlayerId, PacketTypes.S2C_SpawnEntity, oldEntityPacket);
 
         }
 
@@ -96,9 +105,6 @@ public class WorldZone
             _worldHolder.SlotUpdatePlayer(player.PlayerId, diffPacket);
 
         };
-        
-        _players[player.PlayerId] = player;
-        _entities[player.EntityId] = player;
 
     }
 

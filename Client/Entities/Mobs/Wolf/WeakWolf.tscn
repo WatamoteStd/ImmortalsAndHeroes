@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://j6iev0apddde"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j31qk"]
+albedo_color = Color(0.53568584, 0.5356859, 0.5356859, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6u82b"]
+material = SubResource("StandardMaterial3D_j31qk")
+radius = 0.3
+height = 1.0
+
+[node name="Node3D" type="Node3D" unique_id=1936644302]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2022498549]
+mesh = SubResource("CapsuleMesh_6u82b")

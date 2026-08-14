@@ -11,8 +11,19 @@ public class EntityBase
     
     public uint EntityId {get; protected set;}
     public uint RegionId {get; set;}
+    public string Name {get; protected set;}
     public Vector3 Position {get; protected set;}
     protected readonly EntityData _data;
+
+        public int MaxHealth {get; protected set;}
+        protected int _health;
+        public int Health {
+        
+        get => _health;
+        set => _health = Math.Clamp(value, 0, MaxHealth);
+    
+    }
+    public float Speed {get; protected set;} = 4.0f;
 
     public EntityType ModelType {get; protected set;}
 
@@ -29,6 +40,10 @@ public class EntityBase
         ModelType = type;
         RegionId = regionId;
         _data = EntityRegistry.GetEntityData(type);
+        Name =_data.Name;
+        _health = (int)_data.BaseHealth;
+        MaxHealth = (int)_data.BaseHealth;
+
 
     }
 

@@ -11,6 +11,7 @@ public partial class WorldHandler : Node3D
 	public uint RegionId {get; private set;} = 0;
 	[Export] private PackedScene _remotePlayerScene;
 	[Export] private PackedScene _localPlayerScene;
+	[Export] private PackedScene _entityScene;
 
 	public Dictionary<uint, Entity> RegionEntities {get; private set; }= new Dictionary<uint, Entity>();
 
@@ -27,6 +28,10 @@ public partial class WorldHandler : Node3D
 		{
 			SpawnRemotePlayer(data);
 		}
+		else if (data.Type.IsMob())
+		{
+			SpawnEntity(data);
+		}
 
 	}
 	public void RemoveEntity(uint entityId)
@@ -41,6 +46,26 @@ public partial class WorldHandler : Node3D
 
 	}
 
+	private void SpawnEntity(S2C_SpawnEntityPacket data)
+	{
+		
+		PackedScene entityModelScene = ResourceLoader.Load<PackedScene>(EntityRegistry.GetEntityData(data.Type).ScenePath);
+		var entityModel = entityModelScene.Instantiate<Node3D>();
+
+		var newEntity = _entityScene.Instantiate<Entity>();
+		AddChild(newEntity);
+		newEntity.GetNode<Node3D>("Model").AddChild(entityModel);
+
+		GD.Print($"[SPAWN ENTITY] ID: {data.Id}, Type: {data.Type}, POS: {data.PosX}, {data.PosY}, {data.PosZ}");
+		Vector3 pos = new Vector3(data.PosX, data.PosY, data.PosZ);
+		newEntity.InitEntity(data.Id, data.Health, data.Health, data.Name, data.Type, pos);
+		newEntity.Move(pos);
+
+
+		RegionEntities.Add(newEntity.Id, newEntity);
+
+	}
+
 
 	private void SpawnRemotePlayer(S2C_SpawnEntityPacket data)
 	{
@@ -52,9 +77,10 @@ public partial class WorldHandler : Node3D
 		AddChild(newPlayer);
 		newPlayer.GetNode<Node3D>("Model").AddChild(playerModel);
 
-		newPlayer.InitEntity(data.Id, data.Health, data.Health, data.Name, data.Type);
 		Vector3 pos = new Vector3(data.PosX, data.PosY, data.PosZ);
-		newPlayer.GlobalPosition = pos;
+		newPlayer.InitEntity(data.Id, data.Health, data.Health, data.Name, data.Type, pos);
+		newPlayer.Move(pos);
+
 
 		RegionEntities.Add(newPlayer.Id, newPlayer);
 
@@ -70,9 +96,9 @@ public partial class WorldHandler : Node3D
 		AddChild(localPlayer);
 		localPlayer.GetNode<Node3D>("Model").AddChild(locPlayerModel);
 
-		Vector3 dataPos = new Vector3(playerPacket.PosX + 2, playerPacket.PosY, playerPacket.PosZ + 2);
-		localPlayer.InitEntity(playerPacket.Id, playerPacket.CurrentHp, playerPacket.CurrentHp, playerPacket.Name, playerPacket.Type, playerPacket.UserId, playerPacket.CurrentMp, playerPacket.CurrentMp);
-		localPlayer.GlobalPosition = dataPos;
+		Vector3 dataPos = new Vector3(playerPacket.PosX, playerPacket.PosY, playerPacket.PosZ);
+		localPlayer.InitEntity(playerPacket.Id, playerPacket.CurrentHp, playerPacket.CurrentHp, playerPacket.Name, playerPacket.Type, dataPos, playerPacket.UserId, playerPacket.CurrentMp, playerPacket.CurrentMp);
+		localPlayer.Move(dataPos);
 
 		RegionEntities.Add(localPlayer.Id, localPlayer);
 

@@ -10,6 +10,7 @@ public partial class Entity : CharacterBody3D
 	protected int _health;
 	protected int _maxHealth;
 	public string EntityName {get; private set;}
+	[Export] protected Label _name;
 
 
 	public EntityType Type;
@@ -28,13 +29,17 @@ public partial class Entity : CharacterBody3D
 
 	}
 
-	public virtual void InitEntity(uint id, int health, int maxHealth, string name, EntityType type)
+	public virtual void InitEntity(uint id, int health, int maxHealth, string name, EntityType type, Vector3 pos)
 	{
 		
 		Id = id;
 		_health = health;
 		_maxHealth = maxHealth;
 		EntityName = name;
+		if (_name != null)
+		{
+			_name.Text = name;
+		}
 		if (_healthBar != null)
 		{
 			_healthBar.MaxValue = _maxHealth;
@@ -43,6 +48,8 @@ public partial class Entity : CharacterBody3D
 		Type = type;
 		var data = EntityRegistry.GetEntityData(type);
 		SetCollisionSize(data.Height, data.Radius);
+
+		GlobalPosition = pos;
 
 	}
 
@@ -75,8 +82,6 @@ public partial class Entity : CharacterBody3D
 
 			capsule.Radius = radius;
 			capsule.Height = height;
-
-			GD.Print($"[COLLISION] Updated size: Height={height}, Radius={radius}");
 
 		}
 

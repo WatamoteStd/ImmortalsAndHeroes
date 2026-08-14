@@ -69,8 +69,6 @@ public class SessionManager : IWorldBroadcaster, ISessionPacketHandler
                 return;
             }
 
-            Console.WriteLine($"[Server] Received new packet from UserId:{session.UserId}.");
-
             _packetReader.PacketDeserialize(data, dataLength, session);
         }
         else
