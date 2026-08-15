@@ -48,12 +48,14 @@ public partial class PlayerController : Node
 
 					entity.SelectEntity();
 					_selectedEntity = entity;
+					SceneManager.Instance.ShowSelectedEntityWindow(_selectedEntity);
 
 				}
 				else
 				{
 					_selectedEntity?.DeselectEntity();
 					_selectedEntity = null;
+					SceneManager.Instance.HideSelectedEntityWindow();
 				}
 
 			}

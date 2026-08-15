@@ -9,6 +9,7 @@ public partial class Hud : CanvasLayer
 	[Export] private Label _silver;
 	[Export] private Label _lvl;
 	[Export] private Label _nickname;
+	[Export] private SelectedEntityWindow _selectEntityWindow;
 
 	public void InitHud(uint hp, uint mp, uint silver, uint lvl, string name)
 	{
@@ -23,6 +24,15 @@ public partial class Hud : CanvasLayer
 		_nickname.Text = name;
 
 
+	}
+
+	public void ShowSelectedEntity(Entity entity)
+	{
+		_selectEntityWindow.ShowWindow(entity);
+	}
+	public void HideSelectedEntity()
+	{
+		_selectEntityWindow.HideWindow();
 	}
 
 

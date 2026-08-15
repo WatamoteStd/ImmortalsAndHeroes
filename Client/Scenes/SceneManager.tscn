@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://cmgj83a0b8x66" path="res://Scenes/Hud.cs" id="4_7xrkh"]
 [ext_resource type="Script" uid="uid://c2pd0kmiwqjkm" path="res://Scenes/Inventory/Inventory.cs" id="5_8ysa5"]
 [ext_resource type="PackedScene" uid="uid://cqa7psxm0fij7" path="res://Scenes/Inventory/Items/SlotDefault.tscn" id="5_83gc0"]
+[ext_resource type="Script" uid="uid://brl6fol06stt7" path="res://Scenes/SelectedEntityWindow.cs" id="7_2cmid"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_83fg3"]
 shader = ExtResource("1_yueht")
@@ -138,6 +139,15 @@ shadow_size = 2
 base_font = ExtResource("2_ebsso")
 variation_embolden = 0.63
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gbsx4"]
+bg_color = Color(0.15686275, 0.3137255, 0.4509804, 0.7372549)
+border_width_left = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.42109177, 0.42109182, 0.4210915, 1)
+border_blend = true
+shadow_size = 2
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w4wer"]
 bg_color = Color(0.12156863, 0.12156863, 0.12156863, 0.92941177)
 
@@ -207,7 +217,7 @@ show_percentage = false
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2069832628]
 libraries/ = SubResource("AnimationLibrary_83gc0")
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1081374653 node_paths=PackedStringArray("_healthBar", "_manaBar", "_silver", "_lvl", "_nickname")]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1081374653 node_paths=PackedStringArray("_healthBar", "_manaBar", "_silver", "_lvl", "_nickname", "_selectEntityWindow")]
 layer = 100
 visible = false
 script = ExtResource("4_7xrkh")
@@ -216,6 +226,7 @@ _manaBar = NodePath("PanelContainer/MiddleBlock/MpBar")
 _silver = NodePath("PanelContainer/LeftBlock/SilveBlock/Silver")
 _lvl = NodePath("PanelContainer/LeftBlock/LvlBlock/Lvl")
 _nickname = NodePath("PanelContainer/Nickname")
+_selectEntityWindow = NodePath("SelectedEntityWindow")
 
 [node name="PanelContainer" type="PanelContainer" parent="UI" unique_id=383323327]
 custom_minimum_size = Vector2(600, 100)
@@ -361,6 +372,38 @@ layout_mode = 2
 
 [node name="Slot10" parent="UI/Inventory/VBoxContainer/Slots" unique_id=1774147062 instance=ExtResource("5_83gc0")]
 layout_mode = 2
+
+[node name="SelectedEntityWindow" type="PanelContainer" parent="UI" unique_id=1669463716 node_paths=PackedStringArray("_name", "_health")]
+visible = false
+custom_minimum_size = Vector2(300, 100)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gbsx4")
+script = ExtResource("7_2cmid")
+_name = NodePath("VBoxContainer/EntityName")
+_health = NodePath("VBoxContainer/EntityHealth")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/SelectedEntityWindow" unique_id=584375449]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="EntityName" type="Label" parent="UI/SelectedEntityWindow/VBoxContainer" unique_id=1157476469]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8560673, 0.8560673, 0.85606724, 1)
+theme_override_font_sizes/font_size = 21
+text = "EntityName"
+
+[node name="EntityHealth" type="Label" parent="UI/SelectedEntityWindow/VBoxContainer" unique_id=1771639606]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.21548295, 0.33122507, 1)
+theme_override_font_sizes/font_size = 21
+text = "Health"
 
 [node name="ConnectionLostWindow" type="PanelContainer" parent="." unique_id=690597117]
 visible = false

@@ -113,6 +113,18 @@ public partial class SceneManager : CanvasLayer
 		_hud.ProcessMode = ProcessModeEnum.Disabled;
 	}
 
+
+	public void ShowSelectedEntityWindow(Entity entity)
+	{
+		_hud.ShowSelectedEntity(entity);
+	}
+	public void HideSelectedEntityWindow()
+	{
+		_hud.HideSelectedEntity();
+	}
+
+
+
 	public void InitPlayerHud(uint hp, uint mp, uint silver, uint lvl, string name)
 	{
 		
