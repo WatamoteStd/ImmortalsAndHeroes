@@ -13,12 +13,22 @@ bg_color = Color(0.73239285, 0, 0.030770086, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_83fg3"]
 
-[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1223504242 node_paths=PackedStringArray("_healthBar", "_name", "CollisionNode")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ydx2f"]
+albedo_color = Color(0.56876147, 0, 0.10633982, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_ydx2f"]
+material = SubResource("StandardMaterial3D_ydx2f")
+inner_radius = 1.4
+outer_radius = 1.6
+ring_segments = 3
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1223504242 node_paths=PackedStringArray("_healthBar", "_name", "_selectedMesh", "CollisionNode")]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_ydx2f")
 _healthBar = NodePath("HealthBarSprite/SubViewport/HealthBarUI/VBoxContainer/HealthBar")
 _name = NodePath("HealthBarSprite/SubViewport/HealthBarUI/VBoxContainer/Name")
+_selectedMesh = NodePath("SelectedMesh")
 CollisionNode = NodePath("CollisionShape3D")
 
 [node name="Model" type="Node3D" parent="." unique_id=267137872]
@@ -53,8 +63,8 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
-theme_override_colors/font_color = Color(1, 0.4633605, 0.44916433, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_colors/font_color = Color(0.77474815, 0.7462182, 0.7502574, 1)
+theme_override_font_sizes/font_size = 38
 text = "NAME"
 
 [node name="HealthBar" type="ProgressBar" parent="HealthBarSprite/SubViewport/HealthBarUI/VBoxContainer" unique_id=379011886]
@@ -66,3 +76,7 @@ show_percentage = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=23379643]
 shape = SubResource("CapsuleShape3D_83fg3")
+
+[node name="SelectedMesh" type="MeshInstance3D" parent="." unique_id=531492433]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.82080626, 0)
+mesh = SubResource("TorusMesh_ydx2f")

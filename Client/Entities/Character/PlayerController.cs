@@ -8,6 +8,8 @@ public partial class PlayerController : Node
 	[Export] private RayCast3D _raycast;
 	[Export] private LocalPlayerEntity _player;
 
+	private Entity _selectedEntity = null;
+
 	public static Action<Vector3> OnMoveRequest;
 
 	public static Action OnInventoryAction;
@@ -33,7 +35,31 @@ public partial class PlayerController : Node
 			}
 			else GD.Print("[RAW CLICK] Null click, i get it");
 		}
+
+		if (mouseAction.Pressed && mouseAction.ButtonIndex == MouseButton.Left)
+			{
+				
+				GodotObject obj = GetClickCollision();
+
+				if (obj is Entity entity && entity is not LocalPlayerEntity)
+				{
+					
+					if (_selectedEntity != null) _selectedEntity.DeselectEntity();
+
+					entity.SelectEntity();
+					_selectedEntity = entity;
+
+				}
+				else
+				{
+					_selectedEntity?.DeselectEntity();
+					_selectedEntity = null;
+				}
+
+			}
+
 	}
+
 
 	if (@event.IsActionPressed("Inventory"))
 		{
@@ -66,6 +92,31 @@ public partial class PlayerController : Node
 
 		}
 		else return null;
+
+	}
+	private GodotObject GetClickCollision()
+	{
+		
+		var mousePos = GetViewport().GetMousePosition();
+
+		Vector3 origin = _camera.ProjectRayOrigin(mousePos);
+		Vector3 normal = _camera.ProjectRayNormal(mousePos);
+
+		_raycast.GlobalPosition = origin;
+
+		_raycast.TargetPosition = normal * 100;
+
+		_raycast.ForceRaycastUpdate();
+
+		if (_raycast.IsColliding())
+		{
+			
+			GodotObject body = _raycast.GetCollider();
+			return body;
+
+		}
+		else return null;
+
 
 	}
 

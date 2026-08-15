@@ -11,6 +11,7 @@ public partial class Entity : CharacterBody3D
 	protected int _maxHealth;
 	public string EntityName {get; private set;}
 	[Export] protected Label _name;
+	[Export] protected MeshInstance3D _selectedMesh;
 
 
 	public EntityType Type;
@@ -50,6 +51,10 @@ public partial class Entity : CharacterBody3D
 		SetCollisionSize(data.Height, data.Radius);
 
 		GlobalPosition = pos;
+		if (_selectedMesh != null)
+		{
+			_selectedMesh.Visible = false;
+		}
 
 	}
 
@@ -85,6 +90,14 @@ public partial class Entity : CharacterBody3D
 
 		}
 
+	}
+	public void SelectEntity()
+	{
+		_selectedMesh.Visible = true;
+	}
+	public void DeselectEntity()
+	{
+		_selectedMesh.Visible = false;
 	}
 
 

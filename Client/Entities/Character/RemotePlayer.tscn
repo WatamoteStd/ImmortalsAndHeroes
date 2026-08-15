@@ -13,12 +13,22 @@ bg_color = Color(0.0734973, 0.45985252, 0.7343176, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_83fg3"]
 
-[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1223504242 node_paths=PackedStringArray("_healthBar", "_name", "CollisionNode")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ydx2f"]
+albedo_color = Color(0.17503816, 0.3698244, 0.5100867, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_jegbe"]
+material = SubResource("StandardMaterial3D_ydx2f")
+inner_radius = 1.4
+outer_radius = 1.6
+ring_segments = 3
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1223504242 node_paths=PackedStringArray("_healthBar", "_name", "_selectedMesh", "CollisionNode")]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_jegbe")
 _healthBar = NodePath("HealthBarSprite/SubViewport/HealthBarUI/VBoxContainer/HealthBar")
 _name = NodePath("HealthBarSprite/SubViewport/HealthBarUI/VBoxContainer/Name")
+_selectedMesh = NodePath("SelectedMesh")
 CollisionNode = NodePath("CollisionShape3D")
 
 [node name="Model" type="Node3D" parent="." unique_id=267137872]
@@ -30,7 +40,7 @@ texture = SubResource("ViewportTexture_i1f3e")
 
 [node name="SubViewport" type="SubViewport" parent="HealthBarSprite" unique_id=2053142899]
 transparent_bg = true
-size = Vector2i(350, 60)
+size = Vector2i(350, 75)
 render_target_update_mode = 4
 
 [node name="HealthBarUI" type="Control" parent="HealthBarSprite/SubViewport" unique_id=398836045]
@@ -54,8 +64,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 6
-theme_override_font_sizes/font_size = 32
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 36
 text = "NAME"
 
 [node name="HealthBar" type="ProgressBar" parent="HealthBarSprite/SubViewport/HealthBarUI/VBoxContainer" unique_id=379011886]
@@ -67,3 +77,7 @@ show_percentage = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=23379643]
 shape = SubResource("CapsuleShape3D_83fg3")
+
+[node name="SelectedMesh" type="MeshInstance3D" parent="." unique_id=1187649845]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.82080626, 0)
+mesh = SubResource("TorusMesh_jegbe")
