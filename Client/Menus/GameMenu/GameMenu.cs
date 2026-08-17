@@ -25,5 +25,16 @@ public partial class GameMenu : Control
 
 	}
 
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event.IsActionPressed("HideMenu"))
+		{
+			
+			Visible = !Visible;
+
+		}
+    }
+
+
 
 }

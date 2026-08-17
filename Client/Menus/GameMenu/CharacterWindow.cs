@@ -7,7 +7,7 @@ public partial class CharacterWindow : PanelContainer
     [Export] private Label _nickname;
     [Export] private Label _id;
     [Export] private Label _silver;
-    [Export] private PanelContainer _characterCard;
+    [Export] private MarginContainer _characterCard;
     [Export] private StatusWindow _statusWindow;
     [Export] private Button _characterCreateButton;
     [Export] private Button _enterWorldButton;

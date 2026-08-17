@@ -14,12 +14,12 @@ bg_color = Color(0.0734973, 0.45985252, 0.7343176, 1)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_83fg3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ydx2f"]
-albedo_color = Color(0.17503816, 0.3698244, 0.5100867, 1)
+albedo_color = Color(0.6184317, 0.7890525, 0.92612916, 1)
 
 [sub_resource type="TorusMesh" id="TorusMesh_jegbe"]
 material = SubResource("StandardMaterial3D_ydx2f")
-inner_radius = 1.4
-outer_radius = 1.6
+inner_radius = 1.45
+outer_radius = 1.5
 ring_segments = 3
 
 [node name="CharacterBody3D" type="CharacterBody3D" unique_id=1223504242 node_paths=PackedStringArray("_healthBar", "_name", "_selectedMesh", "CollisionNode")]

@@ -14,11 +14,11 @@ bg_color = Color(0.73239285, 0, 0.030770086, 1)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_83fg3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ydx2f"]
-albedo_color = Color(0.56876147, 0, 0.10633982, 1)
+albedo_color = Color(0.655728, 0.69310886, 0.67019445, 1)
 
 [sub_resource type="TorusMesh" id="TorusMesh_ydx2f"]
 material = SubResource("StandardMaterial3D_ydx2f")
-inner_radius = 1.4
+inner_radius = 1.5
 outer_radius = 1.6
 ring_segments = 3
 
