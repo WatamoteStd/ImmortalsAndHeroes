@@ -133,7 +133,7 @@ public class WorldZone
         if (_players.TryGetValue(playerId, out PlayerEntity? player))
         {
 
-            player.ClearInventorySubscriptions();
+            player.ClearAllSubscriptions();
             _players.Remove(player.PlayerId);
             _entities.Remove(player.EntityId);
             
@@ -156,6 +156,22 @@ public class WorldZone
 
         Console.WriteLine($"[REGION {Id}] Can't find PlayerId:{playerId} at this region");
         
+    }
+
+    public void PlayerAttackRequest(PlayerEntity player, uint entityId)
+    {
+        
+        if (_entities.TryGetValue(entityId, out EntityBase? entity))
+        {
+            
+            
+
+        }
+        else
+        {
+            Console.WriteLine($"[Region:{Id}] Attack request declined. Can't find some entity.");
+        }
+
     }
 
 }

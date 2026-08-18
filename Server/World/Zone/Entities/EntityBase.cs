@@ -77,4 +77,5 @@ public class EntityBase
         Position = new Vector3(x,y,z);
     }
 
+
 }

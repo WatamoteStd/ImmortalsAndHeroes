@@ -47,7 +47,7 @@ public class PlayerEntity : LivingEntity
 
     }
 
-    public void ClearInventorySubscriptions()
+    public void ClearAllSubscriptions()
     {
         OnInventoryChanged = null!; 
     }       

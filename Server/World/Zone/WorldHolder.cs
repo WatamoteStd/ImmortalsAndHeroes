@@ -91,7 +91,8 @@ public class WorldHolder : IWorldHolder
                     {
                         
                         var packet = PacketSerialier.Deserialize<C2S_AttackRequestPacket>(cmd.Data[2..]);
-                        Console.WriteLine($"[WorldHolder] Player {cmd.Session.UserId} wants to attack entity: {packet.Id}");
+                    
+                        PlayerAttackRequest((uint)cmd.Session.CharacterId, packet.Id);
 
                         ArrayPool<byte>.Shared.Return(cmd.Data);
 
@@ -239,6 +240,20 @@ public class WorldHolder : IWorldHolder
     public void SuccessfulDeletePlayer(UserSession session)
     {
         _broadcaster.API_RemoveSession(session);
+    }
+
+    public void PlayerAttackRequest(uint playerId, uint entityId)
+    {
+        
+        if (idToPlayer.TryGetValue(playerId, out PlayerEntity? player) && idToZone.TryGetValue(player.RegionId, out WorldZone? zone))
+        {
+            zone.PlayerAttackRequest(player, entityId);
+        }
+        else
+        {
+            Console.WriteLine($"[WorldHolder] Player:{playerId} attack request declined. Invalid data.");
+        }
+
     }
 
     
