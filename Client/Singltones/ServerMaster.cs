@@ -234,6 +234,14 @@ public partial class ServerMaster : Node
 
 
     }
+    public void LP_AttackRequest(uint entityId)
+    {
+        
+        Span<byte> buffer = stackalloc byte[6];
+        var packet = new C2S_AttackRequestPacket {Id = entityId};
+        int length = PacketSerialier.Serialize<C2S_AttackRequestPacket>(buffer, PacketTypes.C2S_AttackRequest, packet);
+        _socket.Send(buffer);
+    }
 
 
 

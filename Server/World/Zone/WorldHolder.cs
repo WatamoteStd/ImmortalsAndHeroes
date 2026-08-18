@@ -87,6 +87,17 @@ public class WorldHolder : IWorldHolder
                     }
                 break;
 
+                case PacketTypes.C2S_AttackRequest:
+                    {
+                        
+                        var packet = PacketSerialier.Deserialize<C2S_AttackRequestPacket>(cmd.Data[2..]);
+                        Console.WriteLine($"[WorldHolder] Player {cmd.Session.UserId} wants to attack entity: {packet.Id}");
+
+                        ArrayPool<byte>.Shared.Return(cmd.Data);
+
+                    }
+                break;
+
             }
 
         }

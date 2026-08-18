@@ -7,10 +7,21 @@ namespace Server.World.Zone.Entities;
 public class LivingEntity : EntityBase
 {
     protected Vector3 _moveTarget;
+    public uint BaseDamage {get; protected set;}
+    public float AttackRange {get; protected set;}
+    public int AttackSpeed {get; protected set;}
+    public int Armor {get; protected set;}
+    public int MagicResistance {get; protected set;}
+
 
     public LivingEntity(uint entityId, Vector3 pos, EntityType type, uint regionId) : base(entityId, pos, type, regionId)
     {
         
+        BaseDamage = _dllData.BaseDamage;
+        AttackRange = _dllData.AttackRange;
+        AttackSpeed = _dllData.AttackSpeed;
+        Armor = _dllData.Armor;
+        MagicResistance = _dllData.MagicResistance;
 
     }
 
@@ -53,7 +64,7 @@ public class LivingEntity : EntityBase
 
         float distanceSquared = Vector3.DistanceSquared(_moveTarget, Position);
         
-        if (distanceSquared < 0.05)
+        if (distanceSquared < 0.05f)
         {
             Position = _moveTarget;
             CurrentState = State.Idle;
@@ -63,7 +74,7 @@ public class LivingEntity : EntityBase
         Vector3 direction = (_moveTarget - Position);
         Vector3 direcionNormalized = Vector3.Normalize(direction);
 
-        Vector3 velocity = direcionNormalized * Speed * deltaTime;
+        Vector3 velocity = direcionNormalized * BaseSpeed * deltaTime;
 
         if (velocity.LengthSquared() > distanceSquared)
         {

@@ -44,6 +44,12 @@ public partial class PlayerController : Node
 				if (obj is Entity entity && entity is not LocalPlayerEntity)
 				{
 					
+					if (_selectedEntity == entity)
+					{
+						ServerMaster.Instance.LP_AttackRequest(_selectedEntity.Id);
+						return;
+					}
+
 					if (_selectedEntity != null) _selectedEntity.DeselectEntity();
 
 					entity.SelectEntity();

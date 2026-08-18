@@ -15,6 +15,7 @@ public enum PacketTypes : ushort
 
     C2S_ChangeRegionRequest = 8,
     S2C_ChangeRegion = 9,
-    S2C_RemoveEntity = 10
+    S2C_RemoveEntity = 10,
+    C2S_AttackRequest = 11
 
 }
