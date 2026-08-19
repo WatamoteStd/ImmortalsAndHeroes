@@ -60,7 +60,7 @@ public partial class Entity : CharacterBody3D
 
 	public override void _Process(double delta)
 	{
-		GlobalPosition = GlobalPosition.MoveToward(_moveTarget, (float)delta * 5.0f);
+		GlobalPosition = GlobalPosition.MoveToward(_moveTarget, (float)delta * 3.0f);
 	}
 
 	

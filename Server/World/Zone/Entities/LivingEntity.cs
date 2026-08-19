@@ -7,6 +7,12 @@ namespace Server.World.Zone.Entities;
 
 public class LivingEntity : EntityBase, IDamageable
 {
+
+    public event Action<LivingEntity, Vector3>? OnMoved;
+    protected Vector3 _lastSnapshotCords;
+    protected float _timeFromLastPacket = 0.0f;
+
+
     protected Vector3 _moveTarget;
     protected EntityBase _currentEnemy = null!;
     public uint BaseDamage {get; protected set;}
@@ -78,6 +84,7 @@ public class LivingEntity : EntityBase, IDamageable
                     {
                         Vector3 dirNormalized = Vector3.Normalize(direction);
                         Position += dirNormalized * BaseSpeed * deltaTime;
+                        CheckMoveSynchronization(deltaTime);
                     }
 
                 }
@@ -128,6 +135,10 @@ public class LivingEntity : EntityBase, IDamageable
         {
             Position = _moveTarget;
             CurrentState = State.Idle;
+
+            OnMoved?.Invoke(this, Position);
+            _timeFromLastPacket = 0.0f;
+            _lastSnapshotCords = Position;
             return;
         }
 
@@ -141,28 +152,24 @@ public class LivingEntity : EntityBase, IDamageable
             
             Position = _moveTarget;
             CurrentState = State.Idle;
+            OnMoved?.Invoke(this, Position);
+            _timeFromLastPacket = 0.0f;
+            _lastSnapshotCords = Position;
             return;
 
         }
 
         Position += velocity;
+        CheckMoveSynchronization(deltaTime);
 
     }
 
-    public virtual void SetAttackTarget(LivingEntity entity)
+    public virtual void SetAttackTarget(EntityBase entity)
     {
     
         _currentEnemy = entity;
         CurrentState = State.Attack;
-
-    }
-    public virtual void PerformAttack()
-    {
-        
-        if (_currentEnemy == null) { CurrentState = State.Idle; return; }
-        if (!IsInAttackRadius(_currentEnemy)) { CurrentState = State.Chase; return;}
-
-        
+        Console.WriteLine($"[Entity:{Name}] Set attack target to: {entity.Name}");
 
     }
 
@@ -178,6 +185,7 @@ public class LivingEntity : EntityBase, IDamageable
                     {
                         float realDmg = (float)damage * (100f / (100f + (float)Armor));
                         Health -= (int)MathF.Round(realDmg);
+                        Console.WriteLine($"[Entity:{EntityId}] Take {realDmg} damage! CurrentHealth:{Health}. Attacker:{attacker.Name}");
                     }
                     else
                     {
@@ -212,10 +220,25 @@ public class LivingEntity : EntityBase, IDamageable
             break;
 
         }
+        if (Health == 0) CurrentState = State.Dead;
 
     }
 
 
+    private void CheckMoveSynchronization(float deltaTime)
+    {
+        _timeFromLastPacket += deltaTime;
+
+        if (_timeFromLastPacket > 0.1f || Vector3.DistanceSquared(Position, _lastSnapshotCords) >= 0.5f)
+        {
+            
+            OnMoved?.Invoke(this, Position);
+            _timeFromLastPacket = 0.0f;
+            _lastSnapshotCords = Position;
+
+        }
+
+    }
 
 
     public void RecalculateAttackCooldown()
@@ -245,4 +268,8 @@ public class LivingEntity : EntityBase, IDamageable
     }
 
 
+    public virtual void ClearAllSubscriptions()
+    {
+        OnMoved = null!;
+    }   
 }

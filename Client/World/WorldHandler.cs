@@ -110,13 +110,14 @@ public partial class WorldHandler : Node3D
 
 	public void MoveEntity(uint id, float x, float y, float z)
 	{
+		Vector3 movePos = new Vector3(x, y, z);
 		
 		if (RegionEntities.TryGetValue(id, out Entity entity))
 		{
-			Vector3 movePos = new Vector3(x, y, z);
-			
-			entity.Move(movePos);
-
+			if (entity.GlobalPosition.DistanceSquaredTo(movePos) > 2.25f)
+			{
+				entity.Move(movePos);
+			}
 		}
 
 	}

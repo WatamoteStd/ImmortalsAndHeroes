@@ -19,6 +19,15 @@ public partial class PlayerController : Node
 		OnMoveRequest?.Invoke(targetPos);
 	}
 
+	public override void _Ready()
+	{
+		if (_player != null && _raycast != null)
+		{
+			_raycast.AddException(_player);
+		}
+	}
+
+
 
 	public override void _UnhandledInput(InputEvent @event)
 {
@@ -88,7 +97,7 @@ public partial class PlayerController : Node
 
 		_raycast.GlobalPosition = origin;
 
-		_raycast.TargetPosition = normal * 100;
+		_raycast.TargetPosition = normal * 1000;
 
 		_raycast.ForceRaycastUpdate();
 
@@ -112,7 +121,7 @@ public partial class PlayerController : Node
 
 		_raycast.GlobalPosition = origin;
 
-		_raycast.TargetPosition = normal * 100;
+		_raycast.TargetPosition = normal * 1000;
 
 		_raycast.ForceRaycastUpdate();
 

@@ -18,7 +18,7 @@ public class WorldHolder : IWorldHolder
 {
 
     public enum ZoneType { World, City, Dungeon}
-    public Dictionary<uint, PlayerEntity> idToPlayer = new Dictionary<uint, PlayerEntity>();
+    public Dictionary<uint, PlayerEntity> idToPlayer = new Dictionary<uint, PlayerEntity>(); // USERID
     public Dictionary<uint, WorldZone> idToZone = new Dictionary<uint, WorldZone>();
 
 
@@ -80,7 +80,7 @@ public class WorldHolder : IWorldHolder
                     {
                         
                         var packet = PacketSerialier.Deserialize<C2S_ChangeRegionRequestPacket>(cmd.Data[2..]);
-                        ChangePlayerRegion(cmd.Session.UserId, packet);
+                        ChangePlayerRegion((uint)cmd.Session.CharacterId, packet);
 
                         ArrayPool<byte>.Shared.Return(cmd.Data);
 
@@ -92,7 +92,7 @@ public class WorldHolder : IWorldHolder
                         
                         var packet = PacketSerialier.Deserialize<C2S_AttackRequestPacket>(cmd.Data[2..]);
                     
-                        PlayerAttackRequest((uint)cmd.Session.CharacterId, packet.Id);
+                        PlayerAttackRequest((uint)cmd.Session.UserId, packet.Id);
 
                         ArrayPool<byte>.Shared.Return(cmd.Data);
 
@@ -242,17 +242,19 @@ public class WorldHolder : IWorldHolder
         _broadcaster.API_RemoveSession(session);
     }
 
-    public void PlayerAttackRequest(uint playerId, uint entityId)
+    public void PlayerAttackRequest(uint userId, uint entityId)
     {
         
-        if (idToPlayer.TryGetValue(playerId, out PlayerEntity? player) && idToZone.TryGetValue(player.RegionId, out WorldZone? zone))
+        if (idToPlayer.TryGetValue(userId, out PlayerEntity? player) && idToZone.TryGetValue(player.RegionId, out WorldZone? zone))
         {
             zone.PlayerAttackRequest(player, entityId);
         }
         else
         {
-            Console.WriteLine($"[WorldHolder] Player:{playerId} attack request declined. Invalid data.");
+            Console.WriteLine($"[WorldHolder] UserId:{userId} attack request declined. Invalid data.");
+            return;
         }
+        
 
     }
 

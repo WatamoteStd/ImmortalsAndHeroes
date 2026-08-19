@@ -6,6 +6,7 @@ public partial class LocalPlayerEntity : Entity
 {
 	
 	public uint LocalPlayerId {get; set;}
+	public float Speed {get; set;} = 3.0f;
 
 	private int _mana;
 	private int _maxMana;
@@ -27,6 +28,8 @@ public partial class LocalPlayerEntity : Entity
 		LocalPlayerId = locPlayeId;
 
 	}
+
+
 
 
 }

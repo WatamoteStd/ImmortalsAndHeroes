@@ -105,6 +105,23 @@ public class WorldZone
             _worldHolder.SlotUpdatePlayer(player.PlayerId, diffPacket);
 
         };
+        player.OnMoved += (character, pos) =>
+        {
+            
+            var movePacket = new S2C_MoveEntityPacket
+            {
+                Id = character.EntityId,
+                PosX = character.Position.X,
+                PosY = character.Position.Y,
+                PosZ = character.Position.Z
+            };
+
+            foreach (var p in _players.Values)
+            {
+                _worldHolder.Broadcaster.SendToPlayer<S2C_MoveEntityPacket>(p.PlayerId, PacketTypes.S2C_MoveEntity, movePacket);
+            }
+
+        };
 
     }
 
@@ -164,7 +181,7 @@ public class WorldZone
         if (_entities.TryGetValue(entityId, out EntityBase? entity))
         {
             
-            
+            player.SetAttackTarget(entity);
 
         }
         else

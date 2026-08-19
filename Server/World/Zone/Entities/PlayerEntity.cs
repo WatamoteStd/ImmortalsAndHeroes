@@ -47,10 +47,11 @@ public class PlayerEntity : LivingEntity
 
     }
 
-    public void ClearAllSubscriptions()
+    public override void ClearAllSubscriptions()
     {
+        base.ClearAllSubscriptions();
         OnInventoryChanged = null!; 
-    }       
+    }
     
 
 }
