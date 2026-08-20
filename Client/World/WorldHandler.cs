@@ -134,7 +134,6 @@ public partial class WorldHandler : Node3D
 			}
 
 			entity.TakeDamage(damage, (int)actualHealth);
-
 		}
 
 	}

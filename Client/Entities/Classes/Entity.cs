@@ -95,7 +95,10 @@ public partial class Entity : CharacterBody3D
 	public virtual void TakeDamage(int damage, int actualHealth)
 	{
 		_health = actualHealth;
-		_healthBar.Value = actualHealth;
+		if (_healthBar != null)
+		{
+			_healthBar.Value = actualHealth;
+		}
 	}
 
 	public void SelectEntity()
