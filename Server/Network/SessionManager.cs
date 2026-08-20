@@ -159,6 +159,7 @@ public class SessionManager : IWorldBroadcaster, ISessionPacketHandler
             if (_worldApi != null)
             {
                 _worldApi.InitiateNewPlayer(characterData);
+                session.CharacterId = characterData.Id;
             }
             else
             {

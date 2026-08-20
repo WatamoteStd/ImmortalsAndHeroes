@@ -80,7 +80,7 @@ public class WorldHolder : IWorldHolder
                     {
                         
                         var packet = PacketSerialier.Deserialize<C2S_ChangeRegionRequestPacket>(cmd.Data[2..]);
-                        ChangePlayerRegion((uint)cmd.Session.CharacterId, packet);
+                        ChangePlayerRegion((uint)cmd.Session.UserId, packet);
 
                         ArrayPool<byte>.Shared.Return(cmd.Data);
 
@@ -161,6 +161,7 @@ public class WorldHolder : IWorldHolder
 
     public void ChangePlayerRegion(uint userId, C2S_ChangeRegionRequestPacket packet)
     {
+        Console.WriteLine($"[DEBUG] ChangeRegion called with userId: {userId}");
         
         if (idToPlayer.TryGetValue(userId, out PlayerEntity? player))
         {
@@ -192,7 +193,7 @@ public class WorldHolder : IWorldHolder
                         UserId = player.PlayerId,
                         Type = player.ModelType,
                         CurrentHp = player.Health,
-                        CurrentMp = player.Health,
+                        CurrentMp = player.Mana,
                         Lvl = (int)player.Lvl,
                         Silver = player.Silver
                     };

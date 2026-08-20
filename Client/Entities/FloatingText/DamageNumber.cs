@@ -23,12 +23,12 @@ public partial class DamageNumber : Node3D
 
 		Tween tween = CreateTween().SetParallel(true);
 
-		tween.TweenProperty(this, "global_position", targetPos, 1f)
+		tween.TweenProperty(this, "global_position", targetPos, 1.15f)
 			.SetTrans(Tween.TransitionType.Cubic)
 			.SetEase(Tween.EaseType.Out);
 
 		
-		tween.TweenProperty(_label, "modulate:a", 0.0f, 1f)
+		tween.TweenProperty(_label, "modulate:a", 0.0f, 1.15f)
 			.SetTrans(Tween.TransitionType.Quad)
 			.SetEase(Tween.EaseType.In);
 
