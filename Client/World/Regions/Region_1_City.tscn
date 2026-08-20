@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dj6wqb3g7xlng" path="res://Entities/Character/LocalPlayer.tscn" id="3_0pbcf"]
 [ext_resource type="PackedScene" uid="uid://bluish8t2ir6o" path="res://Entities/Character/Entity.tscn" id="4_0pbcf"]
 [ext_resource type="PackedScene" uid="uid://cwfns60gnqt7l" path="res://World/Regions/LocationChanger.tscn" id="4_isuyp"]
+[ext_resource type="PackedScene" uid="uid://c85suyvpyr0sm" path="res://Entities/FloatingText/DamageNumber.tscn" id="5_evw3e"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ichqs"]
 albedo_color = Color(0.24697644, 0.228971, 0.15267801, 1)
@@ -47,6 +48,7 @@ script = ExtResource("1_s2f4u")
 _remotePlayerScene = ExtResource("2_isuyp")
 _localPlayerScene = ExtResource("3_0pbcf")
 _entityScene = ExtResource("4_0pbcf")
+_floatDamageScene = ExtResource("5_evw3e")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=538823357]
 

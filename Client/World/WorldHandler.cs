@@ -12,6 +12,7 @@ public partial class WorldHandler : Node3D
 	[Export] private PackedScene _remotePlayerScene;
 	[Export] private PackedScene _localPlayerScene;
 	[Export] private PackedScene _entityScene;
+	[Export] private PackedScene _floatDamageScene;
 
 	public Dictionary<uint, Entity> RegionEntities {get; private set; } = new Dictionary<uint, Entity>();
 
@@ -19,6 +20,10 @@ public partial class WorldHandler : Node3D
 	{
 		ServerMaster.Instance.WorldManager = this;
 	}
+
+
+
+	#region  Entities interaction
 
 	public void AddEntity(S2C_SpawnEntityPacket data)
 	{
@@ -134,9 +139,18 @@ public partial class WorldHandler : Node3D
 			}
 
 			entity.TakeDamage(damage, (int)actualHealth);
+
+			// FLOATING TEXT
+			var damageText = _floatDamageScene.Instantiate<DamageNumber>();
+
+			AddChild(damageText);
+			damageText.Setup(damage, entity.GlobalPosition + new Vector3(0, 1.5f, 0));
+
 		}
 
 	}
+
+	#endregion
 
 	public override void _ExitTree()
 	{

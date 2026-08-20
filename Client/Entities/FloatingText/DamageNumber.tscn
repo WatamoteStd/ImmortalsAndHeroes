@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://c85suyvpyr0sm"]
+
+[ext_resource type="FontFile" uid="uid://dyjvfgk7m57a8" path="res://Assets/Fonts/Inter/static/Inter_24pt-Bold.ttf" id="1_oh51g"]
+[ext_resource type="Script" uid="uid://drh8eap8dmo7n" path="res://Entities/FloatingText/DamageNumber.cs" id="1_trd5d"]
+
+[node name="Node3D" type="Node3D" unique_id=1735282226 node_paths=PackedStringArray("_label")]
+script = ExtResource("1_trd5d")
+_label = NodePath("Label3D")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=375336313]
+billboard = 1
+modulate = Color(0.7080388, 0.6658572, 0, 1)
+outline_modulate = Color(0.066070534, 0.06607054, 0.066070534, 1)
+text = "Null or empry"
+font = ExtResource("1_oh51g")
+font_size = 60
+outline_size = 3
