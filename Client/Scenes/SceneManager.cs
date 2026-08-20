@@ -8,7 +8,7 @@ public partial class SceneManager : CanvasLayer
 {
 
 	[Export] private AnimationPlayer _animator;
-	[Export] private Hud _hud;
+	[Export] public Hud PlayerHud;
 	[Export] private Inventory _inventory;
 	public static SceneManager Instance { get; private set; }
 
@@ -103,24 +103,24 @@ public partial class SceneManager : CanvasLayer
 	private void ShowHud()
 	{
 		
-		_hud.Visible = true;
-		_hud.ProcessMode = ProcessModeEnum.Always;
+		PlayerHud.Visible = true;
+		PlayerHud.ProcessMode = ProcessModeEnum.Always;
 
 	}
 	private void HideHud()
 	{
-		_hud.Visible = false;
-		_hud.ProcessMode = ProcessModeEnum.Disabled;
+		PlayerHud.Visible = false;
+		PlayerHud.ProcessMode = ProcessModeEnum.Disabled;
 	}
 
 
 	public void ShowSelectedEntityWindow(Entity entity)
 	{
-		_hud.ShowSelectedEntity(entity);
+		PlayerHud.ShowSelectedEntity(entity);
 	}
 	public void HideSelectedEntityWindow()
 	{
-		_hud.HideSelectedEntity();
+		PlayerHud.HideSelectedEntity();
 	}
 
 
@@ -128,7 +128,7 @@ public partial class SceneManager : CanvasLayer
 	public void InitPlayerHud(uint hp, uint mp, uint silver, uint lvl, string name)
 	{
 		
-		_hud.InitHud(hp,mp,silver,lvl,name);
+		PlayerHud.InitHud(hp,mp,silver,lvl,name);
 
 	}
 

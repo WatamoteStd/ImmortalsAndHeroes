@@ -13,7 +13,7 @@ public partial class WorldHandler : Node3D
 	[Export] private PackedScene _localPlayerScene;
 	[Export] private PackedScene _entityScene;
 
-	public Dictionary<uint, Entity> RegionEntities {get; private set; }= new Dictionary<uint, Entity>();
+	public Dictionary<uint, Entity> RegionEntities {get; private set; } = new Dictionary<uint, Entity>();
 
 	public override void _Ready()
 	{
@@ -118,6 +118,23 @@ public partial class WorldHandler : Node3D
 			{
 				entity.Move(movePos);
 			}
+		}
+
+	}
+
+	public void EntityTakeDamage(uint entityId, int damage, uint attackerId, uint actualHealth)
+	{
+		
+		if (RegionEntities.TryGetValue(entityId, out Entity entity))
+		{
+			
+			if (entity is LocalPlayerEntity localPlayer)
+			{
+				SceneManager.Instance.PlayerHud.UpdateHealth(actualHealth);
+			}
+
+			entity.TakeDamage(damage, (int)actualHealth);
+
 		}
 
 	}

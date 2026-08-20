@@ -25,6 +25,12 @@ public partial class Hud : CanvasLayer
 
 
 	}
+	public void UpdateHealth(uint actualHealth)
+	{
+		
+		_healthBar.Value = actualHealth;
+
+	}
 
 	public void ShowSelectedEntity(Entity entity)
 	{

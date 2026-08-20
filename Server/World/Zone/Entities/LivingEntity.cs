@@ -9,6 +9,7 @@ public class LivingEntity : EntityBase, IDamageable
 {
 
     public event Action<LivingEntity, Vector3>? OnMoved;
+    public event Action<LivingEntity, int, LivingEntity>? OnDamageTaked; // entity(this) | damage | attacker
     protected Vector3 _lastSnapshotCords;
     protected float _timeFromLastPacket = 0.0f;
 
@@ -173,8 +174,10 @@ public class LivingEntity : EntityBase, IDamageable
 
     }
 
-    public virtual void TakeDamage(DamageTypes type, int damage, EntityBase attacker)
+    public virtual void TakeDamage(DamageTypes type, int damage, LivingEntity attacker)
     {
+
+        float finalDamage = 0.0f;
 
         switch (type)
         {
@@ -183,14 +186,11 @@ public class LivingEntity : EntityBase, IDamageable
                 {
                     if (Armor >= 0)
                     {
-                        float realDmg = (float)damage * (100f / (100f + (float)Armor));
-                        Health -= (int)MathF.Round(realDmg);
-                        Console.WriteLine($"[Entity:{EntityId}] Take {realDmg} damage! CurrentHealth:{Health}. Attacker:{attacker.Name}");
+                        finalDamage = (float)damage * (100f / (100f + (float)Armor));
                     }
                     else
                     {
-                        float finalDmg = (float)damage * (1.0f + 2.0f * (1.0f - (100f / (100f - (float)Armor))));
-                        Health -= (int)MathF.Round(finalDmg);
+                        finalDamage = (float)damage * (1.0f + 2.0f * (1.0f - (100f / (100f - (float)Armor))));
                     }
 
                 }
@@ -201,13 +201,11 @@ public class LivingEntity : EntityBase, IDamageable
                     
                     if (MagicResistance >= 0)
                     {
-                        float realDmg = (float)damage * (70f / (70f + (float)MagicResistance));
-                        Health -= (int)MathF.Round(realDmg);
+                        finalDamage = (float)damage * (70f / (70f + (float)MagicResistance));
                     }
                     else
                     {
-                        float finalDmg = (float)damage * (1.0f + 2f * (1.0f - (70f / (70f - (float)MagicResistance))));
-                        Health -= (int)MathF.Round(finalDmg);
+                        finalDamage = (float)damage * (1.0f + 2f * (1.0f - (70f / (70f - (float)MagicResistance))));
                     }
 
                 }
@@ -215,11 +213,18 @@ public class LivingEntity : EntityBase, IDamageable
 
             case DamageTypes.Pure:
                 {
-                    Health -= damage;
+                    finalDamage = damage;
                 }
             break;
 
         }
+
+        int actualDamage = (int)MathF.Round(finalDamage);
+        Health -= actualDamage;
+
+        Console.WriteLine($"[Entity:{EntityId}] Take {finalDamage} damage! CurrentHealth:{Health}. Attacker:{attacker.Name}");
+        OnDamageTaked?.Invoke(this, actualDamage, attacker);
+        
         if (Health == 0) CurrentState = State.Dead;
 
     }
@@ -271,5 +276,6 @@ public class LivingEntity : EntityBase, IDamageable
     public virtual void ClearAllSubscriptions()
     {
         OnMoved = null!;
+        OnDamageTaked = null!;
     }   
 }

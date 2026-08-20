@@ -172,9 +172,7 @@ public partial class ServerMaster : Node
 
             case S2C_MoveEntityPacket move:
                 {
-                    
                     WorldManager?.MoveEntity(move.Id, move.PosX, move.PosY, move.PosZ);
-
                 }
             break;
 
@@ -197,7 +195,15 @@ public partial class ServerMaster : Node
 
                     }
                 }
-            break;       
+            break;
+
+            case S2C_EntityDamageTakedPacket takeDamage:
+                {
+                    
+                    _worldManager?.EntityTakeDamage(takeDamage.Id, takeDamage.Damage, takeDamage.AttackerId, takeDamage.ActualHealth);
+
+                }
+            break;    
 
         }
 

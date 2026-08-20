@@ -164,10 +164,10 @@ bg_color = Color(0.6851024, 0.7241215, 0.7290107, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q4unc"]
 bg_color = Color(0.81961036, 0.8449592, 0.84812224, 1)
 
-[node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator", "_hud", "_inventory", "_connectionLostWindow", "_connectionLostButton")]
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator", "PlayerHud", "_inventory", "_connectionLostWindow", "_connectionLostButton")]
 script = ExtResource("1_hjya1")
 _animator = NodePath("AnimationPlayer")
-_hud = NodePath("UI")
+PlayerHud = NodePath("UI")
 _inventory = NodePath("UI/Inventory")
 _connectionLostWindow = NodePath("ConnectionLostWindow")
 _connectionLostButton = NodePath("ConnectionLostWindow/VBoxContainer/MenuButton")

@@ -122,6 +122,23 @@ public class WorldZone
             }
 
         };
+        player.OnDamageTaked += (character, dmg, attacker) =>
+        {
+            
+            var packet = new S2C_EntityDamageTakedPacket
+            {
+                Id = character.EntityId,
+                Damage = dmg,
+                AttackerId = attacker.EntityId,
+                ActualHealth = (uint)character.Health
+            };
+
+            foreach (var p in _players.Values)
+            {
+                _worldHolder.Broadcaster.SendToPlayer(p.PlayerId, PacketTypes.S2C_EntityDamageTaked, packet);
+            }
+
+        };
 
     }
 
