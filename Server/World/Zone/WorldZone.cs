@@ -5,6 +5,7 @@ using System.Numerics;
 using Shared.Items;
 using Shared.Udp.Packets.Category;
 using Shared.Characters;
+using Server.World.Zone.Entities.Mobs;
 
 namespace Server.World.Zone;
 
@@ -150,7 +151,7 @@ public class WorldZone
         
         var entityData = EntityRegistry.GetEntityData(type);
 
-        LivingEntity newEntity = new LivingEntity(GenerateNextMobId(), spawnPosition, type, Id);
+        MonsterEntity newEntity = new MonsterEntity(GenerateNextMobId(), spawnPosition, type, Id, this);
         _entities[newEntity.EntityId] = newEntity;
 
         var packet = new S2C_SpawnEntityPacket
@@ -209,6 +210,32 @@ public class WorldZone
     }
 
 
+    public PlayerEntity? TryFindNearestPlayer(Vector3 pos, float radius)
+    {
+        float radiusSq = radius * radius;
+
+        PlayerEntity? nearestPlayer = null;
+        float minDistSq = radiusSq;
+
+        foreach (var p in _players.Values)
+        {
+            
+            if (!p.IsAlive) continue;
+
+            float curDistSq = Vector3.DistanceSquared(p.Position, pos);
+
+            if (curDistSq < minDistSq )
+            {
+                
+                minDistSq = curDistSq;
+                nearestPlayer = p;
+
+            }
+
+        }
+        return nearestPlayer;
+
+    }
     
     #region Player -> World || Server -> World
     public void MovePlayer(PlayerEntity player, float x, float y, float z)

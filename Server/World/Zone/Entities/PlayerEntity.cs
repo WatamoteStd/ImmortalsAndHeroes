@@ -3,6 +3,7 @@ using System.Numerics;
 using Server.World.Zone.Entities;
 using Server.World.Inventory;
 using Shared.Items;
+using Server.World.Zone.Intefaces;
 
 namespace Server.World;
 
@@ -10,10 +11,14 @@ public class PlayerEntity : LivingEntity
 {
 
     public event Action<ushort, ItemType, ushort>? OnInventoryChanged;
+
+    public enum State { Idle, Move, Chase, Attack, Cast, ProtectedCast, Controlled, Respawning}
+    public State CurrentState = State.Idle;
     
     public uint PlayerId {get; private set;}
     public uint Silver {get; private set;}
     public uint Lvl {get; private set;}
+    protected EntityBase _currentEnemy = null!;
 
     public InventoryBase Inventory = new InventoryBase(10);
 
@@ -31,6 +36,101 @@ public class PlayerEntity : LivingEntity
 
     }
 
+    public override void Update(float deltaTime)
+    {
+        base.Update(deltaTime);
+
+        switch (CurrentState)
+        {
+            
+            case State.Idle:
+
+            break;
+
+            case State.Move:
+                {
+                    
+                    Move(deltaTime);
+
+                }
+            break;
+
+            case State.Chase:
+                {
+                    
+                    if (!_currentEnemy.IsValidEntity())
+                    {
+                        _currentEnemy = null!;
+                        CurrentState = State.Idle;
+                        _moveTarget = Position;
+                        return;
+
+                    }
+                    if (!IsInAttackRadius(_currentEnemy))
+                    {
+                        
+                        _moveTarget = _currentEnemy.Position;
+                        Move(deltaTime);
+                        return;
+
+                    }
+                    CurrentState = State.Attack;
+
+                }
+            break;
+
+            case State.Attack:
+                {
+                    
+                    if (!_currentEnemy.IsValidEntity())
+                    {
+                        
+                        _currentEnemy = null!;
+                        CurrentState = State.Idle;
+                        return;
+
+                    }
+
+                    if (!IsInAttackRadius(_currentEnemy))
+                    {
+                        CurrentState= State.Chase;
+                        return;
+                    }
+
+                    if (_currentAttackCooldown > 0) return;
+
+                    if (_currentEnemy is IDamageable damageable)
+                    {
+                        damageable.TakeDamage(DamageTypes.Physical, (int)BaseDamage, this);
+                        _currentAttackCooldown = _attackCooldown;
+                    }
+
+
+                }
+            break;
+
+        }
+    }
+
+    public void MoveToPosition(Vector3 pos)
+    {
+        
+        _moveTarget = pos;
+        CurrentState = State.Move;
+
+    }
+
+    public virtual void SetAttackTarget(EntityBase entity)
+    {
+    
+        _currentEnemy = entity;
+        CurrentState = State.Chase;
+        Console.WriteLine($"[Entity:{Name}] Set attack target to: {entity.Name}");
+
+    }
+
+    #region INVENTORY
+
     public ushort AddItem(ItemType item, ushort count)
     {
         ushort less = Inventory.AddItem(item, count);
@@ -46,6 +146,8 @@ public class PlayerEntity : LivingEntity
 
 
     }
+
+    #endregion
 
     public override void ClearAllSubscriptions()
     {

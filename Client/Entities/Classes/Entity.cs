@@ -12,6 +12,7 @@ public partial class Entity : CharacterBody3D
 	public string EntityName {get; private set;}
 	[Export] protected Label _name;
 	[Export] protected MeshInstance3D _selectedMesh;
+	protected float _speed;
 
 
 	public EntityType Type;
@@ -49,6 +50,7 @@ public partial class Entity : CharacterBody3D
 		Type = type;
 		var data = EntityRegistry.GetEntityData(type);
 		SetCollisionSize(data.Height, data.Radius);
+		_speed = data.BaseSpeed;
 
 		GlobalPosition = pos;
 		if (_selectedMesh != null)
@@ -60,7 +62,7 @@ public partial class Entity : CharacterBody3D
 
 	public override void _Process(double delta)
 	{
-		GlobalPosition = GlobalPosition.MoveToward(_moveTarget, (float)delta * 3.0f);
+		GlobalPosition = GlobalPosition.MoveToward(_moveTarget, (float)delta * _speed);
 	}
 
 	

@@ -5,15 +5,14 @@ namespace Server.World.Zone.Entities;
 
 public class EntityBase
 {
-
-    public enum State { Idle, Move, Chase, Attack, Controlled, Cast, ProtectedCast, Dead}
-    public State CurrentState = State.Idle;
     
     public uint EntityId {get; protected set;}
     public uint RegionId {get; set;}
     public string Name {get; protected set;}
     public Vector3 Position {get; protected set;}
     protected readonly EntityData _dllData;
+
+    public bool IsAlive = true;
 
     public int MaxHealth {get; protected set;}
     protected int _health;
@@ -32,8 +31,6 @@ public class EntityBase
         set => _mana = Math.Clamp(value, 0, MaxMana);
     }
     public float ManaRegeneration {get; protected set;}
-
-
     public float BaseSpeed {get; protected set;}
 
     public EntityType ModelType {get; protected set;}

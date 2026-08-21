@@ -15,7 +15,6 @@ public class LivingEntity : EntityBase, IDamageable
 
 
     protected Vector3 _moveTarget;
-    protected EntityBase _currentEnemy = null!;
     public uint BaseDamage {get; protected set;}
     public float AttackRange {get; protected set;}
     public int AttackSpeed {get; protected set;}
@@ -51,79 +50,6 @@ public class LivingEntity : EntityBase, IDamageable
             _currentAttackCooldown -= deltaTime;
         }
 
-        switch (CurrentState)
-        {
-
-            case State.Idle:
-                {
-
-                }
-            break;
-            
-            case State.Move:
-                {
-                    
-                    Move(deltaTime);
-
-                }
-            break;
-            case State.Chase:
-                {
-                    
-                    if (_currentEnemy == null) { CurrentState = State.Idle; return;}
-
-                    if (IsInAttackRadius(_currentEnemy))
-                    {
-                        
-                        _moveTarget = Position;
-                        CurrentState = State.Attack;
-                        return;
-                    }
-                    
-                    Vector3 direction = _currentEnemy.Position - Position;
-                    if (direction.LengthSquared() > 0.0001f)
-                    {
-                        Vector3 dirNormalized = Vector3.Normalize(direction);
-                        Position += dirNormalized * BaseSpeed * deltaTime;
-                        CheckMoveSynchronization(deltaTime);
-                    }
-
-                }
-            break;
-
-            case State.Attack:
-                {
-                    
-                    if (_currentEnemy == null || _currentEnemy.CurrentState == State.Dead) {CurrentState = State.Idle; return;}
-                    if (!IsInAttackRadius(_currentEnemy)) { CurrentState = State.Chase; return;}
-
-                    if (_currentAttackCooldown > 0.0f) return;
-
-                    if (_currentEnemy is IDamageable damageable)
-                    {
-                        damageable.TakeDamage(DamageTypes.Physical, (int)BaseDamage, this);
-                        _currentAttackCooldown = _attackCooldown;
-                    }
-                    else
-                    {
-                        CurrentState = State.Idle;
-                        _currentEnemy = null!;
-                        return;
-                    }
-
-
-                }
-                break;
-
-        }
-
-    }
-
-    public void MoveToPosition(Vector3 pos)
-    {
-        
-        _moveTarget = pos;
-        CurrentState = State.Move;
 
     }
 
@@ -134,8 +60,8 @@ public class LivingEntity : EntityBase, IDamageable
         
         if (distanceSquared < 0.05f)
         {
+
             Position = _moveTarget;
-            CurrentState = State.Idle;
 
             OnMoved?.Invoke(this, Position);
             _timeFromLastPacket = 0.0f;
@@ -152,7 +78,7 @@ public class LivingEntity : EntityBase, IDamageable
         {
             
             Position = _moveTarget;
-            CurrentState = State.Idle;
+
             OnMoved?.Invoke(this, Position);
             _timeFromLastPacket = 0.0f;
             _lastSnapshotCords = Position;
@@ -162,15 +88,6 @@ public class LivingEntity : EntityBase, IDamageable
 
         Position += velocity;
         CheckMoveSynchronization(deltaTime);
-
-    }
-
-    public virtual void SetAttackTarget(EntityBase entity)
-    {
-    
-        _currentEnemy = entity;
-        CurrentState = State.Attack;
-        Console.WriteLine($"[Entity:{Name}] Set attack target to: {entity.Name}");
 
     }
 
@@ -225,12 +142,12 @@ public class LivingEntity : EntityBase, IDamageable
         Console.WriteLine($"[Entity:{EntityId}] Take {finalDamage} damage! CurrentHealth:{Health}. Attacker:{attacker.Name}");
         OnDamageTaked?.Invoke(this, actualDamage, attacker);
         
-        if (Health == 0) CurrentState = State.Dead;
+        if (Health == 0) IsAlive = false;
 
     }
 
 
-    private void CheckMoveSynchronization(float deltaTime)
+    protected void CheckMoveSynchronization(float deltaTime)
     {
         _timeFromLastPacket += deltaTime;
 
@@ -277,5 +194,21 @@ public class LivingEntity : EntityBase, IDamageable
     {
         OnMoved = null!;
         OnDamageTaked = null!;
-    }   
+    }  
+
+
 }
+    public static class EntityExtensions
+    {
+        
+        public static bool IsValidEntity(this EntityBase? entity)
+    {
+        
+        if (entity == null) return false;
+        if (!entity.IsAlive) return false;
+
+        return true;
+
+    }
+
+    }
