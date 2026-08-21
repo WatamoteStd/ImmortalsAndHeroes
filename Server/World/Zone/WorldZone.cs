@@ -16,8 +16,8 @@ public class WorldZone
     public uint Id {get; private set;}
     private readonly WorldHolder _worldHolder;
 
-    public Dictionary<uint, PlayerEntity> _players {get; private set;} = new();
-    private Dictionary<uint, EntityBase> _entities = new();
+    public Dictionary<uint, PlayerEntity> Players {get; private set;} = new();
+    public Dictionary<uint, EntityBase> Entities {get; private set;}= new();
     private static uint _currentMobId = 2_000_000;
 
     private RegionSpawner _spawner;
@@ -34,7 +34,7 @@ public class WorldZone
         Id = id;
 
         _spawner = new RegionSpawnBuilder(this)
-            .SetDensity(DensityModes.Normal)
+            .SetDensity(DensityModes.Near)
             .SetCapacity(50)
             .GroupsAllowed(false)
             .AddMonster(EntityType.WolfWeak, 50)
@@ -49,12 +49,13 @@ public class WorldZone
         latensy += deltaTime;
         if (latensy >= 45.0f)
         {
-            Console.WriteLine($"[45s Debug| N:{iterationCount}] RegionId:{Id}. Players: {_players.Count} Entities:{_entities.Count}");
+            Console.WriteLine($"[45s Debug| N:{iterationCount}] RegionId:{Id}. Players: {Players.Count} Entities:{Entities.Count}");
             latensy = 0f;
             iterationCount++;
         }
+        _spawner.Update(deltaTime);
 
-        foreach (var entity in _entities.Values)
+        foreach (var entity in Entities.Values)
         {
             entity.Update(deltaTime);    
         }
@@ -76,15 +77,15 @@ public class WorldZone
             Type = player.ModelType
         };
 
-        foreach (var oldPlayer in _players.Values)
+        foreach (var oldPlayer in Players.Values)
         {
             _worldHolder.Broadcaster.SendToPlayer(oldPlayer.PlayerId, PacketTypes.S2C_SpawnEntity, newPlayerPacket);
         }
 
-        _players[player.PlayerId] = player;
-        _entities[player.EntityId] = player;
+        Players[player.PlayerId] = player;
+        Entities[player.EntityId] = player;
 
-        foreach (var entity in _entities.Values)
+        foreach (var entity in Entities.Values)
         {
             if (entity.EntityId == player.EntityId) continue;
             
@@ -128,7 +129,7 @@ public class WorldZone
                 PosZ = character.Position.Z
             };
 
-            foreach (var p in _players.Values)
+            foreach (var p in Players.Values)
             {
                 _worldHolder.Broadcaster.SendToPlayer<S2C_MoveEntityPacket>(p.PlayerId, PacketTypes.S2C_MoveEntity, movePacket);
             }
@@ -145,7 +146,7 @@ public class WorldZone
                 ActualHealth = (uint)character.Health
             };
 
-            foreach (var p in _players.Values)
+            foreach (var p in Players.Values)
             {
                 _worldHolder.Broadcaster.SendToPlayer(p.PlayerId, PacketTypes.S2C_EntityDamageTaked, packet);
             }
@@ -160,7 +161,7 @@ public class WorldZone
         var entityData = EntityRegistry.GetEntityData(type);
 
         MonsterEntity newEntity = new MonsterEntity(GenerateNextMobId(), spawnPosition, type, Id, this);
-        _entities[newEntity.EntityId] = newEntity;
+        Entities[newEntity.EntityId] = newEntity;
 
         var packet = new S2C_SpawnEntityPacket
         {
@@ -173,7 +174,7 @@ public class WorldZone
             Type = type
         };
 
-        foreach (var p in _players.Values)
+        foreach (var p in Players.Values)
         {
             _worldHolder.Broadcaster.SendToPlayer<S2C_SpawnEntityPacket>(p.PlayerId, PacketTypes.S2C_SpawnEntity, packet);
         }
@@ -188,7 +189,7 @@ public class WorldZone
                 ActualHealth = (uint)entity.Health
             };
 
-            foreach (var p in _players.Values)
+            foreach (var p in Players.Values)
             {
                 _worldHolder.Broadcaster.SendToPlayer(p.PlayerId, PacketTypes.S2C_EntityDamageTaked, packet);
             }
@@ -203,7 +204,7 @@ public class WorldZone
                 PosZ = entity.Position.Z
             };
 
-            foreach (var p in _players.Values)
+            foreach (var p in Players.Values)
             {
                 _worldHolder.Broadcaster.SendToPlayer<S2C_MoveEntityPacket>(p.PlayerId, PacketTypes.S2C_MoveEntity, movePacket);
             }
@@ -225,7 +226,7 @@ public class WorldZone
         PlayerEntity? nearestPlayer = null;
         float minDistSq = radiusSq;
 
-        foreach (var p in _players.Values)
+        foreach (var p in Players.Values)
         {
             
             if (!p.IsAlive) continue;
@@ -250,7 +251,7 @@ public class WorldZone
     {
         player.MoveToPosition(new Vector3(x,1,z));
 
-        foreach (var curPlayer in _players.Values)
+        foreach (var curPlayer in Players.Values)
         {
             var movePacket = new S2C_MoveEntityPacket
             {
@@ -266,16 +267,16 @@ public class WorldZone
     public void RemovePlayer(uint playerId, bool notifySelf = false)
     {
         
-        if (_players.TryGetValue(playerId, out PlayerEntity? player))
+        if (Players.TryGetValue(playerId, out PlayerEntity? player))
         {
 
             player.ClearAllSubscriptions();
-            _players.Remove(player.PlayerId);
-            _entities.Remove(player.EntityId);
+            Players.Remove(player.PlayerId);
+            Entities.Remove(player.EntityId);
             
             var packet = new S2C_RemoveEntityPacket { Id = player.EntityId};
         
-            foreach (var p in _players.Values)
+            foreach (var p in Players.Values)
             {
                 _worldHolder.Broadcaster.SendToPlayer(p.PlayerId, PacketTypes.S2C_RemoveEntity, packet);
             }
@@ -297,7 +298,7 @@ public class WorldZone
     public void PlayerAttackRequest(PlayerEntity player, uint entityId)
     {
         
-        if (_entities.TryGetValue(entityId, out EntityBase? entity))
+        if (Entities.TryGetValue(entityId, out EntityBase? entity))
         {
             
             player.SetAttackTarget(entity);
