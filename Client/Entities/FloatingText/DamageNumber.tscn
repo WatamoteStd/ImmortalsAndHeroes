@@ -13,5 +13,5 @@ modulate = Color(0.9722244, 0.7268999, 0, 1)
 outline_modulate = Color(0.066070534, 0.06607054, 0.066070534, 1)
 text = "Null or empry"
 font = ExtResource("1_oh51g")
-font_size = 66
+font_size = 85
 outline_size = 4

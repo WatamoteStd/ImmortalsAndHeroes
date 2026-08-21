@@ -12,7 +12,7 @@ public class MonsterEntity : LivingEntity
     public State CurrentMobState = State.Idle;
 
     public Vector3 _spawnPosition {get; protected set;}
-    public float _aggroRadius {get; protected set;} = 8.0f;
+    public float _aggroRadius {get; protected set;} = 10.0f;
     public float _leashRadius {get; protected set;} = 18.0f;
     private float _leashRadiusSq;
     public float _patrolRadius {get; protected set;} = 5.0f;

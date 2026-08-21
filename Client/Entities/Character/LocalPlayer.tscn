@@ -14,7 +14,7 @@ CollisionNode = NodePath("CollisionShape3D")
 [node name="Model" type="Node3D" parent="." unique_id=1213344726]
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1685685567]
-transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 12, 10)
+transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 16, 12)
 
 [node name="PlayerController" type="Node" parent="." unique_id=463748240 node_paths=PackedStringArray("_camera", "_raycast", "_player")]
 script = ExtResource("2_id7e5")

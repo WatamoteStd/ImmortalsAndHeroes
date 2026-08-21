@@ -6,6 +6,7 @@ using Shared.Items;
 using Shared.Udp.Packets.Category;
 using Shared.Characters;
 using Server.World.Zone.Entities.Mobs;
+using Server.World.Zone.RegionController;
 
 namespace Server.World.Zone;
 
@@ -18,6 +19,8 @@ public class WorldZone
     public Dictionary<uint, PlayerEntity> _players {get; private set;} = new();
     private Dictionary<uint, EntityBase> _entities = new();
     private static uint _currentMobId = 2_000_000;
+
+    private RegionSpawner _spawner;
     
 
     private float latensy;
@@ -30,7 +33,12 @@ public class WorldZone
         Type = type;
         Id = id;
 
-        CreateEntity(EntityType.WolfWeak, new Vector3(15, 1, 15));
+        _spawner = new RegionSpawnBuilder(this)
+            .SetDensity(DensityModes.Normal)
+            .SetCapacity(50)
+            .GroupsAllowed(false)
+            .AddMonster(EntityType.WolfWeak, 50)
+            .Build();
 
     }
 

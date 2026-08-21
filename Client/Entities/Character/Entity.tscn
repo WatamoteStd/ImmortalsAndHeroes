@@ -40,7 +40,7 @@ texture = SubResource("ViewportTexture_i1f3e")
 
 [node name="SubViewport" type="SubViewport" parent="HealthBarSprite" unique_id=2053142899]
 transparent_bg = true
-size = Vector2i(350, 80)
+size = Vector2i(500, 100)
 render_target_update_mode = 4
 
 [node name="HealthBarUI" type="Control" parent="HealthBarSprite/SubViewport" unique_id=398836045]
@@ -63,8 +63,9 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
-theme_override_colors/font_color = Color(0.77474815, 0.7462182, 0.7502574, 1)
-theme_override_font_sizes/font_size = 38
+theme_override_colors/font_color = Color(0.8219159, 0.74246067, 0.5405933, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 43
 text = "NAME"
 
 [node name="HealthBar" type="ProgressBar" parent="HealthBarSprite/SubViewport/HealthBarUI/VBoxContainer" unique_id=379011886]
