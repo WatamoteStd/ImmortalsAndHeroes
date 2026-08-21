@@ -11,6 +11,7 @@ public class RegionSpawnBuilder
     private WorldZone _region;
     private List<MobSpawnConfig> _mobs = new();
     private bool _groupsAllowed = true;
+    private float _respawnTime = 10.0f;
     
     public RegionSpawnBuilder(WorldZone region)
     {
@@ -37,6 +38,11 @@ public class RegionSpawnBuilder
         _groupsAllowed = isAllowed;
         return this;
     }
+    public RegionSpawnBuilder RespawnTime(float timeSec)
+    {
+        _respawnTime = timeSec;
+        return this;
+    }
 
     public RegionSpawner Build()
     {
@@ -53,7 +59,7 @@ public class RegionSpawnBuilder
             throw new InvalidOperationException($"[SpawnerBuilder error] At region:{_region.Id} MaxCapacity:{_maxCapacity}, but total mobs count:{totalMobsCount}");
         }
 
-        return new RegionSpawner(_density, _maxCapacity, _region, _mobs);
+        return new RegionSpawner(_density, _maxCapacity, _region, _mobs, _respawnTime);
 
 
     }

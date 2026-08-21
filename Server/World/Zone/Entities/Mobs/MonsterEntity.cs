@@ -19,6 +19,8 @@ public class MonsterEntity : LivingEntity
     public float _aiCheckTimer {get; protected set;} = 0.0f;
     protected float _aiCheckCooldown = 1.5f;
 
+    public float RespawnTimer;
+
 
     protected EntityBase _currentEnemy = null!;
 
@@ -37,6 +39,8 @@ public class MonsterEntity : LivingEntity
     public override void Update(float deltaTime)
     {
         base.Update(deltaTime);
+
+
         if (!IsAlive) return;
 
         if (_currentEnemy == null)
@@ -225,6 +229,15 @@ public class MonsterEntity : LivingEntity
                 CurrentMobState = State.Chase;
             }
         }
+    }
+
+    public void Respawn(Vector3 pos)
+    {
+        _health = (int)_dllData.BaseHealth;
+        Position = pos;
+        _spawnPosition = pos;
+        IsAlive = true;
+
     }
 
     

@@ -39,6 +39,7 @@ public class WorldZone
             .GroupsAllowed(false)
             .AddMonster(EntityType.WolfWeak, 50)
             .AddMonster(EntityType.ForestBear, 20)
+            .RespawnTime(10f)
             .Build();
 
     }
@@ -175,8 +176,9 @@ public class WorldZone
             Type = type
         };
 
-        foreach (var p in Players.Values)
+        foreach (var pair in Players)
         {
+            var p = pair.Value;
             _worldHolder.Broadcaster.SendToPlayer<S2C_SpawnEntityPacket>(p.PlayerId, PacketTypes.S2C_SpawnEntity, packet);
         }
 
@@ -190,8 +192,9 @@ public class WorldZone
                 ActualHealth = (uint)entity.Health
             };
 
-            foreach (var p in Players.Values)
+            foreach (var pair in Players)
             {
+                var p = pair.Value;
                 _worldHolder.Broadcaster.SendToPlayer(p.PlayerId, PacketTypes.S2C_EntityDamageTaked, packet);
             }
         };
@@ -205,10 +208,30 @@ public class WorldZone
                 PosZ = entity.Position.Z
             };
 
-            foreach (var p in Players.Values)
+            foreach (var pair in Players)
             {
+                var p = pair.Value;
                 _worldHolder.Broadcaster.SendToPlayer<S2C_MoveEntityPacket>(p.PlayerId, PacketTypes.S2C_MoveEntity, movePacket);
             }
+        };
+        newEntity.OnDead += (entity) =>
+        {
+            
+            var removePacket = new S2C_RemoveEntityPacket
+            {
+                Id = entity.EntityId
+            };
+
+            foreach(var pair in Players)
+            {
+                var p = pair.Value;
+                _worldHolder.Broadcaster.SendToPlayer<S2C_RemoveEntityPacket>(p.PlayerId, PacketTypes.S2C_RemoveEntity, removePacket);
+            }
+
+            if (entity is MonsterEntity monster)
+
+            _spawner.EntityDie(monster);
+
         };
 
     }
@@ -308,6 +331,33 @@ public class WorldZone
         else
         {
             Console.WriteLine($"[Region:{Id}] Attack request declined. Can't find some entity.");
+        }
+
+    }
+
+    #endregion
+
+    #region REGION SPAWNER 
+
+    public void RespawnMonster(MonsterEntity entity, Vector3 pos)
+    {
+        entity.Respawn(pos);
+
+        var packet = new S2C_SpawnEntityPacket
+        {
+            Id = entity.EntityId,
+            Health = entity.Health,
+            Name = entity.Name,
+            PosX = pos.X,
+            PosY = pos.Y,
+            PosZ = pos.Z,
+            Type = entity.ModelType
+        };
+
+        foreach(var pair in Players)
+        {
+            var p = pair.Value;
+            _worldHolder.Broadcaster.SendToPlayer<S2C_SpawnEntityPacket>(p.PlayerId, PacketTypes.S2C_SpawnEntity, packet);
         }
 
     }

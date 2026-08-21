@@ -30,7 +30,7 @@ public partial class PlayerController : Node
 
 
 	public override void _UnhandledInput(InputEvent @event)
-{
+	{
 	if (@event is InputEventMouseButton mouseAction)
 	{
 		
@@ -59,7 +59,10 @@ public partial class PlayerController : Node
 						return;
 					}
 
-					if (_selectedEntity != null) _selectedEntity.DeselectEntity();
+					if (IsInstanceValid(_selectedEntity)) 
+					{
+						_selectedEntity.DeselectEntity();
+					}
 
 					entity.SelectEntity();
 					_selectedEntity = entity;
@@ -68,7 +71,10 @@ public partial class PlayerController : Node
 				}
 				else
 				{
-					_selectedEntity?.DeselectEntity();
+					if (IsInstanceValid(_selectedEntity))
+					{
+						_selectedEntity.DeselectEntity();
+					}
 					_selectedEntity = null;
 					SceneManager.Instance.HideSelectedEntityWindow();
 				}
