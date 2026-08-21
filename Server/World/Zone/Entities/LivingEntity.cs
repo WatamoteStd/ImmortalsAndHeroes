@@ -20,7 +20,7 @@ public class LivingEntity : EntityBase, IDamageable
     public int AttackSpeed {get; protected set;}
     public int Armor {get; protected set;}
     public int MagicResistance {get; protected set;}
-    public const float BASIC_ATTACK_TIME = 1.6f;
+    public float BasicAttackTime {get; protected set;}
 
     protected float _attackCooldown = 0.0f;
     protected float _currentAttackCooldown = 0.0f;
@@ -34,9 +34,10 @@ public class LivingEntity : EntityBase, IDamageable
         AttackSpeed = _dllData.AttackSpeed;
         Armor = _dllData.Armor;
         MagicResistance = _dllData.MagicResistance;
+        BasicAttackTime = _dllData.BasicAttackTime;
 
         // ATTACK COOLDOWN CALCULATE
-        _attackCooldown = BASIC_ATTACK_TIME * 100f / AttackSpeed;
+        _attackCooldown = BasicAttackTime * 100f / AttackSpeed;
 
 
     }
@@ -166,7 +167,7 @@ public class LivingEntity : EntityBase, IDamageable
     public void RecalculateAttackCooldown()
     {
         int safeSpeed = Math.Max(1, AttackSpeed);
-        _attackCooldown = (BASIC_ATTACK_TIME * 100f) / safeSpeed;
+        _attackCooldown = (BasicAttackTime * 100f) / safeSpeed;
 
     }
     public bool IsInAttackRadius(EntityBase entity)
