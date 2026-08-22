@@ -209,7 +209,7 @@ bg_color = Color(0.18310183, 0.20869619, 0.33469316, 1)
 border_blend = true
 shadow_size = 1
 
-[node name="Control" type="Control" unique_id=853745610]
+[node name="Control" type="Control" unique_id=853745610 node_paths=PackedStringArray("_itemList")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -217,6 +217,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nvxjk")
+_itemList = NodePath("PanelContainer/Border/Panels/TabContainer/Items/ItemList")
+_item = ExtResource("3_tub62")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1227776599]
 layout_mode = 1
@@ -426,14 +428,6 @@ metadata/_tab_name = "MARKET"
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 1
-
-[node name="Item1" parent="PanelContainer/Border/Panels/TabContainer/Items/ItemList" unique_id=180159841 instance=ExtResource("3_tub62")]
-layout_mode = 2
-ItemName = "WolfSkin"
-ItemDescription = "A great sword"
-ItemCost = 6
-ItemSeller = "City"
-ItemRare = "Horrible"
 
 [node name="Taxes & Stats" type="PanelContainer" parent="PanelContainer/Border/Panels/TabContainer" unique_id=285235417]
 visible = false

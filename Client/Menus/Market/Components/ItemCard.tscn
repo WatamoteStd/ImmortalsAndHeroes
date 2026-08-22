@@ -61,7 +61,7 @@ border_width_bottom = 1
 border_color = Color(0.82555753, 0.23520145, 0.2015084, 1)
 border_blend = true
 
-[node name="Button" type="Button" unique_id=180159841 node_paths=PackedStringArray("_name", "_description", "_cost", "_seller", "_rare")]
+[node name="Button" type="Button" unique_id=180159841 node_paths=PackedStringArray("_name", "_description", "_cost", "_icon", "_seller", "_rare", "_ItemBuy", "_ItemSale")]
 custom_minimum_size = Vector2(0, 100)
 anchors_preset = 10
 anchor_right = 1.0
@@ -74,8 +74,11 @@ script = ExtResource("1_m5dyg")
 _name = NodePath("MarginContainer/HBoxContainer/NameMenu/Name")
 _description = NodePath("MarginContainer/HBoxContainer/DescriptionMenu/Description")
 _cost = NodePath("MarginContainer/HBoxContainer/ActionMenu/Cost")
+_icon = NodePath("MarginContainer/HBoxContainer/IconPanel/Icon")
 _seller = NodePath("MarginContainer/HBoxContainer/SellerMenu/Seller")
 _rare = NodePath("MarginContainer/HBoxContainer/RareMenu/Rare")
+_ItemBuy = NodePath("MarginContainer/HBoxContainer/ActionMenu/BuyButton")
+_ItemSale = NodePath("MarginContainer/HBoxContainer/ActionMenu/SaleButton")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=296088114]
 layout_mode = 1
@@ -140,7 +143,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 14
-text = "empty"
+text = "Item"
 
 [node name="SellerMenu" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=676801816]
 layout_mode = 2

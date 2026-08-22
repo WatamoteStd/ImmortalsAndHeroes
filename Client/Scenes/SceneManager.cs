@@ -16,7 +16,7 @@ public partial class SceneManager : CanvasLayer
 	[Export] private Button _connectionLostButton;
 
 	// MARKET
-	[Export] private MarketWindow _marketWindow;
+	[Export] public MarketWindow MarketManagerWindow {get; private set;}
 
 	public Dictionary<uint, string> regIdToScenePath;
 
@@ -32,7 +32,7 @@ public partial class SceneManager : CanvasLayer
 
 		Layer = 200;
 		Visible = false;
-		_marketWindow.Visible = false;
+		MarketManagerWindow.Visible = false;
 
 		regIdToScenePath = new Dictionary<uint, string>
 		{
@@ -147,7 +147,7 @@ public partial class SceneManager : CanvasLayer
 
 	public void SwitchVisiblityCityMarket()
 	{
-		_marketWindow.Visible = !_marketWindow.Visible;
+		MarketManagerWindow.Visible = !MarketManagerWindow.Visible;
 	}
 
 	

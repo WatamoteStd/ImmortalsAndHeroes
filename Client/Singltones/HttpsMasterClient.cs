@@ -1,6 +1,8 @@
 using Godot;
 using Shared.Characters;
+using Shared.DataTransferObjects.Market;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -223,6 +225,32 @@ public partial class HttpsMasterClient : Node
 		}
 		
 		
+
+	}
+
+	public async Task<List<MarketItemDto>> MARKET_GetDefault(long regionId)
+	{
+
+
+		try
+		{
+			var response = await client.GetAsync($"/api/market?regionId={regionId}");
+			
+			var data = await response.Content.ReadFromJsonAsync<List<MarketItemDto>>();
+
+			if (response.IsSuccessStatusCode)
+			{
+				return data;
+			}
+
+			return null;
+
+		}
+		catch (Exception e)
+		{
+			GD.PrintErr($"[HTTPS ERROR] {e.Message}");
+			return null;
+		}
 
 	}
 	

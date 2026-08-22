@@ -109,6 +109,7 @@ EnterZoneId = 0
 [node name="Market" type="Area3D" parent="." unique_id=335373770]
 transform = Transform3D(-0.5791409, 0, -0.81522745, 0, 1, 0, 0.81522745, 0, -0.5791409, 23.614006, 3.5, 20.989376)
 script = ExtResource("7_bm4pn")
+_regionId = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Market" unique_id=1794772477]
 mesh = SubResource("BoxMesh_6u82b")
