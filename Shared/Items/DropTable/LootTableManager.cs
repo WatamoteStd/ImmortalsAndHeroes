@@ -10,8 +10,8 @@ public static class LootTableManager
     {
         
         {EntityType.WolfWeak, new LootDrop[] {
-            new LootDrop(ItemType.WolfSkin_Horrible, 0.35f, 1, 4),
-            new LootDrop(ItemType.WolfSkin_Normal, 0.1f, 1, 3),
+            new LootDrop(ItemType.WolfSkin_Horrible, 0.25f, 1, 2),
+            new LootDrop(ItemType.WolfSkin_Normal, 0.1f, 1, 2),
             new LootDrop(ItemType.WolfSkin_Primordial, 0.02f, 1, 1)
         }}
 

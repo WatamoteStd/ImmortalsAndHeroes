@@ -34,7 +34,18 @@ public class WorldZone
         Type = type;
         Id = id;
 
-        _spawner = new RegionSpawnBuilder(this)
+        if (Type == WorldHolder.ZoneType.City)
+        {
+             _spawner = new RegionSpawnBuilder(this)
+            .SetDensity(DensityModes.Near)
+            .SetCapacity(0)
+            .GroupsAllowed(false)
+            .Build();
+
+        }
+        else
+        {
+             _spawner = new RegionSpawnBuilder(this)
             .SetDensity(DensityModes.Near)
             .SetCapacity(70)
             .GroupsAllowed(false)
@@ -42,6 +53,7 @@ public class WorldZone
             .AddMonster(EntityType.ForestBear, 20)
             .RespawnTime(10f)
             .Build();
+        }
 
     }
 
