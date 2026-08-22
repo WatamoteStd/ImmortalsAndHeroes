@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bluish8t2ir6o" path="res://Entities/Character/Entity.tscn" id="4_0pbcf"]
 [ext_resource type="PackedScene" uid="uid://cwfns60gnqt7l" path="res://World/Regions/LocationChanger.tscn" id="4_isuyp"]
 [ext_resource type="PackedScene" uid="uid://c85suyvpyr0sm" path="res://Entities/FloatingText/DamageNumber.tscn" id="5_evw3e"]
+[ext_resource type="Script" uid="uid://6h64qpyr230j" path="res://World/Regions/Scripts/CityMarket.cs" id="7_bm4pn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ichqs"]
 albedo_color = Color(0.24697644, 0.228971, 0.15267801, 1)
@@ -42,6 +43,16 @@ size = Vector3(6, 4, 7)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0pbcf"]
 size = Vector3(6, 4, 7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qm0se"]
+albedo_color = Color(0.84313726, 0.48235294, 0.29803923, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6u82b"]
+material = SubResource("StandardMaterial3D_qm0se")
+size = Vector3(15, 7, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_83fg3"]
+size = Vector3(15, 3, 7)
 
 [node name="Node3D" type="Node3D" unique_id=1231749597]
 script = ExtResource("1_s2f4u")
@@ -94,3 +105,14 @@ shape = SubResource("BoxShape3D_0pbcf")
 [node name="EnterToCity" parent="." unique_id=667303599 instance=ExtResource("4_isuyp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.98025, 0.582957, 0)
 EnterZoneId = 0
+
+[node name="Market" type="Area3D" parent="." unique_id=335373770]
+transform = Transform3D(-0.5791409, 0, -0.81522745, 0, 1, 0, 0.81522745, 0, -0.5791409, 23.614006, 3.5, 20.989376)
+script = ExtResource("7_bm4pn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Market" unique_id=1794772477]
+mesh = SubResource("BoxMesh_6u82b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Market" unique_id=384055336]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3841858e-07, -1.4807677, 4.496)
+shape = SubResource("BoxShape3D_83fg3")

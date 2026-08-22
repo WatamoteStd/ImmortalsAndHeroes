@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://c2pd0kmiwqjkm" path="res://Scenes/Inventory/Inventory.cs" id="5_8ysa5"]
 [ext_resource type="PackedScene" uid="uid://cqa7psxm0fij7" path="res://Scenes/Inventory/Items/SlotDefault.tscn" id="5_83gc0"]
 [ext_resource type="Script" uid="uid://brl6fol06stt7" path="res://Scenes/SelectedEntityWindow.cs" id="7_2cmid"]
+[ext_resource type="PackedScene" uid="uid://c4khyov2ay7x8" path="res://Menus/Market/BaseMarket.tscn" id="8_q4unc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_83fg3"]
 shader = ExtResource("1_yueht")
@@ -164,13 +165,14 @@ bg_color = Color(0.6851024, 0.7241215, 0.7290107, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q4unc"]
 bg_color = Color(0.81961036, 0.8449592, 0.84812224, 1)
 
-[node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator", "PlayerHud", "_inventory", "_connectionLostWindow", "_connectionLostButton")]
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator", "PlayerHud", "_inventory", "_connectionLostWindow", "_connectionLostButton", "_marketWindow")]
 script = ExtResource("1_hjya1")
 _animator = NodePath("AnimationPlayer")
 PlayerHud = NodePath("UI")
 _inventory = NodePath("UI/Inventory")
 _connectionLostWindow = NodePath("ConnectionLostWindow")
 _connectionLostButton = NodePath("ConnectionLostWindow/VBoxContainer/MenuButton")
+_marketWindow = NodePath("CanvasLayer/MarkeetWindow")
 
 [node name="Bg" type="TextureRect" parent="." unique_id=1002927567]
 texture_repeat = 2
@@ -437,3 +439,9 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_ygr85")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2cmid")
 theme_override_styles/hover = SubResource("StyleBoxFlat_q4unc")
 text = "Back"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2076985847]
+layer = 120
+
+[node name="MarkeetWindow" parent="CanvasLayer" unique_id=853745610 instance=ExtResource("8_q4unc")]
+visible = false

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cr2asmjhvlmsl" path="res://Menus/Market/PanelsController.cs" id="1_32t48"]
 [ext_resource type="Texture2D" uid="uid://bkho5n2sh1w4s" path="res://Assets/temp/thedigitalartist-approved-5254258_640.png" id="1_cvoin"]
+[ext_resource type="Script" uid="uid://cax2sne2key80" path="res://Menus/Market/MarketWindow.cs" id="1_nvxjk"]
 [ext_resource type="Script" uid="uid://chcy8745e6njm" path="res://Menus/Market/FadePanel.cs" id="2_0h5cj"]
 [ext_resource type="PackedScene" uid="uid://bb6skeww6pvx7" path="res://Menus/Market/Guildhall/guildhall.tscn" id="2_etg18"]
 [ext_resource type="PackedScene" uid="uid://d2dmonvo31mp" path="res://Menus/Market/Components/ItemCard.tscn" id="3_tub62"]
@@ -215,6 +216,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_nvxjk")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1227776599]
 layout_mode = 1

@@ -15,6 +15,9 @@ public partial class SceneManager : CanvasLayer
 	[Export] private PanelContainer _connectionLostWindow;
 	[Export] private Button _connectionLostButton;
 
+	// MARKET
+	[Export] private MarketWindow _marketWindow;
+
 	public Dictionary<uint, string> regIdToScenePath;
 
 	public override void _Ready()
@@ -29,6 +32,7 @@ public partial class SceneManager : CanvasLayer
 
 		Layer = 200;
 		Visible = false;
+		_marketWindow.Visible = false;
 
 		regIdToScenePath = new Dictionary<uint, string>
 		{
@@ -90,7 +94,7 @@ public partial class SceneManager : CanvasLayer
 	{
 		HideHud();
 		Visible = true;
-    	_inventory.Visible = false;
+		_inventory.Visible = false;
 		_connectionLostWindow.Visible = true;
 	}
 	private void BackToMenuConnectionLost()
@@ -139,6 +143,11 @@ public partial class SceneManager : CanvasLayer
 	public void UpdateInventoryCell(ushort slotIndex, ItemType item, ushort count)
 	{
 		_inventory.UpdateCell(slotIndex,item, count);
+	}
+
+	public void SwitchVisiblityCityMarket()
+	{
+		_marketWindow.Visible = !_marketWindow.Visible;
 	}
 
 	
