@@ -56,7 +56,12 @@ public static class ItemRegistry
     private static readonly Dictionary<ItemType, ItemData> _items = new Dictionary<ItemType, ItemData>()
     {
         
-        {ItemType.IronOre_Horrible, new ItemData(QualityType.Horrible, 999, "Iron Ore", "res://Scenes/Inventory/Items/Resource/IronOre/IronOre_Horrible.png")}
+        {ItemType.IronOre_Horrible, new ItemData(QualityType.Horrible, 999, "Iron Ore", "res://Scenes/Inventory/Items/Resource/IronOre/IronOre_Horrible.png")},
+
+
+        {ItemType.WolfSkin_Horrible, new ItemData(QualityType.Horrible, 999, "Wolf Skin Horrible", "res://Scenes/Inventory/Items/Resource/WolfSkin/horrible.png")},
+        {ItemType.WolfSkin_Primordial, new ItemData(QualityType.Primordial, 10, "Wolf Skin Primordial", "res://Scenes/Inventory/Items/Resource/WolfSkin/Primordial.png")},
+        {ItemType.WolfSkin_Normal, new ItemData(QualityType.Normal, 999, "Wolf Skin", "res://Scenes/Inventory/Items/Resource/WolfSkin/Normal.png")}
 
     };
 
