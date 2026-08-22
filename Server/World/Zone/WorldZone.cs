@@ -7,6 +7,7 @@ using Shared.Udp.Packets.Category;
 using Shared.Characters;
 using Server.World.Zone.Entities.Mobs;
 using Server.World.Zone.RegionController;
+using Shared.Items.DropTable;
 
 namespace Server.World.Zone;
 
@@ -214,7 +215,7 @@ public class WorldZone
                 _worldHolder.Broadcaster.SendToPlayer<S2C_MoveEntityPacket>(p.PlayerId, PacketTypes.S2C_MoveEntity, movePacket);
             }
         };
-        newEntity.OnDead += (entity) =>
+        newEntity.OnDead += (entity, attacker) =>
         {
             
             var removePacket = new S2C_RemoveEntityPacket
@@ -231,6 +232,34 @@ public class WorldZone
             if (entity is MonsterEntity monster)
 
             _spawner.EntityDie(monster);
+
+            // LOOT GENERATE
+
+            if (attacker is PlayerEntity player)
+            {
+                Console.WriteLine($"[Region#{Id}] {entity.Name}:{entity.EntityId} die! Killer:{player.Name}");
+                
+                var drops = LootTableManager.GetEntityDropTable(entity.ModelType);
+                if (drops.Length == 0) return;
+
+                for (int i = 0; i < drops.Length; i++)
+                {
+                    Console.WriteLine($"[Region#{Id}] Generating loot...");
+                    var drop = drops[i];
+                    
+                    if (Random.Shared.NextSingle() <= drop.DropChance)
+                    {
+                        
+                        ushort count = (ushort)Random.Shared.Next(drop.MinCount, drop.MaxCount + 1);
+                        Console.WriteLine($"[Region#{Id}] {entity.Name}:{entity.EntityId} dropped:{count}x{drop.Item} To:{player.Name}");
+
+                        _ = player.Inventory.AddItem(drop.Item, count);
+
+                    }
+
+                }
+
+            }
 
         };
 

@@ -43,7 +43,7 @@ theme_override_constants/margin_bottom = 5
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 expand_mode = 1
-stretch_mode = 3
+stretch_mode = 4
 
 [node name="Count" type="PanelContainer" parent="." unique_id=1621794604]
 layout_mode = 2

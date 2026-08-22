@@ -10,7 +10,7 @@ public class LivingEntity : EntityBase, IDamageable
 
     public event Action<LivingEntity, Vector3>? OnMoved;
     public event Action<LivingEntity, int, LivingEntity>? OnDamageTaked; // entity(this) | damage | attacker
-    public event Action<LivingEntity>? OnDead;
+    public event Action<LivingEntity, LivingEntity>? OnDead; // this, attacker
     protected Vector3 _lastSnapshotCords;
     protected float _timeFromLastPacket = 0.0f;
 
@@ -147,7 +147,7 @@ public class LivingEntity : EntityBase, IDamageable
         if (Health == 0) 
         {
             IsAlive = false;
-            OnDead?.Invoke(this);
+            OnDead?.Invoke(this, attacker);
         }
 
     }
