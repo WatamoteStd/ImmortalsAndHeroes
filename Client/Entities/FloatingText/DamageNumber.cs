@@ -28,7 +28,7 @@ public partial class DamageNumber : Node3D
 			.SetEase(Tween.EaseType.Out);
 
 		
-		tween.TweenProperty(_label, "modulate:a", 0.0f, 1.15f)
+		tween.TweenProperty(_label, "modulate:a", 0.0f, 1.55f)
 			.SetTrans(Tween.TransitionType.Quad)
 			.SetEase(Tween.EaseType.In);
 

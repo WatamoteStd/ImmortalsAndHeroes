@@ -43,14 +43,15 @@ public partial class CityMarket : Area3D
 
 	}
 
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (@event.IsActionPressed("Back") && _isOpen)
-        {
-            SceneManager.Instance.SwitchVisiblityCityMarket();
-            _isOpen = false;
-        }
-    }
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (@event.IsActionPressed("Back") && _isOpen)
+		{
+			SceneManager.Instance.SwitchVisiblityCityMarket();
+			_marketWindow.MARKET_ClearData();
+			_isOpen = false;
+		}
+	}
 
 
 
