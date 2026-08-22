@@ -129,10 +129,10 @@ public partial class SceneManager : CanvasLayer
 
 
 
-	public void InitPlayerHud(uint hp, uint mp, uint silver, uint lvl, string name)
+	public void InitPlayerHud(uint hp, uint mp, uint silver, string name)
 	{
 		
-		PlayerHud.InitHud(hp,mp,silver,lvl,name);
+		PlayerHud.InitHud(hp,mp,silver,name);
 
 	}
 

@@ -107,7 +107,7 @@ public partial class WorldHandler : Node3D
 
 		RegionEntities.Add(localPlayer.Id, localPlayer);
 
-		SceneManager.Instance.InitPlayerHud((uint)playerPacket.CurrentHp, (uint)playerPacket.CurrentMp, playerPacket.Silver, (uint)playerPacket.Lvl, playerPacket.Name);
+		SceneManager.Instance.InitPlayerHud((uint)playerPacket.CurrentHp, (uint)playerPacket.CurrentMp, playerPacket.Silver, playerPacket.Name);
 		
 
 
