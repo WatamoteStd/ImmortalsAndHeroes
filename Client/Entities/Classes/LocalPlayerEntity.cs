@@ -30,6 +30,11 @@ public partial class LocalPlayerEntity : Entity
 	}
 
 
+	public override void Regenerate(float delta)
+	{
+		base.Regenerate(delta);
+		SceneManager.Instance.PlayerHud.UpdateHealth((uint)_health);
+	}
 
 
 }

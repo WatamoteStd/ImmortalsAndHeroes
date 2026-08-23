@@ -26,6 +26,9 @@ public class LivingEntity : EntityBase, IDamageable
     protected float _attackCooldown = 0.0f;
     protected float _currentAttackCooldown = 0.0f;
 
+    protected float _healthRegenBuffer = 0f;
+    protected float _manaRegenBuffer = 0f;
+
 
     public LivingEntity(uint entityId, Vector3 pos, EntityType type, uint regionId) : base(entityId, pos, type, regionId)
     {
@@ -51,6 +54,8 @@ public class LivingEntity : EntityBase, IDamageable
         {
             _currentAttackCooldown -= deltaTime;
         }
+
+        Regenerate(deltaTime);
 
 
     }
@@ -163,6 +168,26 @@ public class LivingEntity : EntityBase, IDamageable
             OnMoved?.Invoke(this, Position);
             _timeFromLastPacket = 0.0f;
             _lastSnapshotCords = Position;
+
+        }
+
+    }
+
+    public virtual void Regenerate(float deltaTime)
+    {
+        
+        if (_health < MaxHealth)
+        {
+            
+            _healthRegenBuffer += HealthRegeneration * deltaTime;
+
+            if (_healthRegenBuffer >= 1.0f)
+            {
+                int amount = (int)_healthRegenBuffer;
+                Health += amount;
+                _healthRegenBuffer -= (float)amount;
+
+            }
 
         }
 

@@ -15,7 +15,11 @@ public partial class Entity : CharacterBody3D
 	protected float _speed;
 
 
+	protected float _healthRegenBuffer = 0f;
+	protected float _manaRegenBuffer = 0f;
+
 	public EntityType Type;
+	public EntityData _dllData;
 	[Export] public CollisionShape3D CollisionNode { get; set; } = null!;
 
 	protected Vector3 _moveTarget;
@@ -49,6 +53,7 @@ public partial class Entity : CharacterBody3D
 		}
 		Type = type;
 		var data = EntityRegistry.GetEntityData(type);
+		_dllData = data;
 		SetCollisionSize(data.Height, data.Radius);
 		_speed = data.BaseSpeed;
 
@@ -63,9 +68,31 @@ public partial class Entity : CharacterBody3D
 	public override void _Process(double delta)
 	{
 		GlobalPosition = GlobalPosition.MoveToward(_moveTarget, (float)delta * _speed);
+
+		Regenerate((float)delta);
+
 	}
 
 	
+	public virtual void Regenerate(float delta)
+	{
+		
+		if (_health < _maxHealth)
+		{
+			
+			_healthRegenBuffer += _dllData.HealthRegeneration * delta;
+
+			if (_healthRegenBuffer >= 1.0f)
+			{
+				int amount = (int)_healthRegenBuffer;
+				Health += amount;
+				_healthRegenBuffer -= (float)amount;
+
+			}
+
+		}
+
+	}
 
 	public virtual void Move(Vector3 position)
 	{
