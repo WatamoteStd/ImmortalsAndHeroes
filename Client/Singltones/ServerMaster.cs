@@ -205,6 +205,12 @@ public partial class ServerMaster : Node
                 }
             break;    
 
+            case S2C_PlayerExpSyncPacket expUpd:
+                {
+                    GameSession.Instance.PlayerExpCache = expUpd.TotalExp;
+                }
+            break;
+
         }
 
     }

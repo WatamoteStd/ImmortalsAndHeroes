@@ -17,6 +17,7 @@ public enum PacketTypes : ushort
     S2C_ChangeRegion = 9,
     S2C_RemoveEntity = 10,
     C2S_AttackRequest = 11,
-    S2C_EntityDamageTaked = 12
+    S2C_EntityDamageTaked = 12,
+    S2C_PlayerExpSync = 13
 
 }

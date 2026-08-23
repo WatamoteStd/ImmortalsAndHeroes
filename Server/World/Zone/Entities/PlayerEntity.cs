@@ -11,23 +11,23 @@ public class PlayerEntity : LivingEntity
 {
 
     public event Action<ushort, ItemType, ushort>? OnInventoryChanged;
+    public event Action<int, int>? OnExpChanged; // this newExp totalExp
 
     public enum State { Idle, Move, Chase, Attack, Cast, ProtectedCast, Controlled, Respawning}
     public State CurrentState = State.Idle;
     
     public uint PlayerId {get; private set;}
     public uint Silver {get; private set;}
-    public uint Lvl {get; private set;}
+    public int Exp {get; private set;}
     protected EntityBase _currentEnemy = null!;
 
     public InventoryBase Inventory = new InventoryBase(10);
 
-    public PlayerEntity(uint entityId, Vector3 pos, EntityType type, string name, uint playerId, uint regionId, uint silver, uint lvl) : base(entityId, pos, type, regionId)
+    public PlayerEntity(uint entityId, Vector3 pos, EntityType type, string name, uint playerId, uint regionId, uint silver) : base(entityId, pos, type, regionId)
     {
         Name = name;
         PlayerId = playerId;
         Silver = silver;
-        Lvl = lvl;
 
         Inventory.OnItemChanged += (slotIndex, item, count) =>
         {
@@ -130,6 +130,14 @@ public class PlayerEntity : LivingEntity
 
     }
 
+    public void AddExp(int exp)
+    {
+        
+        Exp += exp;
+        OnExpChanged?.Invoke(exp, Exp);
+
+    }
+
     #region INVENTORY
 
     public ushort AddItem(ItemType item, ushort count)
@@ -154,6 +162,7 @@ public class PlayerEntity : LivingEntity
     {
         base.ClearAllSubscriptions();
         OnInventoryChanged = null!; 
+        OnExpChanged = null!;
     }
     
 

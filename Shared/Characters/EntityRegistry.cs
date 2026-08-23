@@ -12,15 +12,21 @@ public static class EntityRegistry
             
                 Height = 1f, Radius = 0.3f, ScenePath = "res://Entities/Mobs/Wolf/WeakWolf.tscn", BaseHealth = 80, Name = "WeakWolf",
                 BaseDamage = 15, AttackRange = 1.1f, AttackSpeed = 100, Armor = 1, MagicResistance = 0, BaseSpeed = 3.5f,
-                HealthRegeneration = 1.3f, BaseMana = 30, ManaRegeneration = 0.3f, BasicAttackTime = 1.15f
+                HealthRegeneration = 1.3f, BaseMana = 30, ManaRegeneration = 0.3f, BasicAttackTime = 1.15f,
+
+                MaxExpReward = 28,
+                MinExpReward = 20
 
             }
         },
         {EntityType.ForestBear, new EntityData
         {
-            Height = 2.4f, Radius = 1.2f, ScenePath = "res://Entities/Mobs/Bears/ForestBear.tscn", BaseHealth = 350, Name = "Forest Bear",
-            BaseDamage = 43, AttackRange = 1.3f, AttackSpeed = 100, Armor = 3, MagicResistance = 0, BaseSpeed = 2.5f,
-            HealthRegeneration = 2.6f, BaseMana = 60, ManaRegeneration = 0.3f, BasicAttackTime = 2.7f
+            Height = 2.4f, Radius = 1.2f, ScenePath = "res://Entities/Mobs/Bears/ForestBear.tscn", BaseHealth = 345, Name = "Forest Bear",
+            BaseDamage = 43, AttackRange = 1.3f, AttackSpeed = 100, Armor = 3, MagicResistance = 0, BaseSpeed = 2.4f,
+            HealthRegeneration = 2.6f, BaseMana = 60, ManaRegeneration = 0.3f, BasicAttackTime = 2.7f,
+
+            MaxExpReward = 155,
+            MinExpReward = 125
         }
         },
         {EntityType.Default, new EntityData
@@ -83,5 +89,7 @@ public readonly struct EntityData
     public required float ManaRegeneration { get; init; }
     public required float BasicAttackTime { get; init; }
 
+    public uint? MinExpReward {get; init;}
+    public uint? MaxExpReward {get; init;}
 
     }

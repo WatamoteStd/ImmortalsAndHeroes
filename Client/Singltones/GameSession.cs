@@ -15,6 +15,7 @@ public partial class GameSession : Node
 	public string UdpIp { get; set; }
 	public int UdpPort { get; set; }
 
+	public uint PlayerExpCache {get; set;}
 	public S2C_HandshakeSuccessPacket PlayerCache;
 
 	public enum State

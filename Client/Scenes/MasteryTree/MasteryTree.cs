@@ -16,6 +16,10 @@ public partial class MasteryTree : Control
 
 	public override void _Ready()
 	{
+		VisibilityChanged += () =>
+		{
+			_playerExp.Text = GameSession.Instance.PlayerExpCache.ToString();
+		};
 		_pathInfoWindow.Visible = false;
 		_darkPathButton.Pressed += () => OpenPathInfo("DarkPath", "You entered to this way. + 1 armor", 10);
 

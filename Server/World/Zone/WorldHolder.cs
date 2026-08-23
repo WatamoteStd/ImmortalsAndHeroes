@@ -117,7 +117,7 @@ public class WorldHolder : IWorldHolder
         {
 
             Vector3 startPos = new Vector3(character.PosX, character.PosY, character.PosZ);
-            PlayerEntity newPlayer = new PlayerEntity((uint)character.Id, startPos, character.Type, character.Name,(uint)character.UserId, (uint)character.RegionId, (uint)character.Silver, (uint)character.Lvl);
+            PlayerEntity newPlayer = new PlayerEntity((uint)character.Id, startPos, character.Type, character.Name,(uint)character.UserId, (uint)character.RegionId, (uint)character.Silver);
             
             zone.AddPlayer(newPlayer);
             idToPlayer[(uint)character.UserId] = newPlayer;
@@ -194,7 +194,6 @@ public class WorldHolder : IWorldHolder
                         Type = player.ModelType,
                         CurrentHp = player.Health,
                         CurrentMp = player.Mana,
-                        Lvl = (int)player.Lvl,
                         Silver = player.Silver
                     };
 
