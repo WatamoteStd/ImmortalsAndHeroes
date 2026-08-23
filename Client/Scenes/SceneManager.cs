@@ -17,6 +17,7 @@ public partial class SceneManager : CanvasLayer
 
 	// MARKET
 	[Export] public MarketWindow MarketManagerWindow {get; private set;}
+	[Export] public MasteryTree MasteryTreeWindow {get; private set;}
 
 	public Dictionary<uint, string> regIdToScenePath;
 
@@ -148,6 +149,10 @@ public partial class SceneManager : CanvasLayer
 	public void SwitchVisiblityCityMarket()
 	{
 		MarketManagerWindow.Visible = !MarketManagerWindow.Visible;
+	}
+	public void SwitchVisiblityMasteryTree()
+	{
+		MasteryTreeWindow.Visible = !MasteryTreeWindow.Visible;
 	}
 
 	

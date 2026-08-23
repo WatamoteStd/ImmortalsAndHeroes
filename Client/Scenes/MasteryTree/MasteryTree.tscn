@@ -1,9 +1,278 @@
 [gd_scene format=3 uid="uid://bwfe7uyvwkkqt"]
 
-[node name="Control" type="Control" unique_id=758776108]
+[ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="1_2brbh"]
+[ext_resource type="Script" uid="uid://bhlu24qh4nsfy" path="res://Scenes/MasteryTree/MasteryTree.cs" id="1_njmpg"]
+
+[sub_resource type="Gradient" id="Gradient_njmpg"]
+colors = PackedColorArray(0.10021392, 0.13682938, 0.1692164, 1, 0.18904668, 0.27346432, 0.29251376, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_83fg3"]
+gradient = SubResource("Gradient_njmpg")
+fill_from = Vector2(0.30844155, 0.36038962)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83fg3"]
+bg_color = Color(0.16445175, 0.2660973, 0.33083236, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_83fg3"]
+base_font = ExtResource("1_2brbh")
+variation_embolden = 0.41
+spacing_glyph = 10
+
+[sub_resource type="FontVariation" id="FontVariation_vap5j"]
+base_font = ExtResource("1_2brbh")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6u82b"]
+bg_color = Color(0.1658462, 0.18507051, 0.181158, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.083187394, 0.09568008, 0.093183, 1)
+border_blend = true
+shadow_size = 1
+shadow_offset = Vector2(-1, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2brbh"]
+bg_color = Color(0.12490403, 0.14107686, 0.13784331, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.04816147, 0.057026856, 0.057026938, 1)
+border_blend = true
+shadow_size = 2
+shadow_offset = Vector2(-1, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_njmpg"]
+bg_color = Color(0.1880202, 0.20959398, 0.2052781, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2732044, 0.30316967, 0.30316585, 1)
+border_blend = true
+shadow_size = 1
+shadow_offset = Vector2(-1, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ichqs"]
+bg_color = Color(0.16741201, 0.21319222, 0.22420344, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.254201, 0.3120983, 0.33383688, 1)
+border_blend = true
+shadow_size = 4
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_83fg3"]
+color = Color(0.25033975, 0.30769467, 0.32334712, 1)
+
+[node name="Control" type="Control" unique_id=758776108 node_paths=PackedStringArray("_darkPathButton", "_playerExp", "_pathInfoWindow", "_learnPathButton", "_title", "_description", "_requiredExp")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_njmpg")
+_darkPathButton = NodePath("Body/VBoxContainer/DarkPath")
+_playerExp = NodePath("Header/HBoxContainer/PlayerExp")
+_pathInfoWindow = NodePath("Body/PathInfoPanel")
+_learnPathButton = NodePath("Body/PathInfoPanel/Content/VBoxContainer/LearnPanel/Learn")
+_title = NodePath("Body/PathInfoPanel/Header/Title")
+_description = NodePath("Body/PathInfoPanel/Content/VBoxContainer/Description")
+_requiredExp = NodePath("Body/PathInfoPanel/Content/VBoxContainer/LearnPanel/Required")
+
+[node name="bg" type="TextureRect" parent="." unique_id=1985687418]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_83fg3")
+
+[node name="Header" type="PanelContainer" parent="." unique_id=227608537]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_83fg3")
+
+[node name="Name" type="Label" parent="Header" unique_id=1492625689]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.8146983, 0.8861328, 0.93315333, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 30
+text = "MASTERY TREE"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Header" unique_id=1927149962]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Header/HBoxContainer" unique_id=1269208828]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("1_2brbh")
+text = "YOUR EXP"
+
+[node name="PlayerExp" type="Label" parent="Header/HBoxContainer" unique_id=1457686443]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.3989755, 0.74205905, 0.8957975, 1)
+theme_override_fonts/font = ExtResource("1_2brbh")
+text = "COUNT"
+
+[node name="Body" type="MarginContainer" parent="." unique_id=490173045]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Body" unique_id=1301373042]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = 90
+
+[node name="Body" type="Button" parent="Body/VBoxContainer" unique_id=953989088]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7257979, 0.81245506, 0.8866728, 1)
+theme_override_fonts/font = SubResource("FontVariation_vap5j")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_6u82b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2brbh")
+theme_override_styles/hover = SubResource("StyleBoxFlat_njmpg")
+text = "BODY"
+
+[node name="DarkPath" type="Button" parent="Body/VBoxContainer" unique_id=1543161005]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7257979, 0.81245506, 0.8866728, 1)
+theme_override_fonts/font = SubResource("FontVariation_vap5j")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_6u82b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2brbh")
+theme_override_styles/hover = SubResource("StyleBoxFlat_njmpg")
+text = "DARK PATH"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Body" unique_id=184924675]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/separation = 150
+
+[node name="Intelligense" type="Button" parent="Body/HBoxContainer" unique_id=809081295]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.7257979, 0.81245506, 0.8866728, 1)
+theme_override_fonts/font = SubResource("FontVariation_vap5j")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_6u82b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2brbh")
+theme_override_styles/hover = SubResource("StyleBoxFlat_njmpg")
+text = "INTELLIGENSE"
+
+[node name="FottAgilivty" type="Button" parent="Body/HBoxContainer" unique_id=495433984]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.7257979, 0.81245506, 0.8866728, 1)
+theme_override_fonts/font = SubResource("FontVariation_vap5j")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_6u82b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2brbh")
+theme_override_styles/hover = SubResource("StyleBoxFlat_njmpg")
+text = "FOOT AGILITY"
+
+[node name="HandAgility" type="Button" parent="Body/HBoxContainer" unique_id=1224267627]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.7257979, 0.81245506, 0.8866728, 1)
+theme_override_fonts/font = SubResource("FontVariation_vap5j")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_6u82b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2brbh")
+theme_override_styles/hover = SubResource("StyleBoxFlat_njmpg")
+text = "HAND AGILITY"
+
+[node name="PathInfoPanel" type="PanelContainer" parent="Body" unique_id=1796295046]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ichqs")
+
+[node name="Header" type="PanelContainer" parent="Body/PathInfoPanel" unique_id=60392685]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Title" type="Label" parent="Body/PathInfoPanel/Header" unique_id=830335719]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.849525, 0.8041001, 0.86474174, 1)
+theme_override_font_sizes/font_size = 19
+text = "TITLE"
+
+[node name="Content" type="MarginContainer" parent="Body/PathInfoPanel" unique_id=1344585051]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 70
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Body/PathInfoPanel/Content" unique_id=747857977]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LearnPanel" type="HBoxContainer" parent="Body/PathInfoPanel/Content/VBoxContainer" unique_id=1851037951]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="RequiredTitle" type="Label" parent="Body/PathInfoPanel/Content/VBoxContainer/LearnPanel" unique_id=1526270197]
+layout_mode = 2
+text = "Required:"
+
+[node name="Required" type="Label" parent="Body/PathInfoPanel/Content/VBoxContainer/LearnPanel" unique_id=2113243609]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8217887, 0.82178867, 0.82178867, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 15
+text = "Count"
+
+[node name="Learn" type="Button" parent="Body/PathInfoPanel/Content/VBoxContainer/LearnPanel" unique_id=122892988]
+custom_minimum_size = Vector2(70, 25)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 12
+text = "LEARN"
+
+[node name="HSeparator" type="HSeparator" parent="Body/PathInfoPanel/Content/VBoxContainer" unique_id=649474538]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_83fg3")
+
+[node name="Description" type="Label" parent="Body/PathInfoPanel/Content/VBoxContainer" unique_id=588735694]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 14
+text = "Desctiption:"

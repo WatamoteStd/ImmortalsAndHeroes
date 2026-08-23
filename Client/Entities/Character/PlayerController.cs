@@ -85,10 +85,14 @@ public partial class PlayerController : Node
 
 
 	if (@event.IsActionPressed("Inventory"))
-		{
-			OnInventoryAction?.Invoke();
-		}
+	{
+		OnInventoryAction?.Invoke();
+	}
 
+	if (@event.IsActionPressed("MastryTree"))
+	{
+		SceneManager.Instance.SwitchVisiblityMasteryTree();
+	}
 
 }
 
