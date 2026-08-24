@@ -4,6 +4,8 @@ using Server.World.Zone.Entities;
 using Server.World.Inventory;
 using Shared.Items;
 using Server.World.Zone.Intefaces;
+using Server.World.MasteryTree;
+using Shared.MasteryTree;
 
 namespace Server.World;
 
@@ -22,6 +24,7 @@ public class PlayerEntity : LivingEntity
     protected EntityBase _currentEnemy = null!;
 
     public InventoryBase Inventory = new InventoryBase(10);
+    public PlayerMasteryTree MasteryTree {get;}
 
     public PlayerEntity(uint entityId, Vector3 pos, EntityType type, string name, uint playerId, uint regionId, uint silver) : base(entityId, pos, type, regionId)
     {
@@ -33,6 +36,8 @@ public class PlayerEntity : LivingEntity
         {
             OnInventoryChanged?.Invoke(slotIndex, item,count);
         };
+
+        MasteryTree = new PlayerMasteryTree(this);
 
     }
 
@@ -134,6 +139,13 @@ public class PlayerEntity : LivingEntity
         
         Exp += exp;
         OnExpChanged?.Invoke(exp, Exp);
+
+    }
+
+    public void AddBranchExp(MasteryNodeId id)
+    {
+        
+        MasteryTree.AddExp(id);
 
     }
 

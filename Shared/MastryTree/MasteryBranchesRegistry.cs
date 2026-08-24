@@ -8,6 +8,7 @@ public static class MasteryBranchesRegistry
 {
     
     private static FrozenDictionary<MasteryNodeId, MasteryBranch> _branches = FrozenDictionary<MasteryNodeId, MasteryBranch>.Empty;
+    public readonly static ushort Count;
 
     static MasteryBranchesRegistry()
     {
@@ -40,6 +41,7 @@ public static class MasteryBranchesRegistry
         };
 
         _branches = list.ToFrozenDictionary(b => b.BranchId);
+        Count = (ushort)list.Length;
 
     }
 

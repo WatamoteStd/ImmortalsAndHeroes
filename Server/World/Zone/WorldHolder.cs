@@ -12,6 +12,7 @@ using Server.Pools.Session;
 using System.Buffers.Binary;
 using System.Buffers;
 using Shared.Udp.Packets.Category.MasteryTree;
+using Shared.MasteryTree;
 
 namespace Server.World.Zone;
 
@@ -104,6 +105,7 @@ public class WorldHolder : IWorldHolder
                     {
                         
                         var packet = PacketSerialier.Deserialize<C2S_MasteryTreeLearnRequestPacket>(cmd.Data[2..]);
+                        PlayerBranchLearnRequest(cmd.Session.UserId, packet.BranchId);
 
                         ArrayPool<byte>.Shared.Return(cmd.Data);
 
@@ -265,7 +267,17 @@ public class WorldHolder : IWorldHolder
             Console.WriteLine($"[WorldHolder] UserId:{userId} attack request declined. Invalid data.");
             return;
         }
+
+    }
+    public void PlayerBranchLearnRequest(uint userId, MasteryNodeId branch)
+    {
         
+        if (idToPlayer.TryGetValue(userId, out PlayerEntity? player) && idToZone.TryGetValue(player.RegionId, out WorldZone? zone))
+        {
+            
+            zone.PlayerBranch_AddExp(player, branch);
+
+        }
 
     }
 

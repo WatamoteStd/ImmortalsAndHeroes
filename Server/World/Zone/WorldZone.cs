@@ -8,6 +8,7 @@ using Shared.Characters;
 using Server.World.Zone.Entities.Mobs;
 using Server.World.Zone.RegionController;
 using Shared.Items.DropTable;
+using Shared.MasteryTree;
 
 namespace Server.World.Zone;
 
@@ -396,6 +397,13 @@ public class WorldZone
         {
             Console.WriteLine($"[Region:{Id}] Attack request declined. Can't find some entity.");
         }
+
+    }
+
+    public void PlayerBranch_AddExp(PlayerEntity player, MasteryNodeId branch)
+    {
+        
+        player.AddBranchExp(branch);
 
     }
 
