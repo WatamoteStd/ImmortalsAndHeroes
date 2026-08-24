@@ -151,7 +151,14 @@ public class PacketReaderClient
                             var packet = PacketSerialier.Deserialize<S2C_BranchUpdatePacket>(payload);
                             _networkPackets.Enqueue(packet);
                         }
-                    break;  
+                    break;
+
+                    case PacketTypes.S2C_StatsSync:
+                        {
+                            var packet = PacketSerialier.Deserialize<S2C_StatsSyncPacket>(payload);
+                            _networkPackets.Enqueue(packet);
+                        }
+                    break;
 
                     default:
                         {

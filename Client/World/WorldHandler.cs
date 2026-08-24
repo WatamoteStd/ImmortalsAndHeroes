@@ -22,6 +22,21 @@ public partial class WorldHandler : Node3D
 	}
 
 
+	public void LOC_StateSync(in S2C_StatsSyncPacket packet)
+	{
+		
+		if (RegionEntities.TryGetValue(GameSession.Instance.NetworkId, out Entity entity))
+		{
+			
+			if (entity is LocalPlayerEntity player)
+			{
+				player.UpdateStats(packet);
+			}
+		}
+
+	}
+
+
 
 	#region  Entities interaction
 

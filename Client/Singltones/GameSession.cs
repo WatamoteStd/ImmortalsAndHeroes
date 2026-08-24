@@ -1,5 +1,6 @@
 using Godot;
 using Shared.Udp.Packets.Category;
+using Shared.Udp.Packets.Category.Game;
 using System;
 
 public partial class GameSession : Node
@@ -17,6 +18,7 @@ public partial class GameSession : Node
 
 	public uint PlayerExpCache {get; set;}
 	public S2C_HandshakeSuccessPacket PlayerCache;
+	public S2C_StatsSyncPacket StatsCache;
 
 	public enum State
 	{

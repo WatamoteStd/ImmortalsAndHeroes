@@ -190,6 +190,10 @@ public class WorldZone
             };
             _worldHolder.Broadcaster.SendToPlayer<S2C_BranchUpdatePacket>(player.PlayerId, PacketTypes.S2C_BranchUpdate, packet);
         };
+        player.OnStatsUpdated += (packet) =>
+        {
+            _worldHolder.Broadcaster.SendToPlayer<S2C_StatsSyncPacket>(player.PlayerId, PacketTypes.S2C_StatsSync, packet);
+        };
  
     }
 

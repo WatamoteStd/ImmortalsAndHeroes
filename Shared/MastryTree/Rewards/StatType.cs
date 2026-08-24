@@ -10,5 +10,6 @@ public enum StatType : byte
     Armor = 4,
     MagicResistance = 5,
     AttackSpeed = 6,
-    HealthRegen = 7
+    HealthRegen = 7,
+    ManaRegen = 8
 }

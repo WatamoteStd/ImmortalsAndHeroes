@@ -219,6 +219,13 @@ public partial class ServerMaster : Node
                 }
             break;
 
+            case S2C_StatsSyncPacket stats:
+                {
+                    GameSession.Instance.StatsCache = stats;
+                    _worldManager?.LOC_StateSync(in stats);
+                }
+            break;
+
         }
 
     }

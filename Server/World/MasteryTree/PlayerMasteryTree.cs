@@ -1,4 +1,4 @@
-
+using Shared.MasteryTree.Rewards;
 using Shared.MasteryTree;
 
 namespace Server.World.MasteryTree;
@@ -38,6 +38,8 @@ public class PlayerMasteryTree
             progress.CurrentExp = 0;
             _player.AddExp((int)-dif);
 
+            LevelUp(branchId, progress.CurrentLevel);
+
         }
         else
         {
@@ -47,8 +49,49 @@ public class PlayerMasteryTree
 
         OnBranchUpdate?.Invoke(branchId, progress.CurrentExp, progress.CurrentLevel);
 
-        Console.WriteLine($"[MasteryTree] Branch:{branch.Title} Upgraded! Lvl:{progress.CurrentLevel}, Exp:{progress.CurrentExp}, PlayerExpLeft:{_player.Exp}");
-        Console.WriteLine($"[MasteryTree] Branch:{branch.Title} Required! MaxLvl:{branch.MaxLvl}, ExpToLvl:{branch.GetRequiredExpForLevel((ushort)(progress.CurrentLevel + 1))}");
+
+    }
+
+    private void LevelUp(MasteryNodeId branchId, ushort lvl)
+    {
+        Console.WriteLine($"LevelUp trigerred by branch:{branchId.ToString()}");
+        
+        if (!MasteryBranchesRegistry.TryGetBranch(branchId, out var data))
+            return;
+        if (data.Rewards.Length == 0) return;
+
+
+        for (int i = 0; i < data.Rewards.Length; i++)
+        {
+            
+            var reward = data.Rewards[i];
+
+            if (reward.Context == RewardContextType.SingleLevel && reward.TargetLevel == lvl)
+            {
+                
+
+
+            }
+
+            if (reward.Context == RewardContextType.PerLevel)
+            {
+                
+                switch (reward.Type)
+                {
+                    
+                    case RewardType.Stat:
+                        {
+                            
+                            _player.UpdateStat(reward.StatId, (int)reward.Value);
+
+                        }
+                    break;
+
+                }
+
+            }
+
+        }
 
     }
 

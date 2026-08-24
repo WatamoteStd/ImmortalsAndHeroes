@@ -41,6 +41,13 @@ public partial class Hud : CanvasLayer
 		_healthBarLabel.Text = actualHealth.ToString() + " / " + _maxHealth.ToString();
 
 	}
+	public void ReplaceHealth(int health, int maxHealth)
+	{
+		_maxHealth = (uint)maxHealth;
+		_healthBar.MaxValue = maxHealth;
+		_healthBar.Value = health;
+		_healthBarLabel.Text = health.ToString() + " / " + maxHealth.ToString();
+	}
 
 	public void ShowSelectedEntity(Entity entity)
 	{
