@@ -49,6 +49,7 @@ public class PacketReader
             case PacketTypes.C2S_MoveRequest:
             case PacketTypes.C2S_ChangeRegionRequest:
             case PacketTypes.C2S_AttackRequest:
+            case PacketTypes.C2S_MasteryTreeLearnRequest:
                 _worldApi?.EnqueueCommand(new NetworkCommand
                 {
                     Session = session,

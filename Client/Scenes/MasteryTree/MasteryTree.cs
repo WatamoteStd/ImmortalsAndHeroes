@@ -1,4 +1,5 @@
 using Godot;
+using Shared.MasteryTree;
 using System;
 
 public partial class MasteryTree : Control
@@ -14,6 +15,8 @@ public partial class MasteryTree : Control
 	[Export] private Label _description;
 	[Export] private Label _requiredExp;
 
+	private MasteryNodeId _currentBranchId = MasteryNodeId.None; // default alt null
+
 	public override void _Ready()
 	{
 		VisibilityChanged += () =>
@@ -21,18 +24,30 @@ public partial class MasteryTree : Control
 			_playerExp.Text = GameSession.Instance.PlayerExpCache.ToString();
 		};
 		_pathInfoWindow.Visible = false;
-		_darkPathButton.Pressed += () => OpenPathInfo("DarkPath", "You entered to this way. + 1 armor", 10);
+		_darkPathButton.Pressed += () => OpenPathInfo(MasteryNodeId.DarkPath);
+
+
+
+
+		_learnPathButton.Pressed += () =>
+		{
+			
+			if (_currentBranchId == MasteryNodeId.None) return;
+			LearnBranchRequest();
+
+		};
 
 	}
 
 
-	public void OpenPathInfo(string name, string description, uint requiredExp)
+	public void OpenPathInfo(MasteryNodeId id)
 	{
 		
 		_pathInfoWindow.Visible = true;
-		_title.Text = name;
-		_description.Text = description;
-		_requiredExp.Text = requiredExp.ToString();
+		_currentBranchId = id;
+		//_title.Text = name;
+		//_description.Text = description;
+		//_requiredExp.Text = requiredExp.ToString();
 
 	}
 
@@ -40,6 +55,13 @@ public partial class MasteryTree : Control
 	{
 		
 		_playerExp.Text = exp.ToString();
+
+	}
+
+	private void LearnBranchRequest()
+	{
+		
+		ServerMaster.Instance.LP_MasteryTreeLearnRequest(_currentBranchId);
 
 	}
 

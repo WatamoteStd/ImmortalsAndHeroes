@@ -1,9 +1,11 @@
 using Client.NO_NODE;
 using Godot;
+using Shared.MasteryTree;
 using Shared.Udp.Interfaces;
 using Shared.Udp.Packets;
 using Shared.Udp.Packets.Category;
 using Shared.Udp.Packets.Category.Game;
+using Shared.Udp.Packets.Category.MasteryTree;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -252,6 +254,16 @@ public partial class ServerMaster : Node
         var packet = new C2S_AttackRequestPacket {Id = entityId};
         int length = PacketSerialier.Serialize<C2S_AttackRequestPacket>(buffer, PacketTypes.C2S_AttackRequest, packet);
         _socket.Send(buffer);
+    }
+
+    public void LP_MasteryTreeLearnRequest(MasteryNodeId node)
+    {
+        
+        Span<byte> buffer = stackalloc byte[4];
+        var packet = new C2S_MasteryTreeLearnRequestPacket { BranchId = node};
+        int length = PacketSerialier.Serialize<C2S_MasteryTreeLearnRequestPacket>(buffer, PacketTypes.C2S_MasteryTreeLearnRequest, packet);
+        _socket.Send(buffer);
+
     }
 
 

@@ -11,6 +11,7 @@ using System.Collections.Concurrent;
 using Server.Pools.Session;
 using System.Buffers.Binary;
 using System.Buffers;
+using Shared.Udp.Packets.Category.MasteryTree;
 
 namespace Server.World.Zone;
 
@@ -93,6 +94,16 @@ public class WorldHolder : IWorldHolder
                         var packet = PacketSerialier.Deserialize<C2S_AttackRequestPacket>(cmd.Data[2..]);
                     
                         PlayerAttackRequest((uint)cmd.Session.UserId, packet.Id);
+
+                        ArrayPool<byte>.Shared.Return(cmd.Data);
+
+                    }
+                break;
+
+                case PacketTypes.C2S_MasteryTreeLearnRequest:
+                    {
+                        
+                        var packet = PacketSerialier.Deserialize<C2S_MasteryTreeLearnRequestPacket>(cmd.Data[2..]);
 
                         ArrayPool<byte>.Shared.Return(cmd.Data);
 
