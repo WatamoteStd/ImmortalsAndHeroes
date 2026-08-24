@@ -126,7 +126,6 @@ public class PlayerEntity : LivingEntity
     
         _currentEnemy = entity;
         CurrentState = State.Chase;
-        Console.WriteLine($"[Entity:{Name}] Set attack target to: {entity.Name}");
 
     }
 
