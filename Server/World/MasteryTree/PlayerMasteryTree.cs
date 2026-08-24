@@ -6,6 +6,7 @@ namespace Server.World.MasteryTree;
 public class PlayerMasteryTree
 {
 
+    public event Action<MasteryNodeId, uint, ushort>? OnBranchUpdate; // BrenchId, exp, lvl
     private PlayerMasteryBranchProgress[] _branches = new PlayerMasteryBranchProgress[MasteryBranchesRegistry.Count];
     private PlayerEntity _player;
 
@@ -43,6 +44,8 @@ public class PlayerMasteryTree
             progress.CurrentExp += (uint)_player.Exp;
             _player.AddExp(-_player.Exp);
         }
+
+        OnBranchUpdate?.Invoke(branchId, progress.CurrentExp, progress.CurrentLevel);
 
         Console.WriteLine($"[MasteryTree] Branch:{branch.Title} Upgraded! Lvl:{progress.CurrentLevel}, Exp:{progress.CurrentExp}, PlayerExpLeft:{_player.Exp}");
         Console.WriteLine($"[MasteryTree] Branch:{branch.Title} Required! MaxLvl:{branch.MaxLvl}, ExpToLvl:{branch.GetRequiredExpForLevel((ushort)(progress.CurrentLevel + 1))}");

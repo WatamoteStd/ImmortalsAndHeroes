@@ -65,10 +65,30 @@ border_color = Color(0.254201, 0.3120983, 0.33383688, 1)
 border_blend = true
 shadow_size = 4
 
+[sub_resource type="FontVariation" id="FontVariation_6u82b"]
+base_font = ExtResource("1_2brbh")
+variation_embolden = 0.9
+
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_83fg3"]
 color = Color(0.25033975, 0.30769467, 0.32334712, 1)
 
-[node name="Control" type="Control" unique_id=758776108 node_paths=PackedStringArray("_darkPathButton", "_playerExp", "_pathInfoWindow", "_learnPathButton", "_title", "_description", "_requiredExp")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vcdtc"]
+draw_center = false
+border_width_top = 1
+border_width_right = 1
+border_color = Color(0.3033069, 0.36886618, 0.38676864, 1)
+border_blend = true
+shadow_size = 2
+
+[sub_resource type="Gradient" id="Gradient_vap5j"]
+colors = PackedColorArray(0.123289965, 0.15883124, 0.16593567, 1, 0.24929023, 0.29816398, 0.2947126, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6u82b"]
+gradient = SubResource("Gradient_vap5j")
+fill_from = Vector2(1, 0.58766234)
+fill_to = Vector2(0, 0)
+
+[node name="Control" type="Control" unique_id=758776108 node_paths=PackedStringArray("_darkPathButton", "_bodyPathButton", "_playerExp", "_pathInfoWindow", "_learnPathButton", "_title", "_description", "_requiredExp", "_currentExp", "_statName", "_statValue", "_curLvl", "_maxlvl")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -77,12 +97,18 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_njmpg")
 _darkPathButton = NodePath("Body/VBoxContainer/DarkPath")
+_bodyPathButton = NodePath("Body/VBoxContainer/Body")
 _playerExp = NodePath("Header/HBoxContainer/PlayerExp")
 _pathInfoWindow = NodePath("Body/PathInfoPanel")
-_learnPathButton = NodePath("Body/PathInfoPanel/Content/VBoxContainer/LearnPanel/Learn")
+_learnPathButton = NodePath("Body/PathInfoPanel/Content/VBoxContainer/CurrentProgress/Learn")
 _title = NodePath("Body/PathInfoPanel/Header/Title")
-_description = NodePath("Body/PathInfoPanel/Content/VBoxContainer/Description")
+_description = NodePath("Body/PathInfoPanel/Content/VBoxContainer/Description/Description")
 _requiredExp = NodePath("Body/PathInfoPanel/Content/VBoxContainer/LearnPanel/Required")
+_currentExp = NodePath("Body/PathInfoPanel/Content/VBoxContainer/CurrentProgress/Current")
+_statName = NodePath("Body/PathInfoPanel/Content/VBoxContainer/Rewards/HBoxContainer/Type")
+_statValue = NodePath("Body/PathInfoPanel/Content/VBoxContainer/Rewards/HBoxContainer/Value")
+_curLvl = NodePath("Body/PathInfoPanel/Content/VBoxContainer/LevelPanel/CurLvl")
+_maxlvl = NodePath("Body/PathInfoPanel/Content/VBoxContainer/LevelPanel/MaxLvl")
 
 [node name="bg" type="TextureRect" parent="." unique_id=1985687418]
 layout_mode = 1
@@ -229,6 +255,7 @@ size_flags_vertical = 0
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.849525, 0.8041001, 0.86474174, 1)
+theme_override_fonts/font = ExtResource("1_2brbh")
 theme_override_font_sizes/font_size = 19
 text = "TITLE"
 
@@ -241,7 +268,31 @@ theme_override_constants/margin_bottom = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Body/PathInfoPanel/Content" unique_id=747857977]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 11
+
+[node name="LevelPanel" type="HBoxContainer" parent="Body/PathInfoPanel/Content/VBoxContainer" unique_id=1212017276]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 30
+
+[node name="CurLvl" type="Label" parent="Body/PathInfoPanel/Content/VBoxContainer/LevelPanel" unique_id=67501940]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7060365, 0.76899797, 0.8288644, 1)
+theme_override_fonts/font = SubResource("FontVariation_6u82b")
+theme_override_font_sizes/font_size = 17
+text = "CurLvl"
+uppercase = true
+
+[node name="VSeparator" type="VSeparator" parent="Body/PathInfoPanel/Content/VBoxContainer/LevelPanel" unique_id=1176355104]
+layout_mode = 2
+
+[node name="MaxLvl" type="Label" parent="Body/PathInfoPanel/Content/VBoxContainer/LevelPanel" unique_id=1362388885]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7060365, 0.76899797, 0.8288644, 1)
+theme_override_fonts/font = SubResource("FontVariation_6u82b")
+theme_override_font_sizes/font_size = 17
+text = "maxlvl"
+uppercase = true
 
 [node name="LearnPanel" type="HBoxContainer" parent="Body/PathInfoPanel/Content/VBoxContainer" unique_id=1851037951]
 layout_mode = 2
@@ -258,7 +309,22 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
 theme_override_font_sizes/font_size = 15
 text = "Count"
 
-[node name="Learn" type="Button" parent="Body/PathInfoPanel/Content/VBoxContainer/LearnPanel" unique_id=122892988]
+[node name="CurrentProgress" type="HBoxContainer" parent="Body/PathInfoPanel/Content/VBoxContainer" unique_id=1406627199]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Body/PathInfoPanel/Content/VBoxContainer/CurrentProgress" unique_id=1996847677]
+layout_mode = 2
+text = "Current:"
+
+[node name="Current" type="Label" parent="Body/PathInfoPanel/Content/VBoxContainer/CurrentProgress" unique_id=1051974349]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8217887, 0.82178867, 0.82178867, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 15
+text = "Count"
+
+[node name="Learn" type="Button" parent="Body/PathInfoPanel/Content/VBoxContainer/CurrentProgress" unique_id=122892988]
 custom_minimum_size = Vector2(70, 25)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -270,9 +336,41 @@ layout_mode = 2
 size_flags_vertical = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_83fg3")
 
-[node name="Description" type="Label" parent="Body/PathInfoPanel/Content/VBoxContainer" unique_id=588735694]
+[node name="Description" type="PanelContainer" parent="Body/PathInfoPanel/Content/VBoxContainer" unique_id=190540935]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vcdtc")
+
+[node name="bg" type="TextureRect" parent="Body/PathInfoPanel/Content/VBoxContainer/Description" unique_id=1763971055]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_6u82b")
+
+[node name="Description" type="Label" parent="Body/PathInfoPanel/Content/VBoxContainer/Description" unique_id=588735694]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 14
 text = "Desctiption:"
+
+[node name="Rewards" type="VBoxContainer" parent="Body/PathInfoPanel/Content/VBoxContainer" unique_id=1785119721]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="Title" type="Label" parent="Body/PathInfoPanel/Content/VBoxContainer/Rewards" unique_id=1606032034]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7786867, 0.8430937, 0.90219384, 1)
+theme_override_font_sizes/font_size = 15
+text = "Rewards:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Body/PathInfoPanel/Content/VBoxContainer/Rewards" unique_id=1966899107]
+layout_mode = 2
+
+[node name="Type" type="Label" parent="Body/PathInfoPanel/Content/VBoxContainer/Rewards/HBoxContainer" unique_id=729092485]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Stat"
+
+[node name="Value" type="Label" parent="Body/PathInfoPanel/Content/VBoxContainer/Rewards/HBoxContainer" unique_id=1040292396]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Stat"

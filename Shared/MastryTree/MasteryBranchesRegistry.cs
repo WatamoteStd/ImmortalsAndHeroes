@@ -36,7 +36,28 @@ public static class MasteryBranchesRegistry
                     }
                 }
               
+            },
+            new MasteryBranch
+            {
+                BranchId = MasteryNodeId.Body,
+                Title = "Body",
+                Description = "Core of your strength",
+                MaxLvl = 15,
+                BaseExp = 60,
+                ExpMultiplier = 1.5f,
+
+                Rewards = new BranchReward[]
+                {
+                    new BranchReward
+                    {
+                        Context = RewardContextType.PerLevel,
+                        Type = RewardType.Stat,
+                        StatId = StatType.Health,
+                        Value = 5
+                    }
+                }
             }
+            
 
         };
 

@@ -1,5 +1,6 @@
 using Godot;
 using Shared.Items;
+using Shared.MasteryTree;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

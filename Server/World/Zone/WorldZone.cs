@@ -9,6 +9,7 @@ using Server.World.Zone.Entities.Mobs;
 using Server.World.Zone.RegionController;
 using Shared.Items.DropTable;
 using Shared.MasteryTree;
+using Shared.Udp.Packets.Category.MasteryTree;
 
 namespace Server.World.Zone;
 
@@ -178,6 +179,16 @@ public class WorldZone
             };
             _worldHolder.Broadcaster.SendToPlayer<S2C_PlayerExpSyncPacket>(player.PlayerId, PacketTypes.S2C_PlayerExpSync, packet);
 
+        };
+        player.OnBranchUpdate += (branchId, exp, lvl) =>
+        {
+            var packet = new S2C_BranchUpdatePacket
+            {
+                BranchId = branchId,
+                CurrentExp = exp,
+                CurrentLevel = lvl
+            };
+            _worldHolder.Broadcaster.SendToPlayer<S2C_BranchUpdatePacket>(player.PlayerId, PacketTypes.S2C_BranchUpdate, packet);
         };
  
     }

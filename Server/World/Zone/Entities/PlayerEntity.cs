@@ -14,6 +14,7 @@ public class PlayerEntity : LivingEntity
 
     public event Action<ushort, ItemType, ushort>? OnInventoryChanged;
     public event Action<int, int>? OnExpChanged; // this newExp totalExp
+    public event Action<MasteryNodeId, uint, ushort>? OnBranchUpdate;
 
     public enum State { Idle, Move, Chase, Attack, Cast, ProtectedCast, Controlled, Respawning}
     public State CurrentState = State.Idle;
@@ -38,6 +39,13 @@ public class PlayerEntity : LivingEntity
         };
 
         MasteryTree = new PlayerMasteryTree(this);
+
+        MasteryTree!.OnBranchUpdate += (branchId, exp, lvl) =>
+        {
+            OnBranchUpdate?.Invoke(branchId, exp, lvl);
+        };
+
+
 
     }
 
@@ -174,6 +182,7 @@ public class PlayerEntity : LivingEntity
         base.ClearAllSubscriptions();
         OnInventoryChanged = null!; 
         OnExpChanged = null!;
+        OnBranchUpdate = null!;
     }
     
 

@@ -213,6 +213,12 @@ public partial class ServerMaster : Node
                 }
             break;
 
+            case S2C_BranchUpdatePacket bPacket:
+                {
+                    SceneManager.Instance.MasteryTreeWindow.UpdateBranch(bPacket.BranchId, bPacket.CurrentExp, bPacket.CurrentLevel);
+                }
+            break;
+
         }
 
     }

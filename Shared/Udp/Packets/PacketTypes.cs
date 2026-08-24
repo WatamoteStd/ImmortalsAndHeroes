@@ -19,6 +19,7 @@ public enum PacketTypes : ushort
     C2S_AttackRequest = 11,
     S2C_EntityDamageTaked = 12,
     S2C_PlayerExpSync = 13,
-    C2S_MasteryTreeLearnRequest = 14
+    C2S_MasteryTreeLearnRequest = 14,
+    S2C_BranchUpdate = 15
 
 }

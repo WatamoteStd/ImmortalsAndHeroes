@@ -10,6 +10,7 @@ using Shared.Udp.Interfaces;
 using Shared.Udp.Packets;
 using Shared.Udp.Packets.Category;
 using Shared.Udp.Packets.Category.Game;
+using Shared.Udp.Packets.Category.MasteryTree;
 
 
 namespace Client.NO_NODE;
@@ -144,6 +145,13 @@ public class PacketReaderClient
 
                         }
                     break;
+
+                    case PacketTypes.S2C_BranchUpdate:
+                        {
+                            var packet = PacketSerialier.Deserialize<S2C_BranchUpdatePacket>(payload);
+                            _networkPackets.Enqueue(packet);
+                        }
+                    break;  
 
                     default:
                         {
