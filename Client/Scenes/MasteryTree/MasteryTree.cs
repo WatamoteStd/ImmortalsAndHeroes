@@ -2,11 +2,13 @@ using Godot;
 using Shared.MasteryTree;
 using System;
 using Shared.MasteryTree.Rewards;
+using Shared.Ability;
 public partial class MasteryTree : Control
 {
 	
 	[Export] private Button _darkPathButton;
 	[Export] private Button _bodyPathButton;
+	[Export] private Button _footAgilityButton;
 	[Export] private Label _playerExp;
 
 	// INFO PANEl
@@ -20,7 +22,10 @@ public partial class MasteryTree : Control
 	[Export] private Label[] _statValue;
 	[Export] private Label _curLvl;
 	[Export] private Label _maxlvl;
-
+	[Export] private Label _reqLevelSingle;
+	[Export] private PackedScene _abilityButtonScene;
+	[Export] private HBoxContainer _singleLvlContainer;
+ 
 
 	private BranchCache[] _branchesCache; 
 
@@ -35,12 +40,15 @@ public partial class MasteryTree : Control
 
 		VisibilityChanged += () =>
 		{
-			_playerExp.Text = GameSession.Instance.PlayerExpCache.ToString();
+			if (GameSession.Instance != null && _playerExp != null)
+			{
+				_playerExp.Text = GameSession.Instance.PlayerExpCache.ToString();
+			}
 		};
 		_pathInfoWindow.Visible = false;
 		_darkPathButton.Pressed += () => OpenPathInfo(MasteryNodeId.DarkPath);
 		_bodyPathButton.Pressed += () => OpenPathInfo(MasteryNodeId.Body);
-
+		_footAgilityButton.Pressed += () => OpenPathInfo(MasteryNodeId.FootAgility);
 
 
 
@@ -110,6 +118,24 @@ public partial class MasteryTree : Control
 							}
 						break;
 
+					}
+
+				}
+				if (curReward.Type == RewardType.ActiveSkill)
+				{
+					
+					if (AbilityRegistry.TryGetAbility((AbilityTypes)curReward.Value, out var data))
+					{
+						
+						_reqLevelSingle.Text = curReward.TargetLevel.ToString() + " LVL";
+						var abilityIcon = _abilityButtonScene.Instantiate<AbilityButton>();
+						_singleLvlContainer.AddChild(abilityIcon);
+						abilityIcon.Init(data);
+
+					}
+					else
+					{
+						_reqLevelSingle.Text = "Invalid abilty data.";
 					}
 
 				}

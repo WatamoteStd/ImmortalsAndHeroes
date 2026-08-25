@@ -299,7 +299,7 @@ public class WorldHolder : IWorldHolder
         
         if (idToPlayer.TryGetValue(userId, out var player) && idToZone.TryGetValue(player.RegionId, out var zone)) {
             
-            player.ApplyAbility();
+            //player.ApplyAbility();
 
         }
 
