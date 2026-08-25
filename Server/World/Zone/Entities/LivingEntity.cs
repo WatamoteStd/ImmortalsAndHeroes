@@ -2,6 +2,8 @@
 using System.Numerics;
 using Server.World.Zone.Intefaces;
 using Shared.Characters;
+using Shared.MasteryTree.Rewards;
+using Shared.Udp.Packets.Category.Game;
 
 namespace Server.World.Zone.Entities;
 
@@ -11,15 +13,16 @@ public class LivingEntity : EntityBase, IDamageable
     public event Action<LivingEntity, Vector3>? OnMoved;
     public event Action<LivingEntity, int, LivingEntity>? OnDamageTaked; // entity(this) | damage | attacker
     public event Action<LivingEntity, LivingEntity>? OnDead; // this, attacker
+    public event Action<S2C_StatsSyncPacket>? OnStatsUpdated; 
     protected Vector3 _lastSnapshotCords;
     protected float _timeFromLastPacket = 0.0f;
 
 
     protected Vector3 _moveTarget;
-    public uint BaseDamage {get; protected set;}
+    public float BaseDamage {get; protected set;}
     public float AttackRange {get; protected set;}
-    protected int _attackSpeed;
-    public int AttackSpeed {
+    protected float _attackSpeed;
+    public float AttackSpeed {
         
         get => _attackSpeed;
         protected set
@@ -29,8 +32,8 @@ public class LivingEntity : EntityBase, IDamageable
         }
         
     }
-    public int Armor {get; protected set;}
-    public int MagicResistance {get; protected set;}
+    public float Armor {get; protected set;}
+    public float MagicResistance {get; protected set;}
     public float BasicAttackTime {get; protected set;}
 
     protected float _attackCooldown = 0.0f;
@@ -165,6 +168,82 @@ public class LivingEntity : EntityBase, IDamageable
 
     }
 
+    public void UpdateStat(StatType stat, float value)
+    {
+        
+        switch (stat)
+        {
+            
+            case StatType.Armor:
+                {
+                    Armor += value;
+                }
+            break;
+            case StatType.Health:
+                {
+                    MaxHealth += value;
+                }
+            break;
+            case StatType.Mana:
+                {
+                    MaxMana += value;
+                }
+            break;
+            case StatType.PhysicalDamage:
+                {
+                    BaseDamage += value;
+                }
+            break;
+            case StatType.AttackSpeed:
+                {
+                    AttackSpeed += value;
+                }
+            break;
+            case StatType.HealthRegen:
+                {
+                    HealthRegeneration += value;
+                }
+            break;
+            case StatType.ManaRegen:
+                {
+                    ManaRegeneration += value;
+                }
+            break;
+            case StatType.MagicResistance:
+                {
+                    MagicResistance += value;
+                }
+            break;
+            case StatType.MoveSpeed:
+                {
+                    BaseSpeed += value;
+                }
+            break;
+
+            default:
+
+            break;
+
+        }
+
+        var packet = new S2C_StatsSyncPacket
+        {
+            Health = Health,
+            Mana = Mana,
+            HealthRegen = HealthRegeneration,
+            ManaRegen = ManaRegeneration,
+            Damage = BaseDamage,
+            Armor = Armor,
+            MagicResistance = MagicResistance,
+            AttackSpeed = AttackSpeed,
+            MaxHealth = MaxHealth,
+            MaxMana = MaxMana,
+            Speed = BaseSpeed
+        };
+        OnStatsUpdated?.Invoke(packet);
+
+    }
+
 
     protected void CheckMoveSynchronization(float deltaTime)
     {
@@ -204,7 +283,7 @@ public class LivingEntity : EntityBase, IDamageable
 
     public void RecalculateAttackCooldown()
     {
-        int safeSpeed = Math.Max(1, AttackSpeed);
+        float safeSpeed = Math.Max(1, AttackSpeed);
         _attackCooldown = (BasicAttackTime * 100f) / safeSpeed;
         Console.WriteLine($"[ATTACK SPEED UPDATED] AS: {AttackSpeed} | BAT: {BasicAttackTime} | Cooldown: {_attackCooldown}s");
 
@@ -235,6 +314,7 @@ public class LivingEntity : EntityBase, IDamageable
         OnMoved = null!;
         OnDamageTaked = null!;
         OnDead = null!;
+        OnStatsUpdated = null;
     }  
 
 

@@ -9,9 +9,9 @@ public partial class LocalPlayerEntity : Entity
 	public uint LocalPlayerId {get; set;}
 	public float Speed {get; set;} = 3.0f;
 
-	private int _mana;
-	private int _maxMana;
-	public int Mana
+	private float _mana;
+	private float _maxMana;
+	public float Mana
 	{
 		get => _mana;
 		set
@@ -22,7 +22,7 @@ public partial class LocalPlayerEntity : Entity
 
 	private float _healthRegeneration;
 
-	public void InitEntity(uint id, int health, int maxHealth, string name, EntityType type, Vector3 pos, uint locPlayeId, int mana, int maxMana)
+	public void InitEntity(uint id, float health, float maxHealth, string name, EntityType type, Vector3 pos, uint locPlayeId, float mana, float maxMana)
 	{
 		base.InitEntity(id, health, maxHealth, name, type, pos);
 

@@ -11,7 +11,7 @@ public struct S2C_EntityDamageTakedPacket : INetworkPacket
     public int Length {get; private set;}
 
     public uint Id;
-    public int Damage;
+    public float Damage;
     public uint AttackerId;
     public uint ActualHealth;
 
@@ -21,7 +21,7 @@ public struct S2C_EntityDamageTakedPacket : INetworkPacket
         Length = 0;
         BinaryPrimitives.WriteUInt32LittleEndian(buffer, Id);
         Length += 4;
-        BinaryPrimitives.WriteInt32LittleEndian(buffer[Length..], Damage);
+        BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], Damage);
         Length += 4;
         BinaryPrimitives.WriteUInt32LittleEndian(buffer[Length..], AttackerId);
         Length += 4;
@@ -36,7 +36,7 @@ public struct S2C_EntityDamageTakedPacket : INetworkPacket
         Length = 0;
         Id = BinaryPrimitives.ReadUInt32LittleEndian(buffer);
         Length += 4;
-        Damage = BinaryPrimitives.ReadInt32LittleEndian(buffer[Length..]);
+        Damage = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;
         AttackerId = BinaryPrimitives.ReadUInt32LittleEndian(buffer[Length..]);
         Length += 4;

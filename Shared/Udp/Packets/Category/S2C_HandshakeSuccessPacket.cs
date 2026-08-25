@@ -21,9 +21,9 @@ public struct S2C_HandshakeSuccessPacket() : INetworkPacket
     // CHARACTER
 
     public EntityType Type {get; set;} = EntityType.Default;
-    public int CurrentHp {get; set;} 
-    public int CurrentMp {get; set;} 
-    public int Lvl {get; set;} = 1;
+    public float CurrentHp {get; set;} 
+    public float CurrentMp {get; set;} 
+    public float Exp {get; set;}
     public uint Silver {get; set;} 
 
     public int Serialize(Span<byte> buffer)
@@ -53,11 +53,11 @@ public struct S2C_HandshakeSuccessPacket() : INetworkPacket
         Length += 4;
         BinaryPrimitives.WriteUInt32LittleEndian(buffer[Length..], (uint)Type);
         Length +=4;
-        BinaryPrimitives.WriteInt32LittleEndian(buffer[Length..], CurrentHp);
+        BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], CurrentHp);
         Length += 4;
-        BinaryPrimitives.WriteInt32LittleEndian(buffer[Length..], CurrentMp);
+        BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], CurrentMp);
         Length += 4;
-        BinaryPrimitives.WriteInt32LittleEndian(buffer[Length..], Lvl);
+        BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], Exp);
         Length += 4;
         BinaryPrimitives.WriteUInt32LittleEndian(buffer[Length..], Silver);
         Length += 4;
@@ -99,13 +99,13 @@ public struct S2C_HandshakeSuccessPacket() : INetworkPacket
         Type = (EntityType)BinaryPrimitives.ReadUInt32LittleEndian(buffer[Length..]);
         Length += 4;
 
-        CurrentHp = BinaryPrimitives.ReadInt32LittleEndian(buffer[Length..]);
+        CurrentHp = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;
 
-        CurrentMp = BinaryPrimitives.ReadInt32LittleEndian(buffer[Length..]);
+        CurrentMp = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;
 
-        Lvl = BinaryPrimitives.ReadInt32LittleEndian(buffer[Length..]);
+        Exp = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;
 
         Silver = BinaryPrimitives.ReadUInt32LittleEndian(buffer[Length..]);

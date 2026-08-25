@@ -44,7 +44,7 @@ public class InternalController : ControllerBase
             Type = c.Type,
             CurrentHp = c.CurrentHp,
             CurrentMp = c.CurrentMp,
-            Lvl = c.Lvl,
+            Exp = c.Exp,
             Silver = c.Silver
         })
         .FirstOrDefaultAsync();

@@ -38,7 +38,7 @@ public class PacketSender
                 Type = data.Type,
                 CurrentHp = data.CurrentHp,
                 CurrentMp = data.CurrentMp,
-                Lvl = data.Lvl,
+                Exp = data.Exp,
                 Silver = (uint)data.Silver
             };
 

@@ -17,7 +17,6 @@ public class PlayerEntity : LivingEntity
     public event Action<ushort, ItemType, ushort>? OnInventoryChanged;
     public event Action<int, int>? OnExpChanged; // this newExp totalExp
     public event Action<MasteryNodeId, uint, ushort>? OnBranchUpdate;
-    public event Action<S2C_StatsSyncPacket>? OnStatsUpdated; 
 
     public enum State { Idle, Move, Chase, Attack, Cast, ProtectedCast, Controlled, Respawning}
     public State CurrentState = State.Idle;
@@ -161,77 +160,6 @@ public class PlayerEntity : LivingEntity
     }
 
 
-    public void UpdateStat(StatType stat, int value)
-    {
-        
-        switch (stat)
-        {
-            
-            case StatType.Armor:
-                {
-                    Armor += value;
-                }
-            break;
-            case StatType.Health:
-                {
-                    MaxHealth += value;
-                }
-            break;
-            case StatType.Mana:
-                {
-                    MaxMana += value;
-                }
-            break;
-            case StatType.PhysicalDamage:
-                {
-                    int newDamage = (int)BaseDamage + value;
-                    BaseDamage = (uint)Math.Max(0, newDamage);
-                }
-            break;
-            case StatType.AttackSpeed:
-                {
-                    AttackSpeed += value;
-                }
-            break;
-            case StatType.HealthRegen:
-                {
-                    HealthRegeneration += value;
-                }
-            break;
-            case StatType.ManaRegen:
-                {
-                    ManaRegeneration += value;
-                }
-            break;
-            case StatType.MagicResistance:
-                {
-                    MagicResistance += value;
-                }
-            break;
-            default:
-
-            break;
-
-        }
-
-        var packet = new S2C_StatsSyncPacket
-        {
-            Health = (uint)Health,
-            Mana = (uint)Mana,
-            HealthRegen = HealthRegeneration,
-            ManaRegen = ManaRegeneration,
-            Damage = BaseDamage,
-            Armor = Armor,
-            MagicResistance = MagicResistance,
-            AttackSpeed = (uint)AttackSpeed,
-            MaxHealth = (uint)MaxHealth,
-            MaxMana = (uint)MaxMana,
-            Speed = BaseSpeed
-        };
-        OnStatsUpdated?.Invoke(packet);
-
-    }
-
     #region INVENTORY
 
     public ushort AddItem(ItemType item, ushort count)
@@ -258,7 +186,6 @@ public class PlayerEntity : LivingEntity
         OnInventoryChanged = null!; 
         OnExpChanged = null!;
         OnBranchUpdate = null!;
-        OnStatsUpdated = null!;
     }
     
 

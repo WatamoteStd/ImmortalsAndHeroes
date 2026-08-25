@@ -5,7 +5,7 @@ using System;
 public partial class PlayerEntity : Entity
 {
 
-	public override void InitEntity(uint id, int health, int maxHealth, string name, EntityType type, Vector3 pos)
+	public override void InitEntity(uint id, float health, float maxHealth, string name, EntityType type, Vector3 pos)
 	{
 		base.InitEntity(id, health, maxHealth, name, type, pos);
 		

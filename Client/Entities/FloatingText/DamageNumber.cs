@@ -6,7 +6,7 @@ public partial class DamageNumber : Node3D
 	
 	[Export] private Label3D _label;
 
-	public void Setup(int damage, Vector3 spawnPosition)
+	public void Setup(float damage, Vector3 spawnPosition)
 	{
 		
 		GlobalPosition = spawnPosition;

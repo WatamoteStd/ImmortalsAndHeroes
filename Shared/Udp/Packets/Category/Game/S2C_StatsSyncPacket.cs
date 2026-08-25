@@ -8,41 +8,41 @@ namespace Shared.Udp.Packets.Category.Game;
 {
     
     public int Length {get; private set;}
-    public uint Health;
-    public uint Mana;
+    public float Health;
+    public float Mana;
     public float HealthRegen; 
     public float ManaRegen; 
-    public uint Damage; 
-    public int Armor;
-    public int MagicResistance;
-    public uint AttackSpeed;
-    public uint MaxHealth;
-    public uint MaxMana;
+    public float Damage; 
+    public float Armor;
+    public float MagicResistance;
+    public float AttackSpeed;
+    public float MaxHealth;
+    public float MaxMana;
     public float Speed;
 
     public int Serialize(Span<byte> buffer)
     {
         
         Length = 0;
-        BinaryPrimitives.WriteUInt32LittleEndian(buffer, Health);
+        BinaryPrimitives.WriteSingleLittleEndian(buffer, Health);
         Length += 4;
-        BinaryPrimitives.WriteUInt32LittleEndian(buffer[Length..], Mana);
+        BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], Mana);
         Length += 4;
         BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], HealthRegen);
         Length += 4;
         BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], ManaRegen);
         Length += 4;
-        BinaryPrimitives.WriteUInt32LittleEndian(buffer[Length..], Damage);
+        BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], Damage);
         Length += 4;
-        BinaryPrimitives.WriteInt32LittleEndian(buffer[Length..], Armor);
+        BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], Armor);
         Length += 4;
-        BinaryPrimitives.WriteInt32LittleEndian(buffer[Length..], MagicResistance);
+        BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], MagicResistance);
         Length += 4;
-        BinaryPrimitives.WriteUInt32LittleEndian(buffer[Length..], AttackSpeed);
+        BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], AttackSpeed);
         Length += 4;
-        BinaryPrimitives.WriteUInt32LittleEndian(buffer[Length..], MaxHealth);
+        BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], MaxHealth);
         Length += 4;
-        BinaryPrimitives.WriteUInt32LittleEndian(buffer[Length..], MaxMana);
+        BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], MaxMana);
         Length += 4;
         BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], Speed);
         Length += 4;
@@ -56,25 +56,25 @@ namespace Shared.Udp.Packets.Category.Game;
     {
         Length = 0;
 
-        Health = BinaryPrimitives.ReadUInt32LittleEndian(buffer);
+        Health = BinaryPrimitives.ReadSingleLittleEndian(buffer);
         Length += 4;
-        Mana = BinaryPrimitives.ReadUInt32LittleEndian(buffer[Length..]);
+        Mana = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;
         HealthRegen = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;
         ManaRegen = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;
-        Damage = BinaryPrimitives.ReadUInt32LittleEndian(buffer[Length..]);
+        Damage = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;
-        Armor = BinaryPrimitives.ReadInt32LittleEndian(buffer[Length..]);
+        Armor = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;
-        MagicResistance = BinaryPrimitives.ReadInt32LittleEndian(buffer[Length..]);
+        MagicResistance = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;
-        AttackSpeed = BinaryPrimitives.ReadUInt32LittleEndian(buffer[Length..]);
+        AttackSpeed = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;
-        MaxHealth = BinaryPrimitives.ReadUInt32LittleEndian(buffer[Length..]);
+        MaxHealth = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;
-        MaxMana = BinaryPrimitives.ReadUInt32LittleEndian(buffer[Length..]);
+        MaxMana = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;
         Speed = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;

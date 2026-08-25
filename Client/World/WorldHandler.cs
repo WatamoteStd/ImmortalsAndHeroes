@@ -142,7 +142,7 @@ public partial class WorldHandler : Node3D
 
 	}
 
-	public void EntityTakeDamage(uint entityId, int damage, uint attackerId, uint actualHealth)
+	public void EntityTakeDamage(uint entityId, float damage, uint attackerId, uint actualHealth)
 	{
 		
 		if (RegionEntities.TryGetValue(entityId, out Entity entity))

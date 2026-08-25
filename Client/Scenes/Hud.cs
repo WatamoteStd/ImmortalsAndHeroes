@@ -15,7 +15,7 @@ public partial class Hud : CanvasLayer
 	private uint _maxHealth;
 	private uint _maxMana;
 
-	public void InitHud(uint hp, uint mp, uint silver, string name)
+	public void InitHud(float hp, float mp, uint silver, string name)
 	{
 		
 		_healthBar.MaxValue = hp;
@@ -23,8 +23,8 @@ public partial class Hud : CanvasLayer
 		_manaBar.MaxValue = mp;
 		_manaBar.Value = mp;
 
-		_maxHealth = hp;
-		_maxMana = mp;
+		_maxHealth = (uint)hp;
+		_maxMana = (uint)mp;
 
 		_healthBarLabel.Text = hp.ToString() + " / " + hp.ToString();
 		_manaBarLabel.Text = mp.ToString() + " / " + mp.ToString();
@@ -41,7 +41,7 @@ public partial class Hud : CanvasLayer
 		_healthBarLabel.Text = actualHealth.ToString() + " / " + _maxHealth.ToString();
 
 	}
-	public void ReplaceHealth(int health, int maxHealth)
+	public void ReplaceHealth(float health, float maxHealth)
 	{
 		_maxHealth = (uint)maxHealth;
 		_healthBar.MaxValue = maxHealth;

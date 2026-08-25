@@ -3,6 +3,7 @@ using System;
 using MasterServer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MasterServer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260825130951_ChangeBaseCharacterTable")]
+    partial class ChangeBaseCharacterTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,11 +33,11 @@ namespace MasterServer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<float>("CurrentHp")
-                        .HasColumnType("real");
+                    b.Property<int>("CurrentHp")
+                        .HasColumnType("integer");
 
-                    b.Property<float>("CurrentMp")
-                        .HasColumnType("real");
+                    b.Property<int>("CurrentMp")
+                        .HasColumnType("integer");
 
                     b.Property<float>("Exp")
                         .HasColumnType("real");

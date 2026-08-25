@@ -16,9 +16,9 @@ public record HandshakeResponseDto
     // CHARACTER
 
         public EntityType Type {get; set;} = EntityType.Default;
-        public int CurrentHp {get; set;} = 220;
-        public int CurrentMp {get; set;} = 100;
-        public int Lvl {get; set;} = 1;
+        public float CurrentHp {get; set;} = 220;
+        public float CurrentMp {get; set;} = 100;
+        public float Exp {get; set;} = 0;
         public long Silver {get; set;} = 0;
 
     }

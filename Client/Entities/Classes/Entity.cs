@@ -7,8 +7,8 @@ public partial class Entity : CharacterBody3D
 	
 	[Export] protected ProgressBar _healthBar;
 	public uint Id {get; protected set;}
-	protected int _health;
-	protected int _maxHealth;
+	protected float _health;
+	protected float _maxHealth;
 	public string EntityName {get; private set;}
 	[Export] protected Label _name;
 	[Export] protected MeshInstance3D _selectedMesh;
@@ -23,7 +23,7 @@ public partial class Entity : CharacterBody3D
 	[Export] public CollisionShape3D CollisionNode { get; set; } = null!;
 
 	protected Vector3 _moveTarget;
-	public int Health
+	public float Health
 	{
 		
 		get => _health;
@@ -35,7 +35,7 @@ public partial class Entity : CharacterBody3D
 
 	}
 
-	public virtual void InitEntity(uint id, int health, int maxHealth, string name, EntityType type, Vector3 pos)
+	public virtual void InitEntity(uint id, float health, float maxHealth, string name, EntityType type, Vector3 pos)
 	{
 		
 		Id = id;
@@ -121,7 +121,7 @@ public partial class Entity : CharacterBody3D
 
 	}
 
-	public virtual void TakeDamage(int damage, int actualHealth)
+	public virtual void TakeDamage(float damage, int actualHealth)
 	{
 		_health = actualHealth;
 		if (_healthBar != null)

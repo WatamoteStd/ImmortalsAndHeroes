@@ -14,24 +14,32 @@ public class EntityBase
 
     public bool IsAlive = true;
 
-    public int MaxHealth {get; protected set;}
-    protected int _health;
-    public int Health {
+    public float MaxHealth {get; protected set;}
+    protected float _health;
+    public float Health {
         
     get => _health;
     set => _health = Math.Clamp(value, 0, MaxHealth);
     
     }
     public float HealthRegeneration {get; protected set;}
-    private int _mana;
-    public int MaxMana {get; protected set;}
-    public int Mana
+    private float _mana;
+    public float MaxMana {get; protected set;}
+    public float Mana
     {
         get => _mana;
         set => _mana = Math.Clamp(value, 0, MaxMana);
     }
     public float ManaRegeneration {get; protected set;}
-    public float BaseSpeed {get; protected set;}
+    protected float _baseSpeed;
+    public float BaseSpeed 
+        {
+            get => _baseSpeed;
+            set
+            {
+                _baseSpeed = Math.Clamp(value, 0, 250);
+            }
+        }
 
     public EntityType ModelType {get; protected set;}
 

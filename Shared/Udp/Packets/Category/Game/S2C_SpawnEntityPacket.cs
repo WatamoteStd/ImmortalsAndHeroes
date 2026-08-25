@@ -13,7 +13,7 @@ public struct S2C_SpawnEntityPacket : INetworkPacket
     public int Length {get; set;} 
 
     public uint Id;
-    public int Health;
+    public float Health;
     public string Name;
     public float PosX, PosY, PosZ;
     public EntityType Type;
@@ -26,7 +26,7 @@ public struct S2C_SpawnEntityPacket : INetworkPacket
 
         BinaryPrimitives.WriteUInt32LittleEndian(buffer, Id);
         Length += 4;
-        BinaryPrimitives.WriteInt32LittleEndian(buffer[Length..], Health);
+        BinaryPrimitives.WriteSingleLittleEndian(buffer[Length..], Health);
         Length += 4;
         ushort nameLength = (ushort)Encoding.UTF8.GetByteCount(Name);
         BinaryPrimitives.WriteUInt16LittleEndian(buffer[Length..], nameLength);
@@ -54,7 +54,7 @@ public struct S2C_SpawnEntityPacket : INetworkPacket
         Id = BinaryPrimitives.ReadUInt32LittleEndian(buffer);
         Length += 4;
 
-        Health = BinaryPrimitives.ReadInt32LittleEndian(buffer[Length..]);
+        Health = BinaryPrimitives.ReadSingleLittleEndian(buffer[Length..]);
         Length += 4;
 
         ushort nameLength = BinaryPrimitives.ReadUInt16LittleEndian(buffer[Length..]);
