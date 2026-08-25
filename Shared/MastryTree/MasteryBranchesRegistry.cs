@@ -29,11 +29,18 @@ public static class MasteryBranchesRegistry
                 {
                     new BranchReward
                     {
-                         Context = RewardContextType.SingleLevel,
-                        Type = RewardType.HidenSkill,
-                        StatId = StatType.Armor,
-                        Value = 2
-                    }
+                        Context = RewardContextType.PerLevel,
+                        Type = RewardType.Stat,
+                        StatId = StatType.AttackSpeed,
+                        Value = 200
+                    },
+                    new BranchReward
+                    {
+                        Context = RewardContextType.PerLevel,
+                        Type = RewardType.Stat,
+                        StatId = StatType.HealthRegen,
+                        Value = 20
+                    },
                 }
               
             },
@@ -42,9 +49,9 @@ public static class MasteryBranchesRegistry
                 BranchId = MasteryNodeId.Body,
                 Title = "Body",
                 Description = "Core of your strength",
-                MaxLvl = 15,
-                BaseExp = 60,
-                ExpMultiplier = 1.5f,
+                MaxLvl = 20,
+                BaseExp = 50,
+                ExpMultiplier = 1.35f,
 
                 Rewards = new BranchReward[]
                 {

@@ -208,6 +208,9 @@ public class PlayerEntity : LivingEntity
                     MagicResistance += value;
                 }
             break;
+            default:
+
+            break;
 
         }
 

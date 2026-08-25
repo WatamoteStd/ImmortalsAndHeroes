@@ -18,7 +18,17 @@ public class LivingEntity : EntityBase, IDamageable
     protected Vector3 _moveTarget;
     public uint BaseDamage {get; protected set;}
     public float AttackRange {get; protected set;}
-    public int AttackSpeed {get; protected set;}
+    protected int _attackSpeed;
+    public int AttackSpeed {
+        
+        get => _attackSpeed;
+        protected set
+        {
+            _attackSpeed = value;
+            RecalculateAttackCooldown();
+        }
+        
+    }
     public int Armor {get; protected set;}
     public int MagicResistance {get; protected set;}
     public float BasicAttackTime {get; protected set;}
@@ -35,13 +45,11 @@ public class LivingEntity : EntityBase, IDamageable
         
         BaseDamage = _dllData.BaseDamage;
         AttackRange = _dllData.AttackRange;
-        AttackSpeed = _dllData.AttackSpeed;
         Armor = _dllData.Armor;
         MagicResistance = _dllData.MagicResistance;
         BasicAttackTime = _dllData.BasicAttackTime;
 
-        // ATTACK COOLDOWN CALCULATE
-        _attackCooldown = BasicAttackTime * 100f / AttackSpeed;
+        AttackSpeed = _dllData.AttackSpeed;
 
 
     }
@@ -198,6 +206,7 @@ public class LivingEntity : EntityBase, IDamageable
     {
         int safeSpeed = Math.Max(1, AttackSpeed);
         _attackCooldown = (BasicAttackTime * 100f) / safeSpeed;
+        Console.WriteLine($"[ATTACK SPEED UPDATED] AS: {AttackSpeed} | BAT: {BasicAttackTime} | Cooldown: {_attackCooldown}s");
 
     }
     public bool IsInAttackRadius(EntityBase entity)

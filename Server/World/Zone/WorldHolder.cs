@@ -212,6 +212,7 @@ public class WorldHolder : IWorldHolder
 
                     _broadcaster.SendToPlayer<S2C_ChangeRegionPacket>(player.PlayerId, PacketTypes.S2C_ChangeRegion, changeRegPacket);
                     _broadcaster.SendToPlayer<S2C_HandshakeSuccessPacket>(player.PlayerId, PacketTypes.S2C_HandshakeSuccess, characterDataPacket);
+                    player.UpdateStat(Shared.MasteryTree.Rewards.StatType.None, 0);
                     newRegion.AddPlayer(player);
 
 
