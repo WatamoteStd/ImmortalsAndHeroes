@@ -16,8 +16,8 @@ public partial class MasteryTree : Control
 	[Export] private Label _description;
 	[Export] private Label _requiredExp;
 	[Export] private Label _currentExp;
-	[Export] private Label _statName;
-	[Export] private Label _statValue;
+	[Export] private Label[] _statName;
+	[Export] private Label[] _statValue;
 	[Export] private Label _curLvl;
 	[Export] private Label _maxlvl;
 
@@ -81,39 +81,57 @@ public partial class MasteryTree : Control
 		_curLvl.Text = cache.CurrentLvl.ToString();
 		_maxlvl.Text = dllData.MaxLvl.ToString();
 
-		if (dllData.Rewards.Length > 0)
-		{
-			
-				for (int i = 0; i < dllData.Rewards.Length; i++)
-				{
-			
-					var curReward = dllData.Rewards[i];
+		int rewardsCount = dllData.Rewards?.Length ?? 0;
 
-					if (curReward.Type == RewardType.Stat)
-					{
+		for (int i = 0; i < _statName.Length; i++)
+		{
+			if (i < rewardsCount)
+			{
+				var curReward = dllData.Rewards[i];
+
+				if (curReward.Type == RewardType.Stat)
+				{
+					_statName[i].Text = curReward.StatId.ToString();
+					_statValue[i].Text = $"+{curReward.Value}";
+					_statName[i].Visible = true;
+					_statValue[i].Visible = true;
 					
-						_statName.Text = curReward.StatId.ToString();
-						_statValue.Text = curReward.Value.ToString();
+					switch (curReward.StatId)
+					{
+						
+						case StatType.Health:
+							{
+								_statName[i].Modulate = new Color(0.988f, 0.0f, 0.141f);
+							}
+						break;
+						default:
+							{
+								_statName[i].Modulate = new Color(0.816f, 0.863f, 0.859f);
+							}
+						break;
 
 					}
-					else
-				{
-					_statName.Text = string.Empty;
-					_statValue.Text = string.Empty;
+
 				}
-
+				else
+				{
+					_statName[i].Text = curReward.Type.ToString();
+					_statValue[i].Text = string.Empty;
+					_statName[i].Visible = true;
+					_statValue[i].Visible = true;
+				}
 			}
-
+			else
+			{
+				_statName[i].Visible = false;
+				_statValue[i].Visible = false;
+			}
 		}
-		else
-		{
-			_statName.Text = string.Empty;
-			_statValue.Text = string.Empty;
-		}
-
-		//_requiredExp.Text = dllData.GetRequiredExpForLevel()
-
 	}
+	
+	
+
+		
 
 	public void InitTree(uint exp)
 	{

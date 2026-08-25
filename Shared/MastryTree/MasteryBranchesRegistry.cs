@@ -53,7 +53,14 @@ public static class MasteryBranchesRegistry
                         Context = RewardContextType.PerLevel,
                         Type = RewardType.Stat,
                         StatId = StatType.Health,
-                        Value = 5
+                        Value = 8
+                    },
+                    new BranchReward
+                    {
+                        Context = RewardContextType.PerLevel,
+                        Type = RewardType.Stat,
+                        StatId = StatType.Armor,
+                        Value = 1
                     }
                 }
             }
