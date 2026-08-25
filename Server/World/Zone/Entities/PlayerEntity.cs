@@ -8,6 +8,8 @@ using Server.World.MasteryTree;
 using Shared.MasteryTree;
 using Shared.MasteryTree.Rewards;
 using Shared.Udp.Packets.Category.Game;
+using Server.World.Ability;
+using Shared.Ability;
 
 namespace Server.World;
 
@@ -29,6 +31,10 @@ public class PlayerEntity : LivingEntity
     public InventoryBase Inventory = new InventoryBase(10);
     public PlayerMasteryTree MasteryTree {get;}
 
+    // ABILITY
+
+    private DefaultRunAbility _runAbility = new DefaultRunAbility(AbilityTypes.DefaulthRun);
+
     public PlayerEntity(uint entityId, Vector3 pos, EntityType type, string name, uint playerId, uint regionId, uint silver) : base(entityId, pos, type, regionId)
     {
         Name = name;
@@ -48,6 +54,15 @@ public class PlayerEntity : LivingEntity
         };
 
 
+
+    }
+
+    // TEST
+    public void ApplyAbility()
+    {
+        Console.WriteLine($"[ApplyAbility entity] Trigerred!");
+        
+        _runAbility.OnApply(this, null, this);
 
     }
 

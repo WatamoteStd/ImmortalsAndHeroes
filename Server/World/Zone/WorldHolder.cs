@@ -13,6 +13,7 @@ using System.Buffers.Binary;
 using System.Buffers;
 using Shared.Udp.Packets.Category.MasteryTree;
 using Shared.MasteryTree;
+using Shared.Udp.Packets.Category.Game.Ability;
 
 namespace Server.World.Zone;
 
@@ -107,6 +108,17 @@ public class WorldHolder : IWorldHolder
                         var packet = PacketSerialier.Deserialize<C2S_MasteryTreeLearnRequestPacket>(cmd.Data[2..]);
                         PlayerBranchLearnRequest(cmd.Session.UserId, packet.BranchId);
 
+                        ArrayPool<byte>.Shared.Return(cmd.Data);
+
+                    }
+                break;
+
+                case PacketTypes.C2S_ActivateAbility:
+                    {
+                        Console.WriteLine($"[WorldHolder] Skill packet received");
+                        
+                        var packet = PacketSerialier.Deserialize<C2S_ActivateAbilityPacket>(cmd.Data[2..]);
+                        PlayerSkillActivationRequest(cmd.Session.UserId);
                         ArrayPool<byte>.Shared.Return(cmd.Data);
 
                     }
@@ -277,6 +289,17 @@ public class WorldHolder : IWorldHolder
         {
             
             zone.PlayerBranch_AddExp(player, branch);
+
+        }
+
+    }
+
+    public void PlayerSkillActivationRequest(uint userId)
+    {
+        
+        if (idToPlayer.TryGetValue(userId, out var player) && idToZone.TryGetValue(player.RegionId, out var zone)) {
+            
+            player.ApplyAbility();
 
         }
 

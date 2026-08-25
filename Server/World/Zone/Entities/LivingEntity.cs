@@ -1,5 +1,6 @@
 
 using System.Numerics;
+using Server.World.Effects;
 using Server.World.Zone.Intefaces;
 using Shared.Characters;
 using Shared.MasteryTree.Rewards;
@@ -42,6 +43,8 @@ public class LivingEntity : EntityBase, IDamageable
     protected float _healthRegenBuffer = 0f;
     protected float _manaRegenBuffer = 0f;
 
+    protected List<StatusEffectBase> _statusEffects = new ();
+
 
     public LivingEntity(uint entityId, Vector3 pos, EntityType type, uint regionId) : base(entityId, pos, type, regionId)
     {
@@ -67,6 +70,28 @@ public class LivingEntity : EntityBase, IDamageable
         }
 
         Regenerate(deltaTime);
+
+        if (_statusEffects.Count > 0)
+        {
+            
+            for (int i = _statusEffects.Count -1; i >= 0; i--)
+            {
+            
+                var effect = _statusEffects[i];
+
+                effect.OnUpdate(deltaTime);
+
+                if (effect.Duration <= 0)
+                {
+                
+                    effect.OnLeave();
+                    _statusEffects.RemoveAt(i);
+
+                }
+
+            }
+
+        }
 
 
     }
@@ -241,6 +266,7 @@ public class LivingEntity : EntityBase, IDamageable
             Speed = BaseSpeed
         };
         OnStatsUpdated?.Invoke(packet);
+        Console.WriteLine($"[Entity:{Name}] Stat update trigerred! CurrentHealth:{Health}");
 
     }
 
@@ -280,12 +306,23 @@ public class LivingEntity : EntityBase, IDamageable
 
     }
 
+    public void ApplyStatusEffect(StatusEffectBase effect, LivingEntity caster)
+    {
+        Console.WriteLine($"[Entity:{Name}] Status effect apply! effect:{effect.Name}");
+        effect.OnApply(caster, this, null);
+        _statusEffects.Add(effect);
+
+    }
+
+
+
+    #region  INTERNAL
+
 
     public void RecalculateAttackCooldown()
     {
         float safeSpeed = Math.Max(1, AttackSpeed);
         _attackCooldown = (BasicAttackTime * 100f) / safeSpeed;
-        Console.WriteLine($"[ATTACK SPEED UPDATED] AS: {AttackSpeed} | BAT: {BasicAttackTime} | Cooldown: {_attackCooldown}s");
 
     }
     public bool IsInAttackRadius(EntityBase entity)
@@ -317,6 +354,8 @@ public class LivingEntity : EntityBase, IDamageable
         OnStatsUpdated = null;
     }  
 
+    #endregion
+
 
 }
     public static class EntityExtensions
@@ -333,3 +372,4 @@ public class LivingEntity : EntityBase, IDamageable
     }
 
     }
+    

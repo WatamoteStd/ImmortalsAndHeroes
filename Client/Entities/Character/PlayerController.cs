@@ -93,6 +93,10 @@ public partial class PlayerController : Node
 	{
 		SceneManager.Instance.SwitchVisiblityMasteryTree();
 	}
+	if (@event.IsActionPressed("ActivateAbility"))
+	{
+		ServerMaster.Instance.LP_ActivateSkillRequest();
+	}
 
 }
 
