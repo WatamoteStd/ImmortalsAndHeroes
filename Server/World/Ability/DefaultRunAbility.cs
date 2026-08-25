@@ -7,7 +7,7 @@ using Shared.MasteryTree.Rewards;
 
 namespace Server.World.Ability;
 
-public class DefaultRunAbility : AbiltiyBase
+public class DefaultRunAbility : AbilityBase
 {
     
     public DefaultRunAbility(AbilityTypes abilityId) : base (abilityId)

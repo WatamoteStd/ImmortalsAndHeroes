@@ -1,7 +1,10 @@
 
 using System.Numerics;
+using Server.World.Ability;
 using Server.World.Effects;
+using Server.World.Zone.Entities.Ability;
 using Server.World.Zone.Intefaces;
+using Shared.Ability;
 using Shared.Characters;
 using Shared.MasteryTree.Rewards;
 using Shared.Udp.Packets.Category.Game;
@@ -44,6 +47,7 @@ public class LivingEntity : EntityBase, IDamageable
     protected float _manaRegenBuffer = 0f;
 
     protected List<StatusEffectBase> _statusEffects = new ();
+    protected AbilityComponent _abilityComponent;
 
 
     public LivingEntity(uint entityId, Vector3 pos, EntityType type, uint regionId) : base(entityId, pos, type, regionId)
@@ -56,6 +60,8 @@ public class LivingEntity : EntityBase, IDamageable
         BasicAttackTime = _dllData.BasicAttackTime;
 
         AttackSpeed = _dllData.AttackSpeed;
+
+        _abilityComponent = new AbilityComponent(_dllData.AbilitySlotCount, this);
 
 
     }
@@ -92,6 +98,7 @@ public class LivingEntity : EntityBase, IDamageable
             }
 
         }
+        _abilityComponent.Update(deltaTime);
 
 
     }
@@ -193,6 +200,18 @@ public class LivingEntity : EntityBase, IDamageable
 
     }
 
+
+    #region  ABILITIES 
+
+    public bool TryCastAbility(int slot, Vector3? targetPos = null, LivingEntity? targetEntity = null)
+    {
+    return _abilityComponent.TryCast(slot, targetPos, targetEntity);
+    }
+
+    public int AddAbility(AbilityTypes abilityId) => _abilityComponent.AddAbility(abilityId);
+    public bool SetAbilityToSlot(int slot, AbilityBase ability) => _abilityComponent.SetAbilityToSlot(slot, ability);
+
+    #endregion
     public void UpdateStat(StatType stat, float value)
     {
         

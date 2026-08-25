@@ -57,15 +57,6 @@ public class PlayerEntity : LivingEntity
 
     }
 
-    // TEST
-    public void ApplyAbility()
-    {
-        Console.WriteLine($"[ApplyAbility entity] Trigerred!");
-        
-        _runAbility.OnApply(this, null, this);
-
-    }
-
     public override void Update(float deltaTime)
     {
         base.Update(deltaTime);

@@ -1,5 +1,6 @@
 using Shared.MasteryTree.Rewards;
 using Shared.MasteryTree;
+using Shared.Ability;
 
 namespace Server.World.MasteryTree;
 
@@ -68,28 +69,34 @@ public class PlayerMasteryTree
 
             if (reward.Context == RewardContextType.SingleLevel && reward.TargetLevel == lvl)
             {
-                
-
-
+                GiveReward(reward);
             }
 
             if (reward.Context == RewardContextType.PerLevel)
             {
-                
-                switch (reward.Type)
-                {
-                    
-                    case RewardType.Stat:
-                        {
-                            
-                            _player.UpdateStat(reward.StatId, (int)reward.Value);
-
-                        }
-                    break;
-
-                }
-
+                GiveReward(reward);
             }
+
+        }
+
+    }
+
+    private void GiveReward(BranchReward reward)
+    {
+        
+        switch (reward.Type)
+        {
+            
+            case RewardType.Stat:
+                {
+                    _player.UpdateStat(reward.StatId, reward.Value);
+                }
+            break;
+            case RewardType.ActiveSkill:
+                {
+                    _player.AddAbility((AbilityTypes)reward.Value);
+                }
+            break;
 
         }
 

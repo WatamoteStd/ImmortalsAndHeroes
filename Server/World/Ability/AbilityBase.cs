@@ -5,7 +5,7 @@ using Shared.Ability;
 
 namespace Server.World.Ability;
 
-public class AbiltiyBase
+public class AbilityBase
 {
     
     public AbilityTypes Id {get; protected set;}
@@ -13,7 +13,7 @@ public class AbiltiyBase
     
     public float CurrentCooldown {get; protected set;}
 
-    public AbiltiyBase(AbilityTypes abilityId)
+    public AbilityBase(AbilityTypes abilityId)
     {
 
         if (AbilityRegistry.TryGetAbility(abilityId, out var dll))

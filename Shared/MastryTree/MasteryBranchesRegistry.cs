@@ -1,5 +1,6 @@
 
 using System.Collections.Frozen;
+using Shared.Ability;
 using Shared.MasteryTree.Rewards;
 
 namespace Shared.MasteryTree;
@@ -70,6 +71,37 @@ public static class MasteryBranchesRegistry
                         Value = 1
                     }
                 }
+            },
+            new MasteryBranch
+            {
+                BranchId = MasteryNodeId.FootAgility,
+                Title = "Foot Agility",
+                Description = "Be more flex",
+                MaxLvl = 20,
+                BaseExp = 75,
+                ExpMultiplier = 1.45f,
+
+                Rewards = new BranchReward[]
+                {
+                    
+                    new BranchReward
+                    {
+                        Context = RewardContextType.SingleLevel,
+                        Type = RewardType.ActiveSkill,
+                        StatId = StatType.None,
+                        TargetLevel = 3,
+                        Value = (uint)AbilityTypes.DefaulthRun
+                    },
+                    new BranchReward
+                    {
+                        Context = RewardContextType.PerLevel,
+                        Type = RewardType.Stat,
+                        StatId = StatType.Health,
+                        Value = 5
+                    }
+
+                }
+
             }
             
 
