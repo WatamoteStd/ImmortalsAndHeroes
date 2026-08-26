@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://pcd163nj2hui"]
 
-[ext_resource type="Script" uid="uid://gjg1bbrigv8s" path="res://Scenes/AbilityButton/AbilityButton.cs" id="1_87a14"]
+[ext_resource type="Script" uid="uid://gjg1bbrigv8s" path="res://Scenes/MasteryTree/Rewards/AbilityButton/AbilityButton.cs" id="1_87a14"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83fg3"]
 bg_color = Color(0.07500922, 0.10981316, 0.11012504, 1)

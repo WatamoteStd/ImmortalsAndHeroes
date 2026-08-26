@@ -39,9 +39,10 @@ project/assembly_name="MMORPGClient"
 
 folder_colors={
 "res://Entities/FloatingText/": "blue",
-"res://Scenes/AbilityButton/": "gray",
 "res://Scenes/Inventory/": "orange",
-"res://Scenes/MasteryTree/": "green"
+"res://Scenes/MasteryTree/": "green",
+"res://Scenes/MasteryTree/Rewards/": "green",
+"res://Scenes/MasteryTree/Rewards/AbilityButton/": "green"
 }
 
 [global_group]

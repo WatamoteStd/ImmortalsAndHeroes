@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://ctsoomc6muxj1"]
+
+[ext_resource type="Script" uid="uid://dnc17ldwtbwls" path="res://Scenes/MasteryTree/Rewards/StatReward/StatReward.cs" id="1_8bpj0"]
+[ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="2_bckdx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83fg3"]
+bg_color = Color(0.03529412, 0.03529412, 0.03529412, 0.2)
+
+[sub_resource type="FontVariation" id="FontVariation_5gqgw"]
+base_font = ExtResource("2_bckdx")
+variation_opentype = {
+2003265652: 650
+}
+spacing_glyph = 1
+
+[sub_resource type="FontVariation" id="FontVariation_655wg"]
+base_font = ExtResource("2_bckdx")
+variation_opentype = {
+2003265652: 450
+}
+spacing_glyph = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6u82b"]
+bg_color = Color(0.11764706, 0.11764706, 0.11764706, 0.7607843)
+
+[node name="StatReward" type="Control" unique_id=1898352833 node_paths=PackedStringArray("_statLabel", "_valueLabel", "_requiredLabel", "_requiredPanel")]
+custom_minimum_size = Vector2(250, 35)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8bpj0")
+_statLabel = NodePath("PanelContainer/Content/Labels/StatType")
+_valueLabel = NodePath("PanelContainer/Content/Labels/Count")
+_requiredLabel = NodePath("PanelContainer/Content/Labels/RequiredLevel/Content/HBoxContainer/lvl")
+_requiredPanel = NodePath("PanelContainer/Content/Labels/RequiredLevel")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1373698083]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_83fg3")
+
+[node name="Content" type="MarginContainer" parent="PanelContainer" unique_id=582561714]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Labels" type="HBoxContainer" parent="PanelContainer/Content" unique_id=654737709]
+layout_mode = 2
+
+[node name="StatType" type="Label" parent="PanelContainer/Content/Labels" unique_id=941241368]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = SubResource("FontVariation_5gqgw")
+theme_override_font_sizes/font_size = 15
+text = "HEALTH"
+uppercase = true
+
+[node name="Count" type="Label" parent="PanelContainer/Content/Labels" unique_id=1623817502]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = SubResource("FontVariation_655wg")
+theme_override_font_sizes/font_size = 16
+text = "+20"
+uppercase = true
+
+[node name="RequiredLevel" type="PanelContainer" parent="PanelContainer/Content/Labels" unique_id=202046505]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_styles/panel = SubResource("StyleBoxFlat_6u82b")
+
+[node name="Content" type="MarginContainer" parent="PanelContainer/Content/Labels/RequiredLevel" unique_id=514545907]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/Content/Labels/RequiredLevel/Content" unique_id=30488567]
+layout_mode = 2
+
+[node name="Required" type="Label" parent="PanelContainer/Content/Labels/RequiredLevel/Content/HBoxContainer" unique_id=1417056612]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.9335466, 0.00051949924, 0.105943896, 1)
+theme_override_fonts/font = SubResource("FontVariation_5gqgw")
+theme_override_font_sizes/font_size = 13
+text = "Required lvl"
+uppercase = true
+
+[node name="lvl" type="Label" parent="PanelContainer/Content/Labels/RequiredLevel/Content/HBoxContainer" unique_id=2090558119]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.99980074, 0.12587652, 0.15851986, 1)
+theme_override_fonts/font = SubResource("FontVariation_655wg")
+theme_override_font_sizes/font_size = 16
+text = "5"
+uppercase = true

@@ -1,0 +1,250 @@
+[gd_scene format=3 uid="uid://sn81pcl0opa6"]
+
+[ext_resource type="Script" uid="uid://rsclp33mhmii" path="res://Scenes/MasteryTree/PathInfoPanel.cs" id="1_tx5jj"]
+[ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="2_ot6au"]
+[ext_resource type="PackedScene" uid="uid://ctsoomc6muxj1" path="res://Scenes/MasteryTree/Rewards/StatReward/StatReward.tscn" id="3_ot6au"]
+[ext_resource type="Script" uid="uid://bgelx2gkdivdt" path="res://Scenes/MasteryTree/ProgressionBlock.cs" id="4_2tojr"]
+[ext_resource type="FontFile" uid="uid://4idcqtrgxamb" path="res://Assets/Fonts/Cinzel_Decorative/CinzelDecorative-Black.ttf" id="5_lw4ih"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ichqs"]
+bg_color = Color(0.16741201, 0.21319222, 0.22420344, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.254201, 0.3120983, 0.33383688, 1)
+border_blend = true
+shadow_size = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qcen3"]
+bg_color = Color(0.10249352, 0.10249352, 0.10249349, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.06607057, 0.06607053, 0.06607054, 1)
+border_blend = true
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qm0se"]
+bg_color = Color(0.26106697, 0.39297754, 0.4454767, 1)
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vap5j"]
+bg_color = Color(0.38523474, 0.5480794, 0.6154782, 1)
+border_width_right = 2
+border_color = Color(0.8160996, 0.81609964, 0.81609946, 1)
+border_blend = true
+shadow_size = 1
+
+[sub_resource type="FontVariation" id="FontVariation_6u82b"]
+base_font = ExtResource("2_ot6au")
+variation_embolden = 0.9
+
+[sub_resource type="FontVariation" id="FontVariation_tx5jj"]
+base_font = ExtResource("2_ot6au")
+variation_embolden = 0.7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tx5jj"]
+bg_color = Color(0.52427644, 0.6005094, 0.66673136, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2tojr"]
+bg_color = Color(0.43104786, 0.50407535, 0.5691956, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lw4ih"]
+bg_color = Color(0.5709583, 0.6431835, 0.7079367, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iq38n"]
+bg_color = Color(0.28548625, 0.3435738, 0.39521095, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_83fg3"]
+color = Color(0.25033975, 0.30769467, 0.32334712, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vcdtc"]
+draw_center = false
+border_color = Color(0.3033069, 0.36886618, 0.38676864, 1)
+border_blend = true
+shadow_size = 2
+
+[sub_resource type="Gradient" id="Gradient_vap5j"]
+colors = PackedColorArray(0.111081086, 0.14348453, 0.15231949, 1, 0.0621192, 0.08735611, 0.09296364, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6u82b"]
+gradient = SubResource("Gradient_vap5j")
+fill_to = Vector2(1, 0.30844155)
+
+[sub_resource type="FontVariation" id="FontVariation_83fg3"]
+base_font = ExtResource("2_ot6au")
+variation_opentype = {
+2003265652: 600
+}
+variation_embolden = 0.11
+
+[node name="PathInfoPanel" type="PanelContainer" unique_id=281071292 node_paths=PackedStringArray("_rewardsBox", "_progressionBlock", "_learnBranchButton", "_headerTitle", "_descriptionLabel")]
+custom_minimum_size = Vector2(300, 0)
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -27.0
+offset_right = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ichqs")
+script = ExtResource("1_tx5jj")
+_statRewardScene = ExtResource("3_ot6au")
+_rewardsBox = NodePath("Content/ScrollContainer/VBoxContainer/Rewards")
+_progressionBlock = NodePath("Content/ScrollContainer/VBoxContainer/Progression")
+_learnBranchButton = NodePath("Content/ScrollContainer/VBoxContainer/Progression/Learn")
+_headerTitle = NodePath("Header/BRANCHNAME")
+_descriptionLabel = NodePath("Content/ScrollContainer/VBoxContainer/Description/Content/Description")
+
+[node name="Header" type="PanelContainer" parent="." unique_id=181414779]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qcen3")
+
+[node name="BRANCHNAME" type="Label" parent="Header" unique_id=131861651]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.849525, 0.8041001, 0.86474174, 1)
+theme_override_fonts/font = ExtResource("2_ot6au")
+theme_override_font_sizes/font_size = 19
+text = "BRANCHNAME"
+
+[node name="Content" type="MarginContainer" parent="." unique_id=2140887643]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 70
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Content" unique_id=1570249912]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Content/ScrollContainer" unique_id=751300238]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 11
+
+[node name="Progression" type="VBoxContainer" parent="Content/ScrollContainer/VBoxContainer" unique_id=1362602341 node_paths=PackedStringArray("_progressBar", "_curExp", "_reqExp", "_curLvl", "_maxLvl")]
+layout_mode = 2
+theme_override_constants/separation = 14
+script = ExtResource("4_2tojr")
+_progressBar = NodePath("Progress")
+_curExp = NodePath("Progress/CurExp")
+_reqExp = NodePath("Progress/ReqExp")
+_curLvl = NodePath("LevelPanel/CurLvl")
+_maxLvl = NodePath("LevelPanel/MaxLvl")
+
+[node name="Progress" type="ProgressBar" parent="Content/ScrollContainer/VBoxContainer/Progression" unique_id=1233479502]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_qm0se")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vap5j")
+value = 30.0
+show_percentage = false
+
+[node name="CurExp" type="Label" parent="Content/ScrollContainer/VBoxContainer/Progression/Progress" unique_id=1909963541]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -10.0
+offset_right = 65.0
+offset_bottom = 10.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_lw4ih")
+theme_override_font_sizes/font_size = 12
+text = "curExp"
+
+[node name="ReqExp" type="Label" parent="Content/ScrollContainer/VBoxContainer/Progression/Progress" unique_id=1901157249]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -8.5
+offset_bottom = 8.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_lw4ih")
+theme_override_font_sizes/font_size = 12
+text = "reqExp"
+horizontal_alignment = 2
+
+[node name="LevelPanel" type="HBoxContainer" parent="Content/ScrollContainer/VBoxContainer/Progression" unique_id=822163398]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 30
+
+[node name="CurLvl" type="Label" parent="Content/ScrollContainer/VBoxContainer/Progression/LevelPanel" unique_id=33589503]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7060365, 0.76899797, 0.8288644, 1)
+theme_override_fonts/font = SubResource("FontVariation_6u82b")
+theme_override_font_sizes/font_size = 17
+text = "CurLvl"
+uppercase = true
+
+[node name="VSeparator" type="VSeparator" parent="Content/ScrollContainer/VBoxContainer/Progression/LevelPanel" unique_id=212002283]
+layout_mode = 2
+
+[node name="MaxLvl" type="Label" parent="Content/ScrollContainer/VBoxContainer/Progression/LevelPanel" unique_id=953250122]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7060365, 0.76899797, 0.8288644, 1)
+theme_override_fonts/font = SubResource("FontVariation_6u82b")
+theme_override_font_sizes/font_size = 17
+text = "maxlvl"
+uppercase = true
+
+[node name="Learn" type="Button" parent="Content/ScrollContainer/VBoxContainer/Progression" unique_id=1060246151]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_colors/font_color = Color(0.8897135, 0.92753017, 0.9427165, 1)
+theme_override_colors/font_disabled_color = Color(0.5294118, 0.5294118, 0.5294118, 1)
+theme_override_fonts/font = SubResource("FontVariation_tx5jj")
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_tx5jj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2tojr")
+theme_override_styles/hover = SubResource("StyleBoxFlat_lw4ih")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_iq38n")
+text = "LEARN"
+
+[node name="HSeparator" type="HSeparator" parent="Content/ScrollContainer/VBoxContainer" unique_id=92395372]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_83fg3")
+
+[node name="Description" type="PanelContainer" parent="Content/ScrollContainer/VBoxContainer" unique_id=1706644010]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vcdtc")
+
+[node name="bg" type="TextureRect" parent="Content/ScrollContainer/VBoxContainer/Description" unique_id=1084023560]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_6u82b")
+
+[node name="Content" type="MarginContainer" parent="Content/ScrollContainer/VBoxContainer/Description" unique_id=368965927]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Description" type="Label" parent="Content/ScrollContainer/VBoxContainer/Description/Content" unique_id=1155858097]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 12
+text = "Desc"
+autowrap_mode = 2
+
+[node name="Rewards" type="VBoxContainer" parent="Content/ScrollContainer/VBoxContainer" unique_id=133306512]
+layout_mode = 2
