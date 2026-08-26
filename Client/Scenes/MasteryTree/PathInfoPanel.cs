@@ -51,7 +51,7 @@ public partial class PathInfoPanel : PanelContainer
 			_progressionBlock.SetProgress(0, 0, dllData);
 		}
 
-		bool isMax = cache.CurrentLvl >= dllData.MaxLvl;
+		bool isMax = currentLvl >= dllData.MaxLvl;
 		_learnBranchButton.Disabled = isMax;
 
 		// REWARDS
@@ -65,25 +65,33 @@ public partial class PathInfoPanel : PanelContainer
 
 
 
-		for (int i = 0; i < dllData.Rewards.Length; i++)
+		for (int i = 0; i < dllData.Rewards.Length; i++) // STAT PER LVL
 		{
 			
 			var reward = dllData.Rewards[i];
 
-			if (reward.Type == RewardType.Stat)
+			if (reward.Type == RewardType.Stat && reward.Context == RewardContextType.PerLevel)
 			{
-				
 				var newReward = _statRewardScene.Instantiate<StatReward>();
-				_rewardsBox.AddChild(newReward);
 
-				if (reward.Context == RewardContextType.PerLevel)
-				{
-					newReward.CreateVisual(reward.StatId, (int)reward.Value, 0);
-				}
-				else
-				{
-					newReward.CreateVisual(reward.StatId, (int)reward.Value, reward.TargetLevel, true );
-				}
+				_rewardsBox.AddChild(newReward);
+				newReward.CreateVisual(reward.StatId, (int)reward.Value, 0);
+			}
+
+		}
+		
+		for (int i = 0; i < dllData.Rewards.Length; i++) // STAT SINGLE LVL
+		{
+			
+			var reward = dllData.Rewards[i];
+
+			if (reward.Type == RewardType.Stat && reward.Context == RewardContextType.SingleLevel) 
+			{
+
+				var newReward = _statRewardScene.Instantiate<StatReward>();
+
+				_rewardsBox.AddChild(newReward);
+				newReward.CreateVisual(reward.StatId, (int)reward.Value, reward.TargetLevel, true);
 
 			}
 

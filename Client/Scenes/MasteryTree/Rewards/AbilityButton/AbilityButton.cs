@@ -10,6 +10,8 @@ public partial class AbilityButton : Button
 	private Color _hoverColor = new Color(0.788f, 0.808f, 0.816f);
 	private Color _pressColor = new Color(0.589f, 0.589f, 0.589f);
 
+	public AbilityTypes AbilityId {get; private set;}
+
 	public override void _Ready()
 	{
 		
@@ -28,6 +30,13 @@ public partial class AbilityButton : Button
 		ButtonUp += () =>
 		{
 			_icon.SelfModulate = _defaultColor;
+		};
+
+		Pressed += () =>
+		{
+			
+			
+
 		};
 
 	}

@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://pcd163nj2hui"]
 
 [ext_resource type="Script" uid="uid://gjg1bbrigv8s" path="res://Scenes/MasteryTree/Rewards/AbilityButton/AbilityButton.cs" id="1_87a14"]
+[ext_resource type="Texture2D" uid="uid://dv7qjt578onmt" path="res://Assets/Icons/Ability/Run/RunIcon.png" id="2_h40m5"]
+[ext_resource type="PackedScene" uid="uid://makr814fcvp1" path="res://Scenes/MasteryTree/Rewards/AbilityButton/AbilityInfoPanel.tscn" id="3_a7plb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83fg3"]
 bg_color = Color(0.07500922, 0.10981316, 0.11012504, 1)
@@ -49,6 +51,7 @@ theme_override_constants/margin_bottom = 2
 [node name="Icon" type="TextureRect" parent="Content" unique_id=1164592816]
 layout_mode = 2
 mouse_filter = 2
+texture = ExtResource("2_h40m5")
 expand_mode = 1
 stretch_mode = 5
 
@@ -61,3 +64,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6u82b")
+
+[node name="Control" parent="." unique_id=780214792 instance=ExtResource("3_a7plb")]
+layout_mode = 1
+offset_left = 130.0
+offset_top = -276.0
+offset_right = 530.0
+offset_bottom = 224.0

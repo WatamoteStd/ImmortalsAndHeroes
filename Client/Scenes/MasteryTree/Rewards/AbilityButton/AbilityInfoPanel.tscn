@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://makr814fcvp1"]
+
+[ext_resource type="Script" uid="uid://b8ees3pjuyo6x" path="res://Scenes/MasteryTree/Rewards/AbilityButton/AbilityInfoPanel.cs" id="1_i8jdv"]
+[ext_resource type="Texture2D" uid="uid://dv7qjt578onmt" path="res://Assets/Icons/Ability/Run/RunIcon.png" id="2_0jqvs"]
+[ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="3_wo578"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i8jdv"]
+bg_color = Color(0.13496616, 0.16915813, 0.16636547, 0.85882354)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0jqvs"]
+bg_color = Color(0.2627451, 0.3372549, 0.43137255, 0.49803922)
+draw_center = false
+
+[sub_resource type="Gradient" id="Gradient_i8jdv"]
+colors = PackedColorArray(0.18003884, 0.30816653, 0.38733155, 1, 0.09498718, 0.20934722, 0.2704513, 0.654902)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_83fg3"]
+gradient = SubResource("Gradient_i8jdv")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83fg3"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_blend = true
+
+[sub_resource type="FontVariation" id="FontVariation_83fg3"]
+base_font = ExtResource("3_wo578")
+variation_embolden = 0.98
+spacing_glyph = 1
+
+[node name="Control" type="Control" unique_id=780214792]
+custom_minimum_size = Vector2(400, 500)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i8jdv")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1864096804]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_i8jdv")
+
+[node name="Header" type="PanelContainer" parent="PanelContainer" unique_id=945667864]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0jqvs")
+
+[node name="bg" type="TextureRect" parent="PanelContainer/Header" unique_id=353853707]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_83fg3")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Content" type="MarginContainer" parent="PanelContainer/Header" unique_id=265462918]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/Header/Content" unique_id=1355971327]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="AbilityIconPanel" type="PanelContainer" parent="PanelContainer/Header/Content/HBoxContainer" unique_id=2097869584]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_83fg3")
+
+[node name="AbilityIcon" type="TextureRect" parent="PanelContainer/Header/Content/HBoxContainer/AbilityIconPanel" unique_id=1217543578]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+texture = ExtResource("2_0jqvs")
+expand_mode = 1
+
+[node name="AbilityName" type="Label" parent="PanelContainer/Header/Content/HBoxContainer" unique_id=1365663852]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.9599754, 0.967393, 0.9747723, 1)
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 25
+text = "Defaulth Run"
+
+[node name="Content" type="MarginContainer" parent="PanelContainer" unique_id=204894420]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/Content" unique_id=1217856188]
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Content/ScrollContainer" unique_id=1805343982]
+layout_mode = 2

@@ -123,6 +123,8 @@ theme_override_constants/margin_bottom = 5
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Content" unique_id=1570249912]
 layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Content/ScrollContainer" unique_id=751300238]
 layout_mode = 2

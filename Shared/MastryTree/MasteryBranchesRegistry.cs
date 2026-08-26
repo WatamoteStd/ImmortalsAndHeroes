@@ -98,15 +98,8 @@ public static class MasteryBranchesRegistry
                         Type = RewardType.Stat,
                         StatId = StatType.Health,
                         Value = 5
-                    },
-                    new BranchReward
-                    {
-                        Context = RewardContextType.SingleLevel,
-                        Type = RewardType.Stat,
-                        StatId = StatType.AttackSpeed,
-                        TargetLevel = 3,
-                        Value = 20
-                    }
+                    }           
+                
 
                 }
 
