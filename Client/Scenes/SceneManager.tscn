@@ -5,8 +5,8 @@
 [ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="2_ebsso"]
 [ext_resource type="Script" uid="uid://cmgj83a0b8x66" path="res://Scenes/Hud.cs" id="4_7xrkh"]
 [ext_resource type="Script" uid="uid://c2pd0kmiwqjkm" path="res://Scenes/Inventory/Inventory.cs" id="5_8ysa5"]
-[ext_resource type="Texture2D" uid="uid://qs5b6naailca" path="res://Assets/Icons/Ability/Empty/Null.png" id="5_75dai"]
 [ext_resource type="PackedScene" uid="uid://cqa7psxm0fij7" path="res://Scenes/Inventory/Items/SlotDefault.tscn" id="5_83gc0"]
+[ext_resource type="PackedScene" uid="uid://jdq8s0cmvm5n" path="res://Scenes/AbilitySystem/AbilityPanel.tscn" id="5_c8mt5"]
 [ext_resource type="Script" uid="uid://brl6fol06stt7" path="res://Scenes/SelectedEntityWindow.cs" id="7_2cmid"]
 [ext_resource type="Texture2D" uid="uid://bmjwvo57ef362" path="res://Assets/Icons/Silver/Icon.png" id="7_gbsx4"]
 [ext_resource type="PackedScene" uid="uid://c4khyov2ay7x8" path="res://Menus/Market/BaseMarket.tscn" id="8_q4unc"]
@@ -86,15 +86,6 @@ _data = {
 &"Idle": SubResource("Animation_hjya1"),
 &"RESET": SubResource("Animation_7xrkh")
 }
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_c8mt5"]
-load_path = "res://.godot/imported/Null.png-e6c85504be9ac2d3a036a8463b476378.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b0fb2"]
-load_path = "res://.godot/imported/Null.png-e6c85504be9ac2d3a036a8463b476378.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wi563"]
-load_path = "res://.godot/imported/Null.png-e6c85504be9ac2d3a036a8463b476378.ctex"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6u82b"]
 bg_color = Color(0.2023181, 0.20825613, 0.42671227, 0.3764706)
@@ -199,9 +190,9 @@ visible = false
 script = ExtResource("1_hjya1")
 _animator = NodePath("AnimationPlayer")
 PlayerHud = NodePath("UI")
-_inventory = NodePath("UI/Control/Inventory")
-_connectionLostWindow = NodePath("UI/Control/ConnectionLostWindow")
-_connectionLostButton = NodePath("UI/Control/ConnectionLostWindow/VBoxContainer/MenuButton")
+_inventory = NodePath("UI/HUD/Inventory")
+_connectionLostWindow = NodePath("UI/HUD/ConnectionLostWindow")
+_connectionLostButton = NodePath("UI/HUD/ConnectionLostWindow/VBoxContainer/MenuButton")
 MarketManagerWindow = NodePath("Market/MarkeetWindow")
 MasteryTreeWindow = NodePath("UI/MasteryTree")
 
@@ -252,17 +243,16 @@ libraries/ = SubResource("AnimationLibrary_83gc0")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1081374653 node_paths=PackedStringArray("_healthBar", "_healthBarLabel", "_manaBar", "_manaBarLabel", "_silver", "_nickname", "_selectEntityWindow")]
 layer = 100
-visible = false
 script = ExtResource("4_7xrkh")
-_healthBar = NodePath("Control/BottomPanel/BattleStats/Content/HBoxContainer/Bars/HpBar")
-_healthBarLabel = NodePath("Control/BottomPanel/BattleStats/Content/HBoxContainer/Bars/HpBar/BAR_health")
-_manaBar = NodePath("Control/BottomPanel/BattleStats/Content/HBoxContainer/Bars/MpBar")
-_manaBarLabel = NodePath("Control/BottomPanel/BattleStats/Content/HBoxContainer/Bars/MpBar/BAR_health2")
-_silver = NodePath("Control/Inventory/VBoxContainer/SilverBlock/Silver")
-_nickname = NodePath("Control/Nickname")
-_selectEntityWindow = NodePath("Control/SelectedEntityWindow")
+_healthBar = NodePath("HUD/BottomPanel/BattleStats/Content/HBoxContainer/Bars/HpBar")
+_healthBarLabel = NodePath("HUD/BottomPanel/BattleStats/Content/HBoxContainer/Bars/HpBar/BAR_health")
+_manaBar = NodePath("HUD/BottomPanel/BattleStats/Content/HBoxContainer/Bars/MpBar")
+_manaBarLabel = NodePath("HUD/BottomPanel/BattleStats/Content/HBoxContainer/Bars/MpBar/BAR_health2")
+_silver = NodePath("HUD/Inventory/VBoxContainer/SilverBlock/Silver")
+_nickname = NodePath("HUD/Nickname")
+_selectEntityWindow = NodePath("HUD/SelectedEntityWindow")
 
-[node name="Control" type="Control" parent="UI" unique_id=636239428]
+[node name="HUD" type="Control" parent="UI" unique_id=636239428]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -271,7 +261,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Nickname" type="Label" parent="UI/Control" unique_id=1949083075]
+[node name="Nickname" type="Label" parent="UI/HUD" unique_id=1949083075]
 layout_mode = 1
 offset_right = 128.0
 offset_bottom = 33.0
@@ -281,7 +271,7 @@ theme_override_fonts/font = ExtResource("2_ebsso")
 theme_override_font_sizes/font_size = 24
 text = "Nickname"
 
-[node name="BottomPanel" type="VBoxContainer" parent="UI/Control" unique_id=1924885608]
+[node name="BottomPanel" type="VBoxContainer" parent="UI/HUD" unique_id=1924885608]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -293,79 +283,42 @@ offset_top = -143.0
 offset_right = 215.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 5
+theme_override_constants/separation = 8
+alignment = 2
 
-[node name="AbilityPanel" type="HBoxContainer" parent="UI/Control/BottomPanel" unique_id=567773920]
-custom_minimum_size = Vector2(400, 0)
+[node name="AbilityPanel" parent="UI/HUD/BottomPanel" unique_id=1675897906 instance=ExtResource("5_c8mt5")]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 15
-alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="UI/Control/BottomPanel/AbilityPanel" unique_id=2085893020]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = SubResource("CompressedTexture2D_c8mt5")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect2" type="TextureRect" parent="UI/Control/BottomPanel/AbilityPanel" unique_id=1150013499]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = SubResource("CompressedTexture2D_b0fb2")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect3" type="TextureRect" parent="UI/Control/BottomPanel/AbilityPanel" unique_id=802817802]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = SubResource("CompressedTexture2D_wi563")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect4" type="TextureRect" parent="UI/Control/BottomPanel/AbilityPanel" unique_id=1894576267]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("5_75dai")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect5" type="TextureRect" parent="UI/Control/BottomPanel/AbilityPanel" unique_id=1707718609]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("5_75dai")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="BattleStats" type="PanelContainer" parent="UI/Control/BottomPanel" unique_id=383323327]
+[node name="BattleStats" type="PanelContainer" parent="UI/HUD/BottomPanel" unique_id=383323327]
 custom_minimum_size = Vector2(430, 65)
 propagate_maximum_size = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6u82b")
 
-[node name="Content" type="MarginContainer" parent="UI/Control/BottomPanel/BattleStats" unique_id=2140130585]
+[node name="Content" type="MarginContainer" parent="UI/HUD/BottomPanel/BattleStats" unique_id=2140130585]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/BottomPanel/BattleStats/Content" unique_id=796374853]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/HUD/BottomPanel/BattleStats/Content" unique_id=796374853]
 layout_mode = 2
 
-[node name="MPS" type="VBoxContainer" parent="UI/Control/BottomPanel/BattleStats/Content/HBoxContainer" unique_id=1652209877]
+[node name="MPS" type="VBoxContainer" parent="UI/HUD/BottomPanel/BattleStats/Content/HBoxContainer" unique_id=1652209877]
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="Current" type="Label" parent="UI/Control/BottomPanel/BattleStats/Content/HBoxContainer/MPS" unique_id=1100185016]
+[node name="Current" type="Label" parent="UI/HUD/BottomPanel/BattleStats/Content/HBoxContainer/MPS" unique_id=1100185016]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = SubResource("FontVariation_gbsx4")
 theme_override_font_sizes/font_size = 14
 text = "Throughput"
 
-[node name="Max2" type="Label" parent="UI/Control/BottomPanel/BattleStats/Content/HBoxContainer/MPS" unique_id=1331848820]
+[node name="Max2" type="Label" parent="UI/HUD/BottomPanel/BattleStats/Content/HBoxContainer/MPS" unique_id=1331848820]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.72089285, 0.8195458, 0.7935487, 1)
@@ -373,10 +326,10 @@ theme_override_fonts/font = SubResource("FontVariation_gbsx4")
 theme_override_font_sizes/font_size = 12
 text = "max"
 
-[node name="HSeparator" type="HSeparator" parent="UI/Control/BottomPanel/BattleStats/Content/HBoxContainer/MPS" unique_id=492050617]
+[node name="HSeparator" type="HSeparator" parent="UI/HUD/BottomPanel/BattleStats/Content/HBoxContainer/MPS" unique_id=492050617]
 layout_mode = 2
 
-[node name="Max" type="Label" parent="UI/Control/BottomPanel/BattleStats/Content/HBoxContainer/MPS" unique_id=836763704]
+[node name="Max" type="Label" parent="UI/HUD/BottomPanel/BattleStats/Content/HBoxContainer/MPS" unique_id=836763704]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.8416494, 0.85657287, 0.7633415, 1)
@@ -384,13 +337,13 @@ theme_override_fonts/font = SubResource("FontVariation_gbsx4")
 theme_override_font_sizes/font_size = 12
 text = "Cur"
 
-[node name="Bars" type="VBoxContainer" parent="UI/Control/BottomPanel/BattleStats/Content/HBoxContainer" unique_id=1882101431]
+[node name="Bars" type="VBoxContainer" parent="UI/HUD/BottomPanel/BattleStats/Content/HBoxContainer" unique_id=1882101431]
 propagate_maximum_size = false
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 
-[node name="HpBar" type="ProgressBar" parent="UI/Control/BottomPanel/BattleStats/Content/HBoxContainer/Bars" unique_id=856579824]
+[node name="HpBar" type="ProgressBar" parent="UI/HUD/BottomPanel/BattleStats/Content/HBoxContainer/Bars" unique_id=856579824]
 custom_minimum_size = Vector2(300, 25)
 layout_mode = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_hjya1")
@@ -398,7 +351,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_83gc0")
 value = 50.0
 show_percentage = false
 
-[node name="BAR_health" type="Label" parent="UI/Control/BottomPanel/BattleStats/Content/HBoxContainer/Bars/HpBar" unique_id=1404366849]
+[node name="BAR_health" type="Label" parent="UI/HUD/BottomPanel/BattleStats/Content/HBoxContainer/Bars/HpBar" unique_id=1404366849]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -416,7 +369,7 @@ theme_override_font_sizes/font_size = 12
 text = "cur/max"
 uppercase = true
 
-[node name="MpBar" type="ProgressBar" parent="UI/Control/BottomPanel/BattleStats/Content/HBoxContainer/Bars" unique_id=1807221081]
+[node name="MpBar" type="ProgressBar" parent="UI/HUD/BottomPanel/BattleStats/Content/HBoxContainer/Bars" unique_id=1807221081]
 custom_minimum_size = Vector2(300, 16)
 layout_mode = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_ichqs")
@@ -424,7 +377,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_8ysa5")
 value = 25.0
 show_percentage = false
 
-[node name="BAR_health2" type="Label" parent="UI/Control/BottomPanel/BattleStats/Content/HBoxContainer/Bars/MpBar" unique_id=7300681]
+[node name="BAR_health2" type="Label" parent="UI/HUD/BottomPanel/BattleStats/Content/HBoxContainer/Bars/MpBar" unique_id=7300681]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -442,7 +395,7 @@ theme_override_font_sizes/font_size = 10
 text = "cur/max"
 uppercase = true
 
-[node name="Inventory" type="PanelContainer" parent="UI/Control" unique_id=1740792429]
+[node name="Inventory" type="PanelContainer" parent="UI/HUD" unique_id=1740792429]
 visible = false
 custom_minimum_size = Vector2(350, 500)
 layout_mode = 1
@@ -459,16 +412,16 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vcdtc")
 script = ExtResource("5_8ysa5")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/Inventory" unique_id=2017661304]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HUD/Inventory" unique_id=2017661304]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="Header" type="PanelContainer" parent="UI/Control/Inventory/VBoxContainer" unique_id=530941613]
+[node name="Header" type="PanelContainer" parent="UI/HUD/Inventory/VBoxContainer" unique_id=530941613]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qm0se")
 
-[node name="Label" type="Label" parent="UI/Control/Inventory/VBoxContainer/Header" unique_id=1730869598]
+[node name="Label" type="Label" parent="UI/HUD/Inventory/VBoxContainer/Header" unique_id=1730869598]
 layout_mode = 2
 size_flags_horizontal = 6
 theme_override_colors/font_color = Color(0.8127129, 0.8455433, 0.8618154, 1)
@@ -477,62 +430,62 @@ theme_override_fonts/font = SubResource("FontVariation_83fg3")
 theme_override_font_sizes/font_size = 26
 text = "INVENTORY"
 
-[node name="Slots" type="GridContainer" parent="UI/Control/Inventory/VBoxContainer" unique_id=1860133313]
+[node name="Slots" type="GridContainer" parent="UI/HUD/Inventory/VBoxContainer" unique_id=1860133313]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/h_separation = 2
 columns = 4
 
-[node name="Slot1" parent="UI/Control/Inventory/VBoxContainer/Slots" unique_id=1609103383 instance=ExtResource("5_83gc0")]
+[node name="Slot1" parent="UI/HUD/Inventory/VBoxContainer/Slots" unique_id=1609103383 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot2" parent="UI/Control/Inventory/VBoxContainer/Slots" unique_id=158006091 instance=ExtResource("5_83gc0")]
+[node name="Slot2" parent="UI/HUD/Inventory/VBoxContainer/Slots" unique_id=158006091 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot3" parent="UI/Control/Inventory/VBoxContainer/Slots" unique_id=106425847 instance=ExtResource("5_83gc0")]
+[node name="Slot3" parent="UI/HUD/Inventory/VBoxContainer/Slots" unique_id=106425847 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot4" parent="UI/Control/Inventory/VBoxContainer/Slots" unique_id=536414281 instance=ExtResource("5_83gc0")]
+[node name="Slot4" parent="UI/HUD/Inventory/VBoxContainer/Slots" unique_id=536414281 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot5" parent="UI/Control/Inventory/VBoxContainer/Slots" unique_id=2011650220 instance=ExtResource("5_83gc0")]
+[node name="Slot5" parent="UI/HUD/Inventory/VBoxContainer/Slots" unique_id=2011650220 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot6" parent="UI/Control/Inventory/VBoxContainer/Slots" unique_id=844681337 instance=ExtResource("5_83gc0")]
+[node name="Slot6" parent="UI/HUD/Inventory/VBoxContainer/Slots" unique_id=844681337 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot7" parent="UI/Control/Inventory/VBoxContainer/Slots" unique_id=1877923527 instance=ExtResource("5_83gc0")]
+[node name="Slot7" parent="UI/HUD/Inventory/VBoxContainer/Slots" unique_id=1877923527 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot8" parent="UI/Control/Inventory/VBoxContainer/Slots" unique_id=1271336900 instance=ExtResource("5_83gc0")]
+[node name="Slot8" parent="UI/HUD/Inventory/VBoxContainer/Slots" unique_id=1271336900 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot9" parent="UI/Control/Inventory/VBoxContainer/Slots" unique_id=161001819 instance=ExtResource("5_83gc0")]
+[node name="Slot9" parent="UI/HUD/Inventory/VBoxContainer/Slots" unique_id=161001819 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="Slot10" parent="UI/Control/Inventory/VBoxContainer/Slots" unique_id=1774147062 instance=ExtResource("5_83gc0")]
+[node name="Slot10" parent="UI/HUD/Inventory/VBoxContainer/Slots" unique_id=1774147062 instance=ExtResource("5_83gc0")]
 layout_mode = 2
 
-[node name="SilverBlock" type="HBoxContainer" parent="UI/Control/Inventory/VBoxContainer" unique_id=1294274643]
+[node name="SilverBlock" type="HBoxContainer" parent="UI/HUD/Inventory/VBoxContainer" unique_id=1294274643]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10
 theme_override_constants/separation = 10
 
-[node name="Icon" type="TextureRect" parent="UI/Control/Inventory/VBoxContainer/SilverBlock" unique_id=900771727]
+[node name="Icon" type="TextureRect" parent="UI/HUD/Inventory/VBoxContainer/SilverBlock" unique_id=900771727]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 texture = ExtResource("7_gbsx4")
 expand_mode = 1
 
-[node name="Silver" type="Label" parent="UI/Control/Inventory/VBoxContainer/SilverBlock" unique_id=1502581446]
+[node name="Silver" type="Label" parent="UI/HUD/Inventory/VBoxContainer/SilverBlock" unique_id=1502581446]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 18
 text = "silver"
 
-[node name="SelectedEntityWindow" type="PanelContainer" parent="UI/Control" unique_id=1669463716 node_paths=PackedStringArray("_name", "_health")]
+[node name="SelectedEntityWindow" type="PanelContainer" parent="UI/HUD" unique_id=1669463716 node_paths=PackedStringArray("_name", "_health")]
 visible = false
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 1
@@ -548,49 +501,47 @@ script = ExtResource("7_2cmid")
 _name = NodePath("VBoxContainer/EntityName")
 _health = NodePath("VBoxContainer/EntityHealth")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/SelectedEntityWindow" unique_id=584375449]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HUD/SelectedEntityWindow" unique_id=584375449]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="EntityName" type="Label" parent="UI/Control/SelectedEntityWindow/VBoxContainer" unique_id=1157476469]
+[node name="EntityName" type="Label" parent="UI/HUD/SelectedEntityWindow/VBoxContainer" unique_id=1157476469]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8560673, 0.8560673, 0.85606724, 1)
 theme_override_font_sizes/font_size = 21
 text = "EntityName"
 
-[node name="EntityHealth" type="Label" parent="UI/Control/SelectedEntityWindow/VBoxContainer" unique_id=1771639606]
+[node name="EntityHealth" type="Label" parent="UI/HUD/SelectedEntityWindow/VBoxContainer" unique_id=1771639606]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.21548295, 0.33122507, 1)
 theme_override_font_sizes/font_size = 21
 text = "Health"
 
-[node name="ConnectionLostWindow" type="PanelContainer" parent="UI/Control" unique_id=690597117]
+[node name="ConnectionLostWindow" type="PanelContainer" parent="UI/HUD" unique_id=690597117]
 visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 296.0
-offset_bottom = 41.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_w4wer")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/ConnectionLostWindow" unique_id=1928071222]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HUD/ConnectionLostWindow" unique_id=1928071222]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 15
 
-[node name="Label" type="Label" parent="UI/Control/ConnectionLostWindow/VBoxContainer" unique_id=1290293560]
+[node name="Label" type="Label" parent="UI/HUD/ConnectionLostWindow/VBoxContainer" unique_id=1290293560]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8525921, 0.9273058, 0.9750549, 1)
 theme_override_fonts/font = SubResource("FontVariation_6u82b")
 theme_override_font_sizes/font_size = 32
 text = "CONNECTION LOST..."
 
-[node name="MenuButton" type="Button" parent="UI/Control/ConnectionLostWindow/VBoxContainer" unique_id=32593234]
+[node name="MenuButton" type="Button" parent="UI/HUD/ConnectionLostWindow/VBoxContainer" unique_id=32593234]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.1895665, 0.18956706, 0.1895667, 1)
 theme_override_colors/font_pressed_color = Color(0.07683582, 0.07683582, 0.07683582, 1)

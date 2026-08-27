@@ -34,8 +34,10 @@ public class StatModifierEffect : StatusEffectBase
     }
     public override void OnLeave()
     {
-        
-        _target!.UpdateStat(_stat, -_value);
+        if (_target != null && _target.IsAlive)
+        {
+            _target.UpdateStat(_stat, -_value);
+        }
 
     }
 

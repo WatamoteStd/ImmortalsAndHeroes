@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://lxcmupkpih0u" path="res://Entities/Classes/LocalPlayerEntity.cs" id="1_dm67a"]
 [ext_resource type="Script" uid="uid://c4lfs47dmh2xp" path="res://Entities/Character/PlayerController.cs" id="2_id7e5"]
+[ext_resource type="Script" uid="uid://oyqswrwpy2e2" path="res://Entities/Character/PlayerAbilityController.cs" id="3_00h75"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_83fg3"]
 
@@ -21,6 +22,9 @@ script = ExtResource("2_id7e5")
 _camera = NodePath("../Camera3D")
 _raycast = NodePath("../RayCast3D")
 _player = NodePath("..")
+
+[node name="PlayerAbilityController" type="Node" parent="." unique_id=1582659783]
+script = ExtResource("3_00h75")
 
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=1427856926]
 target_position = Vector3(0, 0, -100)

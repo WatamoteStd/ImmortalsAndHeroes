@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://u12a247w754l"]
+
+[ext_resource type="Script" uid="uid://ce0f7mb512aar" path="res://Scenes/AbilitySystem/AbilitySlotUi.cs" id="1_7q1mo"]
+[ext_resource type="Texture2D" uid="uid://qs5b6naailca" path="res://Assets/Icons/Ability/Empty/Null.png" id="1_67sck"]
+[ext_resource type="Texture2D" uid="uid://cm2ip115jiwf7" path="res://Scenes/AbilitySystem/Textures/CooldownProgressOverlay.png" id="2_8ar88"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83fg3"]
+bg_color = Color(0.4159807, 0.41598034, 0.4159804, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.094292246, 0.11046923, 0.11970926, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6u82b"]
+bg_color = Color(0.078431375, 0.09411765, 0.11764706, 0.9254902)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2510488, 0.28531146, 0.3252983, 1)
+border_blend = true
+
+[node name="AbilitySlotUI" type="Control" unique_id=1148678191 node_paths=PackedStringArray("_icon", "_cooldownProgress", "_cooldownLabel", "_skillBind")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7q1mo")
+_icon = NodePath("PanelContainer/Icon")
+_cooldownProgress = NodePath("PanelContainer/CooldownProgress")
+_cooldownLabel = NodePath("PanelContainer/CooldownTime")
+_skillBind = NodePath("PanelContainer/SkillActivate/SkillButton")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=233566398]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_83fg3")
+
+[node name="Icon" type="TextureRect" parent="PanelContainer" unique_id=2051317925]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("1_67sck")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CooldownProgress" type="TextureProgressBar" parent="PanelContainer" unique_id=1155039763]
+visible = false
+layout_mode = 2
+step = 0.0
+fill_mode = 5
+nine_patch_stretch = true
+texture_progress = ExtResource("2_8ar88")
+
+[node name="CooldownTime" type="Label" parent="PanelContainer" unique_id=963356398]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+text = "0s"
+
+[node name="SkillActivate" type="PanelContainer" parent="PanelContainer" unique_id=721276306]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6u82b")
+
+[node name="SkillButton" type="Label" parent="PanelContainer/SkillActivate" unique_id=1832347629]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.8228815, 0.8461936, 0.8901814, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 10
+text = "-"
+horizontal_alignment = 1
