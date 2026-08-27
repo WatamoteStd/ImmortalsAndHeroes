@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ctsoomc6muxj1" path="res://Scenes/MasteryTree/Rewards/StatReward/StatReward.tscn" id="3_ot6au"]
 [ext_resource type="Script" uid="uid://bgelx2gkdivdt" path="res://Scenes/MasteryTree/ProgressionBlock.cs" id="4_2tojr"]
 [ext_resource type="FontFile" uid="uid://4idcqtrgxamb" path="res://Assets/Fonts/Cinzel_Decorative/CinzelDecorative-Black.ttf" id="5_lw4ih"]
+[ext_resource type="PackedScene" uid="uid://pcd163nj2hui" path="res://Scenes/MasteryTree/Rewards/AbilityButton/AbilityButton.tscn" id="6_iq38n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ichqs"]
 bg_color = Color(0.16741201, 0.21319222, 0.22420344, 1)
@@ -80,7 +81,7 @@ variation_opentype = {
 }
 variation_embolden = 0.11
 
-[node name="PathInfoPanel" type="PanelContainer" unique_id=281071292 node_paths=PackedStringArray("_rewardsBox", "_progressionBlock", "_learnBranchButton", "_headerTitle", "_descriptionLabel")]
+[node name="PathInfoPanel" type="PanelContainer" unique_id=281071292 node_paths=PackedStringArray("_rewardsBox", "_abilityRewardBox", "_progressionBlock", "_learnBranchButton", "_headerTitle", "_descriptionLabel")]
 custom_minimum_size = Vector2(300, 0)
 anchors_preset = 13
 anchor_left = 0.5
@@ -94,7 +95,9 @@ size_flags_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ichqs")
 script = ExtResource("1_tx5jj")
 _statRewardScene = ExtResource("3_ot6au")
+_abilityRewardScene = ExtResource("6_iq38n")
 _rewardsBox = NodePath("Content/ScrollContainer/VBoxContainer/Rewards")
+_abilityRewardBox = NodePath("Content/ScrollContainer/VBoxContainer/Rewards/AbilityRewards")
 _progressionBlock = NodePath("Content/ScrollContainer/VBoxContainer/Progression")
 _learnBranchButton = NodePath("Content/ScrollContainer/VBoxContainer/Progression/Learn")
 _headerTitle = NodePath("Header/BRANCHNAME")
@@ -249,4 +252,7 @@ text = "Desc"
 autowrap_mode = 2
 
 [node name="Rewards" type="VBoxContainer" parent="Content/ScrollContainer/VBoxContainer" unique_id=133306512]
+layout_mode = 2
+
+[node name="AbilityRewards" type="HFlowContainer" parent="Content/ScrollContainer/VBoxContainer/Rewards" unique_id=1369615852]
 layout_mode = 2

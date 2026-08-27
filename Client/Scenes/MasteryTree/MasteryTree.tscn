@@ -3,6 +3,7 @@
 [ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="1_2brbh"]
 [ext_resource type="Script" uid="uid://bhlu24qh4nsfy" path="res://Scenes/MasteryTree/MasteryTree.cs" id="1_njmpg"]
 [ext_resource type="PackedScene" uid="uid://sn81pcl0opa6" path="res://Scenes/MasteryTree/PathInfoPanel.tscn" id="3_vap5j"]
+[ext_resource type="PackedScene" uid="uid://makr814fcvp1" path="res://Scenes/MasteryTree/Rewards/AbilityButton/AbilityInfoPanel.tscn" id="4_qcen3"]
 
 [sub_resource type="Gradient" id="Gradient_njmpg"]
 colors = PackedColorArray(0.10021392, 0.13682938, 0.1692164, 1, 0.18904668, 0.27346432, 0.29251376, 1)
@@ -56,7 +57,7 @@ border_blend = true
 shadow_size = 1
 shadow_offset = Vector2(-1, 5)
 
-[node name="Control" type="Control" unique_id=758776108 node_paths=PackedStringArray("_playerExp", "BranchInfoPanel", "_darkPathButton", "_bodyButton", "_footAgilityButton")]
+[node name="Control" type="Control" unique_id=758776108 node_paths=PackedStringArray("_playerExp", "BranchInfoPanel", "_darkPathButton", "_bodyButton", "_footAgilityButton", "_handAgilityButton", "_intelectButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,6 +70,8 @@ BranchInfoPanel = NodePath("Body/PathInfoPanel")
 _darkPathButton = NodePath("Body/VBoxContainer/DarkPath")
 _bodyButton = NodePath("Body/VBoxContainer/Body")
 _footAgilityButton = NodePath("Body/HBoxContainer/FottAgilivty")
+_handAgilityButton = NodePath("Body/HBoxContainer/HandAgility")
+_intelectButton = NodePath("Body/HBoxContainer/Intelligense")
 
 [node name="bg" type="TextureRect" parent="." unique_id=1985687418]
 layout_mode = 1
@@ -203,3 +206,9 @@ text = "HAND AGILITY"
 [node name="PathInfoPanel" parent="Body" unique_id=281071292 instance=ExtResource("3_vap5j")]
 visible = false
 layout_mode = 2
+
+[node name="AbilityInfoPanel" parent="Body" unique_id=780214792 groups=["Interface"] instance=ExtResource("4_qcen3")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4

@@ -74,6 +74,36 @@ public static class MasteryBranchesRegistry
             },
             new MasteryBranch
             {
+                BranchId = MasteryNodeId.HandAgility,
+                Title = "Hand Agility",
+                Description = "RukaBlood",
+                MaxLvl = 20,
+                BaseExp = 75,
+                ExpMultiplier = 1.45f,
+
+                Rewards = new BranchReward[]
+                {
+                    
+                    new BranchReward
+                    {
+                        Context = RewardContextType.PerLevel,
+                        Type = RewardType.Stat,
+                        StatId = StatType.AttackSpeed,
+                        Value = 3
+                    },
+                    new BranchReward
+                    {
+                        Context = RewardContextType.SingleLevel,
+                        Type = RewardType.Stat,
+                        StatId = StatType.PhysicalDamage,
+                        TargetLevel = 5,
+                        Value = 10
+                    }
+
+                }
+            },
+            new MasteryBranch
+            {
                 BranchId = MasteryNodeId.FootAgility,
                 Title = "Foot Agility",
                 Description = "Be more flex",
@@ -98,11 +128,50 @@ public static class MasteryBranchesRegistry
                         Type = RewardType.Stat,
                         StatId = StatType.Health,
                         Value = 5
-                    }           
+                    },
+                    new BranchReward
+                    {
+                        Context = RewardContextType.SingleLevel,
+                        Type = RewardType.Stat,
+                        StatId = StatType.MoveSpeed,
+                        TargetLevel = 5,
+                        Value = 1
+                    }          
                 
 
                 }
 
+            },
+            new MasteryBranch
+            {
+                BranchId = MasteryNodeId.Intelligense,
+                Title = "I'm smarter, I'm stronger, I'm better",
+                Description = "Smart asf",
+                MaxLvl = 20,
+                BaseExp = 75,
+                ExpMultiplier = 1.45f,
+
+                Rewards = new BranchReward[]
+                {
+                    
+                    new BranchReward
+                    {
+                        
+                        Context = RewardContextType.PerLevel,
+                        Type = RewardType.Stat,
+                        StatId = StatType.Mana,
+                        Value = 2
+                    },
+                    new BranchReward
+                    {
+                        Context = RewardContextType.SingleLevel,
+                        Type = RewardType.Stat,
+                        TargetLevel = 5,
+                        StatId = StatType.ManaRegen,
+                        Value = 2
+                    }
+
+                }
             }
             
 

@@ -1,11 +1,16 @@
 [gd_scene format=3 uid="uid://pcd163nj2hui"]
 
 [ext_resource type="Script" uid="uid://gjg1bbrigv8s" path="res://Scenes/MasteryTree/Rewards/AbilityButton/AbilityButton.cs" id="1_87a14"]
-[ext_resource type="Texture2D" uid="uid://dv7qjt578onmt" path="res://Assets/Icons/Ability/Run/RunIcon.png" id="2_h40m5"]
-[ext_resource type="PackedScene" uid="uid://makr814fcvp1" path="res://Scenes/MasteryTree/Rewards/AbilityButton/AbilityInfoPanel.tscn" id="3_a7plb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83fg3"]
 bg_color = Color(0.07500922, 0.10981316, 0.11012504, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ichqs"]
+bg_color = Color(0.24096477, 0.31834778, 0.31832027, 1)
+border_width_left = 1
+border_width_top = 1
+border_color = Color(0.31388396, 0.40663972, 0.4065758, 1)
+border_blend = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6u82b"]
 draw_center = false
@@ -17,8 +22,8 @@ border_color = Color(0.011087579, 0.011087578, 0.01108758, 1)
 border_blend = true
 shadow_size = 1
 
-[node name="Button" type="Button" unique_id=1908437272 node_paths=PackedStringArray("_icon")]
-custom_minimum_size = Vector2(64, 64)
+[node name="Button" type="Button" unique_id=1908437272 node_paths=PackedStringArray("_icon", "_reqLvlPanel", "_reqLvlLabel")]
+custom_minimum_size = Vector2(48, 48)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -34,6 +39,8 @@ focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_83fg3")
 script = ExtResource("1_87a14")
 _icon = NodePath("Content/Icon")
+_reqLvlPanel = NodePath("Content/LvlPanel")
+_reqLvlLabel = NodePath("Content/LvlPanel/Lvl")
 
 [node name="Content" type="MarginContainer" parent="." unique_id=797110599]
 layout_mode = 1
@@ -51,9 +58,21 @@ theme_override_constants/margin_bottom = 2
 [node name="Icon" type="TextureRect" parent="Content" unique_id=1164592816]
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("2_h40m5")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="LvlPanel" type="PanelContainer" parent="Content" unique_id=1843960718]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ichqs")
+
+[node name="Lvl" type="Label" parent="Content/LvlPanel" unique_id=2041389294]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9828426, 0.05785194, 0.15505368, 1)
+theme_override_font_sizes/font_size = 12
+text = "LVL 5"
 
 [node name="Border" type="PanelContainer" parent="." unique_id=887143907]
 layout_mode = 1
@@ -64,10 +83,3 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6u82b")
-
-[node name="Control" parent="." unique_id=780214792 instance=ExtResource("3_a7plb")]
-layout_mode = 1
-offset_left = 130.0
-offset_top = -276.0
-offset_right = 530.0
-offset_bottom = 224.0

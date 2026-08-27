@@ -1,11 +1,23 @@
 [gd_scene format=3 uid="uid://makr814fcvp1"]
 
 [ext_resource type="Script" uid="uid://b8ees3pjuyo6x" path="res://Scenes/MasteryTree/Rewards/AbilityButton/AbilityInfoPanel.cs" id="1_i8jdv"]
-[ext_resource type="Texture2D" uid="uid://dv7qjt578onmt" path="res://Assets/Icons/Ability/Run/RunIcon.png" id="2_0jqvs"]
 [ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="3_wo578"]
+[ext_resource type="Script" uid="uid://b131nof8cte4o" path="res://Scenes/MasteryTree/Rewards/AbilityButton/CategoryComponent.cs" id="4_2hp30"]
+[ext_resource type="FontFile" uid="uid://bcun702jlnmlu" path="res://Assets/Fonts/Inter/Inter-Italic-VariableFont_opsz,wght.ttf" id="4_avclw"]
+[ext_resource type="FontFile" uid="uid://dpj5yrqog00fh" path="res://Assets/Fonts/Cinzel_Decorative/CinzelDecorative-Bold.ttf" id="5_jpttm"]
+[ext_resource type="Texture2D" uid="uid://bvk1khvgvmgi5" path="res://Assets/Icons/BasicStats/manaIcon.png" id="6_rjsr4"]
+[ext_resource type="Texture2D" uid="uid://dov875ae7cuy" path="res://Assets/Icons/BasicStats/magicalThroughput.png" id="7_csxq5"]
+[ext_resource type="Texture2D" uid="uid://ce6rkweuqolpy" path="res://Assets/Icons/BasicStats/cooldownIcon.png" id="8_tw0vc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i8jdv"]
 bg_color = Color(0.13496616, 0.16915813, 0.16636547, 0.85882354)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.23028937, 0.37324983, 0.4356353, 1)
+border_blend = true
+shadow_size = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0jqvs"]
 bg_color = Color(0.2627451, 0.3372549, 0.43137255, 0.49803922)
@@ -30,7 +42,33 @@ base_font = ExtResource("3_wo578")
 variation_embolden = 0.98
 spacing_glyph = 1
 
-[node name="Control" type="Control" unique_id=780214792]
+[sub_resource type="FontVariation" id="FontVariation_wo578"]
+base_font = ExtResource("3_wo578")
+variation_embolden = 0.98
+spacing_glyph = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wo578"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 20.0
+bg_color = Color(0.113152646, 0.1382488, 0.13511401, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.23948899, 0.28209335, 0.27675653, 1)
+border_blend = true
+
+[sub_resource type="FontVariation" id="FontVariation_llujh"]
+base_font = ExtResource("3_wo578")
+variation_embolden = 0.98
+spacing_glyph = 1
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_83fg3"]
+color = Color(0.3529412, 0.35686275, 0.3529412, 1)
+
+[node name="Control" type="Control" unique_id=780214792 node_paths=PackedStringArray("_castTypeComponent", "_addCastTypeComponent", "_targetTypeComponent", "_relationComponent", "_interruptibleComponent", "_moveWhileCastComponent", "_title", "_description", "_icon", "_damageType")]
 custom_minimum_size = Vector2(400, 500)
 layout_mode = 3
 anchors_preset = 8
@@ -41,6 +79,16 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_i8jdv")
+_castTypeComponent = NodePath("PanelContainer/Content/ScrollContainer/VBoxContainer/CastTypePanel")
+_addCastTypeComponent = NodePath("PanelContainer/Content/ScrollContainer/VBoxContainer/AddCastType")
+_targetTypeComponent = NodePath("PanelContainer/Content/ScrollContainer/VBoxContainer/TargetType")
+_relationComponent = NodePath("PanelContainer/Content/ScrollContainer/VBoxContainer/TargetRelations")
+_interruptibleComponent = NodePath("PanelContainer/Content/ScrollContainer/VBoxContainer/InterruptibleBlock")
+_moveWhileCastComponent = NodePath("PanelContainer/Content/ScrollContainer/VBoxContainer/MoveWhileCastBlock")
+_title = NodePath("PanelContainer/Header/Content/HBoxContainer/Ttitle&Dmg/AbilName")
+_description = NodePath("PanelContainer/Content/ScrollContainer/VBoxContainer/Description/Descriptionlabel")
+_icon = NodePath("PanelContainer/Header/Content/HBoxContainer/AbilityIconPanel/AbilityIcon")
+_damageType = NodePath("PanelContainer/Header/Content/HBoxContainer/Ttitle&Dmg/HBoxContainer/Type")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1864096804]
 layout_mode = 1
@@ -81,21 +129,43 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_83fg3")
 [node name="AbilityIcon" type="TextureRect" parent="PanelContainer/Header/Content/HBoxContainer/AbilityIconPanel" unique_id=1217543578]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
-texture = ExtResource("2_0jqvs")
 expand_mode = 1
 
-[node name="AbilityName" type="Label" parent="PanelContainer/Header/Content/HBoxContainer" unique_id=1365663852]
+[node name="Ttitle&Dmg" type="VBoxContainer" parent="PanelContainer/Header/Content/HBoxContainer" unique_id=311622296]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="AbilName" type="Label" parent="PanelContainer/Header/Content/HBoxContainer/Ttitle&Dmg" unique_id=2051878370]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0.9599754, 0.967393, 0.9747723, 1)
 theme_override_fonts/font = SubResource("FontVariation_83fg3")
 theme_override_font_sizes/font_size = 25
-text = "Defaulth Run"
+text = "Ability Name"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/Header/Content/HBoxContainer/Ttitle&Dmg" unique_id=507271538]
+layout_mode = 2
+
+[node name="DmgType" type="Label" parent="PanelContainer/Header/Content/HBoxContainer/Ttitle&Dmg/HBoxContainer" unique_id=1365663852]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.7006424, 0.7566032, 0.81197125, 1)
+theme_override_fonts/font = SubResource("FontVariation_wo578")
+theme_override_font_sizes/font_size = 13
+text = "Damage Type:"
+
+[node name="Type" type="Label" parent="PanelContainer/Header/Content/HBoxContainer/Ttitle&Dmg/HBoxContainer" unique_id=776412314]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.83417076, 0.86682576, 0.89932066, 1)
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 12
+text = "Pure"
 
 [node name="Content" type="MarginContainer" parent="PanelContainer" unique_id=204894420]
 layout_mode = 2
 theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 60
+theme_override_constants/margin_top = 90
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
@@ -106,3 +176,303 @@ vertical_scroll_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Content/ScrollContainer" unique_id=1805343982]
 layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CastTypePanel" type="HBoxContainer" parent="PanelContainer/Content/ScrollContainer/VBoxContainer" unique_id=1933590125 node_paths=PackedStringArray("_value")]
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("4_2hp30")
+_value = NodePath("CastType")
+
+[node name="Title" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/CastTypePanel" unique_id=77804712]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.26841044, 0.45327938, 0.68954796, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 12
+text = "Cast Type:"
+
+[node name="CastType" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/CastTypePanel" unique_id=958209841]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.5079401, 0.715268, 0.77391404, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 12
+text = "Target"
+
+[node name="AddCastType" type="HBoxContainer" parent="PanelContainer/Content/ScrollContainer/VBoxContainer" unique_id=1602654126 node_paths=PackedStringArray("_value")]
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("4_2hp30")
+_value = NodePath("AddCastType")
+
+[node name="Title" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/AddCastType" unique_id=965000479]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.26666668, 0.45490196, 0.6901961, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 12
+text = "Cast Type Property:"
+
+[node name="AddCastType" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/AddCastType" unique_id=2139242940]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.5079401, 0.715268, 0.77391404, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 12
+text = "Point"
+
+[node name="TargetType" type="HBoxContainer" parent="PanelContainer/Content/ScrollContainer/VBoxContainer" unique_id=295938946 node_paths=PackedStringArray("_value")]
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("4_2hp30")
+_value = NodePath("TargetType")
+
+[node name="Title" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/TargetType" unique_id=262986859]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.26666668, 0.45490196, 0.6901961, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 12
+text = "Target Type:"
+
+[node name="TargetType" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/TargetType" unique_id=526632532]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.5079401, 0.715268, 0.77391404, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 12
+text = "Self"
+
+[node name="TargetRelations" type="HBoxContainer" parent="PanelContainer/Content/ScrollContainer/VBoxContainer" unique_id=1829206718 node_paths=PackedStringArray("_value")]
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("4_2hp30")
+_value = NodePath("../TargetType/TargetType")
+
+[node name="Title" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/TargetRelations" unique_id=705837161]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.26666668, 0.45490196, 0.6901961, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 12
+text = "Relation:"
+
+[node name="TargetType" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/TargetRelations" unique_id=570755602]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.5079401, 0.715268, 0.77391404, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 12
+text = "Ally"
+
+[node name="Description" type="PanelContainer" parent="PanelContainer/Content/ScrollContainer/VBoxContainer" unique_id=389788211]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wo578")
+
+[node name="Descriptionlabel" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/Description" unique_id=2083705705]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.3854925, 0.38549247, 0.38549247, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_fonts/font = ExtResource("4_avclw")
+theme_override_font_sizes/font_size = 14
+text = "Some interasting description about very very interasting skill that can disolate your whole family by just clicking some button on keyboard. Isn't it? If you like it just add game to wishlist"
+autowrap_mode = 2
+
+[node name="InterruptibleBlock" type="HBoxContainer" parent="PanelContainer/Content/ScrollContainer/VBoxContainer" unique_id=1412151546 node_paths=PackedStringArray("_value")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 10
+script = ExtResource("4_2hp30")
+_value = NodePath("Interruptible")
+
+[node name="Title" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/InterruptibleBlock" unique_id=1446077666]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.17208385, 0.3203517, 0.5046138, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 16
+text = "Interruptible"
+
+[node name="Interruptible" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/InterruptibleBlock" unique_id=1330459175]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0, 0.5058824, 0.06666667, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 15
+text = "YES"
+
+[node name="MoveWhileCastBlock" type="HBoxContainer" parent="PanelContainer/Content/ScrollContainer/VBoxContainer" unique_id=1482677817 node_paths=PackedStringArray("_value")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 10
+script = ExtResource("4_2hp30")
+_value = NodePath("Interruptible")
+
+[node name="Title" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/MoveWhileCastBlock" unique_id=68658044]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.17208385, 0.3203517, 0.5046138, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_llujh")
+theme_override_font_sizes/font_size = 16
+text = "Move While Cast"
+
+[node name="Interruptible" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/MoveWhileCastBlock" unique_id=1134362643]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.651, 0, 0.067, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 15
+text = "NO"
+
+[node name="Stats" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer" unique_id=597522749]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.51628786, 0.52102125, 0.5210208, 1)
+theme_override_fonts/font = ExtResource("5_jpttm")
+text = "STATS"
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/Content/ScrollContainer/VBoxContainer" unique_id=435859674]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_83fg3")
+
+[node name="ManaBlock" type="HBoxContainer" parent="PanelContainer/Content/ScrollContainer/VBoxContainer" unique_id=1032331275]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Title2" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/ManaBlock" unique_id=2094925652]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5603344, 0.71053475, 0.9025638, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 12
+text = "Required Mana: "
+
+[node name="manaCost" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/ManaBlock" unique_id=1189396460]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.5200842, 0.89139014, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 14
+text = "40"
+
+[node name="Icon" type="TextureRect" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/ManaBlock" unique_id=1544488941]
+modulate = Color(0.27193713, 0.41165674, 0.566028, 1)
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("6_rjsr4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MpsBlock" type="HBoxContainer" parent="PanelContainer/Content/ScrollContainer/VBoxContainer" unique_id=112859050]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Title" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/MpsBlock" unique_id=406430768]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5603344, 0.71053475, 0.9025638, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 12
+text = "Expended magical throughput:"
+
+[node name="Cost" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/MpsBlock" unique_id=1969991609]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7100605, 0.19843525, 0.99999994, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 14
+text = "10"
+
+[node name="Icon" type="TextureRect" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/MpsBlock" unique_id=1051007835]
+modulate = Color(0.42844525, 0.00014458477, 0.4360531, 1)
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("7_csxq5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CooldownBlock" type="HBoxContainer" parent="PanelContainer/Content/ScrollContainer/VBoxContainer" unique_id=1449990266]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 5
+
+[node name="Title" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/CooldownBlock" unique_id=1972820262]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5603344, 0.71053475, 0.9025638, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 12
+text = "Cooldown: "
+
+[node name="Cost" type="Label" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/CooldownBlock" unique_id=450508261]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5188215, 0.5995717, 0.63344646, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.16161275, 0.27776894, 0.34664276, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = SubResource("FontVariation_83fg3")
+theme_override_font_sizes/font_size = 14
+text = "10"
+
+[node name="Icon" type="TextureRect" parent="PanelContainer/Content/ScrollContainer/VBoxContainer/CooldownBlock" unique_id=2125003428]
+modulate = Color(0.42844525, 0.00014458477, 0.4360531, 1)
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("8_tw0vc")
+expand_mode = 1
+stretch_mode = 5

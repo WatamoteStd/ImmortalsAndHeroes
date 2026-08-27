@@ -12,6 +12,8 @@ public partial class MasteryTree : Control
 	[Export] private Button _darkPathButton;
 	[Export] private Button _bodyButton;
 	[Export] private Button _footAgilityButton;
+	[Export] private Button _handAgilityButton;
+	[Export] private Button _intelectButton;
 
 	private MasteryNodeId _currentBranchId = MasteryNodeId.None; 
 
@@ -26,7 +28,9 @@ public partial class MasteryTree : Control
 		// BUTTON SUBS
 		_darkPathButton.Pressed += () => { BranchInfoPanel.OpenBranch(MasteryNodeId.DarkPath);};
 		_bodyButton.Pressed += () => {BranchInfoPanel.OpenBranch(MasteryNodeId.Body);};
-		_footAgilityButton.Pressed += () => {BranchInfoPanel.OpenBranch(MasteryNodeId.FootAgility);};		
+		_footAgilityButton.Pressed += () => {BranchInfoPanel.OpenBranch(MasteryNodeId.FootAgility);};
+		_handAgilityButton.Pressed += () => {BranchInfoPanel.OpenBranch(MasteryNodeId.HandAgility);};
+		_intelectButton.Pressed += () => {BranchInfoPanel.OpenBranch(MasteryNodeId.Intelligense);};
 
 	}
 

@@ -1,17 +1,11 @@
 [gd_scene format=3 uid="uid://ctsoomc6muxj1"]
 
 [ext_resource type="Script" uid="uid://dnc17ldwtbwls" path="res://Scenes/MasteryTree/Rewards/StatReward/StatReward.cs" id="1_8bpj0"]
+[ext_resource type="FontFile" uid="uid://dpj5yrqog00fh" path="res://Assets/Fonts/Cinzel_Decorative/CinzelDecorative-Bold.ttf" id="2_25ihu"]
 [ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="2_bckdx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83fg3"]
 bg_color = Color(0.03529412, 0.03529412, 0.03529412, 0.2)
-
-[sub_resource type="FontVariation" id="FontVariation_8bpj0"]
-base_font = ExtResource("2_bckdx")
-variation_opentype = {
-2003265652: 650
-}
-variation_embolden = 0.69
 
 [sub_resource type="FontVariation" id="FontVariation_655wg"]
 base_font = ExtResource("2_bckdx")
@@ -31,7 +25,7 @@ variation_opentype = {
 spacing_glyph = 1
 
 [node name="StatReward" type="Control" unique_id=1898352833 node_paths=PackedStringArray("_statLabel", "_valueLabel", "_requiredLabel", "_requiredPanel")]
-custom_minimum_size = Vector2(250, 35)
+custom_minimum_size = Vector2(250, 30)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -68,8 +62,8 @@ layout_mode = 2
 [node name="StatType" type="Label" parent="PanelContainer/Content/Labels" unique_id=941241368]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_fonts/font = SubResource("FontVariation_8bpj0")
-theme_override_font_sizes/font_size = 15
+theme_override_fonts/font = ExtResource("2_25ihu")
+theme_override_font_sizes/font_size = 14
 text = "HEALTH"
 uppercase = true
 

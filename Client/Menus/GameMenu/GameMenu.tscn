@@ -5276,7 +5276,8 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_5yqie")
 theme_override_styles/hover = SubResource("StyleBoxFlat_mg7dy")
 text = "CREATE"
 
-[node name="Control" parent="Control/MarginContainer" unique_id=1774751025 instance=ExtResource("7_jukw0")]
+[node name="SettingsWindow" parent="Control/MarginContainer" unique_id=1774751025 instance=ExtResource("7_jukw0")]
+visible = false
 layout_mode = 2
 
 [node name="StatusWindow" parent="Control" unique_id=911583890 instance=ExtResource("4_qy3an")]

@@ -3,11 +3,14 @@ using Shared.MasteryTree;
 using System;
 using System.Collections.Generic;
 using Shared.MasteryTree.Rewards;
+using Shared.Ability;
 
 public partial class PathInfoPanel : PanelContainer
 {
 	[Export] private PackedScene _statRewardScene;
+	[Export] private PackedScene _abilityRewardScene;
 	[Export] private VBoxContainer _rewardsBox;
+	[Export] private HFlowContainer _abilityRewardBox;
 	[Export] private ProgressionBlock _progressionBlock;
 	[Export] private Button _learnBranchButton;
 	[Export] private Label _headerTitle;
@@ -58,6 +61,12 @@ public partial class PathInfoPanel : PanelContainer
 
 		foreach (Node child in _rewardsBox.GetChildren())
 		{
+			if (child is HFlowContainer) continue;
+			child.QueueFree();
+		}
+
+		foreach(Node child in _abilityRewardBox.GetChildren())
+		{
 			child.QueueFree();
 		}
 
@@ -92,6 +101,30 @@ public partial class PathInfoPanel : PanelContainer
 
 				_rewardsBox.AddChild(newReward);
 				newReward.CreateVisual(reward.StatId, (int)reward.Value, reward.TargetLevel, true);
+
+			}
+
+		}
+
+		for (int i = 0; i < dllData.Rewards.Length; i++)
+		{
+			
+			var reward = dllData.Rewards[i];
+
+			if (reward.Type == RewardType.ActiveSkill && reward.Context == RewardContextType.SingleLevel)
+			{
+				AbilityRegistry.TryGetAbility((AbilityTypes)reward.Value, out var data);
+				var newReward = _abilityRewardScene.Instantiate<AbilityButton>();
+
+
+				bool isLocked = false;
+				if (_bracnesCache.TryGetValue(branchId, out var branchCache))
+				{
+					isLocked = _bracnesCache[branchId].CurrentLvl < reward.TargetLevel;
+				}
+
+				_abilityRewardBox.AddChild(newReward);
+				newReward.Init(data, reward.TargetLevel, isLocked);
 
 			}
 
