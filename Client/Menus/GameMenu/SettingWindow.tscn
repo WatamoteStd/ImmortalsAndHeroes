@@ -1,0 +1,180 @@
+[gd_scene format=3 uid="uid://by61a2l1ls2yr"]
+
+[ext_resource type="Script" uid="uid://beiptbvriwpfo" path="res://Menus/GameMenu/Settings/SettingWindow.cs" id="1_no66h"]
+[ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="3_no66h"]
+[ext_resource type="Theme" uid="uid://dsuys2o3by8fo" path="res://Assets/Themes/Settings/SettingsTheme.tres" id="3_yb36q"]
+[ext_resource type="Texture2D" uid="uid://bjp5lo2q01vcx" path="res://Assets/Themes/Settings/HelpPopUpV2.png" id="4_75ben"]
+[ext_resource type="Texture2D" uid="uid://dopu7hl45bka6" path="res://Assets/Themes/Settings/HelpPopUpV2_Hover.png" id="5_6mi8s"]
+[ext_resource type="Script" uid="uid://b5bn0hgody2rl" path="res://Menus/GameMenu/Settings/HelpPopUp.cs" id="6_6mi8s"]
+[ext_resource type="PackedScene" uid="uid://bnsh8yw6b66nx" path="res://Menus/GameMenu/Settings/HelpPopUpWindow.tscn" id="7_l87p5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yb36q"]
+bg_color = Color(0.1764706, 0.21960784, 0.22352941, 0.9098039)
+draw_center = false
+
+[sub_resource type="Gradient" id="Gradient_vv60x"]
+colors = PackedColorArray(0.135892, 0.2705523, 0.4063288, 1, 0.16470589, 0.22352941, 0.2627451, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_no66h"]
+gradient = SubResource("Gradient_vv60x")
+fill_from = Vector2(0.4935484, 0)
+fill_to = Vector2(0.4935484, 0.15806451)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_75ben"]
+color = Color(0.4117647, 0.38039216, 0.36862746, 1)
+
+[node name="Control" type="Control" unique_id=1774751025 node_paths=PackedStringArray("_attackSpace", "_attackSpaceLabel", "_attackLmb", "_attackLmbLabel", "_overheatingBox", "_overheatingLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_yb36q")
+script = ExtResource("1_no66h")
+_attackSpace = NodePath("SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/SpaceAttack/CheckBox")
+_attackSpaceLabel = NodePath("SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/SpaceAttack/Label")
+_attackLmb = NodePath("SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/LeftAttack/CheckBox")
+_attackLmbLabel = NodePath("SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/LeftAttack/Label")
+_overheatingBox = NodePath("SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/overheating/CheckBox")
+_overheatingLabel = NodePath("SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/overheating/Label")
+
+[node name="SettingsWindow" type="PanelContainer" parent="." unique_id=2052761472]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yb36q")
+
+[node name="bg" type="TextureRect" parent="SettingsWindow" unique_id=932504218]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_no66h")
+
+[node name="Content" type="MarginContainer" parent="SettingsWindow" unique_id=1552379965]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 15
+
+[node name="Title" type="Label" parent="SettingsWindow/Content" unique_id=69468763]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.40140495, 0.58694214, 0.7611398, 1)
+theme_override_colors/font_outline_color = Color(0.19563824, 0.30179167, 0.40160322, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_no66h")
+theme_override_font_sizes/font_size = 36
+text = "GAME OPTIONS"
+
+[node name="ContentContent" type="MarginContainer" parent="SettingsWindow/Content" unique_id=1335524851]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 50
+
+[node name="Groups" type="HBoxContainer" parent="SettingsWindow/Content/ContentContent" unique_id=716572751]
+layout_mode = 2
+
+[node name="Gameplay" type="VBoxContainer" parent="SettingsWindow/Content/ContentContent/Groups" unique_id=306109471]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay" unique_id=487277119]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.49978417, 0.4651066, 0.44777942, 1)
+theme_override_fonts/font = ExtResource("3_no66h")
+theme_override_font_sizes/font_size = 22
+text = "GAMEPLAY"
+
+[node name="HSeparator" type="HSeparator" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay" unique_id=336769689]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_75ben")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay" unique_id=604367184]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="SpaceAttack" type="HBoxContainer" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer" unique_id=479831059]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CheckBox" type="CheckBox" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/SpaceAttack" unique_id=251559381]
+layout_mode = 2
+theme = ExtResource("3_yb36q")
+
+[node name="Label" type="Label" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/SpaceAttack" unique_id=1173933885]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5058824, 0.5254902, 0.5058824, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.2)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/font_size = 14
+text = "Space to autoattack (only with a selected target)"
+
+[node name="LeftAttack" type="HBoxContainer" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer" unique_id=1501720059]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CheckBox" type="CheckBox" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/LeftAttack" unique_id=1323120768]
+layout_mode = 2
+theme = ExtResource("3_yb36q")
+
+[node name="Label" type="Label" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/LeftAttack" unique_id=1670553056]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5058824, 0.5254902, 0.5058824, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.2)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/font_size = 14
+text = "Attack target after first click with LMB"
+
+[node name="overheating" type="HBoxContainer" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer" unique_id=1587830366]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CheckBox" type="CheckBox" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/overheating" unique_id=1567677910]
+layout_mode = 2
+theme = ExtResource("3_yb36q")
+
+[node name="Label" type="Label" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/overheating" unique_id=64949363]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5058824, 0.5254902, 0.5058824, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.2)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/font_size = 14
+text = "Turn on equipment overheating"
+
+[node name="HelpPopUp" type="TextureButton" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/overheating" unique_id=1421667911 node_paths=PackedStringArray("_window")]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture_normal = ExtResource("4_75ben")
+texture_pressed = ExtResource("5_6mi8s")
+texture_hover = ExtResource("5_6mi8s")
+ignore_texture_size = true
+stretch_mode = 5
+script = ExtResource("6_6mi8s")
+_window = NodePath("../../../../../../../../Control")
+
+[node name="Control" parent="." unique_id=1892292064 instance=ExtResource("7_l87p5")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 461.0
+offset_top = 289.0
+offset_right = 711.0
+offset_bottom = 409.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
