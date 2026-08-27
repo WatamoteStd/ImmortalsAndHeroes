@@ -3,6 +3,7 @@ using Server.World.Ability;
 using Shared.Ability.Params;
 using System.Numerics;
 using Shared.Ability;
+using Shared.Udp.Packets.Category.Game.Ability;
 
 namespace Server.World.Zone.Entities.Ability;
 
@@ -11,6 +12,8 @@ public class AbilityComponent
     
     private AbilityBase[] _abilities;
     private LivingEntity _owner;
+
+    public event Action? OnAbilityUpdate;
 
     public AbilityComponent(int slotCount, LivingEntity owner)
     {
@@ -45,10 +48,9 @@ public class AbilityComponent
             if (_abilities[i] == null)
             {
                 _abilities[i] = new AbilityBase(abilityId);
+                OnAbilityUpdate?.Invoke();
                 return i;
             }
-            else continue;
-    
             
         }
         return -1;
@@ -63,6 +65,7 @@ public class AbilityComponent
 
         if (_abilities[slot] != null) return false;
         _abilities[slot] = ability;
+        OnAbilityUpdate?.Invoke();
         return true;
 
     }
@@ -78,6 +81,23 @@ public class AbilityComponent
        _owner.UpdateStat(StatType.Mana, -_abilities[slot].DllData.ManaCost);
        _abilities[slot].OnApply(_owner, targetPos, targetEntity);
        return true;
+
+    }
+
+    public AbilitySlotData GetSlot(int index)
+    {
+        
+        if (index < 0 || index >= _abilities.Length)
+        return default;
+
+        var ability = _abilities[index];
+        if (ability == null) return default;
+
+        return new AbilitySlotData
+        {
+            AbilityId = ability.Id,
+            CooldownRemaining = ability.CurrentCooldown
+        };
 
     }
 

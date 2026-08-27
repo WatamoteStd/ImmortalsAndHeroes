@@ -243,6 +243,7 @@ libraries/ = SubResource("AnimationLibrary_83gc0")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1081374653 node_paths=PackedStringArray("_healthBar", "_healthBarLabel", "_manaBar", "_manaBarLabel", "_silver", "_nickname", "_selectEntityWindow")]
 layer = 100
+visible = false
 script = ExtResource("4_7xrkh")
 _healthBar = NodePath("HUD/BottomPanel/BattleStats/Content/HBoxContainer/Bars/HpBar")
 _healthBarLabel = NodePath("HUD/BottomPanel/BattleStats/Content/HBoxContainer/Bars/HpBar/BAR_health")

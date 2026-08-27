@@ -19,6 +19,7 @@ public class PlayerEntity : LivingEntity
     public event Action<ushort, ItemType, ushort>? OnInventoryChanged;
     public event Action<int, int>? OnExpChanged; // this newExp totalExp
     public event Action<MasteryNodeId, uint, ushort>? OnBranchUpdate;
+    public event Action? OnAbilityUpdate;
 
     public enum State { Idle, Move, Chase, Attack, Cast, ProtectedCast, Controlled, Respawning}
     public State CurrentState = State.Idle;
@@ -53,7 +54,7 @@ public class PlayerEntity : LivingEntity
             OnBranchUpdate?.Invoke(branchId, exp, lvl);
         };
 
-
+        _abilityComponent.OnAbilityUpdate += () => { OnAbilityUpdate?.Invoke();};
 
     }
 
@@ -192,6 +193,7 @@ public class PlayerEntity : LivingEntity
         OnInventoryChanged = null!; 
         OnExpChanged = null!;
         OnBranchUpdate = null!;
+        OnAbilityUpdate = null;
     }
     
 

@@ -8,6 +8,7 @@ public partial class LocalPlayerEntity : Entity
 	
 	public uint LocalPlayerId {get; set;}
 	public float Speed {get; set;} = 3.0f;
+	[Export] public PlayerAbilityController AbilityController { get; private set; }
 
 	private float _mana;
 	private float _maxMana;

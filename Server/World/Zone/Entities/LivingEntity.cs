@@ -8,6 +8,7 @@ using Shared.Ability;
 using Shared.Characters;
 using Shared.MasteryTree.Rewards;
 using Shared.Udp.Packets.Category.Game;
+using Shared.Udp.Packets.Category.Game.Ability;
 
 namespace Server.World.Zone.Entities;
 
@@ -18,6 +19,8 @@ public class LivingEntity : EntityBase, IDamageable
     public event Action<LivingEntity, int, LivingEntity>? OnDamageTaked; // entity(this) | damage | attacker
     public event Action<LivingEntity, LivingEntity>? OnDead; // this, attacker
     public event Action<S2C_StatsSyncPacket>? OnStatsUpdated; 
+
+
     protected Vector3 _lastSnapshotCords;
     protected float _timeFromLastPacket = 0.0f;
 
@@ -210,6 +213,8 @@ public class LivingEntity : EntityBase, IDamageable
 
     public int AddAbility(AbilityTypes abilityId) => _abilityComponent.AddAbility(abilityId);
     public bool SetAbilityToSlot(int slot, AbilityBase ability) => _abilityComponent.SetAbilityToSlot(slot, ability);
+
+    public AbilitySlotData GetAbilitySlot(int index) => _abilityComponent.GetSlot(index);
 
     #endregion
     public void UpdateStat(StatType stat, float value)

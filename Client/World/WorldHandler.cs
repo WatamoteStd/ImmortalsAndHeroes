@@ -2,6 +2,7 @@ using Godot;
 using Shared.Characters;
 using Shared.Udp.Packets.Category;
 using Shared.Udp.Packets.Category.Game;
+using Shared.Udp.Packets.Category.Game.Ability;
 using System;
 using System.Collections.Generic;
 
@@ -86,7 +87,6 @@ public partial class WorldHandler : Node3D
 
 	}
 
-
 	private void SpawnRemotePlayer(S2C_SpawnEntityPacket data)
 	{
 		
@@ -161,6 +161,20 @@ public partial class WorldHandler : Node3D
 			AddChild(damageText);
 			damageText.Setup(damage, entity.GlobalPosition + new Vector3(0, 1.5f, 0));
 
+		}
+
+	}
+
+	#endregion
+
+	#region SERVER ABILITY -> LOCAL PLAYER 
+
+	public void LP_SkillsSync(S2C_PlayerAbilitySyncPacket packet)
+	{
+		
+		if (RegionEntities.TryGetValue(GameSession.Instance.NetworkId, out var locPlayer))
+		{
+			if (locPlayer is LocalPlayerEntity lp) lp.AbilityController.UpdateAbilities(packet);
 		}
 
 	}

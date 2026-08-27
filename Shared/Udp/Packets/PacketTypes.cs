@@ -22,6 +22,7 @@ public enum PacketTypes : ushort
     C2S_MasteryTreeLearnRequest = 14,
     S2C_BranchUpdate = 15,
     S2C_StatsSync = 16,
-    C2S_ActivateAbility = 17
+    C2S_ActivateAbility = 17,
+    S2C_PlayerAbilitySync = 18
 
 }

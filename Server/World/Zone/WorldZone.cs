@@ -10,6 +10,7 @@ using Server.World.Zone.RegionController;
 using Shared.Items.DropTable;
 using Shared.MasteryTree;
 using Shared.Udp.Packets.Category.MasteryTree;
+using Shared.Udp.Packets.Category.Game.Ability;
 
 namespace Server.World.Zone;
 
@@ -121,6 +122,17 @@ public class WorldZone
 
         }
 
+        var abilitySync = new S2C_PlayerAbilitySyncPacket
+        {
+            Slot0 = player.GetAbilitySlot(0),
+            Slot1 = player.GetAbilitySlot(1),
+            Slot2 = player.GetAbilitySlot(2),
+            Slot3 = player.GetAbilitySlot(3),
+            Slot4 = player.GetAbilitySlot(4),
+            Slot5 = player.GetAbilitySlot(5),
+        };
+        _worldHolder.Broadcaster.SendToPlayer<S2C_PlayerAbilitySyncPacket>(player.PlayerId, PacketTypes.S2C_PlayerAbilitySync, abilitySync);
+        
          player.OnInventoryChanged += (slotIndex, item, count) =>
         {
             
@@ -194,6 +206,20 @@ public class WorldZone
         {
             _worldHolder.Broadcaster.SendToPlayer<S2C_StatsSyncPacket>(player.PlayerId, PacketTypes.S2C_StatsSync, packet);
         };
+        player.OnAbilityUpdate += () =>
+        {
+            var abl = new S2C_PlayerAbilitySyncPacket
+            {
+                Slot0 = player.GetAbilitySlot(0),
+                Slot1 = player.GetAbilitySlot(1),
+                Slot2 = player.GetAbilitySlot(2),
+                Slot3 = player.GetAbilitySlot(3),
+                Slot4 = player.GetAbilitySlot(4),
+                Slot5 = player.GetAbilitySlot(5),
+            };
+            _worldHolder.Broadcaster.SendToPlayer<S2C_PlayerAbilitySyncPacket>(player.PlayerId, PacketTypes.S2C_PlayerAbilitySync, abl);
+            
+        }; 
  
     }
 

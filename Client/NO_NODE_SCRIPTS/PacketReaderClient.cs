@@ -10,6 +10,7 @@ using Shared.Udp.Interfaces;
 using Shared.Udp.Packets;
 using Shared.Udp.Packets.Category;
 using Shared.Udp.Packets.Category.Game;
+using Shared.Udp.Packets.Category.Game.Ability;
 using Shared.Udp.Packets.Category.MasteryTree;
 
 
@@ -156,6 +157,13 @@ public class PacketReaderClient
                     case PacketTypes.S2C_StatsSync:
                         {
                             var packet = PacketSerialier.Deserialize<S2C_StatsSyncPacket>(payload);
+                            _networkPackets.Enqueue(packet);
+                        }
+                    break;
+
+                    case PacketTypes.S2C_PlayerAbilitySync:
+                        {
+                            var packet = PacketSerialier.Deserialize<S2C_PlayerAbilitySyncPacket>(payload);
                             _networkPackets.Enqueue(packet);
                         }
                     break;

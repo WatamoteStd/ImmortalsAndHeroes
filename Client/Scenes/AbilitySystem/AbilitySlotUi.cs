@@ -18,19 +18,25 @@ public partial class AbilitySlotUi : Control
 
 	public override void _Ready()
 	{
-		
+
 		_cooldownLabel.Visible = false;
 		_cooldownProgress.Visible = false;
-
-		StartCooldown(10.0f);
 
 	}
 
 
-	public void Init(AbilityTypes abilityId, string iconPath)
+	public void Init(AbilityTypes abilityId)
 	{
-		
-		_icon.Texture = GD.Load<Texture2D>(iconPath);
+
+		if (AbilityRegistry.TryGetAbility(abilityId, out var dllData))
+		{
+			_icon.Texture = GD.Load<Texture2D>(dllData.IconPath);
+		}
+		else
+		{
+			_icon.Texture = GD.Load<Texture2D>("res://Assets/Icons/Ability/Empty/Null.png");
+		}
+
 		AbilityId = abilityId;
 
 	}

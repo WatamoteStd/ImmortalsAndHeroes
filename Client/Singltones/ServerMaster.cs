@@ -227,6 +227,12 @@ public partial class ServerMaster : Node
                 }
             break;
 
+            case S2C_PlayerAbilitySyncPacket ablSync:
+                {
+                    _worldManager?.LP_SkillsSync(ablSync);
+                }
+            break;
+
         }
 
     }
@@ -278,15 +284,6 @@ public partial class ServerMaster : Node
         int length = PacketSerialier.Serialize<C2S_MasteryTreeLearnRequestPacket>(buffer, PacketTypes.C2S_MasteryTreeLearnRequest, packet);
         _socket.Send(buffer);
 
-    }
-
-    public void LP_ActivateSkillRequest()
-    {
-        GD.Print("Skill activation pressed");
-        Span<byte> buffer = stackalloc byte[6];
-        var packet = new C2S_ActivateAbilityPacket { Code = 3333};
-        int length = PacketSerialier.Serialize<C2S_ActivateAbilityPacket>(buffer, PacketTypes.C2S_ActivateAbility, packet);
-        _socket.Send(buffer);
     }
 
 

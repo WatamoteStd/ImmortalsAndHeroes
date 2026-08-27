@@ -119,7 +119,7 @@ public static class MasteryBranchesRegistry
                         Context = RewardContextType.SingleLevel,
                         Type = RewardType.ActiveSkill,
                         StatId = StatType.None,
-                        TargetLevel = 3,
+                        TargetLevel = 2,
                         Value = (uint)AbilityTypes.DefaulthRun
                     },
                     new BranchReward
@@ -145,8 +145,8 @@ public static class MasteryBranchesRegistry
             new MasteryBranch
             {
                 BranchId = MasteryNodeId.Intelligense,
-                Title = "I'm smarter, I'm stronger, I'm better",
-                Description = "Smart asf",
+                Title = "Intelectual",
+                Description = "I'm smarter, I'm stronger, I'm better",
                 MaxLvl = 20,
                 BaseExp = 75,
                 ExpMultiplier = 1.45f,
