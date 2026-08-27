@@ -1,12 +1,8 @@
 [gd_scene format=3 uid="uid://by61a2l1ls2yr"]
 
-[ext_resource type="Script" uid="uid://beiptbvriwpfo" path="res://Menus/GameMenu/Settings/SettingWindow.cs" id="1_no66h"]
-[ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="3_no66h"]
-[ext_resource type="Theme" uid="uid://dsuys2o3by8fo" path="res://Assets/Themes/Settings/SettingsTheme.tres" id="3_yb36q"]
-[ext_resource type="Texture2D" uid="uid://bjp5lo2q01vcx" path="res://Assets/Themes/Settings/HelpPopUpV2.png" id="4_75ben"]
-[ext_resource type="Texture2D" uid="uid://dopu7hl45bka6" path="res://Assets/Themes/Settings/HelpPopUpV2_Hover.png" id="5_6mi8s"]
-[ext_resource type="Script" uid="uid://b5bn0hgody2rl" path="res://Menus/GameMenu/Settings/HelpPopUp.cs" id="6_6mi8s"]
-[ext_resource type="PackedScene" uid="uid://bnsh8yw6b66nx" path="res://Menus/GameMenu/Settings/HelpPopUpWindow.tscn" id="7_l87p5"]
+[ext_resource type="Theme" uid="uid://dsuys2o3by8fo" path="res://Assets/Themes/Settings/SettingsTheme.tres" id="1_lymgj"]
+[ext_resource type="Script" uid="uid://beiptbvriwpfo" path="res://Menus/GameMenu/Settings/SettingWindow.cs" id="2_65qys"]
+[ext_resource type="FontFile" uid="uid://dv1oqiqtkvkcw" path="res://Assets/Fonts/Cinzel/Cinzel-VariableFont_wght.ttf" id="3_4ypfr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yb36q"]
 bg_color = Color(0.1764706, 0.21960784, 0.22352941, 0.9098039)
@@ -23,21 +19,22 @@ fill_to = Vector2(0.4935484, 0.15806451)
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_75ben"]
 color = Color(0.4117647, 0.38039216, 0.36862746, 1)
 
-[node name="Control" type="Control" unique_id=1774751025 node_paths=PackedStringArray("_attackSpace", "_attackSpaceLabel", "_attackLmb", "_attackLmbLabel", "_overheatingBox", "_overheatingLabel")]
+[node name="Control" type="Control" unique_id=1774751025 node_paths=PackedStringArray("_attackSpace", "_attackSpaceLabel", "_attackLmb", "_attackLmbLabel", "_overheatingBox", "_overheatingLabel", "_closeWindow")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("3_yb36q")
-script = ExtResource("1_no66h")
+theme = ExtResource("1_lymgj")
+script = ExtResource("2_65qys")
 _attackSpace = NodePath("SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/SpaceAttack/CheckBox")
 _attackSpaceLabel = NodePath("SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/SpaceAttack/Label")
 _attackLmb = NodePath("SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/LeftAttack/CheckBox")
 _attackLmbLabel = NodePath("SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/LeftAttack/Label")
 _overheatingBox = NodePath("SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/overheating/CheckBox")
 _overheatingLabel = NodePath("SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/overheating/Label")
+_closeWindow = NodePath("Close")
 
 [node name="SettingsWindow" type="PanelContainer" parent="." unique_id=2052761472]
 layout_mode = 1
@@ -66,7 +63,7 @@ size_flags_vertical = 0
 theme_override_colors/font_color = Color(0.40140495, 0.58694214, 0.7611398, 1)
 theme_override_colors/font_outline_color = Color(0.19563824, 0.30179167, 0.40160322, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("3_no66h")
+theme_override_fonts/font = ExtResource("3_4ypfr")
 theme_override_font_sizes/font_size = 36
 text = "GAME OPTIONS"
 
@@ -86,7 +83,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0.49978417, 0.4651066, 0.44777942, 1)
-theme_override_fonts/font = ExtResource("3_no66h")
+theme_override_fonts/font = ExtResource("3_4ypfr")
 theme_override_font_sizes/font_size = 22
 text = "GAMEPLAY"
 
@@ -105,7 +102,7 @@ theme_override_constants/separation = 8
 
 [node name="CheckBox" type="CheckBox" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/SpaceAttack" unique_id=251559381]
 layout_mode = 2
-theme = ExtResource("3_yb36q")
+theme = ExtResource("1_lymgj")
 
 [node name="Label" type="Label" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/SpaceAttack" unique_id=1173933885]
 layout_mode = 2
@@ -123,7 +120,7 @@ theme_override_constants/separation = 8
 
 [node name="CheckBox" type="CheckBox" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/LeftAttack" unique_id=1323120768]
 layout_mode = 2
-theme = ExtResource("3_yb36q")
+theme = ExtResource("1_lymgj")
 
 [node name="Label" type="Label" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/LeftAttack" unique_id=1670553056]
 layout_mode = 2
@@ -141,7 +138,7 @@ theme_override_constants/separation = 8
 
 [node name="CheckBox" type="CheckBox" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/overheating" unique_id=1567677910]
 layout_mode = 2
-theme = ExtResource("3_yb36q")
+theme = ExtResource("1_lymgj")
 
 [node name="Label" type="Label" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/overheating" unique_id=64949363]
 layout_mode = 2
@@ -153,28 +150,16 @@ theme_override_constants/shadow_outline_size = 5
 theme_override_font_sizes/font_size = 14
 text = "Turn on equipment overheating"
 
-[node name="HelpPopUp" type="TextureButton" parent="SettingsWindow/Content/ContentContent/Groups/Gameplay/VBoxContainer/overheating" unique_id=1421667911 node_paths=PackedStringArray("_window")]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-texture_normal = ExtResource("4_75ben")
-texture_pressed = ExtResource("5_6mi8s")
-texture_hover = ExtResource("5_6mi8s")
-ignore_texture_size = true
-stretch_mode = 5
-script = ExtResource("6_6mi8s")
-_window = NodePath("../../../../../../../../Control")
-
-[node name="Control" parent="." unique_id=1892292064 instance=ExtResource("7_l87p5")]
-visible = false
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 461.0
-offset_top = 289.0
-offset_right = 711.0
-offset_bottom = 409.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
+[node name="Close" type="Button" parent="." unique_id=1353191397]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -8.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "CLOSE"

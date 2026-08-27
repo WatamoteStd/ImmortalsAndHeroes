@@ -52,22 +52,19 @@ public partial class PlayerController : Node
 
 				if (obj is Entity entity && entity is not LocalPlayerEntity)
 				{
-					
-					if (_selectedEntity == entity)
-					{
-						ServerMaster.Instance.LP_AttackRequest(_selectedEntity.Id);
-						return;
-					}
 
-					if (IsInstanceValid(_selectedEntity)) 
-					{
-						_selectedEntity.DeselectEntity();
-					}
+					bool wasAlreadySelected = (_selectedEntity == entity);
+					if (IsInstanceValid(_selectedEntity)) _selectedEntity.DeselectEntity();
 
-					entity.SelectEntity();
 					_selectedEntity = entity;
 					SceneManager.Instance.ShowSelectedEntityWindow(_selectedEntity);
+					entity.SelectEntity();
 
+					if (SettingsManager.Instance.AttackOnFirstLmb || wasAlreadySelected)
+					{
+						ServerMaster.Instance.LP_AttackRequest(_selectedEntity.Id);
+					}
+				
 				}
 				else
 				{

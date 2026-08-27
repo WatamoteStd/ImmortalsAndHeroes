@@ -10,6 +10,8 @@ public partial class SettingWindow : Control
 	[Export] private CheckBox _overheatingBox;
     [Export] private Label _overheatingLabel;
 
+	[Export] private Button _closeWindow;
+
     private readonly Dictionary<CheckBox, Label> _settingToLabel = new();
 
     private readonly Color _activeColor = new(0.843f, 0.824f, 0.812f);
@@ -27,6 +29,9 @@ public partial class SettingWindow : Control
 
             UpdateSettingState(checkBox, checkBox.ButtonPressed);
         }
+
+
+		_closeWindow.Pressed += () => {Visible = false;};
     }
 
     private void UpdateSettingState(CheckBox checkBox, bool isToggled)
@@ -34,6 +39,12 @@ public partial class SettingWindow : Control
         if (_settingToLabel.TryGetValue(checkBox, out Label label))
         {
             label.AddThemeColorOverride("font_color", isToggled ? _activeColor : _disabledColor);
+
+			if (checkBox == _attackLmb)
+			{
+				SettingsManager.Instance.AttackOnFirstLmb = isToggled;
+			}
+
         }
     }
 }
