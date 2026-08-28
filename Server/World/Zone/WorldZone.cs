@@ -221,7 +221,16 @@ public class WorldZone
             };
             _worldHolder.Broadcaster.SendToPlayer<S2C_PlayerAbilitySyncPacket>(player.PlayerId, PacketTypes.S2C_PlayerAbilitySync, abl);
             
-        }; 
+        };
+        player.OnMoveSpeedChanged += (packet) =>
+        {
+            foreach (var pair in Players)
+            {
+                var p = pair.Value;
+                _worldHolder.Broadcaster.SendToPlayer<S2C_EntityMoveSpeedChangedPacket>(p.PlayerId, PacketTypes.S2C_EntityMoveSpeedChanged, packet);
+                
+            }
+        };
  
     }
 
@@ -337,6 +346,18 @@ public class WorldZone
 
                 }
 
+
+            }
+
+        };
+
+        newEntity.OnMoveSpeedChanged += (packet) =>
+        {
+            
+            foreach (var pair in Players)
+            {
+                var p = pair.Value;
+                _worldHolder.Broadcaster.SendToPlayer<S2C_EntityMoveSpeedChangedPacket>(p.PlayerId, PacketTypes.S2C_EntityMoveSpeedChanged, packet);
 
             }
 

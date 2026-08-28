@@ -164,6 +164,17 @@ public partial class WorldHandler : Node3D
 
 	}
 
+
+	public void ChangeEntityMoveSpeed(S2C_EntityMoveSpeedChangedPacket packet)
+	{
+		
+		if (RegionEntities.TryGetValue(packet.EntityId, out var entity))
+		{
+			entity.Speed = packet.Speed;
+		}
+
+	}
+
 	#endregion
 
 	#region SERVER ABILITY -> LOCAL PLAYER 

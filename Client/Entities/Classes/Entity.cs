@@ -13,6 +13,14 @@ public partial class Entity : CharacterBody3D
 	[Export] protected Label _name;
 	[Export] protected MeshInstance3D _selectedMesh;
 	protected float _speed;
+	public float Speed
+	{
+		get => _speed;
+		set
+		{
+			_speed = value;
+		}
+	}
 
 
 	protected float _healthRegenBuffer = 0f;

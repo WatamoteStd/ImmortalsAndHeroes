@@ -19,6 +19,7 @@ public class LivingEntity : EntityBase, IDamageable
     public event Action<LivingEntity, int, LivingEntity>? OnDamageTaked; // entity(this) | damage | attacker
     public event Action<LivingEntity, LivingEntity>? OnDead; // this, attacker
     public event Action<S2C_StatsSyncPacket>? OnStatsUpdated; 
+    public event Action<S2C_EntityMoveSpeedChangedPacket>? OnMoveSpeedChanged;
 
 
     protected Vector3 _lastSnapshotCords;
@@ -291,6 +292,18 @@ public class LivingEntity : EntityBase, IDamageable
         };
         OnStatsUpdated?.Invoke(packet);
         Console.WriteLine($"[Entity:{Name}] Stat update trigerred! Stat:{stat.ToString()} value:{value}");
+
+        if (stat == StatType.MoveSpeed)
+        {
+            
+            var sPacket = new S2C_EntityMoveSpeedChangedPacket
+            {
+                EntityId = EntityId,
+                Speed = BaseSpeed
+            };
+            OnMoveSpeedChanged?.Invoke(sPacket);
+        
+        }
 
     }
 

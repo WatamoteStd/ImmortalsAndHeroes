@@ -245,6 +245,12 @@ public partial class ServerMaster : Node
                 }
             break;
 
+            case S2C_EntityMoveSpeedChangedPacket scPak:
+                {
+                    _worldManager?.ChangeEntityMoveSpeed(scPak);
+                }
+            break;
+
         }
 
     }
