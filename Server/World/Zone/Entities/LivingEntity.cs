@@ -230,12 +230,12 @@ public class LivingEntity : EntityBase, IDamageable
             break;
             case StatType.Health:
                 {
-                    MaxHealth += value;
+                    Health += value;
                 }
             break;
             case StatType.Mana:
                 {
-                    MaxMana += value;
+                    Mana += value;
                 }
             break;
             case StatType.PhysicalDamage:
@@ -323,6 +323,22 @@ public class LivingEntity : EntityBase, IDamageable
                 int amount = (int)_healthRegenBuffer;
                 Health += amount;
                 _healthRegenBuffer -= (float)amount;
+
+            }
+
+        }
+
+        if (_mana < MaxMana)
+        {
+            
+            _manaRegenBuffer += ManaRegeneration * deltaTime;
+
+            if (_manaRegenBuffer >= 1.0f)
+            {
+                
+                int amount = (int)_manaRegenBuffer;
+                Mana += amount;
+                _manaRegenBuffer -= (float)amount;
 
             }
 

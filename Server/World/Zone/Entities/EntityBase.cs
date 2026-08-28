@@ -23,7 +23,7 @@ public class EntityBase
     
     }
     public float HealthRegeneration {get; protected set;}
-    private float _mana;
+    protected float _mana;
     public float MaxMana {get; protected set;}
     public float Mana
     {

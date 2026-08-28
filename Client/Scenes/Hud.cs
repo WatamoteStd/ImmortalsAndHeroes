@@ -41,6 +41,22 @@ public partial class Hud : CanvasLayer
 		_healthBarLabel.Text = actualHealth.ToString() + " / " + _maxHealth.ToString();
 
 	}
+
+	public void UpdateMana(uint actualMana)
+	{
+		
+		_manaBar.Value = actualMana;
+		_manaBarLabel.Text = actualMana.ToString() + " / " + _maxMana.ToString();
+
+	}
+	public void ReplaceMana(float mana, float maxMana)
+	{
+		_maxMana = (uint)maxMana;
+		_manaBar.MaxValue = maxMana;
+		_manaBar.Value = mana;
+		_manaBarLabel.Text = mana.ToString() + " / " + maxMana.ToString();
+	}
+
 	public void ReplaceHealth(float health, float maxHealth)
 	{
 		_maxHealth = (uint)maxHealth;
