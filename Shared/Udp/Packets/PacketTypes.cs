@@ -23,6 +23,7 @@ public enum PacketTypes : ushort
     S2C_BranchUpdate = 15,
     S2C_StatsSync = 16,
     C2S_ActivateAbility = 17,
-    S2C_PlayerAbilitySync = 18
+    S2C_PlayerAbilitySync = 18,
+    C2S_CastAbilityPacket = 19,
 
 }
