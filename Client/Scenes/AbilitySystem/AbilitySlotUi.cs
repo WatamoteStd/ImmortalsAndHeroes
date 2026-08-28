@@ -41,6 +41,26 @@ public partial class AbilitySlotUi : Control
 
 	}
 
+	public void UpdateIconBind(string actionName)
+	{
+		
+		var events = InputMap.ActionGetEvents(actionName);
+
+		if (events.Count > 0 && events[0] is InputEventKey keyEvent)
+		{
+			
+			string keyText = OS.GetKeycodeString(keyEvent.PhysicalKeycode != Key.None ? keyEvent.PhysicalKeycode : keyEvent.Keycode);
+
+			_skillBind.Text = keyText;
+
+		}
+		else
+		{
+			_skillBind.Text = "";
+		}
+
+	}
+
 	public void StartCooldown(float duration)
 	{
 		

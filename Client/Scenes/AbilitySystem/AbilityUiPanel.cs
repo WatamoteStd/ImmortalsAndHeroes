@@ -12,6 +12,11 @@ public partial class AbilityUiPanel : HBoxContainer
 		
 		PlayerAbilityController.OnAbilitiesSynced += RedrawAbilities;
 
+		for (int i = 0; i < _slots.Length; i++)
+		{
+			_slots[i].UpdateIconBind($"Skill_{i}");
+		}
+
 	}
 
 	private void RedrawAbilities()
