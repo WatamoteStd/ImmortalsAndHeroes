@@ -10,6 +10,7 @@ using Shared.MasteryTree.Rewards;
 using Shared.Udp.Packets.Category.Game;
 using Server.World.Ability;
 using Shared.Ability;
+using Server.World.Zone.Entities.Ability;
 
 namespace Server.World;
 
@@ -186,6 +187,8 @@ public class PlayerEntity : LivingEntity
     }
 
     #endregion
+
+
 
     public override void ClearAllSubscriptions()
     {

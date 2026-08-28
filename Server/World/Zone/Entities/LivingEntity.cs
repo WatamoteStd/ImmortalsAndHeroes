@@ -206,7 +206,7 @@ public class LivingEntity : EntityBase, IDamageable
 
     #region  ABILITIES 
 
-    public bool TryCastAbility(int slot, Vector3? targetPos = null, LivingEntity? targetEntity = null)
+    public virtual CastResult TryCastAbility(int slot, Vector3? targetPos = null, LivingEntity? targetEntity = null)
     {
     return _abilityComponent.TryCast(slot, targetPos, targetEntity);
     }

@@ -4,6 +4,8 @@ using Shared.Ability.Params;
 using System.Numerics;
 using Shared.Ability;
 using Shared.Udp.Packets.Category.Game.Ability;
+using Shared.Ability.CastErrors;
+using System.Runtime.Intrinsics;
 
 namespace Server.World.Zone.Entities.Ability;
 
@@ -70,17 +72,47 @@ public class AbilityComponent
 
     }
 
-    public bool TryCast(int slot, Vector3? targetPos = null, LivingEntity? targetEntity = null)
+    public CastResult TryCast(int slot, Vector3? targetPos = null, LivingEntity? targetEntity = null)
     {
         
-        if (slot < 0 || slot >= _abilities.Length) return false;
-        if (_abilities[slot] == null) return false;
-        if (_abilities[slot].CurrentCooldown > 0) return false;
-        if (_abilities[slot].DllData.ManaCost > _owner.Mana) return false;
+        if (slot < 0 || slot >= _abilities.Length) return new CastResult {Error = AbilityCastErrors.AbilityNotFound, IsSucces = false};
+        if (_abilities[slot] == null) return new CastResult {Error = AbilityCastErrors.AbilityNotFound, IsSucces = false};
+        if (_abilities[slot].CurrentCooldown > 0) return new CastResult {Error = AbilityCastErrors.OnCooldown, IsSucces = false};
+        if (_abilities[slot].DllData.ManaCost > _owner.Mana) return new CastResult {Error = AbilityCastErrors.NoMana, IsSucces = false};
 
-       _owner.UpdateStat(StatType.Mana, -_abilities[slot].DllData.ManaCost);
-       _abilities[slot].OnApply(_owner, targetPos, targetEntity);
-       return true;
+        
+        var abl = _abilities[slot];
+
+        if (abl.DllData.CastType == AbilityCastType.Target && targetEntity is null) return new CastResult{Error = AbilityCastErrors.InvalidTarget, IsSucces = false};
+        if (abl.DllData.CastTypeAdditional != AbilityAdditionalCastType.None && targetPos == Vector3.Zero) return new CastResult{ Error = AbilityCastErrors.InvalidPoint, IsSucces = false};
+
+
+        Vector3 realPosition = _owner.Position;
+
+        if (abl.DllData.CastType == AbilityCastType.Target) realPosition = targetEntity!.Position;
+        if (abl.DllData.CastType == AbilityCastType.NonTarget) realPosition = targetPos ?? _owner.Position;
+
+
+        if (Vector3.DistanceSquared(realPosition, _owner.Position) > abl.DllData.CastRange * abl.DllData.CastRange)
+        {
+            if (_owner is PlayerEntity player)
+            player.MoveToPosition(realPosition);
+            return new CastResult { Error = AbilityCastErrors.None, IsSucces = false};
+        };
+
+       _owner.UpdateStat(StatType.Mana, -abl.DllData.ManaCost);
+       abl.OnApply(_owner, targetPos, targetEntity);
+
+        if (abl.DllData.CastType == AbilityCastType.Target)
+        {
+            return new CastResult { AbilityId = abl.Id, CastPosition = Vector3.Zero, EnemyId = targetEntity!.EntityId, FinalCooldown = abl.CurrentCooldown, IsSucces = true, Slot = (byte)slot};
+        }
+        else
+        {
+            return new CastResult { AbilityId = abl.Id, CastPosition = realPosition, EnemyId = 0, FinalCooldown = abl.CurrentCooldown, IsSucces = true, Slot = (byte)slot};
+
+        }
+       
 
     }
 

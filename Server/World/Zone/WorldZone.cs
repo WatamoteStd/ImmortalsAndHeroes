@@ -11,6 +11,8 @@ using Shared.Items.DropTable;
 using Shared.MasteryTree;
 using Shared.Udp.Packets.Category.MasteryTree;
 using Shared.Udp.Packets.Category.Game.Ability;
+using Server.World.Zone.Entities.Ability;
+using Shared.Ability.CastErrors;
 
 namespace Server.World.Zone;
 
@@ -443,8 +445,75 @@ public class WorldZone
 
     public void PlayerBranch_AddExp(PlayerEntity player, MasteryNodeId branch)
     {
-        
         player.AddBranchExp(branch);
+    }
+
+
+    public void PlayerCastSkillRequest(PlayerEntity player, C2S_CastAbilityRequestPacket packet)
+    {
+        
+        Vector3 pos = new Vector3(packet.PosX, packet.PosY, packet.PosZ);
+        CastResult result;
+
+        if (packet.TargetEntityId == 0)
+        { 
+            result = player.TryCastAbility(packet.Slot, pos, null);
+        }
+        else if(Entities.TryGetValue(packet.TargetEntityId, out var entity) && entity is LivingEntity liveEntity)
+        {
+            result = player.TryCastAbility(packet.Slot, new Vector3(packet.PosX, packet.PosY, packet.PosZ), liveEntity);
+        }
+        else 
+        {
+            
+            var pck = new S2C_CastAbilityFailedPacket
+            {
+                ResponseCode = AbilityCastErrors.InvalidTarget
+            };
+
+            _worldHolder.Broadcaster.SendToPlayer<S2C_CastAbilityFailedPacket>(player.PlayerId, PacketTypes.S2C_CastAbilityFailed, pck);
+            Console.WriteLine($"[Region:{Id}] Can't cast");
+            return;
+
+        };
+
+        if (result.IsSucces)
+        {
+            
+            var sPacket = new S2C_CastAbilitySuccessfulPacket
+            {
+                Slot = result.Slot,
+                CurrentCooldown = result.FinalCooldown
+            };
+            _worldHolder.Broadcaster.SendToPlayer<S2C_CastAbilitySuccessfulPacket>(player.PlayerId, PacketTypes.S2C_CastAbilitySuccessful, sPacket);
+
+            var gPacket = new S2C_AbilityCastedPacket
+            {
+                CasterEntityId = player.EntityId,
+                AbilityId = result.AbilityId,
+                PosX = result.CastPosition.X,
+                PosY = result.CastPosition.Y,
+                PosZ = result.CastPosition.Z,
+                TargetEntityId = result.EnemyId
+            };
+
+            foreach (var pair in Players)
+            {
+                var p = pair.Value;
+                _worldHolder.Broadcaster.SendToPlayer<S2C_AbilityCastedPacket>(p.PlayerId, PacketTypes.S2C_AbilityCasted, gPacket);
+            }
+
+
+        }
+        else
+        {
+            var ePacket = new S2C_CastAbilityFailedPacket
+            {
+                ResponseCode = result.Error
+            };
+            _worldHolder.Broadcaster.SendToPlayer<S2C_CastAbilityFailedPacket>(player.PlayerId, PacketTypes.S2C_CastAbilityFailed, ePacket);
+        }
+        
 
     }
 

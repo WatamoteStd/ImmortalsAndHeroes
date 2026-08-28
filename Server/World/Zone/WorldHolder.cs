@@ -118,7 +118,8 @@ public class WorldHolder : IWorldHolder
                         
                         var packet = PacketSerialier.Deserialize<C2S_CastAbilityRequestPacket>(cmd.Data[2..]);
                         Console.WriteLine($"[WorldHolder] Skill Packet! slot:{packet.Slot} | Pos: x:{packet.PosX} y:{packet.PosY} z:{packet.PosZ} entityId:{packet.TargetEntityId} ");
-                        PlayerSkillActivationRequest(cmd.Session.UserId);
+                        PlayerSkillActivationRequest(cmd.Session.UserId, packet);
+
                         ArrayPool<byte>.Shared.Return(cmd.Data);
 
                     }
@@ -294,12 +295,13 @@ public class WorldHolder : IWorldHolder
 
     }
 
-    public void PlayerSkillActivationRequest(uint userId)
+    public void PlayerSkillActivationRequest(uint userId, C2S_CastAbilityRequestPacket packet)
     {
         
-        if (idToPlayer.TryGetValue(userId, out var player) && idToZone.TryGetValue(player.RegionId, out var zone)) {
+        if (idToPlayer.TryGetValue(userId, out var player) && idToZone.TryGetValue(player.RegionId, out var zone)) 
+        {
             
-            
+            zone.PlayerCastSkillRequest(player, packet);
 
         }
 
