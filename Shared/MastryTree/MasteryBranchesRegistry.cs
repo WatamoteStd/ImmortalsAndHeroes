@@ -108,7 +108,7 @@ public static class MasteryBranchesRegistry
                 Title = "Foot Agility",
                 Description = "Be more flex",
                 MaxLvl = 20,
-                BaseExp = 75,
+                BaseExp = 20,
                 ExpMultiplier = 1.45f,
 
                 Rewards = new BranchReward[]
@@ -119,9 +119,10 @@ public static class MasteryBranchesRegistry
                         Context = RewardContextType.SingleLevel,
                         Type = RewardType.ActiveSkill,
                         StatId = StatType.None,
-                        TargetLevel = 2,
+                        TargetLevel = 1,
                         Value = (uint)AbilityTypes.DefaulthRun
                     },
+                    
                     new BranchReward
                     {
                         Context = RewardContextType.PerLevel,

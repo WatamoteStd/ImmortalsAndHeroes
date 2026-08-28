@@ -4,7 +4,7 @@ using Shared.Udp.Interfaces;
 
 namespace Shared.Udp.Packets.Category.Game.Ability;
 
-public struct C2S_CastAbilityPacket : INetworkPacket
+public struct C2S_CastAbilityRequestPacket : INetworkPacket
 {
     
     public int Length {get; private set;}

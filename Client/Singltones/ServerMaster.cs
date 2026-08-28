@@ -286,6 +286,15 @@ public partial class ServerMaster : Node
 
     }
 
+    public void LP_CastAbilityRequest(C2S_CastAbilityRequestPacket packet)
+    {
+        
+        Span<byte> buffer = stackalloc byte[19];
+        int length = PacketSerialier.Serialize<C2S_CastAbilityRequestPacket>(buffer, PacketTypes.C2S_CastAbilityRequest, packet);
+        _socket.Send(buffer);
+
+    }
+
 
 
 

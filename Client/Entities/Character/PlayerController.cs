@@ -7,6 +7,7 @@ public partial class PlayerController : Node
 	[Export] private Camera3D _camera;
 	[Export] private RayCast3D _raycast;
 	[Export] private LocalPlayerEntity _player;
+	[Export] private PlayerAbilityController _abilityController;
 
 	private Entity _selectedEntity = null;
 
@@ -77,8 +78,22 @@ public partial class PlayerController : Node
 				}
 
 			}
-
 	}
+
+	for(byte i = 0; i < 6; i++)
+			{
+				
+				if (@event.IsActionPressed($"Skill_{i}"))
+				{
+					
+					Vector3 point = GetClickPoint() ?? Vector3.Zero;
+					Entity target = IsInstanceValid(_selectedEntity) ? _selectedEntity : null;
+
+					_abilityController.ExecuteSkill(i,point,target);
+
+				}
+
+			}
 
 
 	if (@event.IsActionPressed("Inventory"))
