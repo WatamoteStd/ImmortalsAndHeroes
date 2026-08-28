@@ -11,6 +11,10 @@ public partial class AbilityUiPanel : HBoxContainer
 	{
 		
 		PlayerAbilityController.OnAbilitiesSynced += RedrawAbilities;
+		PlayerAbilityController.OnAbilityReloadStarted += (slot, time) =>
+		{
+			_slots[slot].StartCooldown(time);
+		};
 
 		for (int i = 0; i < _slots.Length; i++)
 		{

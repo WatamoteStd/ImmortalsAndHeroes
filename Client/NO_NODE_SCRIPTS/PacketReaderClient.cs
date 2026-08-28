@@ -168,6 +168,25 @@ public class PacketReaderClient
                         }
                     break;
 
+                    case PacketTypes.S2C_CastAbilityFailed:
+                        {
+                            var packet = PacketSerialier.Deserialize<S2C_CastAbilityFailedPacket>(payload);
+                            _networkPackets.Enqueue(packet);
+                        }
+                    break;
+                    case PacketTypes.S2C_AbilityCasted:
+                        {
+                            var packet = PacketSerialier.Deserialize<S2C_AbilityCastedPacket>(payload);
+                            _networkPackets.Enqueue(packet);
+                        }
+                    break;
+                    case PacketTypes.S2C_CastAbilitySuccessful:
+                        {
+                            var packet = PacketSerialier.Deserialize<S2C_CastAbilitySuccessfulPacket>(payload);
+                            _networkPackets.Enqueue(packet);
+                        }
+                    break;
+
                     default:
                         {
                             GD.PrintErr($"[PACK READER] Unknown packet type.");

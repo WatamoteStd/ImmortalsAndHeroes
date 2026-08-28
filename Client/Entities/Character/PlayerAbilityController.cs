@@ -7,6 +7,7 @@ using System;
 public partial class PlayerAbilityController : Node
 {
 	public static event Action OnAbilitiesSynced;
+	public static event Action<byte, float> OnAbilityReloadStarted; // slot & duration
 	public static AbilitySlotData[] Slots {get; private set;} = new AbilitySlotData[6];
 
 	public void UpdateAbilities(S2C_PlayerAbilitySyncPacket packet)
@@ -20,6 +21,17 @@ public partial class PlayerAbilityController : Node
 		Slots[5] = packet.Slot5;
 
 		OnAbilitiesSynced?.Invoke();
+
+	}
+
+	public void UpdateSingleAbility(S2C_CastAbilitySuccessfulPacket data)
+	{
+		
+		Slots[data.Slot].CooldownRemaining = data.CurrentCooldown;
+		if (data.CurrentCooldown > 0)
+		{
+			OnAbilityReloadStarted?.Invoke(data.Slot, data.CurrentCooldown);
+		}
 
 	}
 
@@ -51,6 +63,25 @@ public partial class PlayerAbilityController : Node
 
 		}
 
+	}
+
+	public override void _Process(double delta)
+	{
+		float dt = (float)delta;
+
+		for (int i = 0; i < Slots.Length; i++)
+		{
+			if (Slots[i].CooldownRemaining > 0)
+			{
+				Slots[i].CooldownRemaining -= dt;
+
+				if (Slots[i].CooldownRemaining < 0)
+				{
+					Slots[i].CooldownRemaining = 0;
+				}
+				
+			}
+		}
 	}
 
 	private bool IsCanCast(byte slot, Vector3 pos, Entity entity)

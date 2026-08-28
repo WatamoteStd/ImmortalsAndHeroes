@@ -290,7 +290,7 @@ public class LivingEntity : EntityBase, IDamageable
             Speed = BaseSpeed
         };
         OnStatsUpdated?.Invoke(packet);
-        Console.WriteLine($"[Entity:{Name}] Stat update trigerred! CurrentHealth:{Health}");
+        Console.WriteLine($"[Entity:{Name}] Stat update trigerred! Stat:{stat.ToString()} value:{value}");
 
     }
 

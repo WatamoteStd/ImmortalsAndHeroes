@@ -21,8 +21,8 @@ public static class AbilityRegistry
             new AbilityData
             {
                 AbilityId = AbilityTypes.DefaulthRun, Title = "Run", IconPath = "res://Assets/Icons/Ability/Run/RunIcon.png", ScenePath = "",
-                Description = "Just run faster. Increase move speed at 100%", CastType = AbilityCastType.Target, CastTypeAdditional = AbilityAdditionalCastType.None, TargetType = AbilityTarget.Self,
-                TargetRelation = AbilityTargetRelation.None, ManaCost = 25, MpsCost = 0, Cooldown = 20f, Radius = 0f, CastRange = 0f,
+                Description = "Just run faster. Increase move speed at 3", CastType = AbilityCastType.NonTarget, CastTypeAdditional = AbilityAdditionalCastType.None, TargetType = AbilityTarget.Self,
+                TargetRelation = AbilityTargetRelation.None, ManaCost = 25, MpsCost = 0, Cooldown = 22f, Radius = 0f, CastRange = 0f,
                 CastTime = 0f, IsInterruptible = false, IsMoveWhileCast = false, Duration = 5f, DamageType = Characters.DamageTypes.None,
                 ScaleStat = StatType.None, ScalePercent = 1.0f
             }

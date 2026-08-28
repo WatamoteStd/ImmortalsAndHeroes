@@ -233,6 +233,18 @@ public partial class ServerMaster : Node
                 }
             break;
 
+            case S2C_CastAbilityFailedPacket aFail:
+                {
+                    GD.Print($"[CAST FAILED PACKET] Error:{aFail.ResponseCode.ToString()}");
+                }
+            break;
+
+            case S2C_CastAbilitySuccessfulPacket aSus:
+                {
+                    _worldManager?.LP_SingleSkillSync(aSus);
+                }
+            break;
+
         }
 
     }

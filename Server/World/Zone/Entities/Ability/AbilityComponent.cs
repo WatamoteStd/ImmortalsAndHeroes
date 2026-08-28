@@ -49,7 +49,7 @@ public class AbilityComponent
         {
             if (_abilities[i] == null)
             {
-                _abilities[i] = new AbilityBase(abilityId);
+                _abilities[i] = CreateAbilityInstance(abilityId);
                 OnAbilityUpdate?.Invoke();
                 return i;
             }
@@ -93,12 +93,18 @@ public class AbilityComponent
         if (abl.DllData.CastType == AbilityCastType.NonTarget) realPosition = targetPos ?? _owner.Position;
 
 
-        if (Vector3.DistanceSquared(realPosition, _owner.Position) > abl.DllData.CastRange * abl.DllData.CastRange)
+        if (abl.DllData.TargetType != AbilityTarget.Self)
         {
-            if (_owner is PlayerEntity player)
-            player.MoveToPosition(realPosition);
-            return new CastResult { Error = AbilityCastErrors.None, IsSucces = false};
-        };
+            
+            if (Vector3.DistanceSquared(realPosition, _owner.Position) > abl.DllData.CastRange * abl.DllData.CastRange)
+            {
+                if (_owner is PlayerEntity player)
+                player.MoveToPosition(realPosition);
+                return new CastResult { Error = AbilityCastErrors.None, IsSucces = false};
+            
+            };
+
+        }
 
        _owner.UpdateStat(StatType.Mana, -abl.DllData.ManaCost);
        abl.OnApply(_owner, targetPos, targetEntity);
@@ -129,6 +135,20 @@ public class AbilityComponent
         {
             AbilityId = ability.Id,
             CooldownRemaining = ability.CurrentCooldown
+        };
+
+    }
+
+
+    private AbilityBase CreateAbilityInstance(AbilityTypes abilityId)
+    {
+        
+        return abilityId switch
+        {
+            
+            AbilityTypes.DefaulthRun => new DefaultRunAbility(abilityId),
+            _ => new AbilityBase(abilityId)
+
         };
 
     }

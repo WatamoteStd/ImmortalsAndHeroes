@@ -76,8 +76,7 @@ public partial class WorldHandler : Node3D
 		var newEntity = _entityScene.Instantiate<Entity>();
 		AddChild(newEntity);
 		newEntity.GetNode<Node3D>("Model").AddChild(entityModel);
-
-		GD.Print($"[SPAWN ENTITY] ID: {data.Id}, Type: {data.Type}, POS: {data.PosX}, {data.PosY}, {data.PosZ}");
+		
 		Vector3 pos = new Vector3(data.PosX, data.PosY, data.PosZ);
 		newEntity.InitEntity(data.Id, data.Health, data.Health, data.Name, data.Type, pos);
 		newEntity.Move(pos);
@@ -175,6 +174,16 @@ public partial class WorldHandler : Node3D
 		if (RegionEntities.TryGetValue(GameSession.Instance.NetworkId, out var locPlayer))
 		{
 			if (locPlayer is LocalPlayerEntity lp) lp.AbilityController.UpdateAbilities(packet);
+		}
+
+	}
+
+	public void LP_SingleSkillSync(S2C_CastAbilitySuccessfulPacket packet)
+	{
+		
+		if (RegionEntities.TryGetValue(GameSession.Instance.NetworkId, out var locPlayer))
+		{
+			if (locPlayer is LocalPlayerEntity lp) lp.AbilityController.UpdateSingleAbility(packet);
 		}
 
 	}
