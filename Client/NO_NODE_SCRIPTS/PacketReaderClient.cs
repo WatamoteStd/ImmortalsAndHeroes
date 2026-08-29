@@ -192,6 +192,12 @@ public class PacketReaderClient
                             _networkPackets.Enqueue(packet);
                         }
                     break;
+                    case PacketTypes.C2S_AdminConsoleCommand:
+                        {
+                            var packet = PacketSerialier.Deserialize<C2S_AdminConsoleCommandPacket>(payload);
+                            _networkPackets.Enqueue(packet);
+                        }
+                    break;
 
                     default:
                         {

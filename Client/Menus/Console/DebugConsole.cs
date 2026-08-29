@@ -1,4 +1,5 @@
 using Godot;
+using Shared.Udp.Packets.Category;
 using System;
 
 public partial class DebugConsole : Control
@@ -17,14 +18,14 @@ public partial class DebugConsole : Control
 	{
 		Visible = !Visible;
 
-        if (Visible)
-	    {
-		    _commandLine.GrabFocus();
-	    }
-	    else
-	    {
-	        _commandLine.ReleaseFocus();
-	    }
+		if (Visible)
+		{
+			_commandLine.GrabFocus();
+		}
+		else
+		{
+			_commandLine.ReleaseFocus();
+		}
 	}
 
 
@@ -37,9 +38,22 @@ public partial class DebugConsole : Control
 			_commandLine.Text = string.Empty;
 			return;
 		}
+
+		if (string.IsNullOrEmpty(text)) return;
+		
+		var packet = new C2S_AdminConsoleCommandPacket { Payload = text};
+
+		ServerMaster.Instance.LP_SendConsoleCommand(packet);
 		
 		_history.AppendText($"{text}\n");
 		_commandLine.Text = string.Empty;
+
+	}
+
+	public void ReceiveAnswer(C2S_AdminConsoleCommandPacket packet)
+	{
+		
+		_history.AppendText($"[color=green]{packet.Payload}[/color]\n");
 
 	}
 

@@ -33,9 +33,12 @@ public class WorldHolder : IWorldHolder
     private readonly IWorldBroadcaster _broadcaster;
     public IWorldBroadcaster Broadcaster => _broadcaster;
 
+    private AdminConsoleController _consoleController;
+
     public WorldHolder(IWorldBroadcaster broadcaster)
     {
         _broadcaster = broadcaster;
+        _consoleController = new AdminConsoleController(Broadcaster);
         WorldZone startZone = new WorldZone(this, ZoneType.World, 0);
         WorldZone cityZone = new WorldZone(this, ZoneType.City, 1);
         idToZone[0] = startZone;
@@ -121,6 +124,24 @@ public class WorldHolder : IWorldHolder
                         PlayerSkillActivationRequest(cmd.Session.UserId, packet);
 
                         ArrayPool<byte>.Shared.Return(cmd.Data);
+
+                    }
+                break;
+
+                case PacketTypes.C2S_AdminConsoleCommand:
+                    {
+                        
+                        var packet = PacketSerialier.Deserialize<C2S_AdminConsoleCommandPacket>(cmd.Data[2..]);
+                        ArrayPool<byte>.Shared.Return(cmd.Data);
+
+                        if (idToPlayer.TryGetValue(cmd.Session.UserId, out var player) && idToZone.TryGetValue(player.RegionId, out var zone))
+                        {
+                            _consoleController.ExecuteCommand(packet, player, zone);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"[WorldHolder(admin)] Someone who never exists try to execute command");
+                        }
 
                     }
                 break;

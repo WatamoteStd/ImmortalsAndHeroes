@@ -65,7 +65,7 @@ public static class ItemRegistry
 
     };
 
-    private static readonly ItemData defaultData = new ItemData(QualityType.Primordial, 5, "Unexpcted", "res://Scenes/Inventory/Items/Resource/tomato.png");
+    private static readonly ItemData defaultData = new ItemData(QualityType.Primordial, 5, "Unexpected", "res://Scenes/Inventory/Items/Resource/tomato.png");
 
     public static ItemData GetItemData(ItemType item)
     {

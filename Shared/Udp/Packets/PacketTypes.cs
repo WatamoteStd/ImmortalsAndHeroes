@@ -27,6 +27,7 @@ public enum PacketTypes : ushort
     S2C_CastAbilityFailed = 19,
     S2C_CastAbilitySuccessful= 20,
     S2C_AbilityCasted = 21,
-    S2C_EntityMoveSpeedChanged = 22
+    S2C_EntityMoveSpeedChanged = 22,
+    C2S_AdminConsoleCommand = 23
 
 }
