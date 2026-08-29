@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://himb8635iivo"]
 
-[ext_resource type="Script" uid="uid://cwrbphic6ht6d" path="res://AbilityScenes/DefaulthRunAbility/AbilitySceneBase.cs" id="1_nyucb"]
+[ext_resource type="Script" uid="uid://bvs4i4c482kj8" path="res://AbilityScenes/StaticAbilities/StaticAbility.cs" id="1_q6vsh"]
 
 [sub_resource type="Curve" id="Curve_gykv1"]
 _limits = [-2.0, 2.0, 0.0, 1.0]
@@ -45,7 +45,7 @@ size = Vector2(0.8, 0.05)
 orientation = 1
 
 [node name="DefaultRunAbility" type="Node3D" unique_id=1646460428]
-script = ExtResource("1_nyucb")
+script = ExtResource("1_q6vsh")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=517988955]
 amount = 80

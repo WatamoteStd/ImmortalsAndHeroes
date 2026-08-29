@@ -6,6 +6,7 @@ using Shared.Udp.Packets.Category.Game;
 using Shared.Udp.Packets.Category.Game.Ability;
 using System;
 using System.Collections.Generic;
+using Shared.Ability.Params;
 
 public partial class WorldHandler : Node3D
 {
@@ -203,22 +204,64 @@ public partial class WorldHandler : Node3D
 
 	public void AbilityCasted(S2C_AbilityCastedPacket data)
 	{
-		
-		if (data.AbilityId == Shared.Ability.AbilityTypes.DefaulthRun)
-		{
-			if (!AbilityRegistry.TryGetAbility(data.AbilityId, out var dllData)) return;
 
-			var fxScene = GD.Load<PackedScene>(dllData.ScenePath);
-			var abl = fxScene.Instantiate<AbilitySceneBase>();
+		if (!AbilityRegistry.TryGetAbility(data.AbilityId, out var dllData))
+		{
+			GD.PrintErr($"[WARNING] ABILITY SPANED AT SERVER BUT NOT FOUNT AT DLL!");
+			return;
+		}
+
+		var fxScene = GD.Load<PackedScene>(dllData.ScenePath);
+		var ablNode = fxScene.Instantiate<AbilityBase>();
+
+		RegionEntities.TryGetValue(data.CasterEntityId, out var caster);
+		RegionEntities.TryGetValue(data.TargetEntityId, out var targetEntity);
+
+		Vector3 targetFromPacket = new Vector3(data.PosX, data.PosY, data.PosZ);
+
+		if (dllData.TargetType == AbilityTarget.Self && caster != null)
+		{
 			
-			if (RegionEntities.TryGetValue(data.CasterEntityId, out var caster))
+			caster.AddChild(ablNode);
+			ablNode.Position = Vector3.Zero;
+
+		}
+		else
+		{
+
+			GetTree().CurrentScene.AddChild(ablNode);
+
+			if (ablNode is MoveAbility)
 			{
 				
-				caster.AddChild(abl);
+				ablNode.GlobalPosition = caster != null ? caster.GlobalPosition : targetFromPacket;
 
+			}
+			else
+			{
+				ablNode.GlobalPosition = targetFromPacket;
 			}
 
 		}
+
+		if (ablNode is MoveAbility moveAbl && dllData.MoveSpeed > 0)
+		{
+			
+			moveAbl.Setup(
+				lifeTIme: dllData.Duration,
+				speed: dllData.MoveSpeed,
+				targetPos: targetFromPacket,
+				targetEntity: targetEntity
+			);
+
+			
+		}
+		else
+		{
+			ablNode.Setup(dllData.Duration);
+		}
+
+
 
 	}
 

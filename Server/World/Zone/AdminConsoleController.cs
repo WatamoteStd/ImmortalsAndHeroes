@@ -3,6 +3,7 @@ using Shared.Udp.Packets.Category.Game;
 using Server.Network.Interfaces;
 using Shared.Items;
 using Shared.Udp.Packets.Category;
+using Shared.Ability;
 
 namespace Server.World.Zone;
 
@@ -76,6 +77,41 @@ public class AdminConsoleController
 
                         }
                         
+
+                    }
+                    else if (subCmd == "ability")
+                    {
+                        
+                        if (uint.TryParse(parts[2], out uint abilityId))
+                        {
+                            
+                            AbilityTypes abilityType = (AbilityTypes)abilityId;
+                            if (AbilityRegistry.TryGetAbility(abilityType, out var abilityData)) 
+                            {
+                                
+                                player.AddAbility(abilityType);
+                                Console.WriteLine($"[ADMIN] Ability added:{abilityData.Title} to {player.Name}");
+
+                                var pkt = new C2S_AdminConsoleCommandPacket
+                                {
+                                    Payload = $"[Server] Ability added:{abilityData.Title} to {player.Name}"
+                                };
+
+                                _broadcaster.SendToPlayer<C2S_AdminConsoleCommandPacket>(player.PlayerId, PacketTypes.C2S_AdminConsoleCommand, pkt);
+
+                            }
+                            else
+                            {
+                                Console.WriteLine($"[ADMIN] Unknown Ability ID:{abilityId}");
+                                var pkt = new C2S_AdminConsoleCommandPacket
+                                {
+                                    Payload = $"[Server] Unknown AbilityId:{abilityId}"
+                                    
+                                };
+                                _broadcaster.SendToPlayer<C2S_AdminConsoleCommandPacket>(player.PlayerId, PacketTypes.C2S_AdminConsoleCommand, pkt);
+                            }
+
+                        }
 
                     }
 
