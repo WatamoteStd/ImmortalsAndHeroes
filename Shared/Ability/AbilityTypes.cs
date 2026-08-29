@@ -9,7 +9,7 @@ public enum AbilityTypes : uint
     // 1 - 200.000 ACTIVE SKILL
 
     DefaulthRun = 1,
-    BodyTension = 2,
+    ZoneOfBlood = 2,
     Lunge = 3,
     SecondWind = 4
 

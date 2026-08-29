@@ -6,6 +6,6 @@ namespace Server.World.Zone.Intefaces;
 public interface IDamageable
 {
     
-    void TakeDamage(DamageTypes dmgType, int damage, LivingEntity attacker);
+    void TakeDamage(DamageTypes dmgType, float damage, LivingEntity attacker);
 
 }
