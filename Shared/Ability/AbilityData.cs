@@ -28,6 +28,7 @@ public readonly struct AbilityData
     public required bool IsInterruptible {get; init;}
     public required bool IsMoveWhileCast {get; init;}
     public required float Duration {get; init;}
+    public required float MoveSpeed {get; init;}
 
     public required DamageTypes DamageType {get; init;}
     public required StatType ScaleStat {get; init;}

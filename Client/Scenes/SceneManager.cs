@@ -19,6 +19,7 @@ public partial class SceneManager : CanvasLayer
 	// MARKET
 	[Export] public MarketWindow MarketManagerWindow {get; private set;}
 	[Export] public MasteryTree MasteryTreeWindow {get; private set;}
+	[Export] public DebugConsole ConsoleWindow {get; private set;}
 
 	public Dictionary<uint, string> regIdToScenePath;
 

@@ -52,9 +52,9 @@ public class WorldZone
         {
              _spawner = new RegionSpawnBuilder(this)
             .SetDensity(DensityModes.Near)
-            .SetCapacity(100)
+            .SetCapacity(40)
             .GroupsAllowed(false)
-            .AddMonster(EntityType.WolfWeak, 80)
+            .AddMonster(EntityType.WolfWeak, 20)
             .AddMonster(EntityType.ForestBear, 20)
             .RespawnTime(10f)
             .Build();

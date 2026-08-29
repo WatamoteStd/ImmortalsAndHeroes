@@ -106,6 +106,12 @@ public partial class PlayerController : Node
 		SceneManager.Instance.SwitchVisiblityMasteryTree();
 	}
 
+	
+	if (@event.IsActionPressed("Console"))
+	{
+		SceneManager.Instance.ConsoleWindow.ChangeVisible();
+	}
+
 }
 
 

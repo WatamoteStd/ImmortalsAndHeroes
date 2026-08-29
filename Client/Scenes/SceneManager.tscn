@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bmjwvo57ef362" path="res://Assets/Icons/Silver/Icon.png" id="7_gbsx4"]
 [ext_resource type="PackedScene" uid="uid://c4khyov2ay7x8" path="res://Menus/Market/BaseMarket.tscn" id="8_q4unc"]
 [ext_resource type="PackedScene" uid="uid://bwfe7uyvwkkqt" path="res://Scenes/MasteryTree/MasteryTree.tscn" id="10_c8mt5"]
+[ext_resource type="PackedScene" uid="uid://croikkvbx066d" path="res://Menus/Console/DebugConsole.tscn" id="12_b0fb2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_83fg3"]
 shader = ExtResource("1_yueht")
@@ -185,7 +186,7 @@ bg_color = Color(0.6851024, 0.7241215, 0.7290107, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q4unc"]
 bg_color = Color(0.81961036, 0.8449592, 0.84812224, 1)
 
-[node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator", "PlayerHud", "_inventory", "_connectionLostWindow", "_connectionLostButton", "MarketManagerWindow", "MasteryTreeWindow")]
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1173837242 node_paths=PackedStringArray("_animator", "PlayerHud", "_inventory", "_connectionLostWindow", "_connectionLostButton", "MarketManagerWindow", "MasteryTreeWindow", "ConsoleWindow")]
 visible = false
 script = ExtResource("1_hjya1")
 _animator = NodePath("AnimationPlayer")
@@ -195,6 +196,7 @@ _connectionLostWindow = NodePath("UI/HUD/ConnectionLostWindow")
 _connectionLostButton = NodePath("UI/HUD/ConnectionLostWindow/VBoxContainer/MenuButton")
 MarketManagerWindow = NodePath("Market/MarkeetWindow")
 MasteryTreeWindow = NodePath("UI/MasteryTree")
+ConsoleWindow = NodePath("Console/DebugConsole")
 
 [node name="Bg" type="TextureRect" parent="." unique_id=1002927567]
 texture_repeat = 2
@@ -560,4 +562,10 @@ visible = false
 layer = 120
 
 [node name="MarkeetWindow" parent="Market" unique_id=853745610 instance=ExtResource("8_q4unc")]
+visible = false
+
+[node name="Console" type="CanvasLayer" parent="." unique_id=2140343642]
+layer = 130
+
+[node name="DebugConsole" parent="Console" unique_id=1043015706 instance=ExtResource("12_b0fb2")]
 visible = false

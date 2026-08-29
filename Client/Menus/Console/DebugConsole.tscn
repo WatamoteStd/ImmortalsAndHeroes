@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://croikkvbx066d"]
+
+[ext_resource type="FontFile" uid="uid://blfbj74e4y3jk" path="res://Assets/Fonts/Console/FiraCode-Regular.ttf" id="1_rkkr2"]
+[ext_resource type="Script" uid="uid://wayqv15ywnhv" path="res://Menus/Console/DebugConsole.cs" id="1_si4pk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83fg3"]
+bg_color = Color(0.066070534, 0.06607054, 0.066070534, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6u82b"]
+content_margin_left = 2.0
+content_margin_bottom = 4.0
+bg_color = Color(0.16565639, 0.16565642, 0.16565636, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ichqs"]
+bg_color = Color(0.025363795, 0.025363805, 0.02536378, 1)
+border_width_top = 2
+border_color = Color(0.18000484, 0.18000492, 0.18000472, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_si4pk"]
+bg_color = Color(0.060530342, 0.06053035, 0.060530327, 1)
+border_width_top = 2
+border_color = Color(0.18000484, 0.18000492, 0.18000472, 1)
+border_blend = true
+
+[node name="DebugConsole" type="Control" unique_id=1043015706 node_paths=PackedStringArray("_commandLine", "_history")]
+custom_minimum_size = Vector2(900, 500)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_si4pk")
+_commandLine = NodePath("PanelContainer/Content/VBoxContainer/Command")
+_history = NodePath("PanelContainer/Content/VBoxContainer/History")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=642911628]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_83fg3")
+
+[node name="Header" type="PanelContainer" parent="PanelContainer" unique_id=1617511976]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6u82b")
+
+[node name="Title" type="Label" parent="PanelContainer/Header" unique_id=1432088499]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.67092526, 0.6710928, 0.66722155, 1)
+theme_override_fonts/font = ExtResource("1_rkkr2")
+theme_override_font_sizes/font_size = 12
+text = "Console"
+
+[node name="Content" type="MarginContainer" parent="PanelContainer" unique_id=267323585]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Content" unique_id=8927977]
+layout_mode = 2
+
+[node name="History" type="RichTextLabel" parent="PanelContainer/Content/VBoxContainer" unique_id=1921116176]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.63911504, 0.67362434, 0.7302165, 1)
+theme_override_colors/selection_color = Color(0.37254903, 0.34509805, 0.3529412, 0.81960785)
+theme_override_fonts/normal_font = ExtResource("1_rkkr2")
+theme_override_fonts/mono_font = ExtResource("1_rkkr2")
+theme_override_font_sizes/normal_font_size = 13
+bbcode_enabled = true
+scroll_following = true
+
+[node name="Command" type="LineEdit" parent="PanelContainer/Content/VBoxContainer" unique_id=1813379648]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8790552, 0.8790558, 0.87905544, 1)
+theme_override_fonts/font = ExtResource("1_rkkr2")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_ichqs")
+theme_override_styles/focus = SubResource("StyleBoxFlat_si4pk")
+placeholder_text = ">"

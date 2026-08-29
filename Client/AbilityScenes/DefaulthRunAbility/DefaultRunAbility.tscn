@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://himb8635iivo"]
+
+[ext_resource type="Script" uid="uid://cwrbphic6ht6d" path="res://AbilityScenes/DefaulthRunAbility/AbilitySceneBase.cs" id="1_nyucb"]
+
+[sub_resource type="Curve" id="Curve_gykv1"]
+_limits = [-2.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 0.15384626), 0.0, 0.0, 0, 0, Vector2(1, 1.0153847), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ug2pf"]
+curve = SubResource("Curve_gykv1")
+
+[sub_resource type="Curve" id="Curve_nyucb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5056819, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_eshrf"]
+curve = SubResource("Curve_nyucb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nyucb"]
+emission_shape_scale = Vector3(1, 2, 1)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 1.0
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, 0, 0)
+orbit_velocity_min = 0.1000001
+orbit_velocity_max = 0.45100012
+orbit_velocity_curve = SubResource("CurveTexture_ug2pf")
+radial_velocity_min = -0.50002235
+radial_velocity_max = -0.50002235
+gravity = Vector3(0, 1, 0)
+scale_curve = SubResource("CurveTexture_eshrf")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_37jl6"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.5471938, 0.82746047, 0.998426, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_gykv1"]
+material = SubResource("StandardMaterial3D_37jl6")
+size = Vector2(0.8, 0.05)
+orientation = 1
+
+[node name="DefaultRunAbility" type="Node3D" unique_id=1646460428]
+script = ExtResource("1_nyucb")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=517988955]
+amount = 80
+lifetime = 0.4
+randomness = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_nyucb")
+draw_pass_1 = SubResource("QuadMesh_gykv1")

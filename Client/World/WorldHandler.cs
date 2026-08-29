@@ -1,4 +1,5 @@
 using Godot;
+using Shared.Ability;
 using Shared.Characters;
 using Shared.Udp.Packets.Category;
 using Shared.Udp.Packets.Category.Game;
@@ -195,6 +196,28 @@ public partial class WorldHandler : Node3D
 		if (RegionEntities.TryGetValue(GameSession.Instance.NetworkId, out var locPlayer))
 		{
 			if (locPlayer is LocalPlayerEntity lp) lp.AbilityController.UpdateSingleAbility(packet);
+		}
+
+	}
+
+
+	public void AbilityCasted(S2C_AbilityCastedPacket data)
+	{
+		
+		if (data.AbilityId == Shared.Ability.AbilityTypes.DefaulthRun)
+		{
+			if (!AbilityRegistry.TryGetAbility(data.AbilityId, out var dllData)) return;
+
+			var fxScene = GD.Load<PackedScene>(dllData.ScenePath);
+			var abl = fxScene.Instantiate<AbilitySceneBase>();
+			
+			if (RegionEntities.TryGetValue(data.CasterEntityId, out var caster))
+			{
+				
+				caster.AddChild(abl);
+
+			}
+
 		}
 
 	}

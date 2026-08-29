@@ -250,6 +250,11 @@ public partial class ServerMaster : Node
                     _worldManager?.ChangeEntityMoveSpeed(scPak);
                 }
             break;
+            case S2C_AbilityCastedPacket aCast:
+                {
+                    _worldManager?.AbilityCasted(aCast);
+                }
+            break;
 
         }
 
