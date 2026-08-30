@@ -81,6 +81,7 @@ public class ProjectileManager
             {
                 ref var prj = ref _dense[i];
 
+
                 bool isHit = prj.Target.IsInRadius(
                     prj.Position.X, prj.Position.Z, prj.Radius,
                     prj.Target.Position.X, prj.Target.Position.Z, prj.Target.Radius,

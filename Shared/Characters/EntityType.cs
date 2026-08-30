@@ -14,7 +14,8 @@ public enum EntityType : uint
 
     // 301 - 20000 MOBS
     WolfWeak = 301,
-    ForestBear = 302
+    ForestBear = 302,
+    UnknownMage = 303
 
 
     // 20001 - ushortMax OTHER

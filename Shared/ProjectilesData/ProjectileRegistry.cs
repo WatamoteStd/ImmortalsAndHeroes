@@ -17,9 +17,11 @@ public static class ProjectileRegistry
             
             new ProjectileData
             {
-                
                 Id = ProjectileType.Default, BaseSpeed = 10.0f, Height = 0.5f, Radius = 0.25f, ScenePath = "res://Entities/Projectiles/Prefabs/Defaulth/DefaulthProjectile.tscn"
-
+            },
+            new ProjectileData
+            {
+                Id = ProjectileType.UnknownMage, BaseSpeed = 12f, Height = 0.3f, Radius = 0.10f, ScenePath = "res://Entities/Projectiles/Prefabs/Mobs/UnknownMageProjectile.tscn"
             }
 
         };

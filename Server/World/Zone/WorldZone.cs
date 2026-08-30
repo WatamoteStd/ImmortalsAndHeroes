@@ -57,11 +57,12 @@ public class WorldZone
         {
              _spawner = new RegionSpawnBuilder(this)
             .SetDensity(DensityModes.Near)
-            .SetCapacity(40)
+            .SetCapacity(60)
             .GroupsAllowed(false)
-            .AddMonster(EntityType.WolfWeak, 20)
-            .AddMonster(EntityType.ForestBear, 20)
-            .RespawnTime(10f)
+            .AddMonster(EntityType.WolfWeak, 30)
+            .AddMonster(EntityType.ForestBear, 15)
+            .AddMonster(EntityType.UnknownMage, 15)
+            .RespawnTime(15f)
             .Build();
         }
 
@@ -321,6 +322,7 @@ public class WorldZone
 
             _spawner.EntityDie(monster);
 
+
             // LOOT GENERATE
 
             if (attacker is PlayerEntity player)
@@ -374,6 +376,7 @@ public class WorldZone
             }
 
         };
+        newEntity.OnRangeAttackCommited += _projectileManager.AddProjectile;
 
     }
 

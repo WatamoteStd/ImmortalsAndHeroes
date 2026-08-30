@@ -1,6 +1,8 @@
 using System.Numerics;
 using Server.World.Zone.Intefaces;
+using Server.World.Zone.Projectiles;
 using Shared.Characters;
+using Shared.ProjectilesData;
 
 namespace Server.World.Zone.Entities.Mobs;
 
@@ -22,7 +24,7 @@ public class MonsterEntity : LivingEntity
     public float RespawnTimer;
 
 
-    protected EntityBase _currentEnemy = null!;
+    protected LivingEntity _currentEnemy = null!;
 
 
     protected WorldZone _region;
@@ -139,8 +141,37 @@ public class MonsterEntity : LivingEntity
 
                     if (_currentEnemy is IDamageable damageable)
                     {
-                        damageable.TakeDamage(DamageTypes.Physical, (int)BaseDamage, this);
+
+                        if (TypeAttack == AttackType.Melee)
+                        {
+                            damageable.TakeDamage(DamageTypes.Physical, (int)BaseDamage, this);
+                        }
+
+                        else
+                        {
+
+                            ProjectileRegistry.TryGetProjectile(ProjectileType, out var prjData);
+                            
+                            Projectile prj = new Projectile
+                            {
+                                
+                                Position = Position,
+                                Speed = prjData.BaseSpeed,
+                                Target = _currentEnemy,
+                                Caster = this,
+                                Damage = BaseDamage,
+                                DamageType = DamageTypes.Physical,
+                                Type = ProjectileType,
+                                Radius = prjData.Radius,
+                                Height = prjData.Height
+
+                            };
+                            
+                            RaiseRangeAttackCommited(prj);
+
+                        }
                         _currentAttackCooldown = _attackCooldown;
+
                     }
 
                 }

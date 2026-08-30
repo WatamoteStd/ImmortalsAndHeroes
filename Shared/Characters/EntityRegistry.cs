@@ -25,7 +25,7 @@ public static class EntityRegistry
         {EntityType.ForestBear, new EntityData
         {
             Height = 2.4f, Radius = 1.2f, ScenePath = "res://Entities/Mobs/Bears/ForestBear.tscn", BaseHealth = 345f, Name = "Forest Bear",
-            BaseDamage = 43f, AttackRange = 1.3f, AttackSpeed = 100f, Armor = 3f, MagicResistance = 0f, BaseSpeed = 2.4f,
+            BaseDamage = 43f, AttackRange = 1.3f, AttackSpeed = 100f, Armor = 8f, MagicResistance = 0f, BaseSpeed = 2.4f,
             HealthRegeneration = 2.6f, BaseMana = 60f, ManaRegeneration = 0.3f, BasicAttackTime = 2.7f, AbilitySlotCount = 1,
             TypeAttack = AttackType.Melee,
 
@@ -33,6 +33,21 @@ public static class EntityRegistry
             MinExpReward = 125
         }
         },
+
+        {EntityType.UnknownMage, new EntityData
+            {
+                
+                Height = 2.5f, Radius = 0.45f, ScenePath = "res://Entities/Mobs/UnknownMage/Model.tscn", BaseHealth = 140f, Name = "Unknown Mage",
+                BaseDamage = 24, AttackRange = 12, AttackSpeed = 100f, Armor = 1, MagicResistance = 0f, BaseSpeed = 2.8f, 
+                HealthRegeneration = 0.8f, BaseMana = 230, ManaRegeneration = 2f, BasicAttackTime = 1.8f, AbilitySlotCount = 1,
+                TypeAttack = AttackType.Ranged, Projectile = ProjectileType.UnknownMage, 
+
+                MinExpReward = 45,
+                MaxExpReward = 62
+
+            }
+        },
+
         {EntityType.Default, new EntityData
             {
             

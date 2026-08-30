@@ -41,7 +41,15 @@ public partial class Projectile : Node3D
 		Vector3 targetPos = TargetEntity.GlobalPosition + new Vector3(0, 1.0f, 0);
 		Vector3 currentPos = GlobalPosition;
 
-		LookAt(targetPos, Vector3.Up);
+		if (currentPos.DistanceSquaredTo(targetPos) > 0.01f)
+		{
+	
+			var dir = (targetPos - currentPos).Normalized();
+			if (Mathf.Abs(dir.Dot(Vector3.Up)) < 0.99f)
+			{
+				LookAt(targetPos, Vector3.Up);
+			}
+		}
 
 		GlobalPosition = currentPos.MoveToward(targetPos, Speed * (float)delta);
 

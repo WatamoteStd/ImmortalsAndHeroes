@@ -99,8 +99,8 @@ public class RegionSpawner
     private Vector3 RandomSpawnPoint()
     {
         
-        float x = (Random.Shared.NextSingle() * 2 - 1) * 70;
-        float z = (Random.Shared.NextSingle() * 2 - 1) * 70;
+        float x = (Random.Shared.NextSingle() * 2 - 1) * 120;
+        float z = (Random.Shared.NextSingle() * 2 - 1) * 120;
 
         return new Vector3(x, 1, z);
 
