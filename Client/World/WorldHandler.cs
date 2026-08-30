@@ -7,6 +7,7 @@ using Shared.Udp.Packets.Category.Game.Ability;
 using System;
 using System.Collections.Generic;
 using Shared.Ability.Params;
+using Shared.Udp.Packets.Category.Game.Projectile;
 
 public partial class WorldHandler : Node3D
 {
@@ -16,8 +17,10 @@ public partial class WorldHandler : Node3D
 	[Export] private PackedScene _localPlayerScene;
 	[Export] private PackedScene _entityScene;
 	[Export] private PackedScene _floatDamageScene;
+	[Export] private PackedScene _projectilePrefab;
 
 	public Dictionary<uint, Entity> RegionEntities {get; private set; } = new Dictionary<uint, Entity>();
+	public Dictionary<ushort, Projectile> ActiveProjectiles = new();
 
 	public override void _Ready()
 	{
@@ -160,7 +163,7 @@ public partial class WorldHandler : Node3D
 			var damageText = _floatDamageScene.Instantiate<DamageNumber>();
 
 			AddChild(damageText);
-			damageText.Setup(damage, entity.GlobalPosition + new Vector3(0, 1.5f, 0));
+			damageText.Setup((float)Math.Round(damage), entity.GlobalPosition + new Vector3(0, 1.5f, 0));
 
 		}
 
@@ -266,6 +269,39 @@ public partial class WorldHandler : Node3D
 	}
 
 	#endregion
+
+
+	public void CreateProjectile(in S2C_ProjectileCreatedPacket packet)
+	{
+		
+		if (RegionEntities.TryGetValue(packet.CasterId, out var caster) && RegionEntities.TryGetValue(packet.TargetId, out var enemy))
+		{
+			
+			var prj = _projectilePrefab.Instantiate<Projectile>();
+			AddChild(prj);
+			prj.Init(packet, enemy, caster);
+
+			ActiveProjectiles[packet.Id] = prj;
+
+		}
+		else
+		{
+			GD.PrintErr("[WorldHandler] No valid caster or enemy. Can't spawn projectile");
+		}
+
+
+	}
+
+	public void RemoveProjectile(in S2C_ProjectileDeletedPacket packet)
+	{	
+		
+		if (ActiveProjectiles.TryGetValue(packet.Id, out var prj))
+		{
+			ActiveProjectiles.Remove(packet.Id);
+			prj.QueueFree();
+		}
+		
+	}
 
 	public override void _ExitTree()
 	{

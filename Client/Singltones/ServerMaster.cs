@@ -6,6 +6,7 @@ using Shared.Udp.Packets;
 using Shared.Udp.Packets.Category;
 using Shared.Udp.Packets.Category.Game;
 using Shared.Udp.Packets.Category.Game.Ability;
+using Shared.Udp.Packets.Category.Game.Projectile;
 using Shared.Udp.Packets.Category.MasteryTree;
 using System;
 using System.Collections;
@@ -259,6 +260,18 @@ public partial class ServerMaster : Node
 			case C2S_AdminConsoleCommandPacket admin:
 				{
 					SceneManager.Instance.ConsoleWindow.ReceiveAnswer(admin);
+				}
+			break;
+
+			case S2C_ProjectileCreatedPacket prjC:
+				{
+					_worldManager?.CreateProjectile(prjC);
+				}
+			break;
+
+			case S2C_ProjectileDeletedPacket prjD:
+				{
+					_worldManager?.RemoveProjectile(prjD);
 				}
 			break;
 

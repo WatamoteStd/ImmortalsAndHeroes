@@ -18,7 +18,7 @@ public static class ProjectileRegistry
             new ProjectileData
             {
                 
-                Id = ProjectileType.Default, BaseSpeed = 10.0f, Height = 0.5f, Radius = 0.25f, ScenePath = ""
+                Id = ProjectileType.Default, BaseSpeed = 10.0f, Height = 0.5f, Radius = 0.25f, ScenePath = "res://Entities/Projectiles/Prefabs/Defaulth/DefaulthProjectile.tscn"
 
             }
 

@@ -37,8 +37,9 @@ public static class EntityRegistry
             {
             
                 Height = 2f, Radius = 0.5f, ScenePath = "res://Entities/Character/Default/character_default.tscn", BaseHealth = 220, Name = "Default",
-                BaseDamage = 22f, AttackRange = 1.5f, AttackSpeed = 100, Armor = 0, MagicResistance = 0, BaseSpeed = 3f,
-                HealthRegeneration = 2f, BaseMana = 100f, ManaRegeneration = 0.85f, BasicAttackTime = 1.6f, AbilitySlotCount = 6, TypeAttack = AttackType.Melee
+                BaseDamage = 22f, AttackRange = 14f, AttackSpeed = 100, Armor = 0, MagicResistance = 0, BaseSpeed = 3f,
+                HealthRegeneration = 2f, BaseMana = 100f, ManaRegeneration = 0.85f, BasicAttackTime = 1.6f, AbilitySlotCount = 6, TypeAttack = AttackType.Ranged,
+                Projectile = ProjectileType.Default
 
             }
         },

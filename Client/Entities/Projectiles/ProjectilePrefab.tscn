@@ -1,12 +1,8 @@
 [gd_scene format=3 uid="uid://cmj1dyd6pn54k"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_83fg3"]
-height = 1.0
+[ext_resource type="Script" uid="uid://brmkkgeiwbl1t" path="res://Entities/Projectiles/Projectile.cs" id="1_7gc1y"]
 
-[node name="Projectile" type="CharacterBody3D" unique_id=1732728088]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=221908915]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-shape = SubResource("CapsuleShape3D_83fg3")
+[node name="Projectile" type="Node3D" unique_id=1258840819]
+script = ExtResource("1_7gc1y")
 
 [node name="Mesh" type="Node3D" parent="." unique_id=572816975]

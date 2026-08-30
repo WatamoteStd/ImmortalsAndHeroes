@@ -11,6 +11,7 @@ using Shared.Udp.Packets;
 using Shared.Udp.Packets.Category;
 using Shared.Udp.Packets.Category.Game;
 using Shared.Udp.Packets.Category.Game.Ability;
+using Shared.Udp.Packets.Category.Game.Projectile;
 using Shared.Udp.Packets.Category.MasteryTree;
 
 
@@ -195,6 +196,19 @@ public class PacketReaderClient
                     case PacketTypes.C2S_AdminConsoleCommand:
                         {
                             var packet = PacketSerialier.Deserialize<C2S_AdminConsoleCommandPacket>(payload);
+                            _networkPackets.Enqueue(packet);
+                        }
+                    break;
+
+                    case PacketTypes.S2C_ProjectileCreated:
+                        {
+                            var packet = PacketSerialier.Deserialize<S2C_ProjectileCreatedPacket>(payload);
+                            _networkPackets.Enqueue(packet);
+                        }
+                    break;
+                    case PacketTypes.S2C_ProjectileDeleted:
+                        {
+                            var packet = PacketSerialier.Deserialize<S2C_ProjectileDeletedPacket>(payload);
                             _networkPackets.Enqueue(packet);
                         }
                     break;

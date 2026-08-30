@@ -216,7 +216,7 @@ public class MonsterEntity : LivingEntity
 
     }
 
-    public override void TakeDamage(DamageTypes type, int damage, LivingEntity attacker)
+    public override void TakeDamage(DamageTypes type, float damage, LivingEntity attacker)
     {
         base.TakeDamage(type, damage, attacker);
 
