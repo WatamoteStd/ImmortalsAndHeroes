@@ -1,12 +1,15 @@
 using Shared.Characters;
-using System.Collections;
 using System.Numerics;
 using Server.World.Zone.Entities;
 
-namespace Server.World.Zone.Projectile;
+namespace Server.World.Zone.Projectiles;
 
 public class ProjectileManager
 {
+
+
+    public event Action<Projectile>? OnProjectileAdded;
+    public event Action<ushort>? OnProjectileRemoved;
     
     private Projectile[] _dense = new Projectile[512];
     private ushort[] _sparse = new ushort[ushort.MaxValue + 1];
@@ -40,24 +43,32 @@ public class ProjectileManager
         _sparse[projectile.Id] = Count;
         Count++;
 
+        OnProjectileAdded?.Invoke(projectile);
+
     }
 
     public void RemoveProjectile(ushort id)
     {
-        
         if (_sparse[id] == ushort.MaxValue) return;
 
         ushort denseId = _sparse[id];
+        ushort lastIndex = (ushort)(Count - 1);
 
-        _dense[denseId] = _dense[Count - 1];
-        _sparse[_dense[denseId].Id] = denseId;
+    
+        if (denseId != lastIndex)
+        {
+            var lastPrj = _dense[lastIndex];
+            _dense[denseId] = lastPrj;
+            _sparse[lastPrj.Id] = denseId;
+        }
 
         _sparse[id] = ushort.MaxValue;
         _freeIds.Enqueue(id);
 
-        _dense[Count-1] = default;
+        _dense[lastIndex] = default;
         Count--;
 
+        OnProjectileRemoved?.Invoke(id);
     }
 
     public void Update(float deltaTime)
@@ -70,13 +81,17 @@ public class ProjectileManager
             {
                 ref var prj = ref _dense[i];
 
-                var distance = Vector3.DistanceSquared(prj.Target.Position, prj.Position);
+                bool isHit = prj.Target.IsInRadius(
+                    prj.Position.X, prj.Position.Z, prj.Radius,
+                    prj.Target.Position.X, prj.Target.Position.Z, prj.Target.Radius,
+                    0f
+                );
 
-                if (distance > 1.6f)
+                if (!isHit)
                 {
                     
                     var direction = Vector3.Normalize(prj.Target.Position - prj.Position);
-                    _dense[i].Position += direction * (prj.Speed * deltaTime);
+                    prj.Position += direction * (prj.Speed * deltaTime);
 
                 }
                 else

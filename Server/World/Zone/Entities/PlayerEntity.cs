@@ -11,6 +11,8 @@ using Shared.Udp.Packets.Category.Game;
 using Server.World.Ability;
 using Shared.Ability;
 using Server.World.Zone.Entities.Ability;
+using Server.World.Zone.Projectiles;
+using Shared.ProjectilesData;
 
 namespace Server.World;
 
@@ -28,7 +30,7 @@ public class PlayerEntity : LivingEntity
     public uint PlayerId {get; private set;}
     public uint Silver {get; private set;}
     public int Exp {get; private set;}
-    protected EntityBase _currentEnemy = null!;
+    protected LivingEntity _currentEnemy = null!;
 
     public InventoryBase Inventory = new InventoryBase(10);
     public PlayerMasteryTree MasteryTree {get;}
@@ -125,8 +127,37 @@ public class PlayerEntity : LivingEntity
 
                     if (_currentEnemy is IDamageable damageable)
                     {
-                        damageable.TakeDamage(DamageTypes.Physical, (int)BaseDamage, this);
+
+                        if (TypeAttack == AttackType.Melee)
+                        {
+                            damageable.TakeDamage(DamageTypes.Physical, (int)BaseDamage, this);
+                        }
+
+                        else
+                        {
+
+                            ProjectileRegistry.TryGetProjectile(ProjectileType, out var prjData);
+                            
+                            Projectile prj = new Projectile
+                            {
+                                
+                                Position = Position,
+                                Speed = prjData.BaseSpeed,
+                                Target = _currentEnemy,
+                                Caster = this,
+                                Damage = BaseDamage,
+                                DamageType = DamageTypes.Physical,
+                                Type = ProjectileType,
+                                Radius = prjData.Radius,
+                                Height = prjData.Height
+
+                            };
+                            
+                            RaiseRangeAttackCommited(prj);
+
+                        }
                         _currentAttackCooldown = _attackCooldown;
+
                     }
 
 
@@ -144,7 +175,7 @@ public class PlayerEntity : LivingEntity
 
     }
 
-    public virtual void SetAttackTarget(EntityBase entity)
+    public virtual void SetAttackTarget(LivingEntity entity)
     {
     
         _currentEnemy = entity;

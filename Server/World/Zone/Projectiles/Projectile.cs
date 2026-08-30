@@ -2,19 +2,24 @@
 using System.Numerics;
 using Server.World.Zone.Entities;
 using Shared.Characters;
+using Shared.ProjectilesData;
 
-namespace Server.World.Zone.Projectile;
+namespace Server.World.Zone.Projectiles;
 
 public struct Projectile
 {
     
-    public required ushort Id {get; set;}
-    public Vector3 Position {get; set;}
-    public float Speed {get; set;}
+    public ushort Id;
+    public Vector3 Position;
+    public float Speed;
     public LivingEntity Target;
     public LivingEntity Caster;
     public float Damage;
     public DamageTypes DamageType;
+    public ProjectileType Type;
+
+    public float Radius;
+    public float Height;
     
 
 }

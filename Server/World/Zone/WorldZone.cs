@@ -13,6 +13,8 @@ using Shared.Udp.Packets.Category.MasteryTree;
 using Shared.Udp.Packets.Category.Game.Ability;
 using Server.World.Zone.Entities.Ability;
 using Shared.Ability.CastErrors;
+using Server.World.Zone.Projectiles;
+using Shared.Udp.Packets.Category.Game.Projectile;
 
 namespace Server.World.Zone;
 
@@ -24,7 +26,10 @@ public class WorldZone
 
     public Dictionary<uint, PlayerEntity> Players {get; private set;} = new();
     public Dictionary<uint, EntityBase> Entities {get; private set;}= new();
+
     private static uint _currentMobId = 2_000_000;
+
+    public ProjectileManager _projectileManager {get; private set;} = new();
 
     private RegionSpawner _spawner;
     
@@ -60,6 +65,9 @@ public class WorldZone
             .Build();
         }
 
+        _projectileManager.OnProjectileAdded += SendProjectileToRegion;
+        _projectileManager.OnProjectileRemoved += SendProjectileDeleted;
+
     }
 
     public void Update(float deltaTime)
@@ -74,6 +82,8 @@ public class WorldZone
             iterationCount++;
         }
         _spawner.Update(deltaTime);
+
+        _projectileManager.Update(deltaTime);
 
         foreach (var entity in Entities.Values)
         {
@@ -231,7 +241,9 @@ public class WorldZone
                 
             }
         };
- 
+        player.OnRangeAttackCommited += _projectileManager.AddProjectile;
+        
+
     }
 
     public void CreateEntity(EntityType type, Vector3 spawnPosition)
@@ -453,8 +465,12 @@ public class WorldZone
         
         if (Entities.TryGetValue(entityId, out EntityBase? entity))
         {
-            
-            player.SetAttackTarget(entity);
+
+            if (entity is LivingEntity living)
+            {
+                player.SetAttackTarget(living);
+
+            }
 
         }
         else
@@ -564,6 +580,47 @@ public class WorldZone
         }
 
     }
+
+    #endregion
+
+
+    #region Projectile
+
+
+    private void SendProjectileToRegion(Projectile prj)
+    {
+        
+        var packet = new S2C_ProjectileCreatedPacket
+        {
+            Id = prj.Id,
+            CasterId = prj.Caster.EntityId,
+            TargetId = prj.Target.EntityId,
+            Type = prj.Type,
+            Speed = prj.Speed
+        };
+
+        foreach(var pair in Players)
+        {
+            var p = pair.Value;
+            _worldHolder.Broadcaster.SendToPlayer<S2C_ProjectileCreatedPacket>(p.PlayerId, PacketTypes.S2C_ProjectileCreated, packet);
+        }
+
+    }
+    private void SendProjectileDeleted(ushort id)
+    {
+        
+        var packet = new S2C_ProjectileDeletedPacket
+        {
+            Id = id
+        };
+        foreach(var pair in Players)
+        {
+            var p = pair.Value;
+            _worldHolder.Broadcaster.SendToPlayer<S2C_ProjectileDeletedPacket>(p.PlayerId, PacketTypes.S2C_ProjectileDeleted, packet);
+        }
+
+    }
+
 
     #endregion
 

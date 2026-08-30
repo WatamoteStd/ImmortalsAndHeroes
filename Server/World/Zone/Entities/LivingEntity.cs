@@ -4,9 +4,11 @@ using Server.World.Ability;
 using Server.World.Effects;
 using Server.World.Zone.Entities.Ability;
 using Server.World.Zone.Intefaces;
+using Server.World.Zone.Projectiles;
 using Shared.Ability;
 using Shared.Characters;
 using Shared.MasteryTree.Rewards;
+using Shared.ProjectilesData;
 using Shared.Udp.Packets.Category.Game;
 using Shared.Udp.Packets.Category.Game.Ability;
 
@@ -20,6 +22,11 @@ public class LivingEntity : EntityBase, IDamageable
     public event Action<LivingEntity, LivingEntity>? OnDead; // this, attacker
     public event Action<S2C_StatsSyncPacket>? OnStatsUpdated; 
     public event Action<S2C_EntityMoveSpeedChangedPacket>? OnMoveSpeedChanged;
+    public event Action <Projectile>? OnRangeAttackCommited;
+    protected void RaiseRangeAttackCommited(Projectile prj)
+    {
+        OnRangeAttackCommited?.Invoke(prj);
+    }
 
 
     protected Vector3 _lastSnapshotCords;
@@ -29,6 +36,8 @@ public class LivingEntity : EntityBase, IDamageable
     protected Vector3 _moveTarget;
     public float BaseDamage {get; protected set;}
     public float AttackRange {get; protected set;}
+    public AttackType TypeAttack {get; protected set;}
+    public ProjectileType ProjectileType { get; protected set; }
     protected float _attackSpeed;
     public float AttackSpeed {
         
@@ -62,6 +71,9 @@ public class LivingEntity : EntityBase, IDamageable
         Armor = _dllData.Armor;
         MagicResistance = _dllData.MagicResistance;
         BasicAttackTime = _dllData.BasicAttackTime;
+        TypeAttack = _dllData.TypeAttack;
+
+        ProjectileType = _dllData.Projectile;
 
         AttackSpeed = _dllData.AttackSpeed;
 
@@ -102,8 +114,8 @@ public class LivingEntity : EntityBase, IDamageable
             }
 
         }
-        _abilityComponent.Update(deltaTime);
 
+        _abilityComponent.Update(deltaTime);
 
     }
 
@@ -404,6 +416,7 @@ public class LivingEntity : EntityBase, IDamageable
         OnDamageTaked = null!;
         OnDead = null!;
         OnStatsUpdated = null;
+        OnRangeAttackCommited = null;
     }  
 
     #endregion
