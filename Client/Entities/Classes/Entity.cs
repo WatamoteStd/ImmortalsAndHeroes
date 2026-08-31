@@ -26,11 +26,34 @@ public partial class Entity : CharacterBody3D
 	protected float _healthRegenBuffer = 0f;
 	protected float _manaRegenBuffer = 0f;
 
+	public float AttackRange {get; protected set;}
+	public float BasicAtackTime {get; protected set;}
+	protected float _attackSpeed;
+	public float AttackSpeed
+	{
+		get => _attackSpeed;
+		set
+		{
+			RecalculaAttackSpeed();
+		}
+	}
+
+	protected float _attackCooldown;
+	protected float _currentAttackCooldown;
+
+
+
+
 	public EntityType Type;
 	public EntityData _dllData;
 	[Export] public CollisionShape3D CollisionNode { get; set; } = null!;
 
 	protected Vector3 _moveTarget;
+	protected Entity _attackTarget;
+
+	
+	public float Radius {get; protected set;}
+	public float Height {get; protected set;}
 
 
 	public float Health
@@ -73,6 +96,10 @@ public partial class Entity : CharacterBody3D
 			_selectedMesh.Visible = false;
 		}
 
+		AttackRange = _dllData.AttackRange;
+		BasicAtackTime = _dllData.BasicAttackTime;
+		AttackSpeed = _dllData.AttackSpeed;
+
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -111,6 +138,16 @@ public partial class Entity : CharacterBody3D
 
 	}
 
+
+
+
+	protected void RecalculaAttackSpeed()
+	{
+		
+		_attackCooldown = BasicAtackTime / AttackSpeed;
+
+	}
+
 	protected void SetCollisionSize(float height, float radius)
 	{
 		CollisionNode ??= GetNodeOrNull<CollisionShape3D>("CollisionShape3D");
@@ -126,6 +163,9 @@ public partial class Entity : CharacterBody3D
 
 			capsule.Radius = radius;
 			capsule.Height = height;
+
+			Radius = radius;
+			Height = height;
 
 		}
 
@@ -148,6 +188,32 @@ public partial class Entity : CharacterBody3D
 	{
 		_selectedMesh.Visible = false;
 	}
+
+
+
+	#region  EXETENSION FROM SERVER 
+
+	public bool IsInAttackRadius(Entity entity)
+    {
+        if (entity == null) return false;
+        return IsInRadius(Position.X, Position.Z, Radius, entity.Position.X, entity.Position.Z, entity.Radius, AttackRange);
+    }
+
+    public bool IsInRadius(float x, float z, float radius, float enemyX, float enemyZ, float enemyRadius, float attackRange)
+    {
+        
+        float dX = enemyX - x;
+        float dZ = enemyZ - z;
+
+        float distanceSquared = (dX * dX) + (dZ * dZ);
+
+        float maxDistance = attackRange + radius + enemyRadius;
+
+        return distanceSquared <= (maxDistance * maxDistance);
+
+    }
+
+	#endregion
 
 
 }

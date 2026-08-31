@@ -6,8 +6,8 @@ using System;
 public partial class LocalPlayerEntity : Entity
 {
 	
-	public enum State {Idle, Move, Attack, Cast, Strunned, ProtectedCast, Dead}
-	public State CurrentState {get; protected set; }= State.Idle;
+	public enum State {Idle, Move, Attack, Chase, Cast, Strunned, ProtectedCast, Dead}
+	public State CurrentState {get; protected set; } = State.Idle;
 	[Export] private Label _stateLabel;
 	private float _stateTimeGone;
 
@@ -27,6 +27,8 @@ public partial class LocalPlayerEntity : Entity
 
 	private float _healthRegeneration;
 	private float _manaRegeneration;
+
+
 
 	public void InitEntity(uint id, float health, float maxHealth, string name, EntityType type, Vector3 pos, uint locPlayeId, float mana, float maxMana)
 	{
@@ -53,8 +55,16 @@ public partial class LocalPlayerEntity : Entity
 	{
 		
 		_moveTarget = position;
+		_attackTarget = null;
 		CurrentState = State.Move;
 		_stateTimeGone = 0.0f;
+
+	}
+	public void SetAttackTarget(Entity target)
+	{
+		
+		_attackTarget = target;
+		CurrentState = State.Chase;
 
 	}
 
@@ -75,6 +85,11 @@ public partial class LocalPlayerEntity : Entity
     public override void _PhysicsProcess(double delta)
     {
 		Regenerate((float)delta);
+
+		if (_currentAttackCooldown > 0)
+		{
+			_currentAttackCooldown -= (float)delta;
+		}
 
         
 		switch(CurrentState)
@@ -118,6 +133,47 @@ public partial class LocalPlayerEntity : Entity
 				}
 			break;
 
+			case State.Chase:
+				{
+					
+					if (!IsInstanceValid(_attackTarget))
+					{
+						CurrentState = State.Idle;
+						return;
+					}
+					if (IsInAttackRadius(_attackTarget))
+					{
+						CurrentState = State.Attack;
+						return;
+					}
+
+					_stateTimeGone += (float)delta;
+					_stateLabel.Text = $"Chase: {_stateTimeGone:F1}";
+
+					_moveTarget = _attackTarget.GlobalPosition;
+					Move((float)delta);
+
+				}
+			break;
+
+			case State.Attack:
+				{
+					
+					if (!IsInstanceValid(_attackTarget)) {CurrentState = State.Idle; return;}
+					if (!IsInAttackRadius(_attackTarget)) {CurrentState = State.Chase; return;}
+
+					Velocity = Vector3.Zero;
+
+					_stateTimeGone += (float)delta;
+					_stateLabel.Text = $"Attack:{_currentAttackCooldown:F1}";
+
+					if (_currentAttackCooldown > 0) return;
+
+					_currentAttackCooldown = _attackCooldown;
+
+				}
+			break;
+
 		}
 
     }
@@ -137,6 +193,7 @@ public partial class LocalPlayerEntity : Entity
 		MoveAndSlide();
 
 	}
+
 
 
 	public void UpdateStats( in S2C_StatsSyncPacket data)

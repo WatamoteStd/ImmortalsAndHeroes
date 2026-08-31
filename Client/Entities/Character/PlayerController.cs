@@ -65,6 +65,7 @@ public partial class PlayerController : Node
 					if (SettingsManager.Instance.AttackOnFirstLmb || wasAlreadySelected)
 					{
 						ServerMaster.Instance.LP_AttackRequest(_selectedEntity.Id);
+						_player.SetAttackTarget(_selectedEntity);
 					}
 				
 				}
