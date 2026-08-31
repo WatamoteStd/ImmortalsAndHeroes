@@ -31,6 +31,8 @@ public partial class Entity : CharacterBody3D
 	[Export] public CollisionShape3D CollisionNode { get; set; } = null!;
 
 	protected Vector3 _moveTarget;
+
+
 	public float Health
 	{
 		
@@ -73,7 +75,7 @@ public partial class Entity : CharacterBody3D
 
 	}
 
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		GlobalPosition = GlobalPosition.MoveToward(_moveTarget, (float)delta * _speed);
 
@@ -102,7 +104,7 @@ public partial class Entity : CharacterBody3D
 
 	}
 
-	public virtual void Move(Vector3 position)
+	public virtual void ServerMove(Vector3 position)
 	{
 		
 		_moveTarget = position;

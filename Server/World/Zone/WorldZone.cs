@@ -424,9 +424,9 @@ public class WorldZone
             var movePacket = new S2C_MoveEntityPacket
             {
                 Id = player.EntityId,
-                PosX = x,
-                PosY = y,
-                PosZ = z
+                PosX = player.Position.X,
+                PosY = player.Position.Y,
+                PosZ = player.Position.Z
             };
             _worldHolder.Broadcaster.SendToPlayer(curPlayer.PlayerId, PacketTypes.S2C_MoveEntity, movePacket);
         }

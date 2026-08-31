@@ -6,6 +6,11 @@ using System;
 public partial class LocalPlayerEntity : Entity
 {
 	
+	public enum State {Idle, Move, Attack, Cast, Strunned, ProtectedCast, Dead}
+	public State CurrentState {get; protected set; }= State.Idle;
+	[Export] private Label _stateLabel;
+	private float _stateTimeGone;
+
 	public uint LocalPlayerId {get; set;}
 	[Export] public PlayerAbilityController AbilityController { get; private set; }
 
@@ -42,9 +47,100 @@ public partial class LocalPlayerEntity : Entity
 
 	}
 
+
+
+	public void SetMoveTarget(Vector3 position)
+	{
+		
+		_moveTarget = position;
+		CurrentState = State.Move;
+		_stateTimeGone = 0.0f;
+
+	}
+
+    public override void ServerMove(Vector3 serverPosition)
+    {
+        
+		if (GlobalPosition.DistanceSquaredTo(serverPosition) > 6.25f)
+    {
+        GD.Print($"[DESYNC] Client: {GlobalPosition} | Server: {serverPosition}. Hard sync!");
+        GlobalPosition = serverPosition;
+    }
+
+    }
+
+
+
+
+    public override void _PhysicsProcess(double delta)
+    {
+		Regenerate((float)delta);
+
+        
+		switch(CurrentState)
+		{
+			
+			case State.Idle:
+				{
+					_stateTimeGone += (float)delta;
+					_stateLabel.Text = $"Idle: {_stateTimeGone:F1}";
+				}
+			break;
+
+			case State.Move:
+				{
+					
+					Vector3 toTarget = _moveTarget - GlobalPosition;
+					toTarget.Y = 0;
+
+					float distanceSq = toTarget.LengthSquared();
+
+					if (distanceSq > 0.005f)
+					{
+						
+						Move((float)delta);
+						_stateTimeGone += (float)delta;
+						_stateLabel.Text = $"Move: {_stateTimeGone:F1}";
+
+					}
+					else
+					{
+						
+						Velocity = Vector3.Zero;
+						MoveAndSlide();
+
+						CurrentState = State.Idle;
+						_stateTimeGone = 0.0f;
+						_stateLabel.Text = $"Idle: {_stateTimeGone:F1}";
+
+					}
+
+				}
+			break;
+
+		}
+
+    }
+
+	private void Move(float delta)
+	{
+		
+		Vector3 direction = (_moveTarget - GlobalPosition);
+		direction.Y = 0;
+
+		float distance = direction.Length();
+		direction = direction.Normalized();
+
+		float currentSpeed = MathF.Min(_speed, distance / delta);
+		Velocity = direction * currentSpeed;
+
+		MoveAndSlide();
+
+	}
+
+
 	public void UpdateStats( in S2C_StatsSyncPacket data)
 	{
-		GD.Print($"Server sent Mana: {data.Mana}, MaxMana: {data.MaxMana}");
 
 		_healthRegeneration = data.HealthRegen;
 		_speed = data.Speed;

@@ -84,7 +84,7 @@ public partial class WorldHandler : Node3D
 		
 		Vector3 pos = new Vector3(data.PosX, data.PosY, data.PosZ);
 		newEntity.InitEntity(data.Id, data.Health, data.Health, data.Name, data.Type, pos);
-		newEntity.Move(pos);
+		newEntity.ServerMove(pos);
 
 
 		RegionEntities.Add(newEntity.Id, newEntity);
@@ -103,7 +103,7 @@ public partial class WorldHandler : Node3D
 
 		Vector3 pos = new Vector3(data.PosX, data.PosY, data.PosZ);
 		newPlayer.InitEntity(data.Id, data.Health, data.Health, data.Name, data.Type, pos);
-		newPlayer.Move(pos);
+		newPlayer.ServerMove(pos);
 
 
 		RegionEntities.Add(newPlayer.Id, newPlayer);
@@ -122,7 +122,7 @@ public partial class WorldHandler : Node3D
 
 		Vector3 dataPos = new Vector3(playerPacket.PosX, playerPacket.PosY, playerPacket.PosZ);
 		localPlayer.InitEntity(playerPacket.Id, playerPacket.CurrentHp, playerPacket.CurrentHp, playerPacket.Name, playerPacket.Type, dataPos, playerPacket.UserId, playerPacket.CurrentMp, playerPacket.CurrentMp);
-		localPlayer.Move(dataPos);
+		localPlayer.ServerMove(dataPos);
 
 		RegionEntities.Add(localPlayer.Id, localPlayer);
 
@@ -138,10 +138,7 @@ public partial class WorldHandler : Node3D
 		
 		if (RegionEntities.TryGetValue(id, out Entity entity))
 		{
-			if (entity.GlobalPosition.DistanceSquaredTo(movePos) > 2.25f)
-			{
-				entity.Move(movePos);
-			}
+			entity.ServerMove(movePos);
 		}
 
 	}

@@ -42,6 +42,7 @@ public partial class PlayerController : Node
 			if (clickPoint.HasValue)
 			{
 				OnMoveRequest?.Invoke(clickPoint.Value);
+				_player.SetMoveTarget(clickPoint.Value);
 			}
 			else GD.Print("[RAW CLICK] Null click, i get it");
 		}
