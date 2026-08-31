@@ -218,9 +218,9 @@ public class LivingEntity : EntityBase, IDamageable
 
     #region  ABILITIES 
 
-    public virtual CastResult TryCastAbility(int slot, Vector3? targetPos = null, LivingEntity? targetEntity = null)
+    public virtual CastResult TryCastAbility(int slot, WorldZone region, Vector3? targetPos = null, LivingEntity? targetEntity = null) 
     {
-    return _abilityComponent.TryCast(slot, targetPos, targetEntity);
+        return _abilityComponent.TryCast(slot, region, targetPos, targetEntity);
     }
 
     public int AddAbility(AbilityTypes abilityId) => _abilityComponent.AddAbility(abilityId);

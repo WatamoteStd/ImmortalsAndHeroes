@@ -10,7 +10,7 @@ public enum AbilityTypes : uint
 
     DefaulthRun = 1,
     ZoneOfBlood = 2,
-    Lunge = 3,
+    Sharp = 3,
     SecondWind = 4
 
     // 200.001 - 600.000 PASSIVE SKILL

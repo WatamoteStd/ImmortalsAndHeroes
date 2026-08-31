@@ -68,22 +68,22 @@ public partial class LocalPlayerEntity : Entity
 
 	}
 
-    public override void ServerMove(Vector3 serverPosition)
-    {
-        
+	public override void ServerMove(Vector3 serverPosition)
+	{
+		
 		if (GlobalPosition.DistanceSquaredTo(serverPosition) > 6.25f)
-    {
-        GD.Print($"[DESYNC] Client: {GlobalPosition} | Server: {serverPosition}. Hard sync!");
-        GlobalPosition = serverPosition;
-    }
+	{
+		GD.Print($"[DESYNC] Client: {GlobalPosition} | Server: {serverPosition}. Hard sync!");
+		GlobalPosition = serverPosition;
+	}
 
-    }
-
-
+	}
 
 
-    public override void _PhysicsProcess(double delta)
-    {
+
+
+	public override void _PhysicsProcess(double delta)
+	{
 		Regenerate((float)delta);
 
 		if (_currentAttackCooldown > 0)
@@ -91,7 +91,7 @@ public partial class LocalPlayerEntity : Entity
 			_currentAttackCooldown -= (float)delta;
 		}
 
-        
+		
 		switch(CurrentState)
 		{
 			
@@ -176,7 +176,7 @@ public partial class LocalPlayerEntity : Entity
 
 		}
 
-    }
+	}
 
 	private void Move(float delta)
 	{

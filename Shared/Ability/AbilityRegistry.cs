@@ -32,6 +32,15 @@ public static class AbilityRegistry
                 Description = "Zone of blood that give damage to all enemy every 0.5s", CastType = AbilityCastType.NonTarget, CastTypeAdditional = AbilityAdditionalCastType.Point, TargetType = AbilityTarget.None,
                 CastTime = 0f, IsInterruptible = true, IsMoveWhileCast = false, Duration = 8f, DamageType = Characters.DamageTypes.Magic, 
                 ScaleStat = StatType.None, ScalePercent = 1.0f, MoveSpeed = 0.0f, CastRange = 7.0f, Cooldown = 15f, ManaCost = 50f, MpsCost = 0f, Radius = 10f, TargetRelation = AbilityTargetRelation.Any
+            },
+            new AbilityData
+            {
+                
+                AbilityId = AbilityTypes.Sharp, Title = "Sharp", IconPath = "res://Assets/Icons/Ability/Sharp.png", ScenePath = "res://AbilityScenes/StaticAbilities/SharpAbility/SharpAbility.tscn",
+                Description = "Strikes all enemies within 3 meters. Deals 90 physical damage", CastType = AbilityCastType.NonTarget, CastTypeAdditional = AbilityAdditionalCastType.None, TargetType = AbilityTarget.Self,
+                CastTime = 0f, IsInterruptible = false, IsMoveWhileCast = true, Duration = 0.75f, DamageType = Characters.DamageTypes.Physical,
+                ScaleStat = StatType.None, ScalePercent = 1.0f, MoveSpeed = 0.0f, CastRange = 0.0f, Cooldown = 10f, ManaCost = 30f, MpsCost = 0f, Radius = 4.5f, TargetRelation = AbilityTargetRelation.Any
+
             }
 
         };

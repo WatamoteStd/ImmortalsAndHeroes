@@ -72,7 +72,7 @@ public class AbilityComponent
 
     }
 
-    public CastResult TryCast(int slot, Vector3? targetPos = null, LivingEntity? targetEntity = null)
+    public CastResult TryCast(int slot, WorldZone region, Vector3? targetPos = null, LivingEntity? targetEntity = null)
     {
         
         if (slot < 0 || slot >= _abilities.Length) return new CastResult {Error = AbilityCastErrors.AbilityNotFound, IsSucces = false};
@@ -107,7 +107,7 @@ public class AbilityComponent
         }
 
        _owner.UpdateStat(StatType.Mana, -abl.DllData.ManaCost);
-       abl.OnApply(_owner, targetPos, targetEntity);
+       abl.OnApply(_owner, targetPos, targetEntity, region);
 
         if (abl.DllData.CastType == AbilityCastType.Target)
         {
@@ -147,6 +147,7 @@ public class AbilityComponent
         {
             
             AbilityTypes.DefaulthRun => new DefaultRunAbility(abilityId),
+            AbilityTypes.Sharp => new SharpAbility(abilityId),
             _ => new AbilityBase(abilityId)
 
         };

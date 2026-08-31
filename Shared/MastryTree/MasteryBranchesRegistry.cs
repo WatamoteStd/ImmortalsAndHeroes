@@ -98,6 +98,13 @@ public static class MasteryBranchesRegistry
                         StatId = StatType.PhysicalDamage,
                         TargetLevel = 5,
                         Value = 10
+                    },
+                    new BranchReward
+                    {
+                        Context = RewardContextType.SingleLevel,
+                        Type = RewardType.ActiveSkill,
+                        StatId = StatType.None,
+                        Value = (uint)AbilityTypes.Sharp
                     }
 
                 }

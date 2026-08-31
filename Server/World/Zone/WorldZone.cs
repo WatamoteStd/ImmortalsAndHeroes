@@ -413,6 +413,36 @@ public class WorldZone
         return nearestPlayer;
 
     }
+
+    public List<LivingEntity> FindEntityInRadius(Vector3 pos, float radius)
+    {
+        
+        List<LivingEntity> enemies = new List<LivingEntity>();
+
+        foreach (var pair in Entities)
+        {
+            
+            var ent = pair.Value;
+
+            if (!ent.IsValidEntity() || !ent.IsAlive) continue;
+
+            if (ent is not LivingEntity livEnt) continue;
+
+            float totalRad = radius + livEnt.Radius;
+            float totalRadSq = totalRad * totalRad;
+
+            if (Vector3.DistanceSquared(livEnt.Position, pos) <= totalRadSq)
+            {
+                
+                enemies.Add(livEnt);
+
+            }
+
+        }
+
+        return enemies;
+
+    }
     
     #region Player -> World || Server -> World
     public void MovePlayer(PlayerEntity player, float x, float y, float z)
@@ -497,11 +527,11 @@ public class WorldZone
 
         if (packet.TargetEntityId == 0)
         { 
-            result = player.TryCastAbility(packet.Slot, pos, null);
+            result = player.TryCastAbility(packet.Slot, this, pos, null);
         }
         else if(Entities.TryGetValue(packet.TargetEntityId, out var entity) && entity is LivingEntity liveEntity)
         {
-            result = player.TryCastAbility(packet.Slot, new Vector3(packet.PosX, packet.PosY, packet.PosZ), liveEntity);
+            result = player.TryCastAbility(packet.Slot, this, new Vector3(packet.PosX, packet.PosY, packet.PosZ), liveEntity);
         }
         else 
         {

@@ -1,6 +1,7 @@
 using System.Numerics;
 using Server.World.Effects;
 using Server.World.Effects.AbilityStatusEffects;
+using Server.World.Zone;
 using Server.World.Zone.Entities;
 using Shared.Ability;
 using Shared.MasteryTree.Rewards;
@@ -16,7 +17,7 @@ public class DefaultRunAbility : AbilityBase
 
     }
 
-    public override void OnApply(LivingEntity caster, Vector3? targetPos, LivingEntity? targetEntity)
+    public override void OnApply(LivingEntity caster, Vector3? targetPos, LivingEntity? targetEntity, WorldZone region)
     {
         
         var effect = new StatModifierEffect(StatType.MoveSpeed, 3, DllData.Duration, DllData.Title);
