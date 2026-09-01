@@ -279,7 +279,7 @@ public partial class ServerMaster : Node
 
 	}
 
-	private void LocalPlayerMoveRequest(Vector3 pos)
+	public void LocalPlayerMoveRequest(Vector3 pos)
 	{
 		
 		Span<byte> buffer = stackalloc byte[14]; // 4 + 4 + 4 (cords) + 2 (packetYType)

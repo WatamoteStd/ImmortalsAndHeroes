@@ -3,6 +3,7 @@ using Shared.Ability;
 using Shared.Udp.Packets.Category.Game.Ability;
 using Shared.Ability.Params;
 using System;
+using System.Formats.Tar;
 
 public partial class PlayerAbilityController : Node
 {
@@ -10,6 +11,11 @@ public partial class PlayerAbilityController : Node
 	public static event Action OnAbilitiesSynced;
 	public static event Action<byte, float> OnAbilityReloadStarted; // slot & duration
 	public static AbilitySlotData[] Slots {get; private set;} = new AbilitySlotData[6];
+
+	private ExecutableCommand _lastCommand = new ExecutableCommand(0, Vector3.Zero, null);
+	private float _timeFromLastCheck;
+
+
 
 	public void UpdateAbilities(S2C_PlayerAbilitySyncPacket packet)
 	{
@@ -36,6 +42,9 @@ public partial class PlayerAbilityController : Node
 
 	}
 
+
+
+
 	public void ExecuteSkill(byte slot, Vector3 pos, Entity entity)
 	{
 	
@@ -47,26 +56,8 @@ public partial class PlayerAbilityController : Node
 		if (IsCanCast(slot, pos, entity))
 		{
 
-			if (!AbilityRegistry.TryGetAbility(Slots[slot].AbilityId, out var dllData)) return;
-			
-			if (_player != null && dllData.TargetType != AbilityTarget.Self)
-			{
-			
+			uint entityId = entity == null ? 0 : entity.Id;
 
-				if (!_player.IsInRadius(_player.GlobalPosition.X, _player.GlobalPosition.Z, _player.Radius, entity.GlobalPosition.X, entity.GlobalPosition.Z, entity.Radius, dllData.CastRange))
-				{
-					_player.SetMoveTarget(entity.GlobalPosition);
-				}
-					
-
-			}
-
-
-			uint entityId;
-
-			if (entity == null) entityId = 0;
-			else entityId = entity.Id;
-			
 			var packet = new C2S_CastAbilityRequestPacket
 			{
 				Slot = slot,
@@ -82,7 +73,7 @@ public partial class PlayerAbilityController : Node
 
 	}
 
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		float dt = (float)delta;
 
@@ -99,7 +90,28 @@ public partial class PlayerAbilityController : Node
 				
 			}
 		}
+
+		if (_lastCommand.IsActual)
+		{
+			
+			_timeFromLastCheck += dt;
+
+			if (_timeFromLastCheck >= 0.2f)
+			{
+				
+				ExecuteSkill(_lastCommand.Slot, _lastCommand.Pos, _lastCommand.TarEntity);
+				_timeFromLastCheck = 0.0f;
+
+			}
+
+		}
+
 	}
+
+
+
+
+
 
 	private bool IsCanCast(byte slot, Vector3 pos, Entity entity)
 	{
@@ -108,25 +120,115 @@ public partial class PlayerAbilityController : Node
 
 		if (abData.CooldownRemaining > 0) return false;
 
-		if (AbilityRegistry.TryGetAbility(abData.AbilityId, out var dllData))
+		if (!AbilityRegistry.TryGetAbility(abData.AbilityId, out var dllData)) return false;
+		
+		
+
+		if (dllData.CastType == AbilityCastType.Target && entity == null) {GD.Print("Can't cast target skill. Target is null"); return false;}
+			
+		if (dllData.CastTypeAdditional != AbilityAdditionalCastType.None && pos == Vector3.Zero) return false;
+
+		if (dllData.TargetType == AbilityTarget.Self)
+		{
+			return true;
+		}
+
+
+		// DISTANCE CHECKOUT
+
+
+		Vector3 tarPos = Vector3.Zero;
+		bool isInCastR = false;
+		bool isEntityTargetSkill = false;
+
+		if (dllData.CastType == AbilityCastType.Target)
 		{
 			
-			if (dllData.CastType == AbilityCastType.Target && dllData.TargetType != AbilityTarget.Self && entity == null) return false;
+			isInCastR = _player.IsInRadius(_player.GlobalPosition.X, _player.GlobalPosition.Z, _player.Radius,	
+				entity.GlobalPosition.X, entity.GlobalPosition.Z, entity.Radius, dllData.CastRange);
 
-			if (dllData.CastTypeAdditional != AbilityAdditionalCastType.None && pos == Vector3.Zero) return false;
-			if (dllData.TargetType == AbilityTarget.Player && entity is not PlayerEntity) return false;
-
-			return true;
+			isEntityTargetSkill = true;
+			tarPos = entity.GlobalPosition;
 
 		}
+		else if (dllData.CastTypeAdditional != AbilityAdditionalCastType.None)
+		{
+			
+			isInCastR = _player.IsInRadius(_player.GlobalPosition.X, _player.GlobalPosition.Z, _player.Radius,	
+				pos.X, pos.Z, 0.0f, dllData.CastRange);
+
+			tarPos = pos;
+
+		}
+
+		if (isInCastR) return true;
+
+		ExecutableCommand cmd = new ExecutableCommand();
+		cmd.Slot = slot;
+
+		if (!isEntityTargetSkill)
+		{
+
+			if (!_lastCommand.IsActual)
+			{
+				
+				cmd.Pos = tarPos;
+				cmd.TarEntity = null;
+				cmd.IsEntityTarget = false;
+				cmd.IsActual = true;
+
+				_lastCommand = cmd;
+
+				ServerMaster.Instance.LocalPlayerMoveRequest(tarPos);
+
+				_player.SetMoveTarget(tarPos);
+
+			}
+			
+
+		}
+		else
+		{
+
+			float targetShift = entity.GlobalPosition.DistanceSquaredTo(_lastCommand.Pos);
+
+			if (!_lastCommand.IsActual || targetShift > 0.8f)
+			{
+				
+				cmd.Pos = entity.GlobalPosition;
+				cmd.TarEntity = entity;
+				cmd.IsEntityTarget = true;
+				cmd.IsActual = true;
+
+				_lastCommand = cmd;
+
+				ServerMaster.Instance.LocalPlayerMoveRequest(tarPos);
+
+				_player.SetMoveTarget(tarPos);
+
+			}
+
+			
+		}
+		
+
 		return false;
+		
 
 	}
 
-	private struct LastCommand()
+	public void CancelPendingCommand()
+	{
+		_lastCommand.IsActual = false;
+	}
+	private struct ExecutableCommand(byte slot, Vector3 pos, Entity entity)
 	{
 		
-
+		public byte Slot = slot;
+		public Vector3 Pos = pos;
+		public Entity TarEntity = entity;
+		public bool IsActual = false;
+		public bool IsEntityTarget = false;
 
 	}
 

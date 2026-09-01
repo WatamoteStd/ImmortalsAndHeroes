@@ -43,6 +43,8 @@ public partial class PlayerController : Node
 			{
 				OnMoveRequest?.Invoke(clickPoint.Value);
 				_player.SetMoveTarget(clickPoint.Value);
+				
+				_abilityController.CancelPendingCommand();
 			}
 			else GD.Print("[RAW CLICK] Null click, i get it");
 		}
@@ -83,19 +85,19 @@ public partial class PlayerController : Node
 	}
 
 	for(byte i = 0; i < 6; i++)
-			{
+		{
 				
-				if (@event.IsActionPressed($"Skill_{i}"))
-				{
+			if (@event.IsActionPressed($"Skill_{i}"))
+			{
 					
-					Vector3 point = GetClickPoint() ?? Vector3.Zero;
-					Entity target = IsInstanceValid(_selectedEntity) ? _selectedEntity : null;
+				Vector3 point = GetClickPoint() ?? Vector3.Zero;
+				Entity target = GetClickCollision() as Entity;
 
-					_abilityController.ExecuteSkill(i,point,target);
-
-				}
+				_abilityController.ExecuteSkill(i,point,target);
 
 			}
+
+		}
 
 
 	if (@event.IsActionPressed("Inventory"))

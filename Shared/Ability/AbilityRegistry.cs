@@ -49,7 +49,7 @@ public static class AbilityRegistry
                 Description = "Deal 15 physsical damage and applies a bleeding effect (scale up tp 4x times). Bleeding effect deals 5 physsical damage per stack for 3 secound",
                 CastType = AbilityCastType.Target, CastTypeAdditional = AbilityAdditionalCastType.None, TargetType = AbilityTarget.Any, CastTime = 0.0f,
                 IsInterruptible = false, IsMoveWhileCast = false, Duration = 3f, DamageType = Characters.DamageTypes.Physical, ScaleStat = StatType.None,
-                ScalePercent = 1.0f, MoveSpeed = 0.0f, CastRange = 1f, Cooldown = 3f, ManaCost = 22f, MpsCost = 0f, Radius = 0.0f, TargetRelation = AbilityTargetRelation.Any
+                ScalePercent = 1.0f, MoveSpeed = 0.0f, CastRange = 2f, Cooldown = 3f, ManaCost = 22f, MpsCost = 0f, Radius = 0.0f, TargetRelation = AbilityTargetRelation.Any
 
             }
 
