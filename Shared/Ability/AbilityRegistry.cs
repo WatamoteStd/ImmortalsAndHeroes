@@ -41,6 +41,16 @@ public static class AbilityRegistry
                 CastTime = 0f, IsInterruptible = false, IsMoveWhileCast = true, Duration = 0.75f, DamageType = Characters.DamageTypes.Physical,
                 ScaleStat = StatType.None, ScalePercent = 1.0f, MoveSpeed = 0.0f, CastRange = 0.0f, Cooldown = 10f, ManaCost = 30f, MpsCost = 0f, Radius = 4.5f, TargetRelation = AbilityTargetRelation.Any
 
+            },
+            new AbilityData
+            {
+                
+                AbilityId = AbilityTypes.Poke, Title = "Poke", IconPath = "res://Assets/Icons/Ability/PokeAbility.png", ScenePath = "res://AbilityScenes/StaticAbilities/Poke/PokeAbility.tscn",
+                Description = "Deal 15 physsical damage and applies a bleeding effect (scale up tp 4x times). Bleeding effect deals 5 physsical damage per stack for 3 secound",
+                CastType = AbilityCastType.Target, CastTypeAdditional = AbilityAdditionalCastType.None, TargetType = AbilityTarget.Any, CastTime = 0.0f,
+                IsInterruptible = false, IsMoveWhileCast = false, Duration = 3f, DamageType = Characters.DamageTypes.Physical, ScaleStat = StatType.None,
+                ScalePercent = 1.0f, MoveSpeed = 0.0f, CastRange = 1f, Cooldown = 3f, ManaCost = 22f, MpsCost = 0f, Radius = 0.0f, TargetRelation = AbilityTargetRelation.Any
+
             }
 
         };

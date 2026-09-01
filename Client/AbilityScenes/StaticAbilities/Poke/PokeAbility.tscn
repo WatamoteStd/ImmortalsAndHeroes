@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dqs3wbo5n7vlg"]
+
+[ext_resource type="Script" uid="uid://bvs4i4c482kj8" path="res://AbilityScenes/StaticAbilities/StaticAbility.cs" id="1_yj7wg"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6u82b"]
+direction = Vector3(0, 0, 0)
+radial_velocity_min = 9.999977
+radial_velocity_max = 9.999977
+gravity = Vector3(0, -24, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qm0se"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.83137256, 0, 0.039215688, 0.67058825)
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_83fg3"]
+material = SubResource("StandardMaterial3D_qm0se")
+size = Vector2(0.4, 0.8)
+
+[node name="Node3D" type="Node3D" unique_id=1682219257 node_paths=PackedStringArray("_particles")]
+script = ExtResource("1_yj7wg")
+_particles = NodePath("GPUParticles3D")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=988542530]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.069586396, 0, 0)
+emitting = false
+amount = 30
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_6u82b")
+draw_pass_1 = SubResource("QuadMesh_83fg3")

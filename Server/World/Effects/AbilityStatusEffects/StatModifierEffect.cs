@@ -2,6 +2,7 @@ using System.Numerics;
 using Server.World.Ability;
 using Server.World.Zone.Entities;
 using Shared.MasteryTree.Rewards;
+using Shared.StatusEffect;
 
 namespace Server.World.Effects.AbilityStatusEffects;
 
@@ -11,7 +12,7 @@ public class StatModifierEffect : StatusEffectBase
     private float _value;
     private StatType _stat;
     
-    public StatModifierEffect(StatType stat, float value, float duration, string name) : base (name, duration)
+    public StatModifierEffect(StatType stat, float value, float duration, StatusEffect effect) : base (effect, duration)
     {
         
         _value = value;

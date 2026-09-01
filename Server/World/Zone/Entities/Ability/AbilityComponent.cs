@@ -6,6 +6,7 @@ using Shared.Ability;
 using Shared.Udp.Packets.Category.Game.Ability;
 using Shared.Ability.CastErrors;
 using System.Runtime.Intrinsics;
+using Server.World.Ability.PlayerAbility;
 
 namespace Server.World.Zone.Entities.Ability;
 
@@ -96,7 +97,7 @@ public class AbilityComponent
         if (abl.DllData.TargetType != AbilityTarget.Self)
         {
             
-            if (Vector3.DistanceSquared(realPosition, _owner.Position) > abl.DllData.CastRange * abl.DllData.CastRange)
+            if (!_owner.IsInRadius(_owner.Position.X, _owner.Position.Z, _owner.Radius, realPosition.X, realPosition.Z, targetEntity != null ? targetEntity.Radius : 0f, abl.DllData.CastRange))
             {
                 if (_owner is PlayerEntity player)
                 player.MoveToPosition(realPosition);
@@ -148,6 +149,7 @@ public class AbilityComponent
             
             AbilityTypes.DefaulthRun => new DefaultRunAbility(abilityId),
             AbilityTypes.Sharp => new SharpAbility(abilityId),
+            AbilityTypes.Poke => new PokeAbility(abilityId),
             _ => new AbilityBase(abilityId)
 
         };

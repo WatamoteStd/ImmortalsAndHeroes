@@ -5,6 +5,7 @@ using Server.World.Zone;
 using Server.World.Zone.Entities;
 using Shared.Ability;
 using Shared.MasteryTree.Rewards;
+using Shared.StatusEffect;
 
 namespace Server.World.Ability;
 
@@ -20,7 +21,7 @@ public class DefaultRunAbility : AbilityBase
     public override void OnApply(LivingEntity caster, Vector3? targetPos, LivingEntity? targetEntity, WorldZone region)
     {
         
-        var effect = new StatModifierEffect(StatType.MoveSpeed, 3, DllData.Duration, DllData.Title);
+        var effect = new StatModifierEffect(StatType.MoveSpeed, 3, DllData.Duration, StatusEffect.StatModifier);
         caster.ApplyStatusEffect(effect, caster);
         CurrentCooldown = DllData.Cooldown;
 

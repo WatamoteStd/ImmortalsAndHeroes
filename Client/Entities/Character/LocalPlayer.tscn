@@ -29,8 +29,9 @@ _raycast = NodePath("../RayCast3D")
 _player = NodePath("..")
 _abilityController = NodePath("../PlayerAbilityController")
 
-[node name="PlayerAbilityController" type="Node" parent="." unique_id=1582659783]
+[node name="PlayerAbilityController" type="Node" parent="." unique_id=1582659783 node_paths=PackedStringArray("_player")]
 script = ExtResource("3_00h75")
+_player = NodePath("..")
 
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=1427856926]
 target_position = Vector3(0, 0, -100)

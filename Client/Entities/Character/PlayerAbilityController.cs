@@ -6,6 +6,7 @@ using System;
 
 public partial class PlayerAbilityController : Node
 {
+	[Export] private LocalPlayerEntity _player;
 	public static event Action OnAbilitiesSynced;
 	public static event Action<byte, float> OnAbilityReloadStarted; // slot & duration
 	public static AbilitySlotData[] Slots {get; private set;} = new AbilitySlotData[6];
@@ -45,6 +46,22 @@ public partial class PlayerAbilityController : Node
 
 		if (IsCanCast(slot, pos, entity))
 		{
+
+			if (!AbilityRegistry.TryGetAbility(Slots[slot].AbilityId, out var dllData)) return;
+			
+			if (_player != null && dllData.TargetType != AbilityTarget.Self)
+			{
+			
+
+				if (!_player.IsInRadius(_player.GlobalPosition.X, _player.GlobalPosition.Z, _player.Radius, entity.GlobalPosition.X, entity.GlobalPosition.Z, entity.Radius, dllData.CastRange))
+				{
+					_player.SetMoveTarget(entity.GlobalPosition);
+				}
+					
+
+			}
+
+
 			uint entityId;
 
 			if (entity == null) entityId = 0;
@@ -103,6 +120,13 @@ public partial class PlayerAbilityController : Node
 
 		}
 		return false;
+
+	}
+
+	private struct LastCommand()
+	{
+		
+
 
 	}
 

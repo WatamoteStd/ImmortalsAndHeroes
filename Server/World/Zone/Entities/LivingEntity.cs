@@ -372,7 +372,21 @@ public class LivingEntity : EntityBase, IDamageable
 
     public void ApplyStatusEffect(StatusEffectBase effect, LivingEntity caster)
     {
-        Console.WriteLine($"[Entity:{Name}] Status effect apply! effect:{effect.Name}");
+
+
+        for(int i = 0; i < _statusEffects.Count; i++)
+        {
+            
+            if (_statusEffects[i].EffectId == effect.EffectId)
+            {
+                _statusEffects[i].OnApply(caster, this, null);
+                Console.WriteLine($"[Entity:{Name}] Status effect updated! Effect:{effect.EffectId.ToString()}");
+                return;
+            }
+
+        }
+
+        Console.WriteLine($"[Entity:{Name}] Status effect apply! effect:{effect.EffectId.ToString()}");
         effect.OnApply(caster, this, null);
         _statusEffects.Add(effect);
 

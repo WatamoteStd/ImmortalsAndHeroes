@@ -1,17 +1,18 @@
 
 using System.Numerics;
 using Server.World.Zone.Entities;
+using Shared.StatusEffect;
 
 namespace Server.World.Effects;
 
 public abstract class StatusEffectBase
 {
     public float Duration {get; protected set;}
-    public string Name {get; protected set;}
+    public StatusEffect EffectId {get; protected set;}
 
-    public StatusEffectBase(string name, float duration)
+    public StatusEffectBase(StatusEffect effect, float duration)
     {
-        Name = name;
+        EffectId = effect;
         Duration = duration;
     }
     
