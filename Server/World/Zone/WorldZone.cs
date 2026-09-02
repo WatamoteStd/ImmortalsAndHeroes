@@ -15,6 +15,7 @@ using Server.World.Zone.Entities.Ability;
 using Shared.Ability.CastErrors;
 using Server.World.Zone.Projectiles;
 using Shared.Udp.Packets.Category.Game.Projectile;
+using Shared.Zone;
 
 namespace Server.World.Zone;
 
@@ -23,6 +24,8 @@ public class WorldZone
     public WorldHolder.ZoneType Type {get; private set;}
     public uint Id {get; private set;}
     private readonly WorldHolder _worldHolder;
+
+    public ZoneRules Rules {get; set;}
 
     public Dictionary<uint, PlayerEntity> Players {get; private set;} = new();
     public Dictionary<uint, EntityBase> Entities {get; private set;}= new();
@@ -44,7 +47,7 @@ public class WorldZone
         Type = type;
         Id = id;
 
-        if (Type == WorldHolder.ZoneType.City)
+        if (Type != WorldHolder.ZoneType.World)
         {
              _spawner = new RegionSpawnBuilder(this)
             .SetDensity(DensityModes.Near)
@@ -55,15 +58,34 @@ public class WorldZone
         }
         else
         {
-             _spawner = new RegionSpawnBuilder(this)
-            .SetDensity(DensityModes.Near)
-            .SetCapacity(60)
-            .GroupsAllowed(false)
-            .AddMonster(EntityType.WolfWeak, 30)
-            .AddMonster(EntityType.ForestBear, 15)
-            .AddMonster(EntityType.UnknownMage, 15)
-            .RespawnTime(15f)
-            .Build();
+
+            if (Id == 2)
+            {
+                
+                _spawner = new RegionSpawnBuilder(this)
+                .SetDensity(DensityModes.Normal)
+                .SetCapacity(60)
+                .GroupsAllowed(false)
+                .AddMonster(EntityType.WolfWeak, 40)
+                .AddMonster(EntityType.ForestBear, 20)
+                .RespawnTime(20f)
+                .Build();
+
+            }
+            else
+            {
+                
+                _spawner = new RegionSpawnBuilder(this)
+                .SetDensity(DensityModes.Near)
+                .SetCapacity(60)
+                .GroupsAllowed(false)
+                .AddMonster(EntityType.WolfWeak, 30)
+                .AddMonster(EntityType.ForestBear, 15)
+                .AddMonster(EntityType.UnknownMage, 15)
+                .RespawnTime(15f)
+                .Build();
+
+            }
         }
 
         _projectileManager.OnProjectileAdded += SendProjectileToRegion;
@@ -82,7 +104,11 @@ public class WorldZone
             latensy = 0f;
             iterationCount++;
         }
-        _spawner.Update(deltaTime);
+
+        if (Type == WorldHolder.ZoneType.World)
+        {
+            _spawner.Update(deltaTime);
+        }
 
         _projectileManager.Update(deltaTime);
 
@@ -501,6 +527,17 @@ public class WorldZone
 
             if (entity is LivingEntity living)
             {
+
+                if (living is PlayerEntity pl && !Rules.HasFlag(ZoneRules.AllowPvP))
+                {
+                    Console.WriteLine($"Player:{player.Name} try to attack:{pl.Name} in non PvpZone");
+                    return;
+                }
+                else if (living is MonsterEntity mons && !Rules.HasFlag(ZoneRules.AllowPvE))
+                {
+                    return;
+                }
+                
                 player.SetAttackTarget(living);
 
             }

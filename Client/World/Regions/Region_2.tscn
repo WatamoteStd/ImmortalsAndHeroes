@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://22gxbxhwi4tl"]
+
+[ext_resource type="Script" uid="uid://dufeppnhj2h7k" path="res://World/WorldHandler.cs" id="1_772pk"]
+[ext_resource type="PackedScene" uid="uid://b4v3nmvo7nhxw" path="res://Entities/Character/RemotePlayer.tscn" id="2_qoayv"]
+[ext_resource type="PackedScene" uid="uid://dj6wqb3g7xlng" path="res://Entities/Character/LocalPlayer.tscn" id="3_eftk8"]
+[ext_resource type="PackedScene" uid="uid://bluish8t2ir6o" path="res://Entities/Character/Entity.tscn" id="4_kofsh"]
+[ext_resource type="PackedScene" uid="uid://c85suyvpyr0sm" path="res://Entities/FloatingText/DamageNumber.tscn" id="5_k7t1g"]
+[ext_resource type="PackedScene" uid="uid://bcqwwwasw51lb" path="res://Entities/Projectiles/Prefabs/Defaulth/DefaulthProjectile.tscn" id="6_2msla"]
+[ext_resource type="PackedScene" uid="uid://cwfns60gnqt7l" path="res://World/Regions/LocationChanger.tscn" id="7_qoayv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4y62f"]
+albedo_color = Color(0.2656122, 0.30304888, 0.09732909, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_83fg3"]
+material = SubResource("StandardMaterial3D_4y62f")
+size = Vector2(300, 300)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6u82b"]
+size = Vector3(300, 0.01, 300)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eftk8"]
+transparency = 1
+albedo_color = Color(0.43529412, 0.2627451, 0.1254902, 0.84313726)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6u82b"]
+material = SubResource("StandardMaterial3D_eftk8")
+size = Vector2(200, 5)
+
+[node name="Node3D" type="Node3D" unique_id=362245343]
+script = ExtResource("1_772pk")
+_remotePlayerScene = ExtResource("2_qoayv")
+_localPlayerScene = ExtResource("3_eftk8")
+_entityScene = ExtResource("4_kofsh")
+_floatDamageScene = ExtResource("5_k7t1g")
+_projectilePrefab = ExtResource("6_2msla")
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=62390883]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=1713585167]
+mesh = SubResource("PlaneMesh_83fg3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=875421014]
+shape = SubResource("BoxShape3D_6u82b")
+
+[node name="RoadToCapital" type="MeshInstance3D" parent="." unique_id=1010835737]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.053, 0.02, 0)
+mesh = SubResource("PlaneMesh_6u82b")
+
+[node name="EnterToCity" parent="." unique_id=667303599 instance=ExtResource("7_qoayv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 156.22731, 0.005001068, -1.9235382)
+
+[node name="EnterToCity2" parent="." unique_id=999857452 instance=ExtResource("7_qoayv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -145.1315, 0.0049991608, -0.99502563)
+EnterZoneId = 3
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1192840946]
+transform = Transform3D(1, 0, 0, 0, 0.45958495, 0.8881338, 0, -0.8881338, 0.45958495, 0, 41.19635, 0)
+
+[node name="ArrowToCity" type="CSGCombiner3D" parent="." unique_id=1586977974]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.306755, 0.4615624, -5.522186)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="ArrowToCity" unique_id=1642245971]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23227847, 0)
+size = Vector3(0.5, 1.5, 0.4)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="ArrowToCity" unique_id=1718815302]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013000488, 1.0981416, 0)
+size = Vector3(1.8226318, 0.45323485, 0.4)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="ArrowToCity" unique_id=1838989457]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.77919006, 0.8580066, 0)
+operation = 2
+size = Vector3(0.3, 0.5, 0.5)

@@ -104,9 +104,13 @@ mesh = SubResource("BoxMesh_isuyp")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Building3" unique_id=236222554]
 shape = SubResource("BoxShape3D_0pbcf")
 
-[node name="EnterToCity" parent="." unique_id=667303599 instance=ExtResource("4_isuyp")]
+[node name="LeaveTZone1" parent="." unique_id=667303599 instance=ExtResource("4_isuyp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.98025, 0.582957, 0)
 EnterZoneId = 0
+
+[node name="LeaveToZone2" parent="." unique_id=2028261319 instance=ExtResource("4_isuyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.46785, 0.582957, 0)
+EnterZoneId = 2
 
 [node name="Market" type="Area3D" parent="." unique_id=335373770]
 transform = Transform3D(-0.5791409, 0, -0.81522745, 0, 1, 0, 0.81522745, 0, -0.5791409, 23.614006, 3.5, 20.989376)

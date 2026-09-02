@@ -14,13 +14,14 @@ using System.Buffers;
 using Shared.Udp.Packets.Category.MasteryTree;
 using Shared.MasteryTree;
 using Shared.Udp.Packets.Category.Game.Ability;
+using Shared.Zone;
 
 namespace Server.World.Zone;
 
 public class WorldHolder : IWorldHolder
 {
 
-    public enum ZoneType { World, City, Dungeon}
+    public enum ZoneType { World, City, Capital, Dungeon}
     public Dictionary<uint, PlayerEntity> idToPlayer = new Dictionary<uint, PlayerEntity>(); // USERID
     public Dictionary<uint, WorldZone> idToZone = new Dictionary<uint, WorldZone>();
 
@@ -39,10 +40,23 @@ public class WorldHolder : IWorldHolder
     {
         _broadcaster = broadcaster;
         _consoleController = new AdminConsoleController(Broadcaster);
+
         WorldZone startZone = new WorldZone(this, ZoneType.World, 0);
+        startZone.Rules = ZoneRules.AllowPvE;
+
         WorldZone cityZone = new WorldZone(this, ZoneType.City, 1);
+        cityZone.Rules = ZoneRules.None;
+
+        WorldZone semiZone = new WorldZone(this, ZoneType.World, 2);
+        semiZone.Rules = ZoneRules.AllowPvP | ZoneRules.AllowPvE | ZoneRules.FullLoot;
+
+        WorldZone capital = new WorldZone(this, ZoneType.Capital, 3);
+        capital.Rules = ZoneRules.None;
+
         idToZone[0] = startZone;
         idToZone[1] = cityZone;
+        idToZone[2] = semiZone;
+        idToZone[3] = capital;
     }
 
     public void Update(float deltaTime)
@@ -294,7 +308,7 @@ public class WorldHolder : IWorldHolder
     {
         
         if (idToPlayer.TryGetValue(userId, out PlayerEntity? player) && idToZone.TryGetValue(player.RegionId, out WorldZone? zone))
-        {
+        { 
             zone.PlayerAttackRequest(player, entityId);
         }
         else

@@ -2,12 +2,12 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1vvol"]
 shading_mode = 0
-albedo_color = Color(0.65696234, 0, 0.124354936, 1)
+albedo_color = Color(0.48236156, 0.27538988, 0.14932737, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_ichqs"]
 material = SubResource("StandardMaterial3D_1vvol")
-radius = 0.25
-height = 0.5
+radius = 0.12
+height = 0.25
 
 [node name="Node3D" type="Node3D" unique_id=594332954]
 

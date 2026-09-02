@@ -41,7 +41,9 @@ public partial class SceneManager : CanvasLayer
 		{
 			
 			{0, "res://World/Regions/Region_0.tscn"},
-			{1, "res://World/Regions/Region_1_City.tscn"}
+			{1, "res://World/Regions/Region_1_City.tscn"},
+			{2, "res://World/Regions/Region_2.tscn"},
+			{3, "res://World/Regions/Region_3.tscn"}
 
 		};
 

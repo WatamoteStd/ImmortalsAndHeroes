@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://btc13xdnxcoi6"]
+
+[ext_resource type="PackedScene" uid="uid://cwx2fqpuubo8r" path="res://Entities/Character/Male/character_male.tscn" id="1_4ye18"]
+[ext_resource type="Script" uid="uid://dufeppnhj2h7k" path="res://World/WorldHandler.cs" id="1_m3hv4"]
+[ext_resource type="PackedScene" uid="uid://b4v3nmvo7nhxw" path="res://Entities/Character/RemotePlayer.tscn" id="2_tmd3e"]
+[ext_resource type="PackedScene" uid="uid://dj6wqb3g7xlng" path="res://Entities/Character/LocalPlayer.tscn" id="3_csi3s"]
+[ext_resource type="PackedScene" uid="uid://cwfns60gnqt7l" path="res://World/Regions/LocationChanger.tscn" id="3_kfdyn"]
+[ext_resource type="PackedScene" uid="uid://bluish8t2ir6o" path="res://Entities/Character/Entity.tscn" id="4_5wtqr"]
+[ext_resource type="PackedScene" uid="uid://c85suyvpyr0sm" path="res://Entities/FloatingText/DamageNumber.tscn" id="5_icy1l"]
+[ext_resource type="PackedScene" uid="uid://bcqwwwasw51lb" path="res://Entities/Projectiles/Prefabs/Defaulth/DefaulthProjectile.tscn" id="6_245bp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hh7fy"]
+albedo_color = Color(0.3779895, 0.3435185, 0.24801075, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_83fg3"]
+material = SubResource("StandardMaterial3D_hh7fy")
+size = Vector2(250, 250)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6u82b"]
+size = Vector3(250, 0.01, 250)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m3hv4"]
+albedo_color = Color(0.372462, 0.44891763, 0.45258164, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6u82b"]
+material = SubResource("StandardMaterial3D_m3hv4")
+size = Vector2(4, 120)
+
+[node name="Capital" type="Node3D" unique_id=690834174]
+script = ExtResource("1_m3hv4")
+_remotePlayerScene = ExtResource("2_tmd3e")
+_localPlayerScene = ExtResource("3_csi3s")
+_entityScene = ExtResource("4_5wtqr")
+_floatDamageScene = ExtResource("5_icy1l")
+_projectilePrefab = ExtResource("6_245bp")
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=521400199]
+metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=45634570]
+mesh = SubResource("PlaneMesh_83fg3")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=128928807]
+shape = SubResource("BoxShape3D_6u82b")
+metadata/_edit_lock_ = true
+
+[node name="CharacterBody3D" parent="." unique_id=1611367857 instance=ExtResource("1_4ye18")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6156063, 1.0049992, -1.5066338)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=895643164]
+transform = Transform3D(1, 0, 0, 0, 0.024923384, 0.9996893, 0, -0.9996893, 0.024923384, 0, 100, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1440872766]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.12321, 4.891631, 13.794703)
+size = Vector3(12, 10, 8)
+
+[node name="EnterToCity" parent="." unique_id=667303599 instance=ExtResource("3_kfdyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9397507, 0.0050001144, -121.4965)
+EnterZoneId = 2
+
+[node name="RoadToLocation" type="MeshInstance3D" parent="." unique_id=1228982137]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, -61.425)
+mesh = SubResource("PlaneMesh_6u82b")
