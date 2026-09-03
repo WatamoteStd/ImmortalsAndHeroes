@@ -64,12 +64,15 @@ _floatDamageScene = ExtResource("5_evw3e")
 _projectilePrefab = ExtResource("6_6wgx3")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=538823357]
+metadata/_edit_lock_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=265802937]
 mesh = SubResource("PlaneMesh_83fg3")
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=960474095]
 shape = SubResource("BoxShape3D_6u82b")
+metadata/_edit_lock_ = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=499537083]
 environment = SubResource("Environment_83fg3")
@@ -123,3 +126,5 @@ mesh = SubResource("BoxMesh_6u82b")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Market" unique_id=384055336]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3841858e-07, -1.4807677, 4.496)
 shape = SubResource("BoxShape3D_83fg3")
+
+[node name="Landskape" type="Node3D" parent="." unique_id=1787689261]

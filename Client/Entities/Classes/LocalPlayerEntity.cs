@@ -13,6 +13,7 @@ public partial class LocalPlayerEntity : Entity
 
 	public uint LocalPlayerId {get; set;}
 	[Export] public PlayerAbilityController AbilityController { get; private set; }
+	[Export] private MovePoint _movePoint;
 
 	private float _mana;
 	private float _maxMana;
@@ -58,6 +59,9 @@ public partial class LocalPlayerEntity : Entity
 		_attackTarget = null;
 		CurrentState = State.Move;
 		_stateTimeGone = 0.0f;
+
+		_movePoint.GlobalPosition = position;
+		_movePoint.OnClickRMB();
 
 	}
 	public void SetAttackTarget(Entity target)
